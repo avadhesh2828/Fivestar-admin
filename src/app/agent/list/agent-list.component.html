@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['country']" placeholder="Select a country"
+                name="country">
+                <option value="-1">Select a country</option>
+                <option *ngFor="let country of countryList" [value]="country.master_country_id">
+                  {{country.country_name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
+                <option value="-1">Select a status</option>
+                <option *ngFor="let status of AgentStatus | keyvalue" [value]="status.key">
+                  {{status.value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                Filter</button>&nbsp;
+            </span>
+
+          </div>
+        </div>
+        <form class="row mt-1">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by agent username, name, email"
+                (ngModelChange)="search()" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-search"></i> Search</button>&nbsp; -->
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Agents</h1>
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Agent User Name</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>Balance ({{currency_code}})</th>
+              <th>Sold Ticket</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="9" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !agentList">
+              <td colspan="9">Loading...</td>
+            </tr>
+            <tr *ngIf="agentList && !(agentList.length>0)">
+              <td colspan="9" class="text-center">No Agent Found</td>
+            </tr>
+            <tr *ngFor="let agent of agentList; let agentIndex = index">
+              <td>{{ agent.agent_user_name || "-"}} </td>
+              <td>{{ agent.name | titlecase }}</td>
+              <td>{{ agent.email }}</td>
+              <td>{{ agent.country_name }} </td>
+              <td>{{ (+agent.balance) | roundOff }}</td>
+              <td>{{ agent.total_ticket }}</td>
+             
+            
+
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}">{{AgentStatus[agent.status]
+                  }}</span>
+              </td>
+              <td>
+
+                <a routerLink="/agents/tickets-info/{{agent.agent_unique_id}}"><i class="fa fa-address-book"></i>Sold</a>
+                &nbsp; 
+
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
+                    agent_unique_id: agent.agent_unique_id,
+                    status: agent.status,
+										agent_id: agent.agent_id,
+										balance: agent.balance,
+                    agentIndex: agentIndex
+                  })"><i class="fa fa-edit"></i>Edit</a>&nbsp; 
+
+                <a routerLink="/agents/{{agent.agent_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
+                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalAgents > params.items_perpage">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-edit-agent [agent]="currentAgent" (editedStatus)="onStatusEdit($event)"></app-edit-agent>
+
+<app-loader></app-loader>

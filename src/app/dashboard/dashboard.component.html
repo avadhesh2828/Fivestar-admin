@@ -1,0 +1,220 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title text-center">Dashboard</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Amount Deposited in Wallet</div>
+                    <div class="col-sm-1"><i class="icon-envelope-letter"></i></div>
+                  </div>
+                </h5>
+                
+                <p class="card-text">{{currency_code}}{{stats?.total_deposit_amount | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Amount Withdraw from Wallet</div>
+                    <div class="col-sm-1"><i class="icon-envelope-open"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{currency_code}}{{stats?.total_withdraw_amount | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Total Player Assets</div>
+                    <div class="col-sm-1"><i class="icon-wallet"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{currency_code}}{{stats?.total_user_available_balance | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Amount winning from wallet</div>
+                    <div class="col-sm-1"><i class="icon-wallet"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{currency_code}}{{ stats?.total_winning_amount | number: '1.0-1' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Total Player</div>
+                    <div class="col-sm-1"><i class="icon-user"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.total_user || '0'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Total Fighter</div>
+                    <div class="col-sm-1"><i class="icon-user"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.total_player || '0'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+<!--         <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Amount Withdrawn by Participants</div>
+                    <div class="col-sm-1"><i class="icon-share-alt"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{currency_code}}{{stats?.total_amount_withdrawn || '0'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Total Participants Who Played vs Who Signed Up</div>
+                    <div class="col-sm-1"><i class="icon-people"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.total_users_played || 0}} vs
+                  {{stats?.total_users_signup || 0}}</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+       <!--  <div class="row">
+          <div class="col-md-4">
+            <div class="card stats-card list-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Competitions On Which The Most Amount Was Spent</div>
+                    <div class="col-sm-1"><i class="icon-game-controller"></i></div>
+                  </div>
+                </h5>
+                <ul class="card-text" *ngFor="let contest of stats?.contests_on_spent_most">
+                  <li> {{contest.contest_name}} (<a routerLink="/competitions/{{contest.contest_uid}}">{{contest.contest_uid}}</a>)</li>
+                </ul>
+                <p class="card-title">Amount</p>
+                <p class="card-text">£{{stats?.contests_on_spent_most[0].total_amt}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card list-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Competitions With Highest Participants</div>
+                    <div class="col-sm-1"><i class="icon-game-controller"></i></div>
+                  </div>
+                </h5>
+                <ul class="card-text" *ngFor="let contest of stats?.contests_with_most_participants">
+                  <li> {{contest.contest_name}} (<a routerLink="/competitions/{{contest.contest_uid}}">{{contest.contest_uid}}</a>)</li>
+                </ul>
+                <p class="card-title">Number of Participants</p>
+                <p class="card-text">{{stats?.contests_with_most_participants[0].total_join}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card list-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Competitions With Least Participants</div>
+                    <div class="col-sm-1"><i class="icon-game-controller"></i></div>
+                  </div>
+                </h5>
+                <ul class="card-text" *ngFor="let contest of stats?.contests_with_least_participants">
+                  <li> {{contest.contest_name}} (<a routerLink="/competitions/{{contest.contest_uid}}">{{contest.contest_uid}}</a>)</li>
+                </ul>
+                <p class="card-title">Number of Participants</p>
+                <p class="card-text">{{stats?.contests_with_least_participants[0].total_join}}</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4">
+            <div class="card stats-card list-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Participants Who Spent The Most</div>
+                    <div class="col-sm-1"><i class="icon-user"></i></div>
+                  </div>
+                </h5>
+                <ul class="card-text" *ngFor="let user_name of stats?.user_who_spent_most.user_names">
+                  <li> {{user_name || ''}}</li>
+                </ul>
+                <p class="card-title">Amount</p>
+
+                <p class="card-text">{{currency_code}}{{stats?.user_who_spent_most.total_amt || ''}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stats-card list-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">Participants Who Spent The Least</div>
+                    <div class="col-sm-1"><i class="icon-user"></i></div>
+                  </div>
+                </h5>
+                <ul class="card-text" *ngFor="let user_name of stats?.user_who_spent_least.user_names">
+                  <li> {{user_name || ''}}</li>
+                </ul>
+                <p class="card-title">Amount</p>
+                <p class="card-text">{{currency_code}}{{stats?.user_who_spent_least.total_amt || ''}}</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

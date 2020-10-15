@@ -1,0 +1,128 @@
+<!-- /.row-->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <!-- <div class="input-group select-status col-12 col-sm-3">
+            <select class="form-control" [(ngModel)]="params['status']" name="status">
+              <option value="">Select a status</option>
+              <option *ngFor="let status of contestStatus | keyvalue" [value]="status.key">
+                {{status.value}}
+              </option>
+            </select>
+          </div> -->
+          <!-- <div class="col-sm-1 entry-fees">Entry Fees: </div>
+          <div class="col-12 col-sm-6 custom-filter">
+            <ng5-slider [(value)]="params.min_entry_fee" [(highValue)]="params.max_entry_fee" [options]="options">
+            </ng5-slider>
+          </div> -->
+
+          <!-- <span class="col-sm-1 filter-btn">
+            <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-filter"></i> Filter</button>&nbsp;
+          </span> -->
+        </div>
+        <div class="row mt-1">
+          <form class="col-12 col-sm-10">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by name...">
+              <span class="input-group-prepend">
+                <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+                  <i class="fa fa-search"></i> Filter</button>
+              </span>
+            </div>
+          </form>
+          <div class="col-12 col-sm-2">
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body competitions-list">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Promotion
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/promotions/create-new']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>#ID</th>
+              <th>Promotion Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="promotionList && !(promotionList.length>0)">
+              <td colspan="9" class="text-center">No Event Found</td>
+            </tr>
+
+            <tr *ngFor="let promotion of promotionList">
+              <td>{{ promotion.id }}</td>
+              <td *ngIf="!promotion.isEditable">{{ promotion.name }}</td>
+              <td *ngIf="promotion.isEditable">
+                <input class="form-control"  type="text"  name="raffle_entry_fee" [value]= "promotion.name" [disabled] = "!promotion.isEditable" [(ngModel)]="promotion.name">
+              </td> 
+              <td>
+                <a href="javascript:void(0);" *ngIf="!promotion.isEditable" (click)="promotion.isEditable = !promotion.isEditable"><i class="fa fa-edit"></i> Edit</a>&nbsp;
+                <a href="javascript:void(0);" *ngIf="promotion.isEditable" (click)="onFeeSubmit(promotion)"><i class="fa fa-edit"></i> Save</a>&nbsp;
+
+                <a href="javascript:void(0);" (click)="deleteConfirm(promotion)"><i class="fa fa-trash"></i> Delete</a> &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalEvent > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- /.col-->
+</div>
+<!-- Delete Modal Start-->
+<div class="modal fade" id="deleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentPromotion">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{currentPromotion.name | titlecase}}
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete();">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Delete Model End -->
+<!-- /.row-->
+
+<!-- <app-edit-contest (cancelContest)="handleCancelContest()"
+  (confirmedOrCancelled)="handleConfirmationOrCancellation($event)"></app-edit-contest>
+ -->
+ <app-loader></app-loader>
+

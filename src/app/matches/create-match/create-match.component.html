@@ -1,0 +1,219 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <form class="form-horizontal" [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+          <div class="card-header">
+            <strong>Create New Fight</strong>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="combat_type">Combat Type<span class="text-danger">*</span></label>
+              <div class="col-md-9">
+                <select class="form-control"  placeholder="Select Combat Type" name="combat_type" formControlName="combat_type">
+                  <option value="">Select Combat Type</option>
+                  <option *ngFor="let combatType of combatTypes" [value]="combatType.combat_type_id">
+                    {{combatType.combat_type_name | titlecase}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['combat_type'].errors" class="text-danger">
+                  <div *ngIf="f['combat_type'].errors.required">Please select combat type</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="round">Round<span class="text-danger">*</span></label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" formControlName="round" placeholder="Round" min="1" appNumeric numericType="number">
+                <div *ngIf="submitted && f['round'].errors" class="text-danger">
+                  <div *ngIf="f['round'].errors.required">Round is required</div>
+                  <div *ngIf="f['round'].errors.pattern">Round allow only between 1 to 12
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Fight Date<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" id="scheduled_date" style="cursor: pointer;"
+                    formControlName="scheduled_date" class="form-control" placeholder="Select date" #dp="bsDatepicker" bsDatepicker readonly
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false, adaptivePosition: true }">
+                    <div *ngIf="submitted && f['scheduled_date'].errors" class="text-danger">
+                      <div *ngIf="f['scheduled_date'].errors.required">Date is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Fight Time<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <timepicker formControlName="scheduled_time"  [showMeridian]="true"></timepicker>
+                    
+                    <input type="hidden" formControlName="scheduled_time" id="scheduled_time" class="form-control" placeholder="Select time" [value]="matchForm.get('scheduled_time').value" readonly/>
+                    
+                    <div *ngIf="submitted && f['scheduled_time'].errors" class="text-danger">
+                      <div *ngIf="f['scheduled_time'].errors.required">Date is required</div>
+                    </div>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="home_fighter">Blue Corner<span class="text-danger">*</span></label>
+                <div class="col-md-9" *ngIf="allFighters">
+                  <ng-select [items]="allFighters"
+                   bindLabel="Name"
+                   bindValue="player_id"
+                   [multiple]="false"
+                   placeholder="Select Blue Corner"
+                   [(ngModel)]="home_fighter"
+                   formControlName="home_fighter">
+                  </ng-select>
+                  <!-- <select class="form-control"  placeholder="Select Fighter" name="home_fighter" formControlName="home_fighter">
+                    <option value=""> Select Blue Corner</option>
+                    <option *ngFor="let fighter of allFighters" [value]="fighter.player_id">
+                      {{fighter.first_name | titlecase}} {{fighter.last_name | titlecase}}
+                    </option>
+                  </select> -->
+                  <div *ngIf="submitted && f['home_fighter'].errors" class="text-danger">
+                    <div *ngIf="f['home_fighter'].errors.required">Please select blue corner</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="home_fighter">Blue Corner Point<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="winner" appNumeric numericType="number" formControlName="home_point" placeholder="Blue Corner Point">
+                  <div *ngIf="submitted && f['home_point'].errors" class="text-danger">
+                    <div *ngIf="f['home_point'].errors.required">Blue corner point is required</div>
+                    <div *ngIf="f['home_point'].errors.minlength">Blue corner point must have more than 1 digit
+                    </div>
+                    <div *ngIf="f['home_point'].errors.maxlength">Blue corner point must have less than 5 digit
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="away_fighter">Red Corner<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <ng-select [items]="allFighters"
+                   bindLabel="Name"
+                   bindValue="player_id"
+                   [multiple]="false"
+                   placeholder="Select Red Corner"
+                   [(ngModel)]="away_fighter"
+                   formControlName="away_fighter">
+                  </ng-select>
+                  <!-- <select class="form-control"  placeholder="Select Fighter" name="away_fighter" formControlName="away_fighter">
+                    <option value=""> Select Red Corner</option>
+                    <option *ngFor="let fighter of allFighters" [value]="fighter.player_id">
+                      {{fighter.first_name | titlecase}} {{fighter.last_name | titlecase}}
+                    </option>
+                  </select> -->
+                  <div *ngIf="submitted && f['away_fighter'].errors" class="text-danger">
+                    <div *ngIf="f['away_fighter'].errors.required">Please select red corner</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="away_point">Red Corner Point<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="away_point" appNumeric numericType="number" formControlName="away_point" placeholder="Red Corner Point">
+                  <div *ngIf="submitted && f['away_point'].errors" class="text-danger">
+                    <div *ngIf="f['away_point'].errors.required">Red corner point is required</div>
+                    <div *ngIf="f['away_point'].errors.minlength">Red corner point must have more than 1 digit
+                    </div>
+                    <div *ngIf="f['away_point'].errors.maxlength">Red corner point must have less than 5 digit
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="home_fighter">Select Weight Class <span class="text-danger">*</span></label>
+                <div class="col-md-9" *ngIf="weightClasses">
+                  <select class="form-control"  placeholder="Select Weight Class" name="weight_class_id" formControlName="weight_class_id">
+                    <option value=""> Select Weight Class</option>
+                    <option *ngFor="let wc of weightClasses" [value]="wc.weight_class_id">
+                      {{wc.weight_class_name | titlecase}}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && f['weight_class_id'].errors" class="text-danger">
+                    <div *ngIf="f['weight_class_id'].errors.required">Please select blue corner</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="home_fighter">Select Preview</label>
+                <div class="col-md-9" *ngIf="newsList">
+                  <select class="form-control"  placeholder="Select Weight Class" name="preview_id" formControlName="preview_id">
+                    <option value=""> Select Preview</option>
+                    <option *ngFor="let news of newsList" [value]="news.news_id">
+                      {{news.news_title | titlecase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="home_fighter">Select Review</label>
+                <div class="col-md-9" *ngIf="newsList">
+                  <select class="form-control"  placeholder="Select review" name="review_id" formControlName="review_id">
+                    <option value=""> Select Review</option>
+                    <option *ngFor="let news of newsList" [value]="news.news_id">
+                      {{news.news_title | titlecase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="target_url">Championship<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                      <input type="radio" [checked]='true' [(ngModel)]="championship" formControlName="championship" value="1"> Yes
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input type="radio" [(ngModel)]="championship" formControlName="championship" value="0"> No
+                  <div *ngIf="submitted && f['championship'].errors" class="text-danger">
+                    <div *ngIf="f['championship'].errors.required">Please select championship</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="target_url">Title Fight<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                      <input type="radio" [checked]='true' [(ngModel)]="title_fight" formControlName="title_fight" value="1"> Yes
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input type="radio" [(ngModel)]="title_fight" formControlName="title_fight" value="0"> No
+                  <div *ngIf="submitted && f['title_fight'].errors" class="text-danger">
+                    <div *ngIf="f['title_fight'].errors.required">Please select title fight</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="target_url">Main Event<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                      <input type="radio" [checked]='true' [(ngModel)]="main_event" formControlName="main_event" value="1"> Yes
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input type="radio" [(ngModel)]="main_event" formControlName="main_event" value="0"> No
+                  <div *ngIf="submitted && f['main_event'].errors" class="text-danger">
+                    <div *ngIf="f['main_event'].errors.required">Please select main event</div>
+                  </div>
+                </div>
+              </div>
+              
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+              Submit</button>
+            &nbsp;
+            <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+              Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

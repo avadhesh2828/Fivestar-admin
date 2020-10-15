@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Fight Result</strong>
+        </div>
+        <div class="card-body" *ngIf="matchInfo">
+          <label for="status">Select Winner</label>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="radio-inline"><input type="radio" name="winner" value="blue_winner" formControlName="winner" [(ngModel)]="winner" [checked]='winner == "blue_winner"'> Blue Corner</label>
+              <br />
+              <img *ngIf="matchInfo.favourite_fighter_player_image" [src]="imgURL+'/'+matchInfo.favourite_fighter_player_image" width="80px;" /> <br />
+              {{matchInfo.favourite_fighter_first_name}} {{matchInfo.favourite_fighter_last_name}}<br />
+            </div>
+            <div class="col-md-6">
+              <label class="radio-inline"><input type="radio" name="winner" value="red_winner" formformControlName="winner" [(ngModel)]="winner" [checked]='winner == "red_winner"' [ngModelOptions]="{standalone: true}"> Red Corner</label>
+              <!-- <input type="radio" [checked]='true' [(ngModel)]="isFeatured" formControlName="isFeatured" value="1"> Yes -->
+              <br />
+              <img *ngIf="matchInfo.underdog_fighter_player_image" [src]="imgURL+'/'+matchInfo.underdog_fighter_player_image" width="80px;" /> <br />
+              {{matchInfo.underdog_fighter_first_name}} {{matchInfo.underdog_fighter_last_name}}<br />
+            </div>
+            <div *ngIf="submitted && f['winner'].errors" class="text-danger" style="padding-left: 14px;">
+              <div *ngIf="f['winner'].errors.required">Winner is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Victory Type</label>
+            <select class="form-control" id="status" name="status" formControlName="victory_type" [(ngModel)]="victory_type">
+              <option value="">Select Victory Type</option>
+              <ng-container *ngFor="let victoryType of victoryTypeList">
+                <option [value]="victoryType.victory_type_id">
+                  {{victoryType.victory_type_name}}</option>
+              </ng-container>
+            </select>
+            <div *ngIf="submitted && f['victory_type'].errors" class="text-danger">
+              <div *ngIf="f['victory_type'].errors.required">Victory Type is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Select Round</label>
+            <select class="form-control" id="status" name="status" formControlName="round" [(ngModel)]="victory_round">
+              <option value="">Select Round</option>
+              <ng-container *ngFor="let number of roundNumbers">
+                <option [value]="number">{{number}}</option>
+              </ng-container>
+            </select>
+            <div *ngIf="submitted && f['round'].errors" class="text-danger">
+              <div *ngIf="f['round'].errors.required">Round is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          &nbsp;
+          <a class="btn back-btn" routerLink="/matches">
+            <button class="btn btn-sm btn-danger back-button" type="button"><i class="icon-arrow-left-circle"></i>
+              Back</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

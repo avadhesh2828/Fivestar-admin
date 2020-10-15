@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <strong>Create Notification</strong>
+        <form class="row mt-1">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by name,username,email"
+                (ngModelChange)="search()" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-search"></i> Search</button>&nbsp; -->
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="card-body">
+        <div class="row custom-field">
+          <label class="col-md-3 col-form-label" for="notification">Title</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" [(ngModel)]="title" placeholder="Title">
+          </div>
+        </div>
+        <div class="row custom-field">
+          <label class="col-md-3 col-form-label" for="notification">Message</label>
+          <div class="col-md-9">
+            <textarea class="form-control" id="notification" name="notification" placeholder="Message" [(ngModel)]="notification"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-md-3 col-form-label" for="receivers">Select Receivers</label>
+          <div class="col-md-9">
+            <table class="table table-responsive-sm table-bordered table-striped table-sm" id="receivers"
+              name="receivers">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" (click)="selectUsers('all', $event)"
+                      [checked]="(userList && selectedUsers[params.current_page]?.length === userList?.length)" />
+                  </th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Username</th>
+                  <th>Balance ({{currency_code}})</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="error">
+                  <td colspan="5" class="table-danger">There was an error</td>
+                </tr>
+                <tr *ngIf="!error && !userList">
+                  <td colspan="5">Loading...</td>
+                </tr>
+                <tr *ngFor="let user of userList; let userIndex = index">
+                  <td><input type="checkbox" (click)="selectUsers(user, $event)"
+                      [checked]="selectedUsers[params.current_page] && selectedUsers[params.current_page]?.indexOf(user.email) !== -1" />
+                  </td>
+                  <td>{{user.name || "-" | titlecase }}</td>
+                  <td>{{ user.email || "-" }}</td>
+                  <td>{{ user.user_name || "-" }} </td>
+                  <td>{{ +user.balance || "0" }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <nav *ngIf="totalUsers > params.items_perpage">
+              <ul class="pagination">
+                <li class="page-item" *ngIf="params.current_page > 1">
+                  <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+                </li>
+                <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+                  *ngFor="let page of totalPaginationShow">
+                  <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+                </li>
+                <li class="page-item" *ngIf="params.current_page != totalPages">
+                  <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-md-3 col-form-label" for="selectedUsers">Selected Receivers</label>
+          <div class="col-md-9 selectedUsers" id="selectedUsers" name="selectedUsers">
+            <ng-container *ngFor="let userList of selectedUsers | keyvalue">
+              <div *ngFor="let user of userList.value">{{user}}</div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-primary" type="submit" (click)="onSubmit()"><i class="fa fa-dot-circle-o"></i>
+          Submit</button>
+        &nbsp;
+        <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+          Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader></app-loader>

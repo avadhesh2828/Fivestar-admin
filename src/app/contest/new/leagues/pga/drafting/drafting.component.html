@@ -1,0 +1,89 @@
+<div [formGroup]="parentFormGroup">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="lineupStyle">Lineup Style<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <select class="form-control" formControlName="lineupStyle" (change)="resetDraftDate()">
+        <option value="">Select Lineup Style</option>
+        <option *ngFor="let ls of lineupStyles | keyvalue" value="{{ls.key}}">{{ls.key | titlecase}}</option>
+      </select>
+      <div *ngIf="submitted && f['lineupStyle'].errors" class="text-danger">
+        <div *ngIf="f['lineupStyle'].errors.required">Draft Type is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="draftSpeed">Draft Speed<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <select class="form-control" formControlName="draftSpeed" (change)="resetDraftDate()">
+        <option value="">Select Draft Speed</option>
+        <option value="fast-30">Fast Draft (30 seconds/pick)</option>
+        <option value="regular-60">Regular Draft (60 seconds/pick)</option>
+        <option value="slow-28800">Slow Draft (8 hrs / pick )</option>
+      </select>
+      <div *ngIf="submitted && f['draftSpeed'].errors" class="text-danger">
+        <div *ngIf="f['draftSpeed'].errors.required">Draft Speed is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="draftType">Draft Type<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <select class="form-control" formControlName="draftType">
+        <option value="1">Live Snake Draft</option>
+      </select>
+      <div *ngIf="submitted && f['draftType'].errors" class="text-danger">
+        <div *ngIf="f['draftType'].errors.required">Draft Type is required</div>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="f['optMatches'].value && f['gameSize'].value && f['lineupStyle'].value && f['draftSpeed'].value"> -->
+  <div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="whenToDraft">When To Draft<span class="text-danger">*</span></label>
+      <div class="col-md-9">
+        <select class="form-control" formControlName="whenToDraft" (change)="initDraftDateTimeField($event)">
+          <option value="">Select Draft Time</option>
+          <option value="1">When Filled</option>
+          <!-- <option value="2">Scheduled (Select Time)</option> -->
+        </select>
+        <div *ngIf="submitted && f['whenToDraft'].errors" class="text-danger">
+          <div *ngIf="f['whenToDraft'].errors.required">Draft Time is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" id="draft-date-label" for="projectedDraftingEndDate">Projected Drafting End
+        Date<span class="text-danger">*</span></label>
+      <div class="col-md-9">
+        <span class="text-muted"
+          *ngIf="formError.projectedDraftingEndDate == '' && f['projectedDraftingEndDate'].value == ''">Projected
+          Drafting Date
+          will appear here</span>
+        <div class="alert alert-danger" role="alert">
+          Contest will be automatically <strong>CANCELLED</strong> if drafting of all <strong>{{f['gameSize'].value}}
+            Users</strong>
+          is not completed
+          within
+          the below Projected Drafting End Date.
+        </div>
+        <span class="text-muted"
+          *ngIf="formError.projectedDraftingEndDate != '' && f['projectedDraftingEndDate'].value != '' ">{{f['projectedDraftingEndDate'].value | date: 'fullDate'}}</span>
+        <!-- <div class="col-md-6">
+        <input *ngIf="showDraftDateField" (bsValueChange)="validateDraftDateTime($event)" [(ngModel)]="draftDate"
+          type="text" id="draftDate" style="cursor: pointer;" formControlName="draftDate" class="form-control"
+          placeholder="Select dates" #dp="bsDatepicker" bsDatepicker [minDate]="draftMinDate" [maxDate]="draftMaxDate"
+          readonly
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false, adaptivePosition: true }">-->
+        <span *ngIf="formError.projectedDraftingEndDate != ''"
+          class="text-danger">{{formError.projectedDraftingEndDate}}</span>
+        <div *ngIf="submitted && f['projectedDraftingEndDate'].errors" class="text-danger">
+          <div *ngIf="f['projectedDraftingEndDate'].errors.required">Draft Date is required</div>
+        </div>
+      </div>
+      <!-- <div class="col-md-3" *ngIf="showDraftDateField">
+        <timepicker [(ngModel)]="draftTime" [ngModelOptions]="{standalone: true}" [showMeridian]="false">
+        </timepicker>
+      </div> -->
+    </div>
+  </div>
+</div>

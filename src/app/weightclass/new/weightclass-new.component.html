@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="contestForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Create New Weight Class</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Name<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="name" placeholder="Name">
+              <div *ngIf="submitted && f['name'].errors" class="text-danger">
+                <div *ngIf="f['name'].errors.required">Name is required</div>
+                <div *ngIf="f['name'].errors.minlength">Name must have more than 2 characters
+                </div>
+                <div *ngIf="f['name'].errors.maxlength">Name must have less than 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Min Weight<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" appNumeric numericType="number" formControlName="minWeight" placeholder="Min weight">
+              <div *ngIf="submitted && f['minWeight'].errors" class="text-danger">
+                <div *ngIf="f['minWeight'].errors.required">Min weight is required</div>
+                <div *ngIf="f['minWeight'].errors.minlength">Min weight should except only 4 digits
+                </div>
+                <div *ngIf="f['minWeight'].errors.maxlength">Min weight should except only 4 digits
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Max Weight<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control"  appNumeric numericType="number" formControlName="maxWeight" placeholder="Max weight">
+              <div *ngIf="submitted && f['maxWeight'].errors" class="text-danger">
+                <div *ngIf="f['maxWeight'].errors.required">Max weight is required</div>
+                <div *ngIf="f['maxWeight'].errors.minlength">Max weight should except only 4 digits
+                </div>
+                <div *ngIf="f['maxWeight'].errors.maxlength">Max weight should except only 4 digits
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

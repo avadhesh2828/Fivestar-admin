@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['seasons_year']" placeholder="Select a Season" name="season">
+                <option value="-1">Select a Season Year</option>
+                <option *ngFor="let seasonsy of AllseasonYear" [value]="seasonsy.season_year">
+                 {{seasonsy.season_year}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-1">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                Filter</button>&nbsp;
+            </span>
+
+          </div>
+
+          <div class="col-12 col-sm-2">
+            <span class="input-group-prepend">
+              <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+            </span>
+
+          </div>
+          <div class="col-12 col-sm-2">
+             <a class="btn back-btn" routerLink="/leagues"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">All Seasons</h1>
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalSeasons}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Season Unique Id</th>
+              <th>Season Year</th>
+              <th>Season Start Date</th>
+              <th>Season End Date</th>
+              <th>Created Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="10" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !seasonsList">
+              <td colspan="10">Loading...</td>
+            </tr>
+            <tr *ngIf="seasonsList && !(seasonsList.length>0)">
+              <td colspan="10" class="text-center">No Data Found</td>
+            </tr>
+            <tr *ngFor="let season of seasonsList; let seasonlistIndex = index">
+              <td>{{ season.season_id}}</td>
+              <td>{{ season.season_year || "-" }}</td>
+              <td> {{ formatDateTimeZone(season.season_start_date) | date: dateFormatString }} </td>
+              <td> {{ formatDateTimeZone(season.season_end_date) | date: dateFormatString }}</td>
+              <td> {{ formatDateTimeZone(season.created_date) | date: dateFormatString }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalSeasons > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

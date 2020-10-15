@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Match Stats</h1>
+          <a class="btn back-btn" routerLink="/matches"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              There was an error
+            </div>
+            <div *ngIf="!error && !matchData">Loading...</div>
+            <div *ngIf="matchData" class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="font-weight-bold text-primary title">{{ matchData.league_name }} -
+                  {{matchData.league_country}}
+                </h6>
+                <b class="scheduled-date">Scheduled At:
+                  {{ formatDate(matchData.scheduled_date_time) | date:'MMMM d, y, h:mm:ss a' }}</b>
+              </div>
+              <div class="card-body">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <ng-container *ngFor="let oddType of odds | keyvalue : tableOrder">
+                      <div *ngIf="oddType.value.length" class="col-12 col-sm-4">
+                        <table class="table table-bordered team-data">
+                          <tr>
+                            <th *ngIf="oddType.key === 'home'; else notHome" colspan="2"
+                              [ngClass]="matchData?.match_winner?.team_feed_id === oddType.value[0].team_id ? 'win' : ''">
+                              Home Team - {{matchData.home_team_name}} <br />
+                              <ng-container *ngIf="matchData.sport_id === '2'; else notCricketHome">
+                                <span *ngIf="matchData?.match_result">
+                                  RUNS/WICKETS -
+                                  {{matchData.match_result[this.cricketResultIndex.home].runs}}/{{matchData.match_result[this.cricketResultIndex.home].wickets}}
+                                  (OVERS - {{matchData.match_result[this.cricketResultIndex.home].overs}})
+                                </span>
+                              </ng-container>
+                              <ng-template #notCricketHome>
+                                <span *ngIf="matchData?.match_result">
+                                  GOALS - {{matchData.match_result.home_score}}
+                                </span>
+                              </ng-template>
+                            </th>
+                            <ng-template #notHome>
+                              <th *ngIf="oddType.key === 'common'; else notCommon" colspan="2">Common</th>
+                            </ng-template>
+                            <ng-template #notCommon>
+                              <th colspan="2"
+                                [ngClass]="matchData?.match_winner?.team_feed_id === oddType.value[0].team_id ? 'win' : ''">
+                                Away Team - {{matchData.away_team_name}} <br />
+                                <ng-container *ngIf="matchData.sport_id === '2'; else notCricketAway">
+                                  <span *ngIf="matchData?.match_result">
+                                    RUNS/WICKETS -
+                                    {{matchData.match_result[this.cricketResultIndex.away].runs}}/{{matchData.match_result[this.cricketResultIndex.away].wickets}}
+                                    (OVERS - {{matchData.match_result[this.cricketResultIndex.away].overs}})
+                                  </span>
+                                </ng-container>
+                                <ng-template #notCricketAway>
+                                  <span *ngIf="matchData?.match_result">
+                                    GOALS - {{matchData.match_result.away_score}}
+                                  </span>
+                                </ng-template>
+                              </th>
+                            </ng-template>
+                          </tr>
+                          <ng-container *ngFor="let odd of oddType.value">
+                            <tr>
+                              <td rowspan="2" [ngClass]="odd.result === '1' ? 'win' : ''">{{odd.market_name}}
+                                <i *ngIf="odd.result === '1'" class="icon-badge"></i>
+                              </td>
+                              <td>Digital Odd: {{odd.digital_odd}}</td>
+                            </tr>
+                            <tr>
+                              <td>Calculated Point: {{odd.calculated_point}}</td>
+                            </tr>
+                          </ng-container>
+                        </table>
+                      </div>
+                    </ng-container>
+                    <p *ngIf="!odds.home.length && !odds.away.length && !odds.common.length">There are no stats for this
+                      match {{odds.home}}</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Fighter Detail</h1>
+          <a class="btn back-btn" routerLink="/players"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              There was an error
+            </div>
+            <div *ngIf="!error && !player">Loading...</div>
+            <div *ngIf="player" class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{ player.first_name | titlecase }}
+                  {{ player.last_name | titlecase }}
+                  <span class="badge"
+                    [ngClass]="{'badge-success': (player.status == 1), 'badge-secondary': (player.status == 0), 'badge-danger': (player.status > 1)}">{{playerStatus[player.status]
+                  }}</span>
+                </h6>
+              </div>
+              <div class="card-body player-detail">
+                <div *ngIf="!player.player_unique_id" class="text-danger"><b>Player Details not found</b></div>
+                <div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Player Unique Id</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.player_unique_id; else notAvailable">
+                          {{player.player_unique_id || '-'}}</div>
+                      </div>
+                      <!-- <div class="row">
+                              <div class="col-12 col-sm-3"><b>League Name</b></div>
+                              <div class="col-12 col-sm-9" *ngIf="player.seasons_detail.league; else notAvailable">{{player.seasons_detail.league.league_name || '-'}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-3"><b>Season Year</b></div>
+                                <div class="col-12 col-sm-9" *ngIf="player.seasons_detail; else notAvailable">{{player.seasons_detail.season_year || '-'}}</div>
+                            </div> -->
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Nick Name</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.nick_name; else notAvailable">
+                          {{player.nick_name || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Team Name</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.team_name; else notAvailable">
+                          {{player.team_name || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Promotion</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.promotion.name; else notAvailable">
+                          {{player.promotion.name || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Fighter Status</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.promotion.name; else notAvailable">
+                          {{player.fighter_status.fighter_status_name || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Stance</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.stance; else notAvailable">{{player.stance || '-'}}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Gym</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.gym; else notAvailable">{{player.gym || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>W-L-D</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.win; else notAvailable">
+                          {{player.win || '-'}}-{{player.loss || '-'}}-{{player.draw || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>(T)KO</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.ko; else notAvailable">{{player.ko || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Submission</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.sub; else notAvailable">{{player.sub || '-'}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Height</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.height_feet; else notAvailable">
+                          {{player.height_feet || '-'}}.{{player.height_inch || '-'}} ft</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Weight</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.weight; else notAvailable">{{player.weight || '-'}}
+                          lb</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Injury Status</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.injury_status; else notAvailable">
+                          {{player.injury_status || '-'}}</div>
+                      </div>
+                      <!-- <div class="row">
+                                <div class="col-12 col-sm-3"><b>Salary</b></div>
+                                <div class="col-12 col-sm-9" *ngIf="player.salary; else notAvailable">{{currency_code}}{{player.salary || '-'}}</div>
+                            </div>                        -->
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Date Of Birth</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.dob; else notAvailable">
+                          {{formatDateTimeZone(player.dob)|date}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-3"><b>Bio</b></div>
+                        <div class="col-12 col-sm-9" *ngIf="player.bio; else notAvailable">{{player.bio|| '-'}}</div>
+                      </div>
+                      <!-- <div class="row">
+                              <div class="col-12 col-sm-3"><b>Player Image</b></div>
+                              
+                          </div> -->
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="col-12 col-sm-9" *ngIf="player.player_image; else notAvailable">
+                        <img [src]="imgURL" height="100" *ngIf="imgURL">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #notAvailable>
+                  <div class="col-12 col-sm-9 font-italic text-danger">Not Available</div>
+                </ng-template>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loader></app-loader>

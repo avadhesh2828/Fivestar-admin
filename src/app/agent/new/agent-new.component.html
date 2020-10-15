@@ -1,0 +1,253 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="newAgentForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Create New Agent</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Agent Name<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="agentName">
+              <div *ngIf="submitted && f['agentName'].errors" class="text-danger">
+                <div *ngIf="f['agentName'].errors.required">Agent Name is required</div>
+                <div *ngIf="f['agentName'].errors.minlength">Agent Name must have greater than 3 characters</div>
+                <div *ngIf="f['agentName'].errors.maxlength">Agent Name must have less than 50 characters</div>
+                <div *ngIf="f['agentName'].errors.pattern"> Agent Name must begin with a letter and must only contain alphanumeric characters or
+                    _(underscore)</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="email">Email<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text"  class="form-control" id="email" formControlName="email"
+                 />
+              <div *ngIf="submitted && f['email'].errors" class="text-danger">
+                <div *ngIf="f['email'].errors.required">Email is required</div>
+                <div *ngIf="f['email'].errors.pattern">Email address must be valid</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="phone_number">Mobile<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text"  appNumeric numericType='number' class="form-control" id="phone_number" formControlName="phone_number"
+                 />
+              <div *ngIf="submitted && f['phone_number'].errors" class="text-danger">
+                <div *ngIf="f['phone_number'].errors.required">Phone Number is required</div>
+                <div
+                  *ngIf="f['phone_number'].errors.pattern || f['phone_number'].errors.minlength|| f['phone_number'].errors.maxlength">
+                  Phone Number must be valid
+            </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="website">Website</label>
+            <div class="col-md-9">
+              <input type="text"  class="form-control" id="website" formControlName="website"
+                 />
+              <div *ngIf="submitted && f['website'].errors" class="text-danger">
+                  <div *ngIf="f['website'].errors.pattern">Website name must be valid</div>
+                  <div *ngIf="f['website'].errors.maxlength">Website Name must have less than 100 characters</div>
+              </div>
+            </div>
+            
+
+          </div>
+          <!--street address -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="address">Address<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="address" formControlName="address"
+                 /> 
+              <div *ngIf="submitted && f['address'].errors" class="text-danger">
+                <div *ngIf="f['address'].errors.required">Address is required </div>
+                <div *ngIf="f['address'].errors.minlength">Address must have greater than 3 characters</div>
+                <div *ngIf="f['address'].errors.maxlength">Address must have less than 120 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="country">Country<span class="text-danger">*</span></label>
+              <div class="col-md-4">
+                <select class="form-control" (change)="getStateList()" placeholder="Select a country" formControlName="country">
+                  <option value="-1">Select a country</option>
+                  <option *ngFor="let country of countryList" [value]="country.master_country_id">
+                    {{country.country_name}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['country'].errors" class="text-danger">
+                  <div *ngIf="f['country'].errors.required">Select Country Name</div>
+                </div>
+              </div>
+               <label class="col-md-1 col-form-label" for="state">State<span class="text-danger">*</span></label>
+              <div class="col-md-4">
+                <select class="form-control" placeholder="Select a State"
+                   formControlName="state">
+                  <option value="">Select a State</option>
+                  <option *ngFor="let state of stateList" [value]="state.master_state_id">
+                    {{state.name}}
+                  </option>
+                </select> 
+                <div *ngIf="submitted && f['state'].errors" class="text-danger">
+                  <div *ngIf="f['state'].errors.required">Select State Name</div>
+                </div>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="city">City<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="city" formControlName="city"/> 
+              <div *ngIf="submitted && f['city'].errors" class="text-danger">
+                <div *ngIf="f['city'].errors.required">City Name is required </div>
+                <div *ngIf="f['city'].errors.minlength">City Name must have greater than 3 characters</div>
+                <div *ngIf="f['city'].errors.maxlength">City Name must have less than 30 characters</div>
+                <div *ngIf="f['city'].errors.pattern">City Name must contain only alphabets</div>                
+              </div>
+            </div>
+             <label class="col-md-1 col-form-label" for="pincode">Pincode<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="pincode" formControlName="pincode"/> 
+              <div *ngIf="submitted && f['pincode'].errors" class="text-danger">
+                <div *ngIf="f['pincode'].errors.required">PinCode Name is required </div>
+                <div *ngIf="f['pincode'].errors.minlength">PinCode Name must have greater than 3 characters</div>
+                <div *ngIf="f['pincode'].errors.maxlength">PinCode Name must have less than 30 characters</div>                
+              </div>
+            </div>
+          </div>
+          <!--same as business address row -->
+          <div class="form-group row businness_address_hide business_address">
+            <label class="col-md-3 col-form-label" for="business_address">Business Address</label>  
+            <div class="col-md-9">
+              <input type="checkbox" class="col-md-1" formControlName="checkadd" id="checkadd" (change)="checkaddress($event)">
+              <label class="col-md-3 col-form-label" for="business_address">Same As Above Address</label>
+            </div>
+          </div>
+          <!-- business address -->
+          <div class="form-group row businness_address_hide">
+              <label class="col-md-3 col-form-label" for="business_address">Address<span class="text-danger">*</span></label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="business_address" formControlName="business_address"
+                   /> 
+                <div *ngIf="submitted && f['business_address'].errors" class="text-danger">
+                <div *ngIf="f['business_address'].errors.required">Business Address is required </div>
+                <div *ngIf="f['business_address'].errors.minlength">Address must have greater than 3 characters</div>
+                <div *ngIf="f['business_address'].errors.maxlength">Address must have less than 120 characters</div>
+              </div>
+              </div>
+          </div>
+           <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="business_country">Country<span class="text-danger">*</span></label>
+              <div class="col-md-4">
+                <select class="form-control" (change)="getStateList()" placeholder="Select a country" formControlName="business_country">
+                  <option value="-1">Select a country</option>
+                  <option *ngFor="let country of countryList" [value]="country.master_country_id">
+                    {{country.country_name}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['business_country'].errors" class="text-danger">
+                  <div *ngIf="f['business_country'].errors.required">Select Country Name</div>
+                </div>
+              </div>
+               <label class="col-md-1 col-form-label" for="business_state">State<span class="text-danger">*</span></label>
+              <div class="col-md-4">
+                <select class="form-control" placeholder="Select a State"
+                   formControlName="business_state">
+                  <option value="">Select a State</option>
+                  <option *ngFor="let state of stateList" [value]="state.master_state_id">
+                    {{state.name}}
+                  </option>
+                </select> 
+                <div *ngIf="submitted && f['business_state'].errors" class="text-danger">
+                  <div *ngIf="f['business_state'].errors.required">Select State Name</div>
+                </div>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="business_city">City<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="business_city" formControlName="business_city"/> 
+              <div *ngIf="submitted && f['business_city'].errors" class="text-danger">
+                <div *ngIf="f['business_city'].errors.required">City Name is required </div>
+                <div *ngIf="f['business_city'].errors.minlength">City must have greater than 3 characters</div>
+                <div *ngIf="f['business_city'].errors.maxlength">City must have less than 30 characters</div>
+                <div *ngIf="f['business_city'].errors.pattern">City Name must contain only alphabets</div>
+              </div>
+            </div>
+             <label class="col-md-1 col-form-label" for="business_pincode">Pincode<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="business_pincode" formControlName="business_pincode"/> 
+              <div *ngIf="submitted && f['business_pincode'].errors" class="text-danger">
+                <div *ngIf="f['business_pincode'].errors.required">PinCode Name is required </div>
+                <div *ngIf="f['business_pincode'].errors.minlength">PinCode must have greater than 3 characters</div>
+                <div *ngIf="f['business_pincode'].errors.maxlength">PinCode must have less than 30 characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="commission_type">Commission Type<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <select class="form-control"  placeholder="Select Id Proof" name="commission_type" formControlName="commission_type">
+                <option value="">Select Commission Type</option>
+                <option *ngFor="let type of commissionType | keyvalue" [value]="type.key">
+                  {{type.value}}
+                </option>
+              </select>
+              <div *ngIf="submitted && f['commission_type'].errors" class="text-danger">
+                <div *ngIf="f['commission_type'].errors.required">commission type is required </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="commission_amount">Commission Amount<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="number" min="1" max="9999999999" class="form-control" id="commission_amount" formControlName="commission_amount" (focusout)="checkcommissionAmount($event)"/>
+              <span *ngIf="formError" class="text-danger">{{formError}}</span>
+              <div *ngIf="submitted && f['commission_amount'].errors" class="text-danger">
+                <div *ngIf="f['commission_amount'].errors.required">commission amount is required </div>
+              </div>
+            </div>
+          </div>
+           <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="kyc_type">Goverment Proof Type<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <select class="form-control"  placeholder="Select Id Proof" name="kyc_type" formControlName="kyc_type">
+                <option value="">Select Id Proof Type</option>
+                <option *ngFor="let type of kycType | keyvalue" [value]="type.key">
+                  {{type.value}}
+                </option>
+              </select>
+              <div *ngIf="submitted && f['kyc_type'].errors" class="text-danger">
+                <div *ngIf="f['kyc_type'].errors.required">ID Proof type is required </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="website">Agent Goverment Proof Image<span class="text-danger">*</span></label>
+              <div class="col-md-9">
+                <input #file type="file" formControlName="agent_proof_image" accept='image/*' (change)="preview(file.files)"/>
+                <br/><br/>
+                  <div class="col-md-6">
+                    <img [src]="imgURL" height="200" width="500" *ngIf="imgURL">
+                  </div>
+                    <div *ngIf="submitted && f['agent_proof_image'].errors" class="text-danger">
+                      <div *ngIf="f['agent_proof_image'].errors.required"> Id Proof Image is required</div>
+                    </div>
+                    <div *ngIf="imgErrorMsg" class="text-danger">{{imgErrorMsg}}</div>
+              </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

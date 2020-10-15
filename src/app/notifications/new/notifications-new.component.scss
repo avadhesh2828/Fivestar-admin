@@ -1,0 +1,17 @@
+.custom-field {
+  margin-bottom: 10px;
+}
+
+.selectedUsers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selectedUsers div {
+  border: 1px solid #2f353a;
+  padding: 5px;
+  border-radius: 2px;
+  margin: 5px 5px 0 0;
+  background-color: #2f353a;
+  color: white;
+}

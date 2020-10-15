@@ -1,0 +1,197 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <!-- <div class="col-12 col-sm-3">
+            <div class="input-group">
+
+              <select class="form-control" [(ngModel)]="params['team_id']" placeholder="Select Team" name="team">
+                <option value="-1">All Teams(all)</option>
+                <option *ngFor="let team of allTeams" [value]="team.team_id">
+                  {{team.team_name+'('+team.team_abbr+')'}}
+                </option>
+              </select>
+            </div>
+          </div> -->
+          <!-- <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['position']" placeholder="Select a status" name="status">
+                <option value="All">All Positions(all)</option>
+                <option *ngFor="let position of allPositions" [value]="position.position_abbr">
+                  {{position.position}}
+                </option>
+              </select>
+            </div>
+          </div> -->
+          <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
+                <option value="-1">Select a status</option>
+                <option *ngFor="let status of playerStatus | keyvalue" [value]="status.key">
+                  {{status.value}}
+                </option>
+              </select>
+            </div>
+            
+          </div>
+          <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['promotion']" placeholder="Select a promotion" name="promotion">
+                <option value="-1">Select a promotion</option>
+                <option *ngFor="let promotion of promotion" [value]="promotion.id">
+                  {{promotion.name}}
+                </option>
+              </select>
+            </div>
+            
+          </div>
+
+          <div class="col-12 col-sm-3">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                Filter</button>&nbsp;
+            </span>
+
+          </div>
+        </div>
+        <form class="row mt-1">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by fighter name"
+                (ngModelChange)="search()" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Fighters
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/players/create']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalPlayers}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Fighter Unique Id</th>   
+              <th>Promotion</th>             
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Team Name</th>
+              <th>Nick Name</th>
+              <th>Injury Status</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="11" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !playerList">
+              <td colspan="11">Loading...</td>
+            </tr>
+            <tr *ngIf="playerList && !(playerList.length>0)">
+              <td colspan="11" class="text-center">No Fighter found</td>
+            </tr>
+            <tr *ngFor="let player of playerList; let playerIndex = index">
+              <td>{{ player.player_unique_id || "-" }} </td>
+              <td>{{ player.promotion.name || "-" }} </td>
+              <td>{{ player.first_name || "-" | titlecase }}</td>
+              <td>{{ player.last_name || "-" | titlecase }}</td>
+              <td>{{ player.team_name || "-" | titlecase }} </td>
+              <td>{{ player.nick_name || "-"  }}</td>
+            <td style="max-width:100px">
+              <input type="text" id="dates" name="injuryStatus" [(ngModel)]="player.injury_status"
+                class="form-control" placeholder="No Injury" [disabled]="editPlayerId !== player.player_unique_id">
+            </td>                    
+              <td>
+                <ui-switch name="status" size="small" [(ngModel)]="+player.status" (change)="updateStatus($event, player.player_unique_id)"
+                  ></ui-switch>
+              </td>
+              <td>
+
+                <a routerLink="/players/{{player.player_unique_id}}"><i class="icon-list"></i> Details</a>
+                &nbsp;
+
+                <a href="javascript:void(0);" (click)="setInjuryStatusEditable(player.player_unique_id)"
+                  [hidden]="editPlayerId === player.player_unique_id">
+                  <i class="fa fa-edit"></i>&nbsp;Edit Injury
+                </a>
+                <a href="javascript:void(0);" (click)="saveInjuryStatus(player)"
+                  [hidden]="editPlayerId !== player.player_unique_id">
+                  <i class="fa fa-save"></i>&nbsp;Save
+                </a>
+                <a routerLink="/players/edit/player/details/{{player.player_unique_id}}"><i class="fa fa-edit"></i> Edit</a>
+                &nbsp;
+                <a href="javascript:void(0);" (click)="deleteConfirm(player)"><i class="fa fa-trash"></i> Delete</a> &nbsp;
+
+                <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
+                    player_unique_id: player.player_unique_id,
+                    status: player.status,
+										player_id: player.player_id,
+                    buy_rate:player.buy_rate,
+                    sell_rate:player.sell_rate,
+                    playerIndex: playerIndex
+                  })"><i class="fa fa-edit"></i>Edit</a> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalPlayers > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Start-->
+<div class="modal fade" id="deleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentPlayerData">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{currentPlayerData.first_name | titlecase}} {{currentPlayerData.last_name | titlecase}}
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete();">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Delete Model End -->
+
+
+<app-edit-player [player]="currentPlayer" (editedStatus)="onStatusEdit($event)"></app-edit-player>
+<app-loader></app-loader>
+
+
+

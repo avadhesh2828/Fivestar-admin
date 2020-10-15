@@ -1,0 +1,250 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <form class="form-horizontal" [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+          <div class="card-header">
+            <strong>Create New Fighter</strong>
+          </div>
+          <!-- <div class="card-header d-sm-flex align-items-center justify-content-between mb-4">
+            <strong>Create New Fighter</strong>
+            <a class="btn back-btn" routerLink="/players"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="sports">First Name<span class="text-danger">*</span></label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" formControlName="first_name" placeholder="First Name">
+                <div *ngIf="submitted && f['first_name'].errors" class="text-danger">
+                  <div *ngIf="f['first_name'].errors.required">First Name is required</div>
+                  <div *ngIf="f['first_name'].errors.minlength">First Name must have greater than 1 character
+                  </div>
+                  <div *ngIf="f['first_name'].errors.maxlength">First Name must have less than 30 characters
+                  </div>
+                  <div *ngIf="f['first_name'].errors.pattern">Please enter a valid string
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Last Name<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="last_name" placeholder="Last Name">
+                  <div *ngIf="submitted && f['last_name'].errors" class="text-danger">
+                    <div *ngIf="f['last_name'].errors.required">Last Name is required</div>
+                    <div *ngIf="f['last_name'].errors.minlength">Last Name must have greater than 4 characters
+                    </div>
+                    <div *ngIf="f['last_name'].errors.maxlength">Last Name must have less than 30 characters
+                    </div>
+                    <div *ngIf="f['last_name'].errors.pattern">Please enter a valid string</div>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Nick Name</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="nick_name" placeholder="Nick Name">
+                  <div *ngIf="submitted && f['nick_name'].errors" class="text-danger">
+                    <div *ngIf="f['nick_name'].errors.pattern">Please enter a valid string</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Gender<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <select class="form-control"  placeholder="Select Gender" name="gender" formControlName="gender">
+                    <option value="">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Prefer not to answer</option>
+                  </select>
+                  <div *ngIf="submitted && f['gender'].errors" class="text-danger">
+                    <div *ngIf="f['gender'].errors.required">Gender is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Select Promotion<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <select class="form-control" placeholder="Select Promotion" name="promotion_id"
+                  formControlName="promotion_id">
+                  <option value="">Select Promotion</option>
+                  <option *ngFor="let promotion of promotion" [value]="promotion.id">
+                    {{promotion.name}}
+                  </option>
+                </select>
+                  <div *ngIf="submitted && f['promotion_id'].errors" class="text-danger">
+                    <div *ngIf="f['promotion_id'].errors.required">Promotion is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Select Status<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <select class="form-control" placeholder="Select Status" name="fighterStatus"
+                  formControlName="fighterStatus">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of fighterStatus" [value]="status.fighter_status_id">
+                    {{status.fighter_status_name}}
+                  </option>
+                </select>
+                  <div *ngIf="submitted && f['fighterStatus'].errors" class="text-danger">
+                    <div *ngIf="f['fighterStatus'].errors.required">Status is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Team Name<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="team_name" placeholder="Team Name">
+                  <div *ngIf="submitted && f['team_name'].errors" class="text-danger">
+                    <div *ngIf="f['team_name'].errors.required">Team Name is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Stance<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="stance" placeholder="Stance">
+                  <div *ngIf="submitted && f['stance'].errors" class="text-danger">
+                    <div *ngIf="f['stance'].errors.required">Stance is required</div>
+                    <div *ngIf="f['stance'].errors.minlength">Stance must have greater than 4 characters
+                    </div>
+                    <div *ngIf="f['stance'].errors.maxlength">Stance must have less than 30 characters
+                    </div>
+                    <div *ngIf="f['stance'].errors.pattern">Please enter a valid string</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Gym<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="gym" placeholder="Gym"> 
+                  <div *ngIf="submitted && f['gym'].errors" class="text-danger">
+                    <div *ngIf="f['gym'].errors.required">Gym is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">W-L-D<span class="text-danger">*</span></label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="win" placeholder="Win" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['win'].errors" class="text-danger">
+                    <div *ngIf="f['win'].errors.required">Career stats win is required</div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="loss" placeholder="Loss" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['loss'].errors" class="text-danger">
+                    <div *ngIf="f['loss'].errors.required">Career stats loss is required</div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="draw" placeholder="Draw" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['draw'].errors" class="text-danger">
+                    <div *ngIf="f['draw'].errors.required">Career stats draw is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">(T)KO</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="ko" placeholder="(T)KO" appNumeric numericType="number">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Submission</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="submission" placeholder="Submission" appNumeric numericType="number">
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Weight(lbs)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="weight" placeholder="Weight" min="0" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['weight'].errors" class="text-danger">
+                    <div *ngIf="f['weight'].errors.required">Weight is required</div>
+                    <div *ngIf="f['weight'].errors.minLength || f['weight'].errors.maxLength">Entry Fee must be between $10 to $10,000
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Height(ft)<span class="text-danger">*</span></label>
+                <div class="col-md-5">
+                  <input type="text" class="form-control" formControlName="height_feet" placeholder="Feet" min="0" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['height_feet'].errors" class="text-danger">
+                    <div *ngIf="f['height_feet'].errors.required">Height is required</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="height_inch" placeholder="Inch" min="0" appNumeric numericType="number">
+                  <div *ngIf="submitted && f['height_inch'].errors" class="text-danger">
+                    <div *ngIf="f['height_inch'].errors.required">Height is required</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="sports">Date of Birth<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                  <input type="text" id="dob" style="cursor: pointer;"
+                    formControlName="dob" class="form-control" placeholder="Select date" #dp="bsDatepicker" bsDatepicker
+                     readonly [maxDate]="minDate"
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false, adaptivePosition: true }">
+                    <div *ngIf="submitted && f['dob'].errors" class="text-danger">
+                      <div *ngIf="f['dob'].errors.required">Date of birth is required</div>
+                    </div>
+                </div>
+              </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="website">Profile Image<span class="text-danger">*</span> <span *ngIf="currentPosition">{{currentPosition}}</span></label>
+                <div class="col-md-9">
+                  <input #file type="file" formControlName="player_image" name="player_image" accept='image/*' [disabled]="buttonDisabled" (change)="preview(file.files)"/><br/><br/>
+                    <div class="col-md-6">
+                      
+                      <img [src]="imgURL" height="100" width="100" *ngIf="imgURL">
+                    </div>
+                      <div *ngIf="submitted && f['player_image'].errors" class="text-danger">
+                        <div *ngIf="f['player_image'].errors.required"> Fighter Image is required</div>
+                      </div>
+                      <div *ngIf="imgErrorMsg" class="text-danger">{{imgErrorMsg}}</div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="sports">Bio</label>
+              <div class="col-md-9">
+                <textarea class="form-control" formControlName="bio" placeholder="Bio"></textarea>
+                <div *ngIf="submitted && f['bio'].errors" class="text-danger">
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+              Submit</button>
+            &nbsp;
+            <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+              Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

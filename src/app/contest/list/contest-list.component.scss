@@ -1,0 +1,47 @@
+.competitions-list {
+  overflow-y: scroll;
+}
+
+.cancel {
+  padding: 0rem 0.35rem;
+  font-size: 1.0rem;
+}
+
+.select-status select {
+  height: 45px;
+}
+
+.entry-fees {
+  padding-top: 12px;
+  font-weight: bold;
+}
+
+.custom-filter {
+  position: relative;
+  top: -10px;
+}
+
+.filter-btn button{
+  width: 120px;
+  margin-top: 10px;
+}
+::ng-deep {
+   .custom-filter .ng5-slider .ng5-slider-pointer:after {
+    top: 6px !important;
+    left: 6px !important;
+  }
+
+   .custom-filter .ng5-slider .ng5-slider-pointer {
+    width: 20px !important;
+    height: 20px !important;
+    top: -8px;
+  }
+
+  .custom-filter .ng5-slider .ng5-slider-pointer:focus {
+    outline: none !important;
+  }
+
+  .custom-filter .ng5-slider .ng5-slider-bubble {
+    font-size: 14px !important;
+  }
+}

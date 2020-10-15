@@ -1,0 +1,53 @@
+<div [formGroup]="parentFormGroup">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="entryFees">Entry Fees<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <input (blur)="calculatePrizePool()" class="form-control" formControlName="entryFees" type="text" appNumeric numericType="number"/>
+      <div *ngIf="submitted && f['entryFees'].errors" class="text-danger">
+        <div *ngIf="f['entryFees'].errors.required">Entry Fee is required</div>
+        <div *ngIf="f['entryFees'].errors.min || f['entryFees'].errors.max">Entry Fee must be between $10 to $10,000
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="gameSize">Contest Size<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <input (blur)="calculatePrizePool()" class="form-control" formControlName="gameSize" type="text" appNumeric numericType="number" />
+      <div *ngIf="submitted && f['gameSize'].errors" class="text-danger">
+        <div *ngIf="f['gameSize'].errors.required">Game Size is required</div>
+        <div *ngIf="f['gameSize'].errors.min || f['gameSize'].errors.max">Game Size must be between 5 to 100
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="prizes.length > 0">
+    <label class="col-md-3 col-form-label" for="prizePayout">Prize Payout<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <select (change)="calculatePrizePool()" class="form-control" formControlName="prizePayout">
+        <option value="">Select Prize Payout</option>
+        <option *ngFor="let prize of prizes" value="{{prize.master_prize_id}}">{{prize.prize_name}}
+        </option>
+      </select>
+      <div *ngIf="submitted && f['prizePayout'].errors" class="text-danger">
+        <div *ngIf="f['prizePayout'].errors.required">Prize Payout is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="jackpotPrize">Prize Pool<span class="text-danger">*</span></label>
+    <div class="col-md-9">
+      ${{prizePool}}
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="prizeStructure">Prize Structure<span
+        class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <p *ngFor="let composition of prizeComposition">{{composition}}</p>
+    </div>
+  </div>
+</div>

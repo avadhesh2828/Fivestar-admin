@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="newNewsForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Edit News</strong>
+        </div>
+        <div class="card-body" *ngIf="news">
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Title<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="title" placeholder="News Title"
+                [(ngModel)]="news.news_title">
+              <div *ngIf="submitted && f['title'].errors" class="text-danger">
+                <div *ngIf="f['title'].errors.required">News Title is required</div>
+                <div *ngIf="f['title'].errors.minlength">News Title must have greater than 4 characters
+                </div>
+                <div *ngIf="f['title'].errors.maxlength">News Title must have less than 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="target_url">Featured<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="radio" [checked]='isFeatured == 1' formControlName="isFeatured" value="1"> Yes
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" [checked]='isFeatured == 0' formControlName="isFeatured" value="0"> No
+              <div *ngIf="submitted && f['isFeatured'].errors" class="text-danger">
+                <div *ngIf="f['isFeatured'].errors.required">Featured is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" id="start-date-label" for="publicationDate">Publication Date<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" id="publicationDate" style="cursor: pointer;"
+                formControlName="publicationDate" [(ngModel)]="publicationDate" class="form-control" placeholder="Select date" #dp="bsDatepicker" bsDatepicker readonly
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:true, adaptivePosition: true }">
+              <div *ngIf="submitted && f['publicationDate'].errors" class="text-danger">
+                <div *ngIf="f['publicationDate'].errors.required">Publication Date is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="sports">Video URL</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" [(ngModel)]="news.news_video_url" formControlName="videoURL" placeholder="News Video URL">
+              <div *ngIf="submitted && f['videoURL'].errors" class="text-danger">
+                <!-- <div *ngIf="f['videoURL'].errors.required">First Name is required</div> -->
+                <div *ngIf="f['videoURL'].errors.pattern">Please enter a valid URL
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="target_url">Description<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+
+              <textarea class="form-control" id="newsDescription" [(ngModel)]="news.news_description"
+                formControlName="newsDescription" placeholder="Description" rows="3"></textarea>
+
+              <div *ngIf="submitted && f['newsDescription'].errors" class="text-danger">
+                <div *ngIf="f['newsDescription'].errors.required">Description is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="website">Upload Image<span class="text-danger">*</span> <span
+                *ngIf="currentPosition">{{currentPosition}}</span></label>
+            <div class="col-md-9">
+              <input #file type="file" formControlName="adv_image" name="adv_image" accept='image/*'
+                [disabled]="buttonDisabled" (change)="preview(file.files)" /><br /><br />
+              <div class="col-md-6">
+                <div *ngIf="imgURL;else other_content">
+                  <img [src]="imgURL" height="100" width="200" *ngIf="imgURL">
+                </div>
+                <ng-template #other_content>
+                  <img *ngIf="oldImgURL" [src]="oldImgURL+'/'+news.news_cover_image" height="100" width="200" />
+                </ng-template>
+
+              </div>
+              <div *ngIf="submitted && f['adv_image'].errors" class="text-danger">
+                <div *ngIf="f['adv_image'].errors.required"> Image is required</div>
+              </div>
+              <div *ngIf="imgErrorMsg" class="text-danger">{{imgErrorMsg}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          &nbsp;
+          <a class="btn back-btn" routerLink="/news">
+            <button class="btn btn-sm btn-danger back-button" type="button"><i class="icon-arrow-left-circle"></i>
+              Back</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

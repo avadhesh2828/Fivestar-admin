@@ -1,0 +1,153 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12 col-sm-3">
+            <!-- <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['country']" placeholder="Select a country"
+                name="country">
+                <option value="-1">Select a country</option>
+                <option *ngFor="let country of countryList" [value]="country.master_country_id">
+                  {{country.country_name}}
+                </option>
+              </select>
+            </div> -->
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                  name="search_keyword" placeholder="Search by email, name"
+                  (ngModelChange)="search()"  autocomplete="off">
+              </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
+                <option value="-1">Select a status</option>
+                <option *ngFor="let status of userStatus | keyvalue" [value]="status.key">
+                  {{status.value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                Filter</button>&nbsp;
+                <a class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+                  Reset Filters</a>
+            </span>
+          </div>
+          <div class="col-6 col-sm-3">
+            <span class="input-group-prepend">
+                <a class="btn btn-warning" (click)="exportPDF();"><i class="fa fa-file-pdf-o"></i>
+                  Export PDF</a>
+                  <a class="btn btn-warning" (click)="exportExcel();"><i class="fa fa-file-excel-o"></i>
+                    Export CSV</a>
+            </span>
+          </div>
+        </div>
+        <form class="row mt-1">
+          <!-- <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by username, name, email"
+                (ngModelChange)="search()"  autocomplete="off">
+            </div>
+          </div> -->
+          <div class="col-12 col-sm-6">
+            <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-search"></i> Search</button>&nbsp; -->
+            <!-- <a class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</a> -->
+          </div>
+        </form>
+      </div>
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Users</h1>
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <!-- <th>Username</th> -->
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <!-- <th>Country</th>
+
+              <th>Balance ({{currency_code}})</th>
+              <th>Spend ({{currency_code}})</th> -->
+              <th>Last Login</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="9" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !userList">
+              <td colspan="9">Loading...</td>
+            </tr>
+            <tr *ngIf="userList && !(userList.length>0)">
+              <td colspan="9" class="text-center">No User found</td>
+            </tr>
+            <tr *ngFor="let user of userList; let userIndex = index">
+              <!-- <td>{{ user.user_name || "-" }} </td> -->
+              <td>{{ user.name || "-" | titlecase }}</td>
+              <td>{{ user.email || "-" }}</td>
+              <td>{{ user.phone_number || "-" }}</td>
+              <!-- <td>{{ user.email || "-" }}</td>
+              <td *ngIf="user.country_name;else nocountry">{{ user.country_name || "-"}} </td>
+              <ng-template #nocountry>
+                <td>-</td>
+              </ng-template>
+              <td>{{ (+user.balance) | roundOff }}</td>
+              <td>{{ user.spend | roundOff }}</td> -->
+              <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
+
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]
+                  }}</span>
+              </td>
+              <td>
+
+                <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
+                &nbsp;
+
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
+                    user_unique_id: user.user_unique_id,
+                    status: user.status,
+										user_id: user.user_id,
+										balance: user.balance,
+                    userIndex: userIndex
+                  })"><i class="fa fa-edit"></i>Edit</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalUsers > params.items_perpage">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-edit-user [user]="currentUser" (editedStatus)="onStatusEdit($event)"></app-edit-user>
+
+<app-loader></app-loader>

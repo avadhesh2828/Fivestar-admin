@@ -1,0 +1,281 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <!-- <div class="row">
+          <div class="col-12 col-sm-2">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['league_id']" name="league" (change)="searchFilter()">
+                <option value="-1">
+                  Select League
+                </option>
+                <option *ngFor="let league of allLeagues" [value]="league.league_id">
+                  {{league.league_abbr}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-2">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['team_id']" name="team" (change)="searchFilter()">
+                <option value="-1">
+                 All Team
+                </option>
+                <option *ngFor=" let team of allTeams" [value]="team.team_id">
+                  {{team.team_name+'('+team.team_abbr+')'}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-2">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['week']" name="week" (change)="searchFilter()">
+                <option value="-1">
+                  All Week
+                </option>
+                <option *ngFor="let week of allWeeks" [value]="week.match_week">
+                  {{week.match_week}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-2">
+            <div class="input-group">
+              <input type="text" id="dates" name="dates" class="form-control cursor-pointer"
+                placeholder="Select a date range" #dp="bsDaterangepicker" [(ngModel)]="params['dates']"
+                bsDaterangepicker readonly autocomplete="off" (bsValueChange)="searchFilter()"
+                [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false }">
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                Filter</button>&nbsp;
+              <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+                Reset Filters</button>
+            </span>
+
+          </div>
+        </div> -->
+      </div>
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Fights
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/matches/create']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+          <h4 class="mb-0 text-gray-800 pull-right">{{'Total Records : '+totalMatches}}</h4>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Fight ID</th>
+              <th>Combat Type</th>
+              <th>Blue Corner</th>
+              <th>Red Corner</th>
+              <th>Fight Day</th>
+              <!-- <th>Season</th> -->
+              <!-- <th>Result</th> -->
+              <!-- <th>Week</th> -->
+              <!-- <th>Status</th> -->
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="9" class="table-danger text-center">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !matchesList">
+              <td colspan="9">Loading...</td>
+            </tr>
+            <tr *ngFor="let match of matchesList">
+              <td>{{ match.match_unique_id }}</td>
+              <td>{{ match.combat_type_name }}</td>
+              <td>
+                <img *ngIf="match.home_fighter_player_image!=null" [src]="imgURL+'/'+match.home_fighter_player_image" width="40px;" />
+                <img *ngIf="match.home_fighter_player_image==null" src="assets/img/default_team_logo.png" width="25px;">
+                {{ match.home_fighter_first_name}} {{ match.home_fighter_last_name}}
+                <!-- {{ match.home + ' ('+ match.home_abbr +')' }} -->
+              </td>
+              <td>
+                <img *ngIf="match.away_fighter_player_image!=null" [src]="imgURL+'/'+match.away_fighter_player_image" width="40px;" />
+                <img *ngIf="match.away_fighter_player_image==null" src="assets/img/default_team_logo.png" width="25px;">
+                {{ match.away_fighter_first_name}} {{ match.away_fighter_last_name}}
+              </td>
+              <td>{{ formatDateTimeZone(match.scheduled_date_time) | date:dateFormatString }}</td>
+              <!-- <td>{{ match.season }}</td> -->
+              <!-- <td>
+                {{(match.result=='{}')? '-' : getJsonValueOfKey(match.result,'home') + ' : ' + getJsonValueOfKey(match.result,'away') }}
+              </td> -->
+              <!-- <td>{{ match.week }}</td> -->
+              <!-- <td>
+                <span class="badge" style="font-size:12px;"
+                  [ngClass]="{'badge-success': (match.status==='not started' || match.status==='Final'|| match.status==='final')}">
+                  {{(match.status==='not started' ||  match.status==='Not Started')?'Upcoming':((match.status==='Final' || match.status==='final')?'Completed':'')}}</span>
+              </td> -->
+              <td>
+                <a routerLink="/matches/{{match.match_unique_id}}/details"><i class="icon-list"></i> Details</a>&nbsp;
+                &nbsp;
+                <a routerLink="/matches/{{match.match_unique_id}}/edit"><i class="fa fa-edit"></i> Edit</a>&nbsp;
+                <a routerLink="/matches/{{match.match_unique_id}}/fight/result"><i class="icon-list"></i> Fight Result</a>&nbsp;
+                <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#addFightResultModal"  (click)="addFightResult({
+                  away_fighter_first_name: match.away_fighter_first_name,
+                  away_fighter_last_name: match.away_fighter_last_name,
+                  away_fighter_player_image: match.away_fighter_player_image,
+                  away_id: match.away_id,
+                  home_fighter_first_name: match.home_fighter_first_name,
+                  home_fighter_last_name: match.home_fighter_last_name,
+                  home_fighter_player_image: match.home_fighter_player_image,
+                  home_id: match.home_id,
+                  match_id: match.match_id,
+                  match_statistic_id: match.match_statistic_id
+                })"><i class="fa fa-edit"></i> Fight Result</a> &nbsp; -->
+            
+                <a href="javascript:void(0);" (click)="deleteConfirm(match)"><i class="fa fa-trash"></i> Delete</a> &nbsp;
+              </td>
+            </tr>
+            <tr *ngIf="!error && matchesList && matchesList.length === 0">
+              <td colspan="9" class="text-center">There are no fights to be shown</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalMatches > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Start-->
+<div class="modal fade" id="resultConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <!-- <h4>
+          Alert
+        </h4> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Fight result already added
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete();">Delete</button> -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Delete Model End -->
+
+<!-- Delete Modal Start-->
+<div class="modal fade" id="deleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentMatch">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{ currentMatch.home_fighter_first_name}} {{ currentMatch.home_fighter_last_name}} V/S {{ currentMatch.away_fighter_first_name}} {{ currentMatch.away_fighter_last_name}} 
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete();">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Delete Model End -->
+
+<!-- Add Fight Result Model start -->
+<div class="modal fade" id="addFightResultModal"*ngIf="currentMatchData" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true"
+  data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Add Fight Result</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="addFightPointForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="radio-inline"><input type="radio" name="winner" value="blue_winner" formControlName="winner" [(ngModel)]="winner"  (change)="onItemChange($event.target.value)"> Blue Corner</label>
+              <br />
+              <img *ngIf="currentMatchData.home_fighter_player_image" [src]="imgURL+'/'+currentMatchData.home_fighter_player_image" width="40px;" /> <br />
+              {{currentMatchData.home_fighter_first_name}} {{currentMatchData.home_fighter_last_name}}<br />
+            </div>
+            <div class="col-md-6">
+              <label class="radio-inline"><input type="radio" name="winner" value="red_winner" formformControlName="winner" [(ngModel)]="winner" [ngModelOptions]="{standalone: true}" (change)="onItemChange($event.target.value)"> Red Corner</label>
+              <!-- <input type="radio" [checked]='true' [(ngModel)]="isFeatured" formControlName="isFeatured" value="1"> Yes -->
+              <br />
+              <img *ngIf="currentMatchData.away_fighter_player_image" [src]="imgURL+'/'+currentMatchData.away_fighter_player_image" width="40px;" /> <br />
+              {{currentMatchData.away_fighter_first_name}} {{currentMatchData.away_fighter_last_name}}<br />
+            </div>
+            <div *ngIf="submitted && f['winner'].errors" class="text-danger">
+              <div *ngIf="f['winner'].errors.required">Winner is required</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="status">Victory Type</label>
+            <select class="form-control" id="status" name="status" formControlName="victory_type">
+              <option value="">Select Victory Type</option>
+              <ng-container *ngFor="let victoryType of victoryTypeList">
+                <option [value]="victoryType.victory_type_id">
+                  {{victoryType.victory_type_name}}</option>
+              </ng-container>
+            </select>
+            <div *ngIf="submitted && f['victory_type'].errors" class="text-danger">
+              <div *ngIf="f['victory_type'].errors.required">Victory Type is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="status">Select Round</label>
+            <select class="form-control" id="status" name="status" formControlName="round">
+              <option value="">Select Round</option>
+              <ng-container *ngFor="let number of roundNumbers">
+                <option [value]="number">{{number}}</option>
+              </ng-container>
+            </select>
+            <div *ngIf="submitted && f['round'].errors" class="text-danger">
+              <div *ngIf="f['round'].errors.required">Round is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Add Fight Result Model End -->
+
+<app-loader></app-loader>

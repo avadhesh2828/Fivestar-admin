@@ -1,0 +1,235 @@
+<!-- /.row-->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="input-group select-status col-12 col-sm-3">
+            <select class="form-control" [(ngModel)]="params['status']" name="status">
+              <option value="">Select a status</option>
+              <option *ngFor="let status of contestStatus | keyvalue" [value]="status.key">
+                {{status.value}}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-1 entry-fees">Entry Fees: </div>
+          <div class="col-12 col-sm-6 custom-filter">
+            <ng5-slider [(value)]="params.min_entry_fee" [(highValue)]="params.max_entry_fee" [options]="options">
+            </ng5-slider>
+          </div>
+
+          <span class="col-sm-1 filter-btn">
+            <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-filter"></i> Filter</button>&nbsp;
+          </span>
+        </div>
+        <div class="row mt-1">
+          <form class="col-12 col-sm-10">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="Search by name or contest unique id...">
+              <span class="input-group-prepend">
+                <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+                  <i class="fa fa-search"></i> Search</button>
+              </span>
+            </div>
+          </form>
+          <div class="col-12 col-sm-2">
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              Reset Filters</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body competitions-list">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Contests
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/contest/create-new']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Unique Id</th>
+              <th>Name</th>
+              <th>Start At</th>
+              <th>Ends At</th>
+              <th>Entry Fees ({{currency_code}})</th>
+              <th>Size</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="contestList && !(contestList.length>0)">
+              <td colspan="9" class="text-center">No Contest Found</td>
+            </tr>
+
+            <tr *ngFor="let contest of contestList">
+              <td>{{ contest.contest_uid }}</td>
+              <td>{{ contest.contest_name }}</td>
+              <td>{{ formatDateTimeZone(contest.start_date) | date: dateFormatString }}</td>
+              <td>{{ formatDateTimeZone(contest.end_date) | date: dateFormatString }}</td>
+              <td>{{ contest.entry_fees }}</td>
+              <td>{{ contest.size }}</td>
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': (contest.status == 0 || contest.status == 1 || contest.status == 3 ), 'badge-secondary': (contest.status == 2)}">{{contestStatus[contest.status]}}</span>
+              </td>
+              <td>
+                <a routerLink="/contest/detail/{{contest.contest_uid}}"><i class="icon-list"></i>&nbsp;Details</a>&nbsp;
+                <span *ngIf="contest.status != 4 && contest.status != 3; else disabledLink">
+                  <a routerLink="/contest/edit/{{contest.contest_uid}}"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;
+                  <a href="javascript:void(0);" (click)="deleteConfirm(contest)"><i class="fa fa-trash"></i> Delete</a>&nbsp;
+
+                  <a href="javascript:void(0);" (click)="completeContestConfirm(contest)"><i class="fa fa-check-square-o"></i> Complete</a>&nbsp;
+                  <a *ngIf="contest.prediction_status == 0;" href="javascript:void(0);" (click)="predictionStatus(contest)"><i class="fa fa-check-square-o"></i> Prediction Disable</a>
+
+                  <a *ngIf="contest.prediction_status == 1;" href="javascript:void(0);" (click)="predictionStatus(contest)"><i class="fa fa-check-square-o"></i> Prediction Enable</a>&nbsp;
+                  <a href="javascript:void(0);" (click)="cancelledContestConfirm(contest)"><i class="fa fa-check-square-o"></i> Cancelled</a>
+                </span>
+
+                <ng-template #disabledLink>
+                  <a><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;
+                  <a><i class="fa fa-trash"></i> Delete</a>&nbsp;
+                  <a><i class="fa fa-check-square-o"></i> Complete</a>&nbsp;
+                  <a *ngIf="contest.prediction_status == 0;"><i class="fa fa-check-square-o"></i> Prediction Disable</a>
+                  <a *ngIf="contest.prediction_status == 1;"><i class="fa fa-check-square-o"></i> Prediction Enable</a>&nbsp;
+                  <a><i class="fa fa-check-square-o"></i> Cancelled</a>
+                </ng-template>
+            
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalContest > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- /.col-->
+</div>
+<!-- Delete Modal Start-->
+<div class="modal fade" id="deleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentContest">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{ currentContest.contest_name}} 
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete();">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Contest Complete Modal Start -->
+<div class="modal fade" id="contestCompleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentContest">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{ currentContest.contest_name}} 
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="completeContest();">Confirm</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Contest Complete Modal End -->
+
+<!-- Contest Complete Modal Start -->
+<!-- /.row-->
+<div class="modal fade" id="predictionStatusConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentContest">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{ currentContest.contest_name}} 
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="completePrediction();">Confirm</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Contest Complete Modal End -->
+
+<!-- Contest cancelled Modal Start -->
+<div class="modal fade" id="cancelledContestConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="currentContest">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> {{ currentContest.contest_name}} 
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{confirmbMessage}}
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelledContest();">Confirm</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Contest cancelled Modal End -->
+<!-- /.row-->
+
+<!-- <app-edit-contest (cancelContest)="handleCancelContest()"
+  (confirmedOrCancelled)="handleConfirmationOrCancellation($event)"></app-edit-contest>
+ -->
+
+ <!-- <app-loader></app-loader> -->
+
+ 

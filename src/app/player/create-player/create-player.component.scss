@@ -1,0 +1,81 @@
+.week-matches li {
+    border: 1px solid #111;
+    border-radius: 5px;
+    float: left;
+    height: 145px;
+    list-style: none;
+    margin: 10px;
+    width: 180px;
+  
+    .odds.green {
+      color: green;
+    }
+  
+    .odds.red {
+      color: red;
+    }
+  }
+  
+  .match-block a {
+    float: left;
+    height: 100%;
+    padding: 5px;
+    width: 100%;
+    color: #666666;
+  }
+  
+  .match-block.active {
+    border: 2px solid black !important;
+    background-color: #d9f3e2;
+  }
+  
+  .match-block.active a,
+  .match-block.active a span {
+    color: black;
+  }
+  
+  
+  .match-block .team-abbr,
+  .opt-all-matches {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+  
+  .opt-all-matches {
+    margin-top: 13px;
+    color: #666666;
+  }
+  
+  .match-block .match-datetime {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 13px;
+    margin: 5px 0;
+  }
+  
+  .payout-structure-desc {
+    list-style: none;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .prize-pool {
+    width: 270px;
+    margin: 10px;
+  }
+  
+  .prize-pool-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .prize-pool table th {
+    display: table-cell;
+    vertical-align: top;
+  }
+  
