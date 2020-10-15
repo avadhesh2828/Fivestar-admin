@@ -4,13 +4,13 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost/admin/backend/api',
+  API_URL: 'http://localhost/mylance/admin/backend/api',
   captchaSiteKey: '6Ld6754UAAAAABxI9v-vncc3Tq_tochByGIQj0M3',
-  Project_Name: 'FIGHT FOR IT',
-  IMG_URL: 'http://localhost/admin/src/assets/images',
-  PLAYER_IMG_URL: 'http://localhost/admin/backend/storage/app/uploads/players',
-  USER_IMG_URL: 'http://localhost/front-api/storage/app/uploads/profile_image',
-  NEWS_IMG_URL: 'http://localhost/admin/backend/storage/app/uploads/news',
+  Project_Name: 'MyLance',
+  IMG_URL: 'http://localhost/mylance/admin/src/assets/images',
+  PLAYER_IMG_URL: 'http://localhost/mylance/admin/backend/storage/app/uploads/players',
+  USER_IMG_URL: 'http://localhost/mylance/front-api/storage/app/uploads/profile_image',
+  NEWS_IMG_URL: 'http://localhost/mylance/admin/backend/storage/app/uploads/news',
 };
 
 /*
