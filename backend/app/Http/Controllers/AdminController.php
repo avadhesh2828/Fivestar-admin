@@ -54,7 +54,11 @@ class AdminController extends Controller
 
         if($user){
             $success['session_key'] =  'Bearer '.$user->createToken('MyLance Admin')->accessToken;
-            return response()->json(['Data' => $success])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'verify_personal_password',
+                'Data' => $success
+            ])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
         }
         else{
           $error['personal_password'] = 'Incorrect credentials!';
@@ -84,10 +88,12 @@ class AdminController extends Controller
 
         $user = Admin::where('admin_id', $admin_id)->update(['personal_password' => $security_password]);
         if($user > 0){
+            $userAuth = Admin::where('admin_id', $admin_id)->first();
+            $success['session_key'] =  'Bearer '.$userAuth->createToken('MyLance Admin')->accessToken;
             return response()->json([
                 'response_code'=> 200,
                 'service_name' => 'set_personal_password',
-                'message'      => 'Personal password set successfully',
+                'Data' => $success
             ])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
         }
         else{
@@ -100,13 +106,17 @@ class AdminController extends Controller
     }
 
     public function change_password(Request $request){
+
+        $this->user = Auth::user();
+        $user_id = $this->user->admin_id;
         
-        $admin_id = $request->post('admin_id');
+        // $admin_id = $request->post('admin_id');
         $old_password = $request->post('old_password');
         $password = $request->post('password');
         $password_confirmation = $request->post('password_confirmation');
         //validation
         $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
             'password' => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password|min:6'
         ]);
@@ -120,9 +130,9 @@ class AdminController extends Controller
             ], 400);
         }    
 
-        $adminInfo = Admin::where('admin_id', $admin_id)->first();
+        $adminInfo = Admin::where('admin_id', $user_id)->first();
         if(Hash::check($old_password, $adminInfo->password)) {
-            $user = Admin::where('admin_id', $admin_id)->update(['password' => Hash::make($password)]);
+            $user = Admin::where('admin_id', $user_id)->update(['password' => Hash::make($password)]);
             if($user > 0){
                 return response()->json([
                     'response_code'=> 200,

@@ -19,10 +19,13 @@ Route::group(['prefix' => 'dashboard'], function(){
 Route::post('login', 'AdminController@login');
 Route::post('verify-personal-password', 'AdminController@verify_personal_password');
 Route::post('set-personal-password', 'AdminController@set_personal_password');
-Route::post('change-password', 'AdminController@change_password');
 Route::get('user/export-pdf','UserController@export_pdf');
 Route::get('user/export-excel','UserController@export_excel');
 Route::middleware('auth:api')->group(function () {
+	//change password
+	Route::post('change-password', 'AdminController@change_password');
+
+
 	//user route
 	Route::post('users','UserController@getUser');
 	Route::post('user/get_user_detail/','UserController@get_user_detail');
