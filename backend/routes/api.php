@@ -17,6 +17,9 @@ Route::group(['prefix' => 'dashboard'], function(){
 });
 
 Route::post('login', 'AdminController@login');
+Route::post('verify-personal-password', 'AdminController@verify_personal_password');
+Route::post('set-personal-password', 'AdminController@set_personal_password');
+Route::post('change-password', 'AdminController@change_password');
 Route::get('user/export-pdf','UserController@export_pdf');
 Route::get('user/export-excel','UserController@export_excel');
 Route::middleware('auth:api')->group(function () {
@@ -25,6 +28,17 @@ Route::middleware('auth:api')->group(function () {
 	Route::post('user/get_user_detail/','UserController@get_user_detail');
 	Route::post('user/change_user_name/','UserController@change_user_name');
     Route::post('user/change_user_status','UserController@change_user_status');
+
+
+	//agent
+	Route::group(['prefix' => 'agent'], function(){
+		//Golf Contest Routes
+		Route::get('list', 'AgentController@index');
+		Route::post('create', 'AgentController@create');
+		Route::post('change-agent-status/{agent_id}', 'AgentController@change_agent_status');
+		// Route::post('update', 'WeightclassController@update');
+		// Route::post('delete', 'WeightclassController@destroy');
+	});
 
 
 	//route match api
