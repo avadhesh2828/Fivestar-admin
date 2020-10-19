@@ -23,7 +23,11 @@ class AgentController extends Controller
         $user_id = $this->user->admin_id;
     
         $agent = new Agent;
-        $agent = $agent->where('parent_id', $user_id);
+        if($request->parent_id != ''){
+            $agent = $agent->where('parent_id', $request->parent_id);
+        } else {
+            $agent = $agent->where('parent_id', $user_id);
+        }
         $agent = $agent->orderBy('admin_id','ASC');
         $agent = $agent->paginate($request->per_page);
         return response()->json(['response_code'=> 200,'service_name' => 'agent_list','data' => $agent],200);
@@ -46,11 +50,11 @@ class AgentController extends Controller
         $description = $request->post('description');
         //validation
         $validator = Validator::make($request->all(), [
-            "username" => ['required'],
-            "password" => ['required'],
-            "score"    => ['required'],
-            "name"     => ['required'],
-            "phone"    => ['required']
+            'username' => 'required|unique:pgsql.users.admins,username|min:7|max:16',
+            'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'score'    => 'required|numeric|min:0|max:100',
+            'name'     => 'required',
+            'phone'    => 'required'
         ]);
 
         if($validator->fails()){
@@ -73,7 +77,8 @@ class AgentController extends Controller
             "status"        => 1,
             "parent_id"     => $user_id,
             "last_login"    => date('Y-m-d H:i:s'),
-            "last_ip"       => '127.0.0.1'
+            "last_ip"       => '127.0.0.1',
+            "unique_code"   => random_string('alnum', 9)
         ]);
         
         return response()->json([
