@@ -18,7 +18,7 @@ const INITIAL_PARAMS = {
   country: -1,
   keyword: '',
   status: -1,
-  is_agent:0
+  is_agent: 0
 };
 @Component({
   selector: 'app-user-list',
@@ -58,7 +58,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   search() {
     // debugger;
-     
+
     this.params.current_page = 1;
     this.searchTextChanged.next();
   }
@@ -79,25 +79,25 @@ export class UserListComponent implements OnInit, AfterViewInit {
         this.countryList = response.result;
         this.getUserList();
       },
-      (err: any) => {
-      if(err.status != 401) {
-         this.toastr.error(err.message || 'There was an error.');
-         this.error = true;
-       }
-      // }, (err: Error) => {
-      //   this.toastr.error(err.message || 'There was an error.');
-      //   this.error = true;
-      });
+        (err: any) => {
+          if (err.status !== 401) {
+            this.toastr.error(err.message || 'There was an error.');
+            this.error = true;
+          }
+          // }, (err: Error) => {
+          //   this.toastr.error(err.message || 'There was an error.');
+          //   this.error = true;
+        });
   }
 
   public getUserList() {
     this.loaderService.display(true);
-    this.userService.getUsers(this.params)
+    this.userService.getAgents()
       .subscribe((user: []) => {
         this.loaderService.display(false);
         // console.log(user);
         if (user['data'] && user['data']) {
-          this.userList = user['data'].result;
+          this.userList = user['data'].data;
           this.createPaginationItem(user['data'].total);
         }
         this.error = false;
@@ -129,8 +129,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getUserList();
   }
 
-    keyDownFunction(event) {
-    if(event.keyCode == 13) {
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
       this.params.current_page = 1;
       this.searchTextChanged.next();
       // rest of your code
@@ -178,13 +178,13 @@ export class UserListComponent implements OnInit, AfterViewInit {
     mapForm.submit();
   }
 
-  public exportPDF(){
-  this.get({
+  public exportPDF() {
+    this.get({
     }, environment.API_URL + '/user/export-pdf');
   }
 
-  public exportExcel(){
+  public exportExcel() {
     this.get({
-      }, environment.API_URL + '/user/export-excel');
-    }
+    }, environment.API_URL + '/user/export-excel');
+  }
 }

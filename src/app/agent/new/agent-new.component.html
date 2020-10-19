@@ -7,19 +7,63 @@
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="sports">Agent Name<span class="text-danger">*</span></label>
+            <label class="col-md-3 col-form-label" for="username">User Name<span class="text-danger">*</span></label>
             <div class="col-md-9">
-              <input type="text" class="form-control" formControlName="agentName">
-              <div *ngIf="submitted && f['agentName'].errors" class="text-danger">
-                <div *ngIf="f['agentName'].errors.required">Agent Name is required</div>
-                <div *ngIf="f['agentName'].errors.minlength">Agent Name must have greater than 3 characters</div>
-                <div *ngIf="f['agentName'].errors.maxlength">Agent Name must have less than 50 characters</div>
-                <div *ngIf="f['agentName'].errors.pattern"> Agent Name must begin with a letter and must only contain alphanumeric characters or
-                    _(underscore)</div>
+              <input type="text" class="form-control" formControlName="username">
+              <div *ngIf="submitted && f['username'].errors" class="text-danger">
+                <div *ngIf="f['username'].errors.required">User Name is required</div>
+                <div *ngIf="f['username'].errors.minlength">User Name must have greater than 7 characters</div>
+                <div *ngIf="f['username'].errors.maxlength">User Name must have less than 50 characters</div>
+                <div *ngIf="f['username'].errors.pattern"> User Name must begin with a letter and must only contain
+                  alphanumeric characters or
+                  _(underscore)</div>
               </div>
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="password">Password<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="password">
+              <div *ngIf="submitted && f['password'].errors" class="text-danger">
+                <div *ngIf="f['password'].errors.required">Password is required</div>
+                <div *ngIf="f['password'].errors.minlength">Password must have greater than 3 characters</div>
+                <div *ngIf="f['password'].errors.maxlength">Password must have less than 20 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="score">Score<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="score">
+              <div *ngIf="submitted && f['score'].errors" class="text-danger">
+                <div *ngIf="f['score'].errors.required">Score is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="name">Name</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="name">
+              <div *ngIf="submitted && f['name'].errors" class="text-danger">
+                <div *ngIf="f['name'].errors.minlength">Name must have greater than 3 characters</div>
+                <div *ngIf="f['name'].errors.maxlength">Name must have less than 50 characters</div>
+                <div *ngIf="f['name'].errors.pattern">Name must begin with a letter and must only contain alphanumeric
+                  characters or
+                  _(underscore)</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="description">Description</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="description">
+              <div *ngIf="submitted && f['description'].errors" class="text-danger">
+                <div *ngIf="f['description'].errors.minlength">Description must have greater than 5 characters</div>
+                <div *ngIf="f['description'].errors.maxlength">Description must have less than 50 characters</div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group row">
             <label class="col-md-3 col-form-label" for="email">Email<span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text"  class="form-control" id="email" formControlName="email"
@@ -29,22 +73,21 @@
                 <div *ngIf="f['email'].errors.pattern">Email address must be valid</div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="phone_number">Mobile<span class="text-danger">*</span></label>
+            <label class="col-md-3 col-form-label" for="phone">Phone</label>
             <div class="col-md-9">
-              <input type="text"  appNumeric numericType='number' class="form-control" id="phone_number" formControlName="phone_number"
-                 />
-              <div *ngIf="submitted && f['phone_number'].errors" class="text-danger">
-                <div *ngIf="f['phone_number'].errors.required">Phone Number is required</div>
-                <div
-                  *ngIf="f['phone_number'].errors.pattern || f['phone_number'].errors.minlength|| f['phone_number'].errors.maxlength">
+              <input type="text" appNumeric numericType='number' class="form-control" id="phone"
+                formControlName="phone" />
+              <div *ngIf="submitted && f['phone'].errors" class="text-danger">
+                <div *ngIf="f['phone'].errors.required">Phone Number is required</div>
+                <div *ngIf="f['phone'].errors.pattern || f['phone'].errors.minlength|| f['phone'].errors.maxlength">
                   Phone Number must be valid
-            </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-3 col-form-label" for="website">Website</label>
             <div class="col-md-9">
               <input type="text"  class="form-control" id="website" formControlName="website"
@@ -54,23 +97,23 @@
                   <div *ngIf="f['website'].errors.maxlength">Website Name must have less than 100 characters</div>
               </div>
             </div>
-            
 
-          </div>
+
+          </div> -->
           <!--street address -->
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-3 col-form-label" for="address">Address<span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" class="form-control" id="address" formControlName="address"
-                 /> 
+                 />
               <div *ngIf="submitted && f['address'].errors" class="text-danger">
                 <div *ngIf="f['address'].errors.required">Address is required </div>
                 <div *ngIf="f['address'].errors.minlength">Address must have greater than 3 characters</div>
                 <div *ngIf="f['address'].errors.maxlength">Address must have less than 120 characters</div>
               </div>
             </div>
-          </div>
-          <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
               <label class="col-md-3 col-form-label" for="country">Country<span class="text-danger">*</span></label>
               <div class="col-md-4">
                 <select class="form-control" (change)="getStateList()" placeholder="Select a country" formControlName="country">
@@ -91,55 +134,55 @@
                   <option *ngFor="let state of stateList" [value]="state.master_state_id">
                     {{state.name}}
                   </option>
-                </select> 
+                </select>
                 <div *ngIf="submitted && f['state'].errors" class="text-danger">
                   <div *ngIf="f['state'].errors.required">Select State Name</div>
                 </div>
               </div>
-          </div>
-          <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
             <label class="col-md-3 col-form-label" for="city">City<span class="text-danger">*</span></label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="city" formControlName="city"/> 
+              <input type="text" class="form-control" id="city" formControlName="city"/>
               <div *ngIf="submitted && f['city'].errors" class="text-danger">
                 <div *ngIf="f['city'].errors.required">City Name is required </div>
                 <div *ngIf="f['city'].errors.minlength">City Name must have greater than 3 characters</div>
                 <div *ngIf="f['city'].errors.maxlength">City Name must have less than 30 characters</div>
-                <div *ngIf="f['city'].errors.pattern">City Name must contain only alphabets</div>                
+                <div *ngIf="f['city'].errors.pattern">City Name must contain only alphabets</div>
               </div>
             </div>
              <label class="col-md-1 col-form-label" for="pincode">Pincode<span class="text-danger">*</span></label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="pincode" formControlName="pincode"/> 
+              <input type="text" class="form-control" id="pincode" formControlName="pincode"/>
               <div *ngIf="submitted && f['pincode'].errors" class="text-danger">
                 <div *ngIf="f['pincode'].errors.required">PinCode Name is required </div>
                 <div *ngIf="f['pincode'].errors.minlength">PinCode Name must have greater than 3 characters</div>
-                <div *ngIf="f['pincode'].errors.maxlength">PinCode Name must have less than 30 characters</div>                
+                <div *ngIf="f['pincode'].errors.maxlength">PinCode Name must have less than 30 characters</div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--same as business address row -->
-          <div class="form-group row businness_address_hide business_address">
-            <label class="col-md-3 col-form-label" for="business_address">Business Address</label>  
+          <!-- <div class="form-group row businness_address_hide business_address">
+            <label class="col-md-3 col-form-label" for="business_address">Business Address</label>
             <div class="col-md-9">
               <input type="checkbox" class="col-md-1" formControlName="checkadd" id="checkadd" (change)="checkaddress($event)">
               <label class="col-md-3 col-form-label" for="business_address">Same As Above Address</label>
             </div>
-          </div>
+          </div> -->
           <!-- business address -->
-          <div class="form-group row businness_address_hide">
+          <!-- <div class="form-group row businness_address_hide">
               <label class="col-md-3 col-form-label" for="business_address">Address<span class="text-danger">*</span></label>
               <div class="col-md-9">
                 <input type="text" class="form-control" id="business_address" formControlName="business_address"
-                   /> 
+                   />
                 <div *ngIf="submitted && f['business_address'].errors" class="text-danger">
                 <div *ngIf="f['business_address'].errors.required">Business Address is required </div>
                 <div *ngIf="f['business_address'].errors.minlength">Address must have greater than 3 characters</div>
                 <div *ngIf="f['business_address'].errors.maxlength">Address must have less than 120 characters</div>
               </div>
               </div>
-          </div>
-           <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
               <label class="col-md-3 col-form-label" for="business_country">Country<span class="text-danger">*</span></label>
               <div class="col-md-4">
                 <select class="form-control" (change)="getStateList()" placeholder="Select a country" formControlName="business_country">
@@ -160,16 +203,16 @@
                   <option *ngFor="let state of stateList" [value]="state.master_state_id">
                     {{state.name}}
                   </option>
-                </select> 
+                </select>
                 <div *ngIf="submitted && f['business_state'].errors" class="text-danger">
                   <div *ngIf="f['business_state'].errors.required">Select State Name</div>
                 </div>
               </div>
-          </div>
-          <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
             <label class="col-md-3 col-form-label" for="business_city">City<span class="text-danger">*</span></label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="business_city" formControlName="business_city"/> 
+              <input type="text" class="form-control" id="business_city" formControlName="business_city"/>
               <div *ngIf="submitted && f['business_city'].errors" class="text-danger">
                 <div *ngIf="f['business_city'].errors.required">City Name is required </div>
                 <div *ngIf="f['business_city'].errors.minlength">City must have greater than 3 characters</div>
@@ -179,7 +222,7 @@
             </div>
              <label class="col-md-1 col-form-label" for="business_pincode">Pincode<span class="text-danger">*</span></label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="business_pincode" formControlName="business_pincode"/> 
+              <input type="text" class="form-control" id="business_pincode" formControlName="business_pincode"/>
               <div *ngIf="submitted && f['business_pincode'].errors" class="text-danger">
                 <div *ngIf="f['business_pincode'].errors.required">PinCode Name is required </div>
                 <div *ngIf="f['business_pincode'].errors.minlength">PinCode must have greater than 3 characters</div>
@@ -238,7 +281,7 @@
                     </div>
                     <div *ngIf="imgErrorMsg" class="text-danger">{{imgErrorMsg}}</div>
               </div>
-          </div>
+          </div> -->
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>

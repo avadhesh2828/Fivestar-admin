@@ -19,6 +19,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'users', loadChildren: () => import('../../../user/user.module').then(m => m.UserModule) },
+            {
+                path: 'agent',
+                loadChildren: () => import('../../../agent/agent.module').then(m =>
+                    m.AgentModule)
+            },
             { path: 'leagues', loadChildren: () => import('../../../league/league.module').then(m => m.LeagueModule) },
             { path: 'matches', loadChildren: () => import('../../../matches/matches.module').then(m => m.MatchesModule) },
             { path: 'teams', component: TeamListComponent },

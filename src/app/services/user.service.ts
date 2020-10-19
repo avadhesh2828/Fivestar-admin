@@ -10,13 +10,16 @@ export class UserService {
   getUsers(params: object) {
     return this.http.post(`${environment.API_URL}/users`, params);
   }
+  getAgents() {
+    return this.http.get(`${environment.API_URL}/agent/list`);
+  }
 
   getUserDetails(userId: string) {
     return this.http.post(`${environment.API_URL}/user/get_user_detail`, { user_unique_id: userId });
   }
 
-   getAgentTicketDetails(params: object) {
-    return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`,params);
+  getAgentTicketDetails(params: object) {
+    return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`, params);
   }
 
   changeUserStatus(params: object) {
@@ -27,21 +30,19 @@ export class UserService {
     return this.http.post(`${environment.API_URL}/common/country_list`, {});
   }
 
-  getStateList(params: any){
-      return this.http.post(`${environment.API_URL}/common/state_list`, params);
+  getStateList(params: any) {
+    return this.http.post(`${environment.API_URL}/common/state_list`, params);
   }
 
   editUsername(params: any) {
     return this.http.post(`${environment.API_URL}/user/change_user_name`, params);
   }
 
-  getPortfolioDetail(params: object)
-  {
+  getPortfolioDetail(params: object) {
     return this.http.post(`${environment.API_URL}/user/portfolio`, params);
   }
 
-  getUserWatchList(params:object)
-  {
+  getUserWatchList(params: object) {
     return this.http.post(`${environment.API_URL}/user/watchlist`, params);
   }
 }

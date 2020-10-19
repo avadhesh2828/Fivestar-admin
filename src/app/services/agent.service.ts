@@ -15,8 +15,8 @@ export class AgentService {
     return this.http.post(`${environment.API_URL}/agent/get_agent_detail`, { agent_unique_id: agentId });
   }
 
-   getAgentTicketDetails(params: object) {
-    return this.http.post(`${environment.API_URL}/agent/get_agent_ticket_detail`,params);
+  getAgentTicketDetails(params: object) {
+    return this.http.post(`${environment.API_URL}/agent/get_agent_ticket_detail`, params);
   }
 
 
@@ -28,43 +28,39 @@ export class AgentService {
     return this.http.post(`${environment.API_URL}/common/country_list`, {});
   }
 
-  getStateList(params: any){
-      return this.http.post(`${environment.API_URL}/common/state_list`, params);
+  getStateList(params: any) {
+    return this.http.post(`${environment.API_URL}/common/state_list`, params);
   }
 
   editAgentUsername(params: any) {
     return this.http.post(`${environment.API_URL}/agent/change_agent_user_name`, params);
   }
-  //agent
+  // agent
   createAgent(params: object) {
-    return this.http.post(`${environment.API_URL}/agent/new_agent`, params);
+    return this.http.post(`${environment.API_URL}/agent/create`, params);
   }
 
-  //change kyc status
-  editAgentKycStatus(params:any)
-  {
+  // change kyc status
+  editAgentKycStatus(params: any) {
     return this.http.post(`${environment.API_URL}/agent/change_agent_kyc_status`, params);
   }
-  editAgentCommissionType(params:any)
-  {
-    return this.http.post(`${environment.API_URL}/agent/change_agent_commission_type`, params); 
+  editAgentCommissionType(params: any) {
+    return this.http.post(`${environment.API_URL}/agent/change_agent_commission_type`, params);
   }
-  editAgentCommissionAmount(params:any)
-  {
-    return this.http.post(`${environment.API_URL}/agent/change_agent_commission_amount`, params); 
+  editAgentCommissionAmount(params: any) {
+    return this.http.post(`${environment.API_URL}/agent/change_agent_commission_amount`, params);
   }
 
-  //agent payout list 
+  // agent payout list
 
   getAgentPayout(params: object) {
     return this.http.post(`${environment.API_URL}/agent/agent_payout_list`, params);
   }
-  
-  //edit payout status
 
-  editPayoutStatus(params:any)
-  {
-     return this.http.post(`${environment.API_URL}/agent/change_payout_status`, params);
+  // edit payout status
+
+  editPayoutStatus(params: any) {
+    return this.http.post(`${environment.API_URL}/agent/change_payout_status`, params);
   }
 
 }
