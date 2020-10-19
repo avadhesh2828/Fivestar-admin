@@ -76,9 +76,9 @@ class AgentController extends Controller
             "role_id"       => 2,
             "status"        => 1,
             "parent_id"     => $user_id,
-            "last_login"    => date('Y-m-d H:i:s'),
-            "last_ip"       => '127.0.0.1',
-            "unique_code"   => random_string('alnum', 9)
+            "unique_code"   => random_string('alnum', 9),
+            "created_at"    => date('Y-m-d H:i:s'),
+            "updated_at"    => date('Y-m-d H:i:s')
         ]);
         
         return response()->json([

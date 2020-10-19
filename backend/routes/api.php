@@ -24,23 +24,20 @@ Route::get('user/export-excel','UserController@export_excel');
 Route::middleware('auth:api')->group(function () {
 	//change password
 	Route::post('change-password', 'AdminController@change_password');
-
-
-	//user route
-	Route::post('users','UserController@getUser');
-	Route::post('user/get_user_detail/','UserController@get_user_detail');
-	Route::post('user/change_user_name/','UserController@change_user_name');
-    Route::post('user/change_user_status','UserController@change_user_status');
-
+	Route::post('change-security-password', 'AdminController@change_security_password');
 
 	//agent
 	Route::group(['prefix' => 'agent'], function(){
-		//Golf Contest Routes
 		Route::get('list', 'AgentController@index');
 		Route::post('create', 'AgentController@create');
 		Route::post('change-agent-status/{agent_id}', 'AgentController@change_agent_status');
-		// Route::post('update', 'WeightclassController@update');
-		// Route::post('delete', 'WeightclassController@destroy');
+	});
+
+	//User
+	Route::group(['prefix' => 'users'], function(){
+		Route::get('list', 'UserController@index');
+		Route::post('create', 'UserController@create');
+		Route::post('change-user-status/{user_id}', 'UserController@change_user_status');
 	});
 
 
