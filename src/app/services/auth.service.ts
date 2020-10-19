@@ -32,8 +32,32 @@ export class AuthService {
             }));
     }
 
+    public verifyPersonalPassword(data: object) {
+        return this.http.post(`${environment.API_URL}/verify-personal-password`, data)
+            .pipe(map(response => {
+                this.setAuthToken(response['Data'].session_key.toString());
+                return response;
+            }));
+    }
+
+    public initialLogin(data: object) {
+        return this.http.post(`${environment.API_URL}/login`, data);
+    }
+
+    public setPersonalPassword(data: object) {
+        return this.http.post(`${environment.API_URL}/set-personal-password`, data)
+            .pipe(map(response => {
+                this.setAuthToken(response['Data'].session_key.toString());
+                return response;
+            }));
+    }
+
+    public changePassword(data: object) {
+        return this.http.post(`${environment.API_URL}/change-password`, data);
+    }
+
     public logout() {
-        return this.http.post(`${environment.API_URL}/logout`,{})
+        return this.http.post(`${environment.API_URL}/logout`, {})
             .pipe(map(response => {
                 this.removeAuthToken();
                 this.router.navigate(['/login']);

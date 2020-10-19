@@ -1,44 +1,43 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card-group">
-                <div class="card p-4">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                        <div class="card-body">
-                            <div class="logo-content">
-                                <img [src]="logo" />
-                            </div>      
-                            <h1>Login</h1>
-                            <p class="text-muted">Sign In to your account</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="icon-user"></i>
-                                    </span>
-                                </div>
-                                <input class="form-control" type="text" placeholder="Email" formControlName="email"
-                                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['email'].errors.required">Email is required</div>
-                                    <div *ngIf="f['email'].errors.email">Email must be a valid email address</div>
-                                </div>
-                            </div>
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="icon-lock"></i>
-                                    </span>
-                                </div>
-                                <input type="password" placeholder="Password" formControlName="password"
-                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                                <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['password'].errors.required">Password is required</div>
-                                    <div *ngIf="f['password'].errors.minlength">Password must be at least 6 characters
-                                    </div>
-                                </div>
-                            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card-group">
+        <div class="card p-4">
+          <form *ngIf="formType === 0" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+              <div class="logo-content">
+                <img [src]="logo" />
+              </div>
+              <h1>Login</h1>
+              <p class="text-muted">Sign In to your account</p>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-user"></i>
+                  </span>
+                </div>
+                <input class="form-control" type="text" placeholder="Username" formControlName="username"
+                  [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                  <div *ngIf="f['username'].errors.required">Username is required</div>
+                </div>
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input type="password" placeholder="Password" formControlName="password" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                  <div *ngIf="f['password'].errors.required">Password is required</div>
+                  <div *ngIf="f['password'].errors.minlength">Password must be at least 6 characters
+                  </div>
+                </div>
+              </div>
 
-                            <!-- <ngx-recaptcha2 #captchaElem
+              <!-- <ngx-recaptcha2 #captchaElem
                                 [siteKey]="siteKey"
                                 (reset)="handleReset()"
                                 (success)="handleSuccess($event)"
@@ -47,15 +46,157 @@
                                 formControlName="recaptcha">
                             </ngx-recaptcha2> -->
 
-                            <div class="row">
-                                <div class="col-6">
-                                    <input class="btn btn-primary px-4" type="submit" value="Login" />
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+              <div class="row">
+                <div class="col-6">
+                  <input class="btn btn-primary px-4" type="submit" value="Login" />
                 </div>
+              </div>
             </div>
+          </form>
+          <form *ngIf="formType === 1 && setPasswordForm" [formGroup]="setPasswordForm" (ngSubmit)="onSubmitPassword()">
+            <div class="card-body">
+              <div class="logo-content">
+                <img [src]="logo" />
+              </div>
+              <h1>Set Personal Password</h1>
+              <p class="text-muted">Please set your personal(2nd security) password. For security purpose please set
+                your 2nd security password and reconfirm your 2nd security password upon every login</p>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input class="form-control" type="password" placeholder="Personal Password" formControlName="password"
+                  [ngClass]="{ 'is-invalid': setPasswordSubmitted && pf?.password?.errors }">
+                <div *ngIf="setPasswordSubmitted && pf['password'].errors" class="invalid-feedback">
+                  <div *ngIf="pf['password'].errors.required">Personal Password is required</div>
+                  <div *ngIf="pf['password'].errors.minlength">Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="pf['password'].errors.maxlength">Password must have less than
+                    20 characters
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input type="password" placeholder="Confirm personal password" formControlName="confirmPassword"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': setPasswordSubmitted && pf.confirmPassword?.errors }" />
+                <div *ngIf="setPasswordSubmitted && pf['confirmPassword'].errors" class="invalid-feedback">
+                  <div *ngIf="pf['confirmPassword'].errors.required">Confirm personal Password is required</div>
+                  <div *ngIf="pf['confirmPassword'].errors.minlength">Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="pf['confirmPassword'].errors.maxlength">Confirm Password must have less than
+                    20 characters
+                  </div>
+                </div>
+                <div
+                  *ngIf="setPasswordSubmitted && !errorExist('password', 'pf') && !errorExist('confirmPassword', 'pf') && setPasswordForm.errors?.MatchPassword">
+                  Passwords do not match
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <input class="btn btn-primary px-4" type="submit" value="Set Password" />
+                </div>
+              </div>
+            </div>
+          </form>
+          <form *ngIf="formType === 2 && changePasswordForm" [formGroup]="changePasswordForm"
+            (ngSubmit)="changePassword()">
+            <div class="card-body">
+              <h1>Set your new Password</h1>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input class="form-control" type="password" placeholder="Please Enter Old Password"
+                  formControlName="oldPassword"
+                  [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf?.oldPassword?.errors }">
+                <div *ngIf="changePasswordSubmitted && cpf['oldPassword'].errors" class="invalid-feedback">
+                  <div *ngIf="cpf['oldPassword'].errors.required">Old Password is required</div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input class="form-control" type="password" placeholder="New Password" formControlName="password"
+                  [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf?.password?.errors }">
+                <div *ngIf="changePasswordSubmitted && cpf['password'].errors" class="invalid-feedback">
+                  <div *ngIf="cpf['password'].errors.required">New Password is required</div>
+                  <div *ngIf="cpf['password'].errors.minlength">Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="cpf['password'].errors.maxlength">Password must have less than
+                    20 characters
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input type="password" placeholder="Confirm the new password" formControlName="confirmPassword"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf.confirmPassword?.errors }" />
+                <div *ngIf="changePasswordSubmitted && cpf['confirmPassword'].errors" class="invalid-feedback">
+                  <div *ngIf="cpf['confirmPassword'].errors.required">Confirm Password is required</div>
+                  <div *ngIf="cpf['confirmPassword'].errors.minlength">Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="cpf['confirmPassword'].errors.maxlength">Confirm Password must have less than
+                    20 characters
+                  </div>
+                </div>
+                <div
+                  *ngIf="changePasswordSubmitted && !errorExist('password', 'cpf') && !errorExist('confirmPassword', 'cpf') && changePasswordForm.errors?.MatchPassword">
+                  Passwords do not match
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <input class="btn btn-primary px-4" type="submit" value="Set Password" />
+                </div>
+              </div>
+            </div>
+          </form>
+          <form *ngIf="formType === 3 && verifyPersonalPasswordForm" [formGroup]="verifyPersonalPasswordForm"
+            (ngSubmit)="verifyPPassword()">
+            <div class="card-body">
+              <h1>Personal Password</h1>
+              <p class="text-muted">Please confirm personal(2nd security) password</p>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input class="form-control" type="password" placeholder="Please Enter Personal Password"
+                  formControlName="personalPassword"
+                  [ngClass]="{ 'is-invalid': verifyPPasswordSubmitted && ppf?.personalPassword?.errors }">
+                <div *ngIf="verifyPPasswordSubmitted && ppf['personalPassword'].errors" class="invalid-feedback">
+                  <div *ngIf="ppf['personalPassword'].errors.required">Personal Password is required</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <input class="btn btn-primary px-4" type="submit" value="Login" />
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
