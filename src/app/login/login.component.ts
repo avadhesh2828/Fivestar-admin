@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     captchaToken: string;
     logo: any;
 
-    @ViewChild('captchaElem', {static: true}) captchaElem: ReCaptcha2Component;
+    @ViewChild('captchaElem', { static: true }) captchaElem: ReCaptcha2Component;
 
     constructor(
         private authService: AuthService,
@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.authService.isUserAuthenticated) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/users']);
         } else {
             this.router.navigate(['/login']);
         }
-        this.logo = environment.IMG_URL+'/logo.jpg'
+        this.logo = environment.IMG_URL + '/logo.jpg';
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         };
         this.authService.login(data).pipe(first())
             .subscribe(() => {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/users']);
             }, err => {
                 this.toastr.error(err.error.error.email);
                 // this.captchaElem.resetCaptcha();

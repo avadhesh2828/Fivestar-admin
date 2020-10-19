@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from '../../../dashboard/dashboard.component';
 import { PostAuthenticationComponent } from './post-authentication.component';
 import { AuthGuard } from '../../../auth-guard/auth.guard';
 
@@ -19,7 +18,6 @@ const routes: Routes = [
         component: PostAuthenticationComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: 'dashboard', component: DashboardComponent },
             { path: 'users', loadChildren: () => import('../../../user/user.module').then(m => m.UserModule) },
             { path: 'leagues', loadChildren: () => import('../../../league/league.module').then(m => m.LeagueModule) },
             { path: 'matches', loadChildren: () => import('../../../matches/matches.module').then(m => m.MatchesModule) },
@@ -48,7 +46,7 @@ const routes: Routes = [
             },
             { path: 'disputes', loadChildren: () => import('../../../dispute/dispute.module').then(m => m.DisputeModule) },
             { path: 'players', loadChildren: () => import('../../../player/player.module').then(m => m.PlayerModule) },
-           
+
         ]
     },
 ];
@@ -64,7 +62,6 @@ const routes: Routes = [
 export class PostAuthenticationRoutingModule { }
 
 export const routedComponents: Array<any> = [
-    DashboardComponent,
     PostAuthenticationComponent,
     TransactionHistoryListComponent,
     WithdrawListComponent,
