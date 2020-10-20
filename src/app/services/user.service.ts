@@ -10,8 +10,12 @@ export class UserService {
   getUsers(params: object) {
     return this.http.post(`${environment.API_URL}/users`, params);
   }
-  getAgents() {
-    return this.http.get(`${environment.API_URL}/agent/list`);
+  getAgents(url:any) {
+    return this.http.get(`${environment.API_URL}/${url}`);
+  }
+
+  changeAgentStatus(agentId: any, data: object){
+    return this.http.post(`${environment.API_URL}/agent/change-agent-status/${agentId}`, data);
   }
 
   getUserDetails(userId: string) {

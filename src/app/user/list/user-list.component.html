@@ -68,8 +68,7 @@
           <h1 class="h3 mb-0 text-gray-800">User Management</h1>
           
             <span class="input-group-prepend">
-              <a class="btn btn-warning" [routerLink]="['/agent/new']"><i class="fa fa-file-pdf-o"></i>
-                Create Agent</a>
+              <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
             </span>
           
           <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
@@ -78,14 +77,9 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <!-- <th>Username</th> -->
               <th>Name</th>
               <th>Username</th>
               <th>Phone Number</th>
-              <!-- <th>Country</th>
-
-              <th>Balance ({{currency_code}})</th>
-              <th>Spend ({{currency_code}})</th> -->
               <th>Score</th>
               <th>Last Login</th>
               <th>Status</th>
@@ -103,23 +97,15 @@
               <td colspan="9" class="text-center">No Agent found</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
-              <!-- <td>{{ user.user_name || "-" }} </td> -->
-              <td>{{ user.name || "-" | titlecase }}</td>
-              <td>{{ user.username || "-" }}</td>
+              <td (click)="checkSubAgent(user)">{{ user.name || "-" | titlecase }}</td>
+              <td (click)="checkSubAgent(user)">{{ user.username || "-" }}</td>
               <td>{{ user.phone || "-" }}</td>
-              <!-- <td>{{ user.email || "-" }}</td>
-              <td *ngIf="user.country_name;else nocountry">{{ user.country_name || "-"}} </td>
-              <ng-template #nocountry>
-                <td>-</td>
-              </ng-template>
-              <td>{{ (+user.balance) | roundOff }}</td>
-              <td>{{ user.spend | roundOff }}</td> -->
               <td>{{ user.balance}}</td>
               <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
 
               <td>
                 <span class="badge"
-                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]
+                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}" >{{userStatus[user.status]
                   }}</span>
               </td>
               <td>
@@ -132,11 +118,16 @@
 										balance: user.balance,
                     userIndex: userIndex
                   })"><i class="fa fa-edit"></i>Edit</a>
+                  &nbsp;
+                  <a href="javascript:void(0);" *ngIf="user.status == 0" (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-transfer"></i> Enable</a>
+                  &nbsp;
+                  <a href="javascript:void(0);" *ngIf="user.status == 1" (click)="changeAgentStatus(user.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+
               </td>
             </tr>
           </tbody>
         </table>
-        <nav *ngIf="totalUsers > params.items_perpage">
+        <nav *ngIf="totalUsers > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
               <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>

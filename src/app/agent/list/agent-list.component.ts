@@ -86,6 +86,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     this.loaderService.display(true);
     this.agentService.getAgents(this.params)
       .subscribe((agent: []) => {
+        console.log('0 ==>', agent);
         this.loaderService.display(false);
         if (agent['data'] && agent['data'].result) {
           this.agentList = agent['data'].result;
