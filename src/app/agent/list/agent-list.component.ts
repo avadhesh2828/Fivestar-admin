@@ -10,14 +10,9 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
 
 const INITIAL_PARAMS = {
-  items_perpage: 20,
+  per_page: 10,
   current_page: 1,
-  sort_field: 'name',
-  sort_order: 'ASC',
-  country: -1,
-  keyword: '',
-  status: -1,
-  is_agent:1
+  parent_id: '',
 };
 @Component({
   selector: 'app-agent-list',
@@ -38,6 +33,9 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   public countryList = [];
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
+  public url: string = 'agent/list?';
+  formSubmitted = false;
+  selectedAgent : any = '';
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
@@ -47,13 +45,15 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.params = localStorage.getItem('agentFilters')
-    ? JSON.parse(localStorage.getItem('agentFilters'))
-    : { ...INITIAL_PARAMS };
-    localStorage.removeItem('agentFilters');
-    this.getCountryList();
-    this.searchTextChanged.pipe(debounceTime(1000))
-      .subscribe(model => this.getAgentList());
+    // this.params = localStorage.getItem('agentFilters')
+    // ? JSON.parse(localStorage.getItem('agentFilters'))
+    // : { ...INITIAL_PARAMS };
+    // localStorage.removeItem('agentFilters');
+    // this.getCountryList();
+    // this.searchTextChanged.pipe(debounceTime(1000))
+    //   .subscribe(model => this.getAgentList());
+    
+    this.getAgentList();
   }
 
   search() {
@@ -82,14 +82,19 @@ export class AgentListComponent implements OnInit, AfterViewInit {
       });
   }
 
+  private createUrl() {
+    this.url = 'agent/list?';
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id='+ this.selectedAgent;
+  }
+
   public getAgentList() {
     this.loaderService.display(true);
-    this.agentService.getAgents(this.params)
+    this.createUrl();
+    this.agentService.getAgents(this.url)
       .subscribe((agent: []) => {
-        console.log('0 ==>', agent);
         this.loaderService.display(false);
-        if (agent['data'] && agent['data'].result) {
-          this.agentList = agent['data'].result;
+        if (agent['data'] && agent['data'].data) {
+          this.agentList = agent['data'].data;
           this.createPaginationItem(agent['data'].total);
         }
         this.error = false;
@@ -101,7 +106,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
 
   private createPaginationItem(totalAgent: number) {
     this.totalAgents = totalAgent;
-    const maxPages: number = Math.ceil(totalAgent / this.params.items_perpage);
+    const maxPages: number = Math.ceil(totalAgent / this.params.per_page);
     const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
     const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
     this.totalPages = maxPages;
@@ -143,4 +148,29 @@ export class AgentListComponent implements OnInit, AfterViewInit {
       this.getAgentList();
     }
   }
+
+
+  public checkSubAgent(agent:any){  
+    this.selectedAgent = agent.admin_id;
+    this.getAgentList();
+  }
+
+  public changeAgentStatus(agentId: any, status: any){
+    this.formSubmitted = true;
+    const forminputdata = {
+      status : status
+    };    
+    this.agentService.changeAgentStatus(agentId, forminputdata).pipe()
+      .subscribe((res: any) => {
+        this.formSubmitted = false;
+        this.toastr.success(res.message || 'Agent status changed Sucessfully.');
+        this.getAgentList();
+      }, err => {
+        const errorMessage = '';
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
+        this.formSubmitted = false;
+      });
+
+  }
+
 }

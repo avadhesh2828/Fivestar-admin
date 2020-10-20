@@ -5,10 +5,12 @@ import { UserListComponent } from './list/user-list.component';
 import { UserDetailComponent } from './detail/user-detail.component';
 import {UserPortfolioComponent} from './user-portfolio/user-portfolio.component';
 import {UserWatchlistComponent} from './user-watchlist/user-watchlist.component';
+import { NewComponent } from './new/new.component';
 
 const routes: Routes = [
     { path: ':userId', component: UserDetailComponent },
     { path: '', component: UserListComponent },
+    { path: 'new', component:NewComponent},
     { path: 'portfolio/:userId', component:UserPortfolioComponent},
     { path: 'watchlist/:userId', component:UserWatchlistComponent},
 
@@ -29,4 +31,5 @@ export const routedComponents: Array<any> = [
     UserDetailComponent,
     UserPortfolioComponent,
     UserWatchlistComponent,
+    NewComponent,
 ];

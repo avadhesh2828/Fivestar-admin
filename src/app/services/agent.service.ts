@@ -7,9 +7,18 @@ import { environment } from '../../environments/environment';
 export class AgentService {
   constructor(private http: HttpClient) { }
 
-  getAgents(params: object) {
-    return this.http.post(`${environment.API_URL}/agents`, params);
+  // getAgents(params: object) {
+  //   return this.http.post(`${environment.API_URL}/agents`, params);
+  // }
+
+  getAgents(url:any) {
+    return this.http.get(`${environment.API_URL}/${url}`);
   }
+
+  changeAgentStatus(agentId: any, data: object){
+    return this.http.post(`${environment.API_URL}/agent/change-agent-status/${agentId}`, data);
+  }
+
 
   getAgentDetails(agentId: string) {
     return this.http.post(`${environment.API_URL}/agent/get_agent_detail`, { agent_unique_id: agentId });
@@ -20,9 +29,9 @@ export class AgentService {
   }
 
 
-  changeAgentStatus(params: object) {
-    return this.http.post(`${environment.API_URL}/agent/change_agent_status`, params);
-  }
+  // changeAgentStatus(params: object) {
+  //   return this.http.post(`${environment.API_URL}/agent/change_agent_status`, params);
+  // }
 
   //change password
   changePassword(params: object) {
