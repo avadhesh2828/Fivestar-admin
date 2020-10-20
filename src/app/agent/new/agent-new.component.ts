@@ -237,13 +237,9 @@ export class AgentNewComponent implements OnInit {
       this.agentService.createAgent(forminputdata).pipe()
         .subscribe((res: any) => {
           this.formSubmitted = false;
-
           this.toastr.success(res.message || 'New Agent Created Sucessfully.');
           this.handleReset();
           this.router.navigate(['/users']);
-
-
-
         }, err => {
           const errorMessage = '';
           this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while creating new Agent.');
