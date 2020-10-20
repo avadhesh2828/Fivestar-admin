@@ -11,9 +11,9 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { environment } from '../../../environments/environment';
 
 const INITIAL_PARAMS = {
-  per_page: 20,
+  per_page: 10,
   current_page: 1,
-  parent_id: '',
+  status: 1,
 };
 @Component({
   selector: 'app-user-list',
@@ -37,8 +37,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public countryList = [];
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
-  public url: string = 'agent/list?';
-  selectedAgent : any = '';
+  public url: string = 'users/list?';
+  selectedUser : any = 1;
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
@@ -89,8 +89,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   private createUrl() {
-    this.url = 'agent/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id='+ this.selectedAgent;
+    this.url = 'users/list?';
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status='+ this.selectedUser;
   }
 
   public getAgentsList() {
@@ -132,8 +132,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getAgentsList();
   }
 
-  public checkSubAgent(agent:any){  
-    this.selectedAgent = agent.admin_id;
+  public checkSubAgent(user:any){  
+    this.selectedUser = user.admin_id;
     this.getAgentsList();
   }
 

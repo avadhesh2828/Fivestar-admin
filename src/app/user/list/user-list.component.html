@@ -68,7 +68,7 @@
           <h1 class="h3 mb-0 text-gray-800">User Management</h1>
           
             <span class="input-group-prepend">
-              <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
+              <a class="btn btn-warning" [routerLink]="['/users/new']"> Create New Player</a>
             </span>
           
           <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
@@ -77,6 +77,7 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
+              <th>Unique Code</th>
               <th>Name</th>
               <th>Username</th>
               <th>Phone Number</th>
@@ -94,11 +95,12 @@
               <td colspan="9">Loading...</td>
             </tr>
             <tr *ngIf="userList && !(userList.length>0)">
-              <td colspan="9" class="text-center">No Agent found</td>
+              <td colspan="9" class="text-center">No Player found</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
+              <td (click)="checkSubAgent(user)">{{ user.user_unique_id }}</td>
               <td (click)="checkSubAgent(user)">{{ user.name || "-" | titlecase }}</td>
-              <td (click)="checkSubAgent(user)">{{ user.username || "-" }}</td>
+              <td (click)="checkSubAgent(user)">{{ user.user_name || "-" }}</td>
               <td>{{ user.phone || "-" }}</td>
               <td>{{ user.balance}}</td>
               <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
@@ -109,7 +111,7 @@
                   }}</span>
               </td>
               <td>
-                <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
+                <!-- <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
                 &nbsp;
                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
                     user_unique_id: user.user_unique_id,
@@ -118,8 +120,8 @@
 										balance: user.balance,
                     userIndex: userIndex
                   })"><i class="fa fa-edit"></i>Edit</a>
-                  &nbsp;
-                  <a href="javascript:void(0);" *ngIf="user.status == 0" (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-transfer"></i> Enable</a>
+                  &nbsp; -->
+                  <a href="javascript:void(0);" *ngIf="user.status == 0" (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
                   &nbsp;
                   <a href="javascript:void(0);" *ngIf="user.status == 1" (click)="changeAgentStatus(user.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
