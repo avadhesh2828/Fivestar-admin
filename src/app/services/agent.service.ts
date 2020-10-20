@@ -24,6 +24,16 @@ export class AgentService {
     return this.http.post(`${environment.API_URL}/agent/change_agent_status`, params);
   }
 
+  //change password
+  changePassword(params: object) {
+    return this.http.post(`${environment.API_URL}/change-password`, params);
+  }
+
+  //change security password
+  changeSecurityPassword(params: object) {
+    return this.http.post(`${environment.API_URL}/change-security-password`, params);
+  }
+
   getCountryList() {
     return this.http.post(`${environment.API_URL}/common/country_list`, {});
   }

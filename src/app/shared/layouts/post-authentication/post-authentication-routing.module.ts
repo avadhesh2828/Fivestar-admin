@@ -51,6 +51,7 @@ const routes: Routes = [
             },
             { path: 'disputes', loadChildren: () => import('../../../dispute/dispute.module').then(m => m.DisputeModule) },
             { path: 'players', loadChildren: () => import('../../../player/player.module').then(m => m.PlayerModule) },
+            { path: 'password', loadChildren: () => import('../../../password/password.module').then(m => m.PasswordModule) },
 
         ]
     },
