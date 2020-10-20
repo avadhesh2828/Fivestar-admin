@@ -21,7 +21,7 @@ class AgentController extends Controller
     {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
-    
+
         $agent = new Agent;
         if($request->parent_id != ''){
             $agent = $agent->where('parent_id', $request->parent_id);
@@ -38,7 +38,7 @@ class AgentController extends Controller
      *
      */
     public function create(Request $request)
-    {   
+    {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
 
@@ -49,13 +49,17 @@ class AgentController extends Controller
         $phone    = $request->post('phone');
         $description = $request->post('description');
         //validation
+        $customMessages = [
+            'password.regex' => 'Password must have one uppercase and must be alphanumeric.',
+        ];
+
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:pgsql.users.admins,username|min:7|max:16',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric|min:0|max:100',
-            'name'     => 'required',
-            'phone'    => 'required'
-        ]);
+            'name'     => 'required'
+        ],$customMessages);
+
 
         if($validator->fails()){
             return response()->json([
@@ -80,7 +84,7 @@ class AgentController extends Controller
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
         ]);
-        
+
         return response()->json([
             'response_code'=> 200,
             'service_name' => 'create_agent',
@@ -93,7 +97,7 @@ class AgentController extends Controller
      *
      */
     public function change_agent_status($agent_id, Request $request)
-    {   
+    {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
 
@@ -126,8 +130,8 @@ class AgentController extends Controller
                 'message'=> 'Someting wrong for updating agent status',
             ],500);
         }
-        
-        
+
+
     }
 
 }

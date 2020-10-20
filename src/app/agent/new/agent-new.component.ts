@@ -73,7 +73,7 @@ export class AgentNewComponent implements OnInit {
       'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
       'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       'score': ['0', [Validators.required]],
-      'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(pattern)]],
+      'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
       'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
     });
