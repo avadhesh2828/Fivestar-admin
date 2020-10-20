@@ -65,13 +65,13 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Users</h1>
-          <div class="col-6 col-sm-3">
+          <h1 class="h3 mb-0 text-gray-800">User Management</h1>
+          
             <span class="input-group-prepend">
               <a class="btn btn-warning" [routerLink]="['/agent/new']"><i class="fa fa-file-pdf-o"></i>
                 Create Agent</a>
             </span>
-          </div>
+          
           <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
 
         </div>
@@ -106,7 +106,7 @@
               <!-- <td>{{ user.user_name || "-" }} </td> -->
               <td>{{ user.name || "-" | titlecase }}</td>
               <td>{{ user.username || "-" }}</td>
-              <td>{{ user.phone_number || "-" }}</td>
+              <td>{{ user.phone || "-" }}</td>
               <!-- <td>{{ user.email || "-" }}</td>
               <td *ngIf="user.country_name;else nocountry">{{ user.country_name || "-"}} </td>
               <ng-template #nocountry>
