@@ -86,7 +86,6 @@
               <td>{{ agent.phone || "-" }}</td>
               <td>{{ agent.balance}}</td>
               <td>{{ formatDateTimeZone(agent.last_login) | date: dateFormatString}} </td>
-
               <td>
                 <span class="badge"
                   [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}" >{{AgentStatus[agent.status]
