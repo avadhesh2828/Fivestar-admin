@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Agent;
+use App\Models\AdminRoles;
 use Auth;
 use DB;
 use Validator;
@@ -56,7 +57,7 @@ class AgentController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:pgsql.users.admins,username|min:7|max:16',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'score'    => 'required|numeric|min:0|max:100',
+            'score'    => 'required|numeric|min:0|max:'.$this->user->balance,
             'name'     => 'required'
         ],$customMessages);
 
@@ -70,6 +71,8 @@ class AgentController extends Controller
             ], 400);
         }
 
+        $roles = AdminRoles::where('name', 'ADMIN')->first();
+        
         Agent::create([
             "username"      => $username,
             "password"      => Hash::make($password),
@@ -79,7 +82,7 @@ class AgentController extends Controller
             "description"   => $description,
             "role_id"       => 2,
             "status"        => 1,
-            "parent_id"     => $user_id,
+            "parent_id"     => $roles->role_id,
             "unique_code"   => random_string('alnum', 9),
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
