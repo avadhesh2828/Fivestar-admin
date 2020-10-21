@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
-    
+
         $users = new User;
         $users = $users->where('parent_id', $user_id);
         $users = $users->where('status', $request->status);
@@ -43,9 +43,9 @@ class UserController extends Controller
      *
      */
     public function create(Request $request)
-    {   
+    {
         $this->user = Auth::user();
-        $user_id = $this->user->admin_id;
+        $agent_id = $this->user->admin_id;
 
         $username = $request->post('username');
         $password = $request->post('password');
@@ -79,12 +79,12 @@ class UserController extends Controller
             "phone"         => $phone,
             "description"   => $description,
             "status"        => 1,
-            "parent_id"     => $user_id,
+            "parent_id"     => $agent_id,
             "user_unique_id"   => random_string('alnum', 9),
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
         ]);
-        
+
         return response()->json([
             'response_code'=> 200,
             'service_name' => 'create_user',
@@ -98,7 +98,7 @@ class UserController extends Controller
      *
      */
     public function change_user_status($user_id, Request $request)
-    {   
+    {
         $this->user = Auth::user();
         $admin_id = $this->user->admin_id;
 
@@ -131,6 +131,6 @@ class UserController extends Controller
                 'message'=> 'Someting wrong for updating user status',
             ],500);
         }
-    } 
-   
+    }
+
 }
