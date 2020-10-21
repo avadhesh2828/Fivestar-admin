@@ -1,3 +1,89 @@
-<p>
-  new works!
-</p>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="newAgentForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Create New Player</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="username">User Name<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="username">
+              <div *ngIf="submitted && f['username'].errors" class="text-danger">
+                <div *ngIf="f['username'].errors.required">User Name is required</div>
+                <div *ngIf="f['username'].errors.minlength">User Name must have greater than 7 characters</div>
+                <div *ngIf="f['username'].errors.maxlength">User Name must have less than 50 characters</div>
+                <div *ngIf="f['username'].errors.pattern"> User Name must begin with a letter and must only contain
+                  alphanumeric characters or
+                  _(underscore)</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="password">Password<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="password">
+              <div *ngIf="submitted && f['password'].errors" class="text-danger">
+
+                <div *ngIf="f['password'].errors.minlength">Password must have greater than 3 characters</div>
+                <div *ngIf="f['password'].errors.maxlength">Password must have less than 20 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="score">Score<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="number" class="form-control" formControlName="score">
+              <div *ngIf="submitted && f['score'].errors" class="text-danger">
+                <div *ngIf="f['score'].errors.required">Score is required</div>
+                <div *ngIf="f['score'].errors.max">Score should be equal to or less than {{maxBalance}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="name">Name<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="name">
+              <div *ngIf="submitted && f['name'].errors" class="text-danger">
+                <div *ngIf="f['password'].errors.required">Name is required</div>
+                <div *ngIf="f['name'].errors.minlength">Name must have greater than 3 characters</div>
+                <div *ngIf="f['name'].errors.maxlength">Name must have less than 50 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="description">Description</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="description">
+              <div *ngIf="submitted && f['description'].errors" class="text-danger">
+                <div *ngIf="f['description'].errors.minlength">Description must have greater than 5 characters</div>
+                <div *ngIf="f['description'].errors.maxlength">Description must have less than 50 characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="phone">Phone</label>
+            <div class="col-md-9">
+              <input type="text" appNumeric numericType='number' class="form-control" id="phone"
+                formControlName="phone" />
+              <div *ngIf="submitted && f['phone'].errors" class="text-danger">
+                <div *ngIf="f['phone'].errors.required">Phone Number is required</div>
+                <div *ngIf="f['phone'].errors.pattern || f['phone'].errors.minlength|| f['phone'].errors.maxlength">
+                  Phone Number must be valid
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
