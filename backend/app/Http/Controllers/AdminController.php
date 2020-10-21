@@ -59,6 +59,7 @@ class AdminController extends Controller
                 $result =  Admin::where($where)->update($update_data);
 
                 $success['session_key'] =  'Bearer '.$user->createToken('MyLance Admin')->accessToken;
+                $success['info'] =  $user;
                 return response()->json([
                     'response_code'=> 200,
                     'service_name' => 'verify_personal_password',
@@ -104,6 +105,7 @@ class AdminController extends Controller
             $result =  Admin::where($where)->update($update_data);
 
             $success['session_key'] =  'Bearer '.$userAuth->createToken('MyLance Admin')->accessToken;
+            $success['info'] =  $userAuth;
             return response()->json([
                 'response_code'=> 200,
                 'service_name' => 'set_personal_password',

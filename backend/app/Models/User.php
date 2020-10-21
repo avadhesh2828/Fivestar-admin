@@ -11,7 +11,7 @@ class User extends Model
   protected $primaryKey = 'user_id';
 
   protected $fillable = [
-    'user_id', 'user_unique_id','user_name','email','password','balance','dob','status','last_login','last_ip','image','parent_id','phone','description','name','created_at','updated_at'
+    'user_id', 'user_unique_id','username','email','password','balance','dob','status','last_login','last_ip','image','parent_id','phone','description','name','created_at','updated_at'
   ];
 
   public $timestamps = false;
