@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list', 'AgentController@index');
 		Route::post('create', 'AgentController@create');
 		Route::post('change-agent-status/{agent_id}', 'AgentController@change_agent_status');
-	});
+	});	
 
 	//User
 	Route::group(['prefix' => 'users'], function(){
@@ -40,6 +40,23 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('create', 'UserController@create');
 		Route::post('change-user-status/{user_id}', 'UserController@change_user_status');
 	});
+
+	//advertisment route
+	Route::group(['prefix' => 'advertisements'], function(){
+		Route::get('get_advertisement','Advertisements@get_advertisement')->middleware('can:isAdmin');
+		Route::post('create_advertisement','Advertisements@create_ads')->middleware('can:isAdmin');
+		Route::post('get_positions','Advertisements@get_positions')->middleware('can:isAdmin');
+		Route::post('do_upload','Advertisements@do_upload')->middleware('can:isAdmin');
+		Route::post('change_adv_status','Advertisements@change_adv_status')->middleware('can:isAdmin');
+		Route::post('delete_advertisement','Advertisements@delete_advertisement')->middleware('can:isAdmin');
+	});	
+
+	//notificaton
+	Route::group(['prefix' => 'notifications'], function(){
+		Route::post('add_new_notification','NotificationController@add_new_notification')->middleware('can:isAdmin');
+		Route::post('get_all_notifications','NotificationController@get_all_notifications')->middleware('can:isAdmin');
+		Route::post('fcm_notifications','NotificationController@fcm_notifications')->middleware('can:isAdmin');
+	});			
 
 
 	//route match api
@@ -77,15 +94,9 @@ Route::middleware('auth:api')->group(function () {
 
 	});
 
+	
 	//payment transaction
 	Route::post('payment_transaction/get_all_transaction','Payment_transaction@get_all_transaction');
-	//advertisment route
-	Route::get('advertisements/get_advertisement','Advertisements@get_advertisement');
-	Route::post('advertisements/create_advertisement','Advertisements@create_ads');
-	Route::post('advertisements/get_positions','Advertisements@get_positions');
-	Route::post('advertisements/do_upload','Advertisements@do_upload');
-	Route::post('advertisements/change_adv_status','Advertisements@change_adv_status');
-	Route::post('advertisements/delete_advertisement','Advertisements@delete_advertisement');
 	//dispute route
 	Route::get('disputes','DisputeController@get_all_disputes');
 	Route::post('dispute/change_dispute_status','DisputeController@change_dispute_status');
@@ -116,12 +127,6 @@ Route::middleware('auth:api')->group(function () {
 	Route::get('team/get_all_teams','TeamsController@get_all_teams');
 	Route::post('team/pre_team_data','TeamsController@pre_team_data');
 	Route::post('team/match_details','TeamsController@match_details');
-
-	//notificaton
-	Route::post('notifications/add_new_notification','NotificationController@add_new_notification');
-
-	Route::post('notifications/get_all_notifications','NotificationController@get_all_notifications');
-	Route::post('notifications/fcm_notifications','NotificationController@fcm_notifications');
 
 	//admin logout route
 	Route::post('logout','AdminController@logout');

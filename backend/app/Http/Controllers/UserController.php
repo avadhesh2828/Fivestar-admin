@@ -16,6 +16,7 @@ use Auth;
 use DB;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
@@ -55,7 +56,7 @@ class UserController extends Controller
         $description = $request->post('description');
         //validation
         $validator = Validator::make($request->all(), [
-            'username' => 'required|numeric|unique:pgsql.users.user,username|min:7|max:16',
+            'username' => 'required|numeric|unique:pgsql.users.user,username',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric',
             'name'     => 'required',
