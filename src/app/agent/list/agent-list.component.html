@@ -53,10 +53,14 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Agent Management</h1>
-          <span class="input-group-prepend">
+          <h1 class="h3 mb-0 text-gray-800">Agent Management
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+              [routerLink]="['/agent/new']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+          <!-- <span class="input-group-prepend">
             <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
-          </span>
+          </span> -->
           <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
