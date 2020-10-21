@@ -1,3 +1,39 @@
 .navbar-brand span {
   font-weight: 600;
 }
+
+.user-data {
+  display: flex;
+    list-style: none;
+    align-self: flex-start;
+    flex-grow: 1;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 0;
+    height: 55px;
+    padding-left: 0;
+
+    li {
+      margin: 0px 10px;
+      i {
+        margin-right: 5px;
+      }
+    }
+}
+
+.app-header.navbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sidebar-toggler {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-right {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
