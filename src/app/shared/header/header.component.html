@@ -6,9 +6,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <ul class="user-data">
-    <li><i class="fa fa-user"></i>{{user?.user_name || user?.name}}</li>
+    <li><i class="fa fa-user"></i>{{user?.username || user?.name}}</li>
     <li>My score: {{user?.balance}}</li>
-    <li><i class="fa fa-calendar"></i>{{myDate | date: 'YYYY-MM-DD hh:mm:ss'}}</li>
+    <li><i class="fa fa-calendar"></i>{{myDate | date: 'yyyy-MM-dd hh:mm:ss'}}</li>
   </ul>
   <!-- <p><i class="fa fa-user"></i>{{user?.user_name || user?.name}}</p>
   <p>My score: {{user?.balance}}</p>
