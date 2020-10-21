@@ -8,9 +8,9 @@ import { UserWatchlistComponent } from './user-watchlist/user-watchlist.componen
 import { NewComponent } from './new/new.component';
 
 const routes: Routes = [
+    { path: 'new', component: NewComponent },
     { path: ':userId', component: UserDetailComponent },
     { path: '', component: UserListComponent },
-    { path: 'new', component: NewComponent },
     { path: 'portfolio/:userId', component: UserPortfolioComponent },
     { path: 'watchlist/:userId', component: UserWatchlistComponent },
 

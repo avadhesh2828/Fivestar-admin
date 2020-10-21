@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserRoutingModule, routedComponents } from './user-routing.module';
 import { FantasyPipeModule } from '../pipes/pipes.module';
@@ -19,6 +19,7 @@ import { UserListComponent } from './list/user-list.component';
         FantasyPipeModule,
         PostAuthenticationModule,
         DirectivesModule,
+        ReactiveFormsModule,
 
     ],
     declarations: [

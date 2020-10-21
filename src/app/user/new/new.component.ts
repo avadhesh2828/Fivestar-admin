@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
@@ -7,9 +11,97 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewComponent implements OnInit {
 
-  constructor() { }
+  public newAgentForm: FormGroup;
+  formSubmitted = false;
+  formError: any;
+  submitted = false;
+  maxChars = 200;
+  remainChars: any = '';
+  public error = false;
+  minDate: Date;
+  public imagePath;
+  imgURL: any;
+  imgPath: any;
+  public message: string;
+  maxBalance: any;
+
+  // public show:boolean = false;
+  public isSameAdd = false;
+
+  constructor(
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
+    this.userService.currentUser.subscribe((usr: any) => {
+      this.maxBalance = usr.balance;
+      this.minDate = new Date();
+      this.newAgentForm = this.formBuilder.group({
+        // checkadd:[''],
+        'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
+        'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+        // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
+        // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
+        'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
+        'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+        'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
+        'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
+      });
+    });
   }
 
+  // getting form control values
+  get f() {
+    return this.newAgentForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.newAgentForm.invalid || this.formError) {
+      return;
+    } else {
+      const forminputdata = {
+        'username': this.f.username.value,
+        'password': this.f.password.value,
+        'score': this.f.score.value,
+        'name': this.f.name.value,
+        'phone': this.f.phone.value,
+        'description': this.f.description.value
+      };
+
+      this.formSubmitted = true;
+
+      this.userService.createNewPlayer(forminputdata).pipe()
+        .subscribe((res: any) => {
+          this.formSubmitted = false;
+          this.toastr.success(res.message || 'New Player Created Sucessfully.');
+          this.handleReset();
+          this.authService.getUserDetails().subscribe((usr: any) => {
+            this.userService.updateUser(usr.data.user_profile);
+          });
+          this.router.navigate(['/users']);
+        }, err => {
+          const errorMessage = '';
+          this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while creating new Agent.');
+          this.formSubmitted = false;
+        });
+    }
+  }
+
+  handleReset() {
+    this.newAgentForm.reset();
+    this.newAgentForm.controls['username'].setValue('');
+    this.newAgentForm.controls['password'].setValue('');
+    this.newAgentForm.controls['score'].setValue('0');
+    this.newAgentForm.controls['name'].setValue('');
+    this.newAgentForm.controls['phone'].setValue('');
+    this.newAgentForm.controls['description'].setValue('');
+    this.submitted = false;
+    this.formSubmitted = false;
+  }
 }

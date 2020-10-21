@@ -66,4 +66,8 @@ export class UserService {
   getUserWatchList(params: object) {
     return this.http.post(`${environment.API_URL}/user/watchlist`, params);
   }
+
+  createNewPlayer(params: object) {
+    return this.http.post(`${environment.API_URL}/users/create`, params);
+  }
 }
