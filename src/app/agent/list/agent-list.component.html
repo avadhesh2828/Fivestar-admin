@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <div class="card-header">
-        <!-- <div class="row">
+      <!-- <div class="card-header"> -->
+      <!-- <div class="row">
           <div class="col-12 col-sm-3">
             <div class="input-group">
               <select class="form-control" [(ngModel)]="params['country']" placeholder="Select a country"
@@ -41,19 +41,22 @@
             </div>
           </div>
           <div class="col-12 col-sm-6">-->
-            <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+      <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
               <i class="fa fa-search"></i> Search</button>&nbsp; -->
-            <!--<button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+      <!--<button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
               Reset Filters</button>
           </div>
         </form> -->
-        <span class="input-group-prepend">
+      <!-- <span class="input-group-prepend">
           <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
         </span>
-      </div>
+      </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Agent Management</h1>
+          <span class="input-group-prepend">
+            <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
+          </span>
           <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -88,7 +91,7 @@
               <td>{{ formatDateTimeZone(agent.last_login) | date: dateFormatString}} </td>
               <td>
                 <span class="badge"
-                  [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}" >{{AgentStatus[agent.status]
+                  [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}">{{AgentStatus[agent.status]
                   }}</span>
               </td>
               <td>
@@ -101,10 +104,12 @@
 										balance: agent.balance,
                     userIndex: userIndex
                   })"><i class="fa fa-edit"></i>Edit</a> -->
-                  &nbsp;
-                  <a href="javascript:void(0);" *ngIf="agent.status == 0" (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
-                  &nbsp;
-                  <a href="javascript:void(0);" *ngIf="agent.status == 1" (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="agent.status == 0"
+                  (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="agent.status == 1"
+                  (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
               </td>
             </tr>
@@ -128,6 +133,7 @@
     </div>
   </div>
 </div>
+<app-user-list></app-user-list>
 
 
 <!-- <app-edit-agent [agent]="currentAgent" (editedStatus)="onStatusEdit($event)"></app-edit-agent> -->

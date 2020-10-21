@@ -65,11 +65,12 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">User Management
-            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/users/new']">
-              <i class="nav-icon icon-plus"></i> Create</a></button>
+          <h1 class="h3 mb-0 text-gray-800">Player Management
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+                [routerLink]="['/users/new']">
+                <i class="nav-icon icon-plus"></i> Create</a></button>
           </h1>
-          
+
           <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
 
         </div>
@@ -106,7 +107,7 @@
 
               <td>
                 <span class="badge"
-                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}" >{{userStatus[user.status]
+                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]
                   }}</span>
               </td>
               <td>
@@ -120,9 +121,11 @@
                     userIndex: userIndex
                   })"><i class="fa fa-edit"></i>Edit</a>
                   &nbsp; -->
-                  <a href="javascript:void(0);" *ngIf="user.status == 0" (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
-                  &nbsp;
-                  <a href="javascript:void(0);" *ngIf="user.status == 1" (click)="changeAgentStatus(user.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+                <a href="javascript:void(0);" *ngIf="user.status == 0"
+                  (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="user.status == 1"
+                  (click)="changeAgentStatus(user.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
               </td>
             </tr>

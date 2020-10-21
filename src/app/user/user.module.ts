@@ -7,6 +7,7 @@ import { FantasyPipeModule } from '../pipes/pipes.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { PostAuthenticationModule } from '../shared/layouts/post-authentication/post-authentication.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { UserListComponent } from './list/user-list.component';
 
 
 
@@ -23,6 +24,10 @@ import { DirectivesModule } from '../directives/directives.module';
     declarations: [
         ...routedComponents,
         EditUserComponent,
+    ],
+    exports: [
+        UserListComponent,
+
     ],
     providers: [
     ]

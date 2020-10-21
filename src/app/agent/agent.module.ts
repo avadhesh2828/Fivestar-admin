@@ -9,6 +9,7 @@ import { PostAuthenticationModule } from '../shared/layouts/post-authentication/
 import { DirectivesModule } from '../directives/directives.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { LightboxModule } from 'ngx-lightbox';
+import { UserModule } from '../user/user.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { LightboxModule } from 'ngx-lightbox';
         BsDatepickerModule.forRoot(),
         ImageCropperModule,
         LightboxModule,
+        UserModule
 
     ],
     declarations: [

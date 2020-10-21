@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { KYC_TYPE, KYC_STATUS, COMMISSION_TYPE } from '../constants';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-agent-new',
   templateUrl: './agent-new.component.html',
@@ -30,6 +31,7 @@ export class AgentNewComponent implements OnInit {
   imgErrorMsg: any;
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  maxBalance: any;
   public countryList = [];
   public kycType = KYC_TYPE;
   public kycStatus = KYC_STATUS;
@@ -41,41 +43,46 @@ export class AgentNewComponent implements OnInit {
   constructor(
     private agentService: AgentService, private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
     // this.getCountryList();
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-    const pattern = new RegExp(/^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/);
-    this.minDate = new Date();
-    this.newAgentForm = this.formBuilder.group({
-      // agentName: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(pattern)]],
-      // email:    ['',   [Validators.required,
-      // Validators.pattern(new RegExp('^([a-z0-9\\+_\\-]+)(\\.[a-z0-9\\+_\\-]+)*@([a-z0-9\\-]+\\.)+[a-z]{2,6}$', 'i'))]],
-      // phone_number:   ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
-      // website:['',[Validators.maxLength(100),Validators.pattern(reg)]],
-      // address:['',[Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
-      // country:  ['160',   [Validators.required]],
-      // state:    ['',   [Validators.required]],
-      // city:     ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-Z \-\']+')]],
-      // pincode: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      // business_address:['',[Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
-      // business_country:  ['160',   [Validators.required]],
-      // business_state:    ['',   [Validators.required]],
-      // business_city:     ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-Z \-\']+')]],
-      // business_pincode: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      // kyc_type: ['',   [Validators.required]],
-      // commission_type: ['0',   [Validators.required]],
-      // commission_amount: ['1',   [Validators.required]],
-      // agent_proof_image:['',[Validators.required]],
-      // checkadd:[''],
-      'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
-      'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      'score': ['0', [Validators.required]],
-      'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
-      'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
+    const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
+    this.userService.currentUser.subscribe((usr: any) => {
+      this.maxBalance = usr.balance;
+      this.minDate = new Date();
+      this.newAgentForm = this.formBuilder.group({
+        // agentName: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(pattern)]],
+        // email:    ['',   [Validators.required,
+        // Validators.pattern(new RegExp('^([a-z0-9\\+_\\-]+)(\\.[a-z0-9\\+_\\-]+)*@([a-z0-9\\-]+\\.)+[a-z]{2,6}$', 'i'))]],
+        // phone_number:   ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
+        // website:['',[Validators.maxLength(100),Validators.pattern(reg)]],
+        // address:['',[Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
+        // country:  ['160',   [Validators.required]],
+        // state:    ['',   [Validators.required]],
+        // city:     ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-Z \-\']+')]],
+        // pincode: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+        // business_address:['',[Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
+        // business_country:  ['160',   [Validators.required]],
+        // business_state:    ['',   [Validators.required]],
+        // business_city:     ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-Z \-\']+')]],
+        // business_pincode: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+        // kyc_type: ['',   [Validators.required]],
+        // commission_type: ['0',   [Validators.required]],
+        // commission_amount: ['1',   [Validators.required]],
+        // agent_proof_image:['',[Validators.required]],
+        // checkadd:[''],
+        'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
+        'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
+        Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
+        'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
+        'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+        'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
+        'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
+      });
     });
     // this.getStateList();
   }
@@ -219,7 +226,6 @@ export class AgentNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.newAgentForm.invalid || this.formError) {
       return;
     } else {
