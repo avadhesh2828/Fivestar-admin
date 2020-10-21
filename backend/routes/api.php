@@ -25,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
 	//change password
 	Route::post('change-password', 'AdminController@change_password');
 	Route::post('change-security-password', 'AdminController@change_security_password');
+	Route::get('get-details', 'AdminController@get_details');
 
 	//agent
 	Route::group(['prefix' => 'agent'], function(){
