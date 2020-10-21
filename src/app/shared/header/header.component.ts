@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
     }
 
     getDetails() {
-        this.authService.get_user_details().subscribe((res: any) => {
+        this.authService.getUserDetails().subscribe((res: any) => {
             this.userService.updateUser(res.data);
         }, err => { });
     }

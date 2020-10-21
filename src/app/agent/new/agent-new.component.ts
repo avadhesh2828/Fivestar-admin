@@ -9,6 +9,7 @@ import { formatDateTime, formatDate } from '../../services/utils.service';
 import { KYC_TYPE, KYC_STATUS, COMMISSION_TYPE } from '../constants';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-agent-new',
   templateUrl: './agent-new.component.html',
@@ -45,6 +46,7 @@ export class AgentNewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -76,8 +78,9 @@ export class AgentNewComponent implements OnInit {
         // agent_proof_image:['',[Validators.required]],
         // checkadd:[''],
         'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
-        'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
-        Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
+        'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+        // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
+        // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
         'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
@@ -245,6 +248,9 @@ export class AgentNewComponent implements OnInit {
           this.formSubmitted = false;
           this.toastr.success(res.message || 'New Agent Created Sucessfully.');
           this.handleReset();
+          this.authService.getUserDetails().subscribe((usr: any) => {
+            this.userService.updateUser(usr.data.user_profile);
+          });
           this.router.navigate(['/users']);
         }, err => {
           const errorMessage = '';
