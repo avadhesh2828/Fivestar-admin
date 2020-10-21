@@ -65,11 +65,10 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">User Management</h1>
-          
-            <span class="input-group-prepend">
-              <a class="btn btn-warning" [routerLink]="['/users/new']"> Create New Player</a>
-            </span>
+          <h1 class="h3 mb-0 text-gray-800">User Management
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/users/new']">
+              <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
           
           <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
 
