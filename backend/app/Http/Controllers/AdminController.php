@@ -219,6 +219,13 @@ class AdminController extends Controller
 
     }
 
+    public function get_details(){
+        $this->user = Auth::user();
+        $user_id = $this->user->admin_id; 
+        $user = Admin::where('admin_id', $user_id)->first();
+        return response()->json(['response_code'=> 200,'service_name' => 'get_details','data' => $user],200);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->token()->delete();
