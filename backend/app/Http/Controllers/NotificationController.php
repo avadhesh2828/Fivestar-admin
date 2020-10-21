@@ -25,7 +25,7 @@ class NotificationController extends Controller
 	public function add_new_notification(Request $request)
 	{
 
-		if (empty($request->post())) 
+		if (empty($request->post()))
 		{
 			return response()->json(['response_code'=>500,'service_name'=>'add_new_notification','message'=>'Entered required field.']);
 		}
@@ -41,15 +41,15 @@ class NotificationController extends Controller
 		];
         $validator = Validator::make($request->all(), $rules,$customMessages);
         if ($validator->fails())
-        {          
+        {
             $error = $validator->errors();
             $error_all = $validator->messages()->all();
             $message = $error_all[array_keys($error_all)[0]];
-            return response()->json(['response_code'=>422,'service_name' => 'add_new_notification','message'=>$message,'error'=>$error,'global_error'=>$error]);                   
-        }   
-		if (empty($request->post('receiver_user_ids'))) 
+            return response()->json(['response_code'=>422,'service_name' => 'add_new_notification','message'=>$message,'error'=>$error,'global_error'=>$error]);
+        }
+		if (empty($request->post('receiver_user_ids')))
         {
-      		return response()->json(['response_code'=>422,'service_name' => 'add_new_notification','message'=>'Entered required field','error'=>'','global_error'=>'']); 
+      		return response()->json(['response_code'=>422,'service_name' => 'add_new_notification','message'=>'Entered required field','error'=>'','global_error'=>'']);
       	}
       	$notification_type_id = $this->get_notification_types("BULK_NOTIFICATION");
 
@@ -79,8 +79,8 @@ class NotificationController extends Controller
 		if(!empty($device_token)) {
 			$response = Notification::send_notification($notification_title,$notification_content,$device_token);
 		}
-		
-		
+
+
         return response()->json(['response_code'=>200,'service_name'=>'get_all_notifications','data'=>$insert_notification,'message'=>'Add New Notifications']);
 	}
 
@@ -98,7 +98,7 @@ class NotificationController extends Controller
 			$page = $post['currentPage'] - 1;
 		}
 		$query = DB::table('users.notifications as N');
-		$query->select('N.notification_id','U.user_name as receiver_username','U.first_name','U.last_name','N.title','N.notification', 'N.is_read', 'N.created_date', 'N.updated_date');
+		$query->select('N.notification_id','U.user_name as receiver_username','U.name','N.title','N.notification', 'N.is_read', 'N.created_date', 'N.updated_date');
 		$query->leftJoin('users.user as U','U.user_id', '=', 'N.receiver_user_id');
 		$query->where('N.sender_user_id', '0');
 	    $offset   = $limit * $page;
@@ -132,7 +132,7 @@ class NotificationController extends Controller
 		$option = $optionBuilder->build();
 		$notification = $notificationBuilder->build();
 		$data = $dataBuilder->build();
-		
+
 		$token = "d0zPzZdARlOFiWkmDMPcDN:APA91bGcCsszecmYbQ3iK2k8U1abewC8LtqZG-EyX6EGG1pesa7uS4mp8FhJz6bz1KTD2uZDJdaoekQwUXPP2y-YShI7UGdRnxrwVMtKetYXFAYVACxFpF1KbeA6f1c-UY89XdDxLLgy";
 
 		$downstreamResponse = FCM::sendTo($token, $option, $notification, $data);

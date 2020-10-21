@@ -8,7 +8,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUsers(params: object) {
-    return this.http.post(`${environment.API_URL}/users`, params);
+    return this.http.get(`${environment.API_URL}/users/list`, params);
   }
   getAgents(url:any) {
     return this.http.get(`${environment.API_URL}/${url}`);
