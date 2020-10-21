@@ -9,27 +9,29 @@ use App\Models\Ad_position;
 use File;
 use DB;
 use Validator;
+use Illuminate\Support\Facades\Gate;
 
 class Advertisements extends Controller
 {
     public function get_advertisement(Request $request)
     {
-        \DB::enableQueryLog();
-        $all_adv = new Advertisment_model;
-        // Eager load relationship
-        $all_adv = $all_adv->with('position');
-        //status filter
-        if (isset($request->status) && $request->status > -1) {
-            $all_adv = $all_adv->where('status', $request->status);
-        }
-        // Partial Keyword Search Filter with player name
-        if($request->keyword != "" )
-        {
-            $all_adv = $all_adv->where('ad_name','ilike', '%'.$request->keyword.'%');
-        }
-        $all_adv = $all_adv->orderBy('created_date','DESC');
-        $all_adv = $all_adv->paginate($request->per_page);
-        return response()->json(['response_code'=> 200,'service_name' => 'get_all_advertisment','data' => $all_adv]);
+            \DB::enableQueryLog();
+            $all_adv = new Advertisment_model;
+            // Eager load relationship
+            $all_adv = $all_adv->with('position');
+            //status filter
+            if (isset($request->status) && $request->status > -1) {
+                $all_adv = $all_adv->where('status', $request->status);
+            }
+            // Partial Keyword Search Filter with player name
+            if($request->keyword != "" )
+            {
+                $all_adv = $all_adv->where('ad_name','ilike', '%'.$request->keyword.'%');
+            }
+            $all_adv = $all_adv->orderBy('created_date','DESC');
+            $all_adv = $all_adv->paginate($request->per_page);
+            return response()->json(['response_code'=> 200,'service_name' => 'get_all_advertisment','data' => $all_adv],200);
+        
     }
 
     public function create_ads(Request $request)
