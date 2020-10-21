@@ -55,7 +55,7 @@ class UserController extends Controller
         $description = $request->post('description');
         //validation
         $validator = Validator::make($request->all(), [
-            'username' => 'required|unique:pgsql.users.user,user_name|min:7|max:16',
+            'username' => 'required|numeric|unique:pgsql.users.user,username|min:7|max:16',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric',
             'name'     => 'required',
@@ -72,7 +72,7 @@ class UserController extends Controller
         }
 
         User::create([
-            "user_name"     => $username,
+            "username"      => $username,
             "password"      => Hash::make($password),
             "balance"       => $score,
             "name"          => $name,
@@ -80,7 +80,7 @@ class UserController extends Controller
             "description"   => $description,
             "status"        => 1,
             "parent_id"     => $agent_id,
-            "user_unique_id"   => random_string('alnum', 9),
+            "user_unique_id"=> random_string('alnum', 9),
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
         ]);
