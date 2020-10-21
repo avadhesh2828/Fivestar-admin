@@ -5,6 +5,10 @@
   <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <p><i class="fa fa-user"></i>{{user?.user_name || user?.name}}</p>
+  <p>My score: {{user?.balance}}</p>
+  <p><i class="fa fa-calendar"></i>{{myDate | date: 'YYYY-MM-DD hh:mm:ss'}}</p>
+
   <a class="navbar-brand" href="javascript:void(0)">
     <span><img [src]="logo" style="height: 30px" /> | Admin Panel</span>
   </a>
@@ -19,7 +23,7 @@
         <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/password/change-security-password']">
           <i class="fa fa-key"></i> Change Personal Password</a>
         <a class="dropdown-item" href="javascript:void(0)" (click)="adminLogout()">
-         <i class="fa fa-lock"></i> Logout</a>
+          <i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>
   </ul>

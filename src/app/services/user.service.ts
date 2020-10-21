@@ -1,20 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  private userObject = new BehaviorSubject({});
+  currentUser = this.userObject.asObservable();
   constructor(private http: HttpClient) { }
+
+  updateUser(user: any) {
+    this.userObject.next(user);
+  }
+
+  // finding size of object
+  sizeOfObject(obj: object) {
+    let size = 0;
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        size++;
+      }
+    }
+    return size;
+  }
 
   getUsers(params: object) {
     return this.http.get(`${environment.API_URL}/users/list`, params);
   }
-  getAgents(url:any) {
+  getAgents(url: any) {
     return this.http.get(`${environment.API_URL}/${url}`);
   }
 
-  changeAgentStatus(agentId: any, data: object){
+  changeAgentStatus(agentId: any, data: object) {
     return this.http.post(`${environment.API_URL}/agent/change-agent-status/${agentId}`, data);
   }
 

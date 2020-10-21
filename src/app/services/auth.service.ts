@@ -56,6 +56,10 @@ export class AuthService {
         return this.http.post(`${environment.API_URL}/change-password`, data);
     }
 
+    public get_user_details() {
+        return this.http.get(`${environment.API_URL}/get-details`);
+    }
+
     public logout() {
         return this.http.post(`${environment.API_URL}/logout`, {})
             .pipe(map(response => {
