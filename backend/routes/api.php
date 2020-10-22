@@ -39,6 +39,7 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list', 'UserController@index');
 		Route::post('create', 'UserController@create');
 		Route::post('change-user-status/{user_id}', 'UserController@change_user_status');
+		Route::post('get-login-history', 'UserController@get_login_history');
 	});
 
 	//advertisment route

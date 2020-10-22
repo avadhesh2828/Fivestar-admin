@@ -24,6 +24,7 @@ export class NewComponent implements OnInit {
   imgPath: any;
   public message: string;
   maxBalance: any;
+  userAgent: any;
 
   // public show:boolean = false;
   public isSameAdd = false;
@@ -40,10 +41,11 @@ export class NewComponent implements OnInit {
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
       this.maxBalance = usr.balance;
+      this.userAgent = usr.username;
       this.minDate = new Date();
       this.newAgentForm = this.formBuilder.group({
         // checkadd:[''],
-        'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
+        // 'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
         'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
         // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
         // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
@@ -66,7 +68,7 @@ export class NewComponent implements OnInit {
       return;
     } else {
       const forminputdata = {
-        'username': this.f.username.value,
+        // 'username': this.f.username.value,
         'password': this.f.password.value,
         'score': this.f.score.value,
         'name': this.f.name.value,
@@ -95,7 +97,7 @@ export class NewComponent implements OnInit {
 
   handleReset() {
     this.newAgentForm.reset();
-    this.newAgentForm.controls['username'].setValue('');
+    // this.newAgentForm.controls['username'].setValue('');
     this.newAgentForm.controls['password'].setValue('');
     this.newAgentForm.controls['score'].setValue('0');
     this.newAgentForm.controls['name'].setValue('');

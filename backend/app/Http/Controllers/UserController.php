@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use App\Models\LoginHistory;
 use App\Models\User_Portfolio;
 use App\Models\User_Watchlist;
 use App\Http\Controllers\Payment_transaction;
@@ -134,4 +135,40 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Player Login History.
+     *
+     */
+    public function get_login_history(Request $request) {
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+
+        $username = $request->post('username');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "username" => ['required']
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'get_login_history',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $playerIp = new LoginHistory;
+        $playerIp = $playerIp->select('user_login_history.*', 'U.username');
+        $playerIp = $playerIp->join('users.user as U', function($q) {
+            $q->on('U.user_id', '=', 'user_login_history.user_id');
+        });
+        $playerIp = $playerIp->where('U.username', $username);
+        $playerIp = $playerIp->orderBy('user_login_history.created_at', 'DESC');
+        $playerIp = $playerIp->limit(10);
+        $playerIp = $playerIp->get();
+
+        return response()->json(['response_code'=> 200,'service_name' => 'get_login_history','data' => $playerIp],200);
+
+    }
 }
