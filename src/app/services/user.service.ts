@@ -35,6 +35,11 @@ export class UserService {
     return this.http.post(`${environment.API_URL}/agent/change-agent-status/${agentId}`, data);
   }
 
+
+  searchPlayerLoginIP(data: object) {
+    return this.http.post(`${environment.API_URL}/users/get-login-history`, data);
+  }
+
   getUserDetails(userId: string) {
     return this.http.post(`${environment.API_URL}/user/get_user_detail`, { user_unique_id: userId });
   }
