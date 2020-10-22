@@ -48,7 +48,7 @@ class UserController extends Controller
         $this->user = Auth::user();
         $agent_id = $this->user->admin_id;
 
-        $username = $request->post('username');
+        // $username = $request->post('username');
         $password = $request->post('password');
         $score    = $request->post('score');
         $name     = $request->post('name');
@@ -56,7 +56,7 @@ class UserController extends Controller
         $description = $request->post('description');
         //validation
         $validator = Validator::make($request->all(), [
-            'username' => 'required|numeric|unique:pgsql.users.user,username',
+            // 'username' => 'required|numeric|unique:pgsql.users.user,username',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric',
             'name'     => 'required',
@@ -73,7 +73,7 @@ class UserController extends Controller
         }
 
         User::create([
-            "username"      => $username,
+            "username"      => random_string(000000000, 999999999),
             "password"      => Hash::make($password),
             "balance"       => $score,
             "name"          => $name,
