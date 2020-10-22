@@ -140,9 +140,9 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public changeAgentStatus(agentId: any, status: any) {
     this.formSubmitted = true;
     const forminputdata = {
-      status: status
-    };
-    this.userService.changeAgentStatus(agentId, forminputdata).pipe()
+      status : status
+    };    
+    this.userService.changeUserStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
         this.formSubmitted = false;
         this.toastr.success(res.message || 'Agent status changed Sucessfully.');

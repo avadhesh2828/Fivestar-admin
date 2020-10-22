@@ -122,10 +122,10 @@
                   })"><i class="fa fa-edit"></i>Edit</a>
                   &nbsp; -->
                 <a href="javascript:void(0);" *ngIf="user.status == 0"
-                  (click)="changeAgentStatus(user.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                  (click)="changeAgentStatus(user.user_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="user.status == 1"
-                  (click)="changeAgentStatus(user.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+                  (click)="changeAgentStatus(user.user_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
               </td>
             </tr>
