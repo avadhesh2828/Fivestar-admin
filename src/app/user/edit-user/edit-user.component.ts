@@ -45,32 +45,32 @@ export class EditUserComponent implements OnChanges {
     }
   }
 
-  public onSubmit(data) {
+  // public onSubmit(data) {
 
-    this.userService.changeUserStatus({ ...this.user, ...data }).subscribe(
-      (response: any) => {
-        if (response) {
-          this.toastr.success(response.message);
-        }
-        this.user.status = data.status;
-        this.user.balance = parseInt(this.user.balance, 10) + parseInt(this.addBalance, 10);
-        this.editedStatus.emit({ success: true, update_balance: data.add_balance });
-        $('#editModal').modal('hide');
-      },
-      (error: any) => {
-        if (error.error.error) {
+  //   this.userService.changeUserStatus({ ...this.user, ...data }).subscribe(
+  //     (response: any) => {
+  //       if (response) {
+  //         this.toastr.success(response.message);
+  //       }
+  //       this.user.status = data.status;
+  //       this.user.balance = parseInt(this.user.balance, 10) + parseInt(this.addBalance, 10);
+  //       this.editedStatus.emit({ success: true, update_balance: data.add_balance });
+  //       $('#editModal').modal('hide');
+  //     },
+  //     (error: any) => {
+  //       if (error.error.error) {
          
-          this.oldData.addBalance = this.addBalance;
-          this.error.addBalance = error.error.error.add_balance;
-        } else {         
-          this.toastr.error(error.error.message);
-          this.editedStatus.emit({
-            success: false,
-            error: error.error.message || 'There was an error'
-          });
-          $('#editModal').modal('hide');
-        }
-      }
-    );
-  }
+  //         this.oldData.addBalance = this.addBalance;
+  //         this.error.addBalance = error.error.error.add_balance;
+  //       } else {         
+  //         this.toastr.error(error.error.message);
+  //         this.editedStatus.emit({
+  //           success: false,
+  //           error: error.error.message || 'There was an error'
+  //         });
+  //         $('#editModal').modal('hide');
+  //       }
+  //     }
+  //   );
+  // }
 }
