@@ -37,8 +37,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public countryList = [];
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
-  public url: string = 'users/list?';
-  selectedUser : any = 1;
+  public url = 'users/list?';
+  selectedUser: any = 1;
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
@@ -90,7 +90,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   private createUrl() {
     this.url = 'users/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status='+ this.selectedUser;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.selectedUser;
   }
 
   public getAgentsList() {
@@ -132,16 +132,16 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getAgentsList();
   }
 
-  public checkSubAgent(user:any){  
-    this.selectedUser = user.admin_id;
+  public checkSubAgent(user: any) {
+    this.selectedUser = user.user_id;
     this.getAgentsList();
   }
 
-  public changeAgentStatus(agentId: any, status: any){
+  public changeAgentStatus(agentId: any, status: any) {
     this.formSubmitted = true;
     const forminputdata = {
-      status : status
-    };    
+      status: status
+    };
     this.userService.changeAgentStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
         this.formSubmitted = false;

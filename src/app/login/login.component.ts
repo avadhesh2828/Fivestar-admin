@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isUserAuthenticated) {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/agent']);
     } else {
       this.router.navigate(['/login']);
     }
@@ -174,7 +174,7 @@ export class LoginComponent implements OnInit {
       'personal_password': this.ppf.personalPassword.value
     }).subscribe((res) => {
       this.verifyPPasswordSubmitted = false;
-      this.router.navigate(['/users']);
+      this.router.navigate(['/agent']);
     }, err => {
       this.toastr.error('Wrong Password');
     });

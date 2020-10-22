@@ -26,30 +26,30 @@ const routes: Routes = [
             },
             { path: 'leagues', loadChildren: () => import('../../../league/league.module').then(m => m.LeagueModule) },
             { path: 'matches', loadChildren: () => import('../../../matches/matches.module').then(m => m.MatchesModule) },
-            { path: 'teams', component: TeamListComponent },
+            // { path: 'teams', component: TeamListComponent },
 
             { path: 'news', loadChildren: () => import('../../../news/news.module').then(m => m.NewsModule) },
 
-            { path: 'events', loadChildren: () => import('../../../events/events.module').then(m => m.EventsModule) },
+            // { path: 'events', loadChildren: () => import('../../../events/events.module').then(m => m.EventsModule) },
 
-            { path: 'promotions', loadChildren: () => import('../../../promotions/promotions.module').then(m => m.PromotionsModule) },
+            // { path: 'promotions', loadChildren: () => import('../../../promotions/promotions.module').then(m => m.PromotionsModule) },
 
-            { path: 'weightclass', loadChildren: () => import('../../../weightclass/weightclass.module').then(m => m.WeightclassModule) },
+            // { path: 'weightclass', loadChildren: () => import('../../../weightclass/weightclass.module').then(m => m.WeightclassModule) },
 
-            { path: 'pages-list', loadChildren: () => import('../../../page-content/pages.module').then(m => m.PagesModule) },
+            // { path: 'pages-list', loadChildren: () => import('../../../page-content/pages.module').then(m => m.PagesModule) },
 
             { path: 'advertisement', loadChildren: () => import('../../../advertisement/advertisement.module').then(m => m.AdvertisementModule) },
 
-            { path: 'contest', loadChildren: () => import('../../../contest/contest.module').then(m => m.ContestModule) },
-            { path: 'finances/transactions/deposit', component: TransactionHistoryListComponent },
-            { path: 'finances/transactions/withdraw', component: WithdrawListComponent },
-            { path: 'finances/agent/transactions', component: TransactionHistoryAgentListComponent },
-            { path: 'finances/jackpot-transactions', component: JackpotTransactionComponent },
+            // { path: 'contest', loadChildren: () => import('../../../contest/contest.module').then(m => m.ContestModule) },
+            // { path: 'finances/transactions/deposit', component: TransactionHistoryListComponent },
+            // { path: 'finances/transactions/withdraw', component: WithdrawListComponent },
+            // { path: 'finances/agent/transactions', component: TransactionHistoryAgentListComponent },
+            // { path: 'finances/jackpot-transactions', component: JackpotTransactionComponent },
             {
                 path: 'notifications', loadChildren: () => import('../../../notifications/notifications.module').
                     then(m => m.NotificationsModule)
             },
-            { path: 'disputes', loadChildren: () => import('../../../dispute/dispute.module').then(m => m.DisputeModule) },
+            // { path: 'disputes', loadChildren: () => import('../../../dispute/dispute.module').then(m => m.DisputeModule) },
             { path: 'players', loadChildren: () => import('../../../player/player.module').then(m => m.PlayerModule) },
             { path: 'password', loadChildren: () => import('../../../password/password.module').then(m => m.PasswordModule) },
             { path: 'player-loginip', loadChildren: () => import('../../../player-login-ip/player-login-ip.module').then(m => m.PlayerLoginIpModule) },

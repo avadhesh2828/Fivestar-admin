@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 import { AdvertisementService } from '../../services/advertisement.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
@@ -19,7 +20,7 @@ export class AdvNewComponent implements OnInit {
   formError: any;
   submitted = false;
   maxChars = 200;
-  remainChars:any ='';
+  remainChars: any = '';
   public error = false;
   minDate: Date;
   public imagePath;
@@ -27,32 +28,36 @@ export class AdvNewComponent implements OnInit {
   imgName: any;
   imgPath: any;
   public message: string;
-  imgErrorMsg:any;
+  imgErrorMsg: any;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   public advPositionList = [];
   public stateList = [];
-  public isSameAdd=false;
-  public currentPosition ='';
+  public isSameAdd = false;
+  public currentPosition = '';
   public buttonDisabled = true;
 
   constructor(
     private advService: AdvertisementService, private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router, private location: Location
   ) { }
 
   ngOnInit() {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     this.newAdvForm = this.formBuilder.group({
-      advName:['',   [Validators.required, Validators.minLength(4),Validators.maxLength(30)]],
-      target_url:['',   [Validators.required,Validators.pattern(reg)]],
-      ad_position: ['',   [Validators.required]],
-      adv_image:['',[Validators.required]],
+      advName: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30)]],
+      target_url: ['', [Validators.required, Validators.pattern(reg)]],
+      ad_position: ['', [Validators.required]],
+      adv_image: ['', [Validators.required]],
     });
     this.getAdvPositions();
     this.minDate = new Date();
     // this.getStateList();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   public getAdvPositions() {
@@ -65,14 +70,14 @@ export class AdvNewComponent implements OnInit {
       });
   }
 
-  public getImageRatio(){
-    const obj = this.advPositionList.filter(adv => adv.ad_position_id == this.f['ad_position'].value)[0];
-    this.currentPosition =  '(' + obj.width + 'x' + obj.height + ')';
+  public getImageRatio() {
+    const obj = this.advPositionList.filter(adv => adv.ad_position_id === this.f['ad_position'].value)[0];
+    this.currentPosition = '(' + obj.width + 'x' + obj.height + ')';
   }
 
-  initLink(){
+  initLink() {
     return this.formBuilder.group({
-        consolationPrize: ['']
+      consolationPrize: ['']
     });
   }
 
@@ -81,20 +86,20 @@ export class AdvNewComponent implements OnInit {
     return this.newAdvForm.controls;
   }
 
-  //previow of image before upload
+  // previow of image before upload
   preview(files) {
-    if(!this.f.ad_position.value){
-      this.toastr.error('Please select Advertisement position first.');  
+    if (!this.f.ad_position.value) {
+      this.toastr.error('Please select Advertisement position first.');
       this.formSubmitted = false;
       this.f.adv_image.setValue('');
       return;
     }
-    if (files.length === 0){
+    if (files.length === 0) {
       return;
     }
-    var mimeType = files[0].type;
+    const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.imgErrorMsg = "Only images files are supported.";
+      this.imgErrorMsg = 'Only images files are supported.';
       this.formSubmitted = false;
       return;
     }
@@ -104,14 +109,14 @@ export class AdvNewComponent implements OnInit {
     formData.append('pos_type', this.f.ad_position.value);
 
     this.advService.uploadFileValidation(formData).pipe()
-      .subscribe((res:any) => {
+      .subscribe((res: any) => {
         this.formSubmitted = false;
         if (res.data) {
           this.imgURL = res.data.image_path;
           this.imgName = res.data.file_name;
         }
       }, err => {
-        let errorMessage = '';
+        const errorMessage = '';
         this.newAdvForm.controls['adv_image'].setValue('');
         this.toastr.error(errorMessage || err.error.message || 'Some error occurred while creating new Advertisment.');
         this.formSubmitted = false;
@@ -122,30 +127,29 @@ export class AdvNewComponent implements OnInit {
     this.submitted = true;
     if (this.newAdvForm.invalid) {
       return;
-    }
-    else{
-    const forminputdata = {
-      name:this.f.advName.value,
-      target_url:this.f.target_url.value,
-      position_type: this.f.ad_position.value,
-      image_name:this.imgName,
-    };
- 
-    this.formSubmitted = true;
+    } else {
+      const forminputdata = {
+        name: this.f.advName.value,
+        target_url: this.f.target_url.value,
+        position_type: this.f.ad_position.value,
+        image_name: this.imgName,
+      };
 
-    this.advService.createAdv(forminputdata).pipe()
-      .subscribe((res:any) => {
-        this.formSubmitted = false;
-        if (res) {
-          this.toastr.success( res.message || 'New Advertisement Created Sucessfully.');
-          this.handleReset();
-          
-        }
-      }, err => {
-        let errorMessage = '';
-        this.toastr.error(errorMessage || err.error.GlobalError || 'Some error occurred while creating new Advertisment.');
-        this.formSubmitted = false;
-      });
+      this.formSubmitted = true;
+
+      this.advService.createAdv(forminputdata).pipe()
+        .subscribe((res: any) => {
+          this.formSubmitted = false;
+          if (res) {
+            this.toastr.success(res.message || 'New Advertisement Created Sucessfully.');
+            this.handleReset();
+
+          }
+        }, err => {
+          const errorMessage = '';
+          this.toastr.error(errorMessage || err.error.GlobalError || 'Some error occurred while creating new Advertisment.');
+          this.formSubmitted = false;
+        });
     }
   }
 
@@ -154,27 +158,27 @@ export class AdvNewComponent implements OnInit {
     this.submitted = false;
     this.formSubmitted = false;
     this.imgURL = '';
-    this.imgPath ='';
-    this.imgName='';
+    this.imgPath = '';
+    this.imgName = '';
     this.newAdvForm.controls['ad_position'].setValue('');
 
 
   }
 
-    fileChangeEvent(event: any): void {
-        this.imgURL = event.target.value;
-        /*this.imageChangedEvent = event;*/
-    }
-    imageCropped(event: ImageCroppedEvent) {
-        this.croppedImage = event.base64;
-    }
-    imageLoaded() {
-        // show cropper
-    }
-    cropperReady() {
-        // cropper ready
-    }
-    loadImageFailed() {
-        // show message
-    }
+  fileChangeEvent(event: any): void {
+    this.imgURL = event.target.value;
+    /*this.imageChangedEvent = event;*/
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
 }

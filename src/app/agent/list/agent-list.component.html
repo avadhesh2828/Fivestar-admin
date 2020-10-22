@@ -55,20 +55,23 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Agent Management
             <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
-              [routerLink]="['/agent/new']">
-              <i class="nav-icon icon-plus"></i> Create</a></button>
+                [routerLink]="['/agent/new']">
+                <i class="nav-icon icon-plus"></i> Create</a></button>
           </h1>
           <!-- <span class="input-group-prepend">
             <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
           </span> -->
           <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
+              <th>Username</th>
               <th>Unique Code</th>
               <th>Name</th>
-              <th>Username</th>
               <th>Phone Number</th>
               <th>Score</th>
               <th>Last Login</th>
@@ -87,9 +90,9 @@
               <td colspan="9" class="text-center">No Agent Found</td>
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
-              <td (click)="checkSubAgent(agent)">{{ agent.unique_code }}</td>
-              <td (click)="checkSubAgent(agent)">{{ agent.name || "-" | titlecase }}</td>
-              <td (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td>
+              <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td>
+              <td>{{ agent.unique_code }}</td>
+              <td>{{ agent.name || "-" | titlecase }}</td>
               <td>{{ agent.phone || "-" }}</td>
               <td>{{ agent.balance}}</td>
               <td>{{ formatDateTimeZone(agent.last_login) | date: dateFormatString}} </td>

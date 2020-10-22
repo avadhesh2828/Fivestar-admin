@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 import { AgentService } from '../../services/agent.service';
 import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
@@ -20,7 +21,7 @@ const INITIAL_PARAMS = {
   styleUrls: ['./agent-list.component.scss', '../../shared/scss/shared.scss']
 })
 export class AgentListComponent implements OnInit, AfterViewInit {
-  public params = {...INITIAL_PARAMS}
+  public params = { ...INITIAL_PARAMS };
   public agentList = null;
   public totalAgents = 0;
   public totalPaginationShow = [];
@@ -33,15 +34,16 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   public countryList = [];
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
-  public url: string = 'agent/list?';
+  public url = 'agent/list?';
   formSubmitted = false;
-  selectedAgent : any = '';
+  selectedAgent: any = '';
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private agentService: AgentService,
     private toastr: ToastrService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     // this.getCountryList();
     // this.searchTextChanged.pipe(debounceTime(1000))
     //   .subscribe(model => this.getAgentList());
-    
+
     this.getAgentList();
   }
 
@@ -61,6 +63,9 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     this.searchTextChanged.next();
   }
 
+  goBack() {
+    this.location.back();
+  }
 
   ngAfterViewInit() {
     const that = this;
@@ -84,7 +89,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
 
   private createUrl() {
     this.url = 'agent/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id='+ this.selectedAgent;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id=' + this.selectedAgent;
   }
 
   public getAgentList() {
@@ -150,16 +155,16 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   }
 
 
-  public checkSubAgent(agent:any){  
+  public checkSubAgent(agent: any) {
     this.selectedAgent = agent.admin_id;
     this.getAgentList();
   }
 
-  public changeAgentStatus(agentId: any, status: any){
+  public changeAgentStatus(agentId: any, status: any) {
     this.formSubmitted = true;
     const forminputdata = {
-      status : status
-    };    
+      status: status
+    };
     this.agentService.changeAgentStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
         this.formSubmitted = false;

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 import { AdvertisementService } from '../../services/advertisement.service';
 import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
@@ -24,7 +25,7 @@ const INITIAL_PARAMS = {
   styleUrls: ['./adv-list.component.scss', '../../shared/scss/shared.scss']
 })
 export class AdvListComponent implements OnInit, AfterViewInit {
-  public params = {...INITIAL_PARAMS}
+  public params = { ...INITIAL_PARAMS };
   public advList = null;
   public totalAdv = 0;
   public totalPaginationShow = [];
@@ -42,20 +43,21 @@ export class AdvListComponent implements OnInit, AfterViewInit {
   public formatDateTimeZone = formatDateTimeZone;
   public currentAdv: any;
   public confirmbMessage = '';
-  public url: string = 'advertisements/get_advertisement?';
+  public url = 'advertisements/get_advertisement?';
 
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private advService: AdvertisementService,
     private toastr: ToastrService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private location: Location,
   ) { }
 
   ngOnInit() {
     this.params = localStorage.getItem('agentFilters')
-    ? JSON.parse(localStorage.getItem('agentFilters'))
-    : { ...INITIAL_PARAMS };
+      ? JSON.parse(localStorage.getItem('agentFilters'))
+      : { ...INITIAL_PARAMS };
     localStorage.removeItem('agentFilters');
     this.getAdvList();
     this.searchTextChanged.pipe(debounceTime(1000))
@@ -79,6 +81,10 @@ export class AdvListComponent implements OnInit, AfterViewInit {
       that.currentAgent = null;
       $(this).find('textarea').val('').end();
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   public getAdvList() {
@@ -143,39 +149,38 @@ export class AdvListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public onStatusSubmit(adv)
-  {
-   
-      this.loaderService.display(true);
-       adv.isEditabel = false;
-      // if (this.oldStatus !== this.advList.status) {
-         this.advService.editAdvStatus({ ads_unique_id: adv.ads_unique_id, status: adv.status,ads_position_id: adv.ads_position_id })
-           .subscribe((res: any) => {
-          this.loaderService.display(false);
-          if (res && res.message) {
-            this.getAdvList();
-            this.toastr.success(res.message || 'advertisment status updated successfully.');
-          }
+  public onStatusSubmit(adv) {
 
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-        });
-      // }
+    this.loaderService.display(true);
+    adv.isEditabel = false;
+    // if (this.oldStatus !== this.advList.status) {
+    this.advService.editAdvStatus({ ads_unique_id: adv.ads_unique_id, status: adv.status, ads_position_id: adv.ads_position_id })
+      .subscribe((res: any) => {
+        this.loaderService.display(false);
+        if (res && res.message) {
+          this.getAdvList();
+          this.toastr.success(res.message || 'advertisment status updated successfully.');
+        }
+
+      }, (err: any) => {
+        this.loaderService.display(false);
+        if (err && err.error && err.error.message) {
+          this.toastr.error(err.error.message || 'There was an error');
+        }
+      });
+    // }
     //   else {
     //   this.loaderService.display(false);
     // }
-    
+
   }
   deleteAdvertisementconfirm(adv) {
     this.currentAdv = adv;
-    this.confirmbMessage = 'Are you sure you want to Delete "' + adv.ad_name +'" ?';
+    this.confirmbMessage = 'Are you sure you want to Delete "' + adv.ad_name + '" ?';
     $('#deleteAdvertisementconfirm').modal('show');
   }
-  deleteAdv(){
-    this.advService.deleteAdvertisment({'ads_unique_id':this.currentAdv.ads_unique_id})
+  deleteAdv() {
+    this.advService.deleteAdvertisment({ 'ads_unique_id': this.currentAdv.ads_unique_id })
       .subscribe((res: any) => {
         this.loaderService.display(false);
         if (res) {
@@ -184,10 +189,10 @@ export class AdvListComponent implements OnInit, AfterViewInit {
         }
         this.error = false;
       }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
+        this.loaderService.display(false);
+        if (err && err.error && err.error.message) {
+          this.toastr.error(err.error.message || 'There was an error');
+        }
       });
   }
 }
