@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { NotificationService } from '../../services/notification.service';
 import { range } from '../../services/utils.service';
+import { Location } from '@angular/common';
 
 const INITIAL_PARAMS = {
   itemsPerPage: 20,
@@ -24,10 +25,15 @@ export class NotificationListComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private loaderService: LoaderService,
+    private location: Location
   ) { }
 
   ngOnInit() {
     this.getNotifications();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   private getNotifications() {

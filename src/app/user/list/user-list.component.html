@@ -77,9 +77,9 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
+              <th>Username</th>
               <th>Unique Code</th>
               <th>Name</th>
-              <th>Username</th>
               <th>Phone Number</th>
               <th>Score</th>
               <th>Last Login</th>
@@ -98,9 +98,9 @@
               <td colspan="9" class="text-center">No Player found</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
-              <td (click)="checkSubAgent(user)">{{ user.user_unique_id }}</td>
-              <td (click)="checkSubAgent(user)">{{ user.name || "-" | titlecase }}</td>
-              <td (click)="checkSubAgent(user)">{{ user.user_name || "-" }}</td>
+              <td class="username" (click)="checkSubAgent(user)">{{ user.username || "-" }}</td>
+              <td>{{ user.user_unique_id }}</td>
+              <td>{{ user.name || "-" | titlecase }}</td>
               <td>{{ user.phone || "-" }}</td>
               <td>{{ user.balance}}</td>
               <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>

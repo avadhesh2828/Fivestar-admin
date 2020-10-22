@@ -25,8 +25,8 @@
           <div class="col-12 col-sm-6">
             <div class="input-group">
               <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
-                name="search_keyword" placeholder="Search by advertisment name"
-                (ngModelChange)="search()" autocomplete="off">
+                name="search_keyword" placeholder="Search by advertisment name" (ngModelChange)="search()"
+                autocomplete="off">
             </div>
           </div>
           <div class="col-12 col-sm-6">
@@ -34,6 +34,9 @@
               <i class="fa fa-search"></i> Search</button>&nbsp; -->
             <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
               Reset Filters</button>
+            <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+              <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+            </a>
           </div>
         </form>
       </div>
@@ -77,17 +80,21 @@
                   }}</span>
               </td>
               <td *ngIf="advertisment.isEditabel">
-                      <select class="form-control"  placeholder="Select Status" name="kyc_type" name="status" [(ngModel)]="advertisment.status" [disabled] ="!advertisment.isEditabel">
-                        <option *ngFor="let status of AdvStatus | keyvalue" [value]="status.key">
-                          {{status.value}}
-                        </option>
-                      </select>
+                <select class="form-control" placeholder="Select Status" name="kyc_type" name="status"
+                  [(ngModel)]="advertisment.status" [disabled]="!advertisment.isEditabel">
+                  <option *ngFor="let status of AdvStatus | keyvalue" [value]="status.key">
+                    {{status.value}}
+                  </option>
+                </select>
               </td>
               <td>
 
-                <a href="javascript:void(0);" *ngIf="!advertisment.isEditabel" (click)="advertisment.isEditabel = !advertisment.isEditabel"><i class="fa fa-edit"></i>Edit</a>&nbsp;
-                <a href="javascript:void(0);" (click)="deleteAdvertisementconfirm(advertisment)"><i class="fa fa-trash"></i>Delete</a> &nbsp;
-                <a href="javascript:void(0);" *ngIf="advertisment.isEditabel" (click)="onStatusSubmit(advertisment)"><i class="fa fa-edit"></i>Save</a> 
+                <a href="javascript:void(0);" *ngIf="!advertisment.isEditabel"
+                  (click)="advertisment.isEditabel = !advertisment.isEditabel"><i class="fa fa-edit"></i>Edit</a>&nbsp;
+                <a href="javascript:void(0);" (click)="deleteAdvertisementconfirm(advertisment)"><i
+                    class="fa fa-trash"></i>Delete</a> &nbsp;
+                <a href="javascript:void(0);" *ngIf="advertisment.isEditabel" (click)="onStatusSubmit(advertisment)"><i
+                    class="fa fa-edit"></i>Save</a>
               </td>
             </tr>
           </tbody>
@@ -109,7 +116,8 @@
               </div>
               <!-- Modal footer -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteAdv();">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                  (click)="deleteAdv();">Delete</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
               </div>
 

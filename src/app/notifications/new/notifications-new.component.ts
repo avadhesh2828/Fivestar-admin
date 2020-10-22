@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 import { NotificationService } from '../../services/notification.service';
-import { formatDate,range } from '../../services/utils.service';
+import { formatDate, range } from '../../services/utils.service';
 import { UserService } from '../../services/user.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
@@ -36,7 +37,7 @@ export class NotificationNewComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService, private userService: UserService, private toastr: ToastrService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService, private location: Location
   ) { }
 
   ngOnInit() {
@@ -48,6 +49,10 @@ export class NotificationNewComponent implements OnInit {
   search() {
     this.params.current_page = 1;
     this.searchTextChanged.next();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   private getUsers() {
