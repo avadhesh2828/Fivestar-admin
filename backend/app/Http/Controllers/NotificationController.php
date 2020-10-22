@@ -98,7 +98,7 @@ class NotificationController extends Controller
 			$page = $post['currentPage'] - 1;
 		}
 		$query = DB::table('users.notifications as N');
-		$query->select('N.notification_id','U.user_name as receiver_username','U.name','N.title','N.notification', 'N.is_read', 'N.created_date', 'N.updated_date');
+		$query->select('N.notification_id','U.username as receiver_username','U.name','N.title','N.notification', 'N.is_read', 'N.created_date', 'N.updated_date');
 		$query->leftJoin('users.user as U','U.user_id', '=', 'N.receiver_user_id');
 		$query->where('N.sender_user_id', '0');
 	    $offset   = $limit * $page;
