@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>Search User</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="username"></label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="username" placeholder="Search">
+              <div *ngIf="submitted && f['username'].errors" class="text-danger">
+                <div *ngIf="f['username'].errors.required">User Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-lg-sm btn-primary" type="submit"><i class="fa fa-search"></i>
+                Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+      <div class="card-body custom-listing-table" *ngIf="showList === true">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Online</th>
+              <th>Agent</th>
+              <th>Balance</th>
+              <th>Tel</th>
+              <th>Description</th>
+              <th>Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !userList">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="userList && !(userList.length>0)">
+              <td colspan="7" class="text-center">No User found</td>
+            </tr>
+            <tr *ngFor="let user of userList; let userIndex = index">
+              <td>{{user.username}}</td>
+              <td>Off (0 day)</td>
+              <td>{{ user.agent_name }}</td>
+              <td>{{ user.balance }} </td>
+              <td>{{ user.phone }} </td>
+              <td>{{ user.description }} </td>
+              <td>
+                <button href="javascript:void(0);" class="btn-warning" > Set Score </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Score Log </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Edit </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Reports </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Game Log </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Quit Game </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
+                (click)="changeUserStatus(user.user_id, '1')"> Enable </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
+                (click)="changeUserStatus(user.user_id, '0')"> Disable </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> Bonus Log </button> &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-loader></app-loader>

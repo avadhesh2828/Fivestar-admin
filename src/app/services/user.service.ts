@@ -31,13 +31,16 @@ export class UserService {
     return this.http.get(`${environment.API_URL}/${url}`);
   }
 
-  changeAgentStatus(agentId: any, data: object) {
-    return this.http.post(`${environment.API_URL}/agent/change-agent-status/${agentId}`, data);
+  changeUserStatus(userId: any, data: object) {
+    return this.http.post(`${environment.API_URL}/users/change-user-status/${userId}`, data);
   }
-
 
   searchPlayerLoginIP(data: object) {
     return this.http.post(`${environment.API_URL}/users/get-login-history`, data);
+  }
+
+  searchUser(data: object) {
+    return this.http.post(`${environment.API_URL}/users/search-user`, data);
   }
 
   getUserDetails(userId: string) {
@@ -48,9 +51,9 @@ export class UserService {
     return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`, params);
   }
 
-  changeUserStatus(params: object) {
-    return this.http.post(`${environment.API_URL}/user/change_user_status`, params);
-  }
+  // changeUserStatus(params: object) {
+  //   return this.http.post(`${environment.API_URL}/user/change_user_status`, params);
+  // }
 
   getCountryList() {
     return this.http.post(`${environment.API_URL}/common/country_list`, {});

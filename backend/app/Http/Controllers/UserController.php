@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
 use App\Models\LoginHistory;
+use App\Models\Agent;
 use App\Models\User_Portfolio;
 use App\Models\User_Watchlist;
 use App\Http\Controllers\Payment_transaction;
@@ -163,6 +164,7 @@ class UserController extends Controller
         $playerIp = $playerIp->join('users.user as U', function($q) {
             $q->on('U.user_id', '=', 'user_login_history.user_id');
         });
+        $playerIp = $playerIp->where('U.parent_id', $admin_id);
         $playerIp = $playerIp->where('U.username', $username);
         $playerIp = $playerIp->orderBy('user_login_history.created_at', 'DESC');
         $playerIp = $playerIp->limit(10);
@@ -171,4 +173,42 @@ class UserController extends Controller
         return response()->json(['response_code'=> 200,'service_name' => 'get_login_history','data' => $playerIp],200);
 
     }
+
+
+    /**
+     * Search User.
+     *
+     */
+    public function search_user(Request $request) {
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+
+        $username = $request->post('username');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "username" => ['required']
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'search_user',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $user = new User;
+        $user = $user->select('user.*', 'A.username as agent_name');
+        $user = $user->join('users.admins as A', function($q) {
+            $q->on('A.admin_id', '=', 'user.parent_id');
+        });
+        $user = $user->where('user.parent_id', $admin_id);
+        $user = $user->where('user.username', $username);
+        $user = $user->get();
+
+        return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
+
+    }
+
 }
