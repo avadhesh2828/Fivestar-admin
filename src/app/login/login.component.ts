@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
@@ -36,9 +37,14 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public translate: TranslateService
   ) {
     this.siteKey = environment.captchaSiteKey;
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
   }
 
   ngOnInit() {

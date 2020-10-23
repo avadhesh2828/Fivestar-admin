@@ -8,18 +8,18 @@
               <div class="logo-content">
                 <img [src]="logo" />
               </div>
-              <h1>Login</h1>
-              <p class="text-muted">Sign In to your account</p>
+              <h1>{{'home.login' | translate }}</h1>
+              <p class="text-muted">{{'home.signInText' | translate}}</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="icon-user"></i>
                   </span>
                 </div>
-                <input class="form-control" type="text" placeholder="Username" formControlName="username"
-                  [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                <input class="form-control" type="text" placeholder="{{'home.username' | translate}}"
+                  formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
                 <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-                  <div *ngIf="f['username'].errors.required">Username is required</div>
+                  <div *ngIf="f['username'].errors.required">{{'home.usernameReq' | translate}}</div>
                 </div>
               </div>
               <div class="input-group mb-4">
@@ -28,11 +28,11 @@
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input type="password" placeholder="Password" formControlName="password" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <input type="password" placeholder="{{'home.password' | translate}}" formControlName="password"
+                  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                 <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-                  <div *ngIf="f['password'].errors.required">Password is required</div>
-                  <div *ngIf="f['password'].errors.minlength">Password must be at least 6 characters
+                  <div *ngIf="f['password'].errors.required">{{'home.passwordReq' | translate}}</div>
+                  <div *ngIf="f['password'].errors.minlength">{{'home.passwordMinLen' | translate}}
                   </div>
                 </div>
               </div>
@@ -48,7 +48,7 @@
 
               <div class="row">
                 <div class="col-6">
-                  <input class="btn btn-primary px-4" type="submit" value="Login" />
+                  <input class="btn btn-primary px-4" type="submit" value="{{'home.login' | translate }}" />
                 </div>
               </div>
             </div>
@@ -58,23 +58,21 @@
               <div class="logo-content">
                 <img [src]="logo" />
               </div>
-              <h1>Set Personal Password</h1>
-              <p class="text-muted">Please set your personal(2nd security) password. For security purpose please set
-                your 2nd security password and reconfirm your 2nd security password upon every login</p>
+              <h1>{{'home.setPersonalPass' | translate }}</h1>
+              <p class="text-muted">{{'home.setPasswordText' | translate }}</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input class="form-control" type="password" placeholder="Personal Password" formControlName="password"
-                  [ngClass]="{ 'is-invalid': setPasswordSubmitted && pf?.password?.errors }">
+                <input class="form-control" type="password" placeholder="{{'home.personalPassword' | translate }}"
+                  formControlName="password" [ngClass]="{ 'is-invalid': setPasswordSubmitted && pf?.password?.errors }">
                 <div *ngIf="setPasswordSubmitted && pf['password'].errors" class="invalid-feedback">
-                  <div *ngIf="pf['password'].errors.required">Personal Password is required</div>
-                  <div *ngIf="pf['password'].errors.minlength">Password must be at least 6 characters
+                  <div *ngIf="pf['password'].errors.required">{{'home.personalPasswordReq' | translate }}</div>
+                  <div *ngIf="pf['password'].errors.minlength">{{'home.passwordMinLen' | translate }}
                   </div>
-                  <div *ngIf="pf['password'].errors.maxlength">Password must have less than
-                    20 characters
+                  <div *ngIf="pf['password'].errors.maxlength">{{'home.passwordMaxLen' | translate }}
                   </div>
                 </div>
               </div>
@@ -84,25 +82,24 @@
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input type="password" placeholder="Confirm personal password" formControlName="confirmPassword"
-                  class="form-control"
+                <input type="password" placeholder="{{'home.confirmPPassword' | translate }}"
+                  formControlName="confirmPassword" class="form-control"
                   [ngClass]="{ 'is-invalid': setPasswordSubmitted && pf.confirmPassword?.errors }" />
                 <div *ngIf="setPasswordSubmitted && pf['confirmPassword'].errors" class="invalid-feedback">
-                  <div *ngIf="pf['confirmPassword'].errors.required">Confirm personal Password is required</div>
-                  <div *ngIf="pf['confirmPassword'].errors.minlength">Password must be at least 6 characters
+                  <div *ngIf="pf['confirmPassword'].errors.required">{{'home.personalPasswordCon' | translate }}</div>
+                  <div *ngIf="pf['confirmPassword'].errors.minlength">{{'home.passwordMinLen' | translate }}
                   </div>
-                  <div *ngIf="pf['confirmPassword'].errors.maxlength">Confirm Password must have less than
-                    20 characters
+                  <div *ngIf="pf['confirmPassword'].errors.maxlength">{{'home.passwordMaxLen' | translate }}
                   </div>
                 </div>
                 <div
                   *ngIf="setPasswordSubmitted && !errorExist('password', 'pf') && !errorExist('confirmPassword', 'pf') && setPasswordForm.errors?.MatchPassword">
-                  Passwords do not match
+                  {{'home.passwordNotMatch' | translate }}
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
-                  <input class="btn btn-primary px-4" type="submit" value="Set Password" />
+                  <input class="btn btn-primary px-4" type="submit" value="{{'home.setPassword' | translate }}" />
                 </div>
               </div>
             </div>
@@ -110,18 +107,18 @@
           <form *ngIf="formType === 2 && changePasswordForm" [formGroup]="changePasswordForm"
             (ngSubmit)="changePassword()">
             <div class="card-body">
-              <h1>Set your new Password</h1>
+              <h1>{{'home.setNewPassword' | translate }}</h1>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input class="form-control" type="password" placeholder="Please Enter Old Password"
+                <input class="form-control" type="password" placeholder="{{'home.oldPassword' | translate }}"
                   formControlName="oldPassword"
                   [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf?.oldPassword?.errors }">
                 <div *ngIf="changePasswordSubmitted && cpf['oldPassword'].errors" class="invalid-feedback">
-                  <div *ngIf="cpf['oldPassword'].errors.required">Old Password is required</div>
+                  <div *ngIf="cpf['oldPassword'].errors.required">{{'home.oldPasswordReq' | translate }}</div>
                 </div>
               </div>
               <div class="input-group mb-3">
@@ -130,14 +127,14 @@
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input class="form-control" type="password" placeholder="New Password" formControlName="password"
+                <input class="form-control" type="password" placeholder="{{'home.newPassword' | translate }}"
+                  formControlName="password"
                   [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf?.password?.errors }">
                 <div *ngIf="changePasswordSubmitted && cpf['password'].errors" class="invalid-feedback">
-                  <div *ngIf="cpf['password'].errors.required">New Password is required</div>
-                  <div *ngIf="cpf['password'].errors.minlength">Password must be at least 6 characters
+                  <div *ngIf="cpf['password'].errors.required">{{'home.newPasswordReq' | translate }}</div>
+                  <div *ngIf="cpf['password'].errors.minlength">{{'home.passwordMinLen' | translate }}
                   </div>
-                  <div *ngIf="cpf['password'].errors.maxlength">Password must have less than
-                    20 characters
+                  <div *ngIf="cpf['password'].errors.maxlength">{{'home.passwordMaxLen' | translate }}
                   </div>
                 </div>
               </div>
@@ -147,15 +144,14 @@
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input type="password" placeholder="Confirm the new password" formControlName="confirmPassword"
-                  class="form-control"
+                <input type="password" placeholder="{{'home.confirmPassword' | translate }}"
+                  formControlName="confirmPassword" class="form-control"
                   [ngClass]="{ 'is-invalid': changePasswordSubmitted && cpf.confirmPassword?.errors }" />
                 <div *ngIf="changePasswordSubmitted && cpf['confirmPassword'].errors" class="invalid-feedback">
-                  <div *ngIf="cpf['confirmPassword'].errors.required">Confirm Password is required</div>
-                  <div *ngIf="cpf['confirmPassword'].errors.minlength">Password must be at least 6 characters
+                  <div *ngIf="cpf['confirmPassword'].errors.required">{{'home.confirmPasswordReq' | translate }}</div>
+                  <div *ngIf="cpf['confirmPassword'].errors.minlength">{{'home.passwordMinLen' | translate }}
                   </div>
-                  <div *ngIf="cpf['confirmPassword'].errors.maxlength">Confirm Password must have less than
-                    20 characters
+                  <div *ngIf="cpf['confirmPassword'].errors.maxlength">{{'home.passwordMinLen' | translate }}
                   </div>
                 </div>
                 <div
@@ -165,7 +161,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <input class="btn btn-primary px-4" type="submit" value="Set Password" />
+                  <input class="btn btn-primary px-4" type="submit" value="{{'home.setPassword' | translate }}" />
                 </div>
               </div>
             </div>
@@ -173,28 +169,35 @@
           <form *ngIf="formType === 3 && verifyPersonalPasswordForm" [formGroup]="verifyPersonalPasswordForm"
             (ngSubmit)="verifyPPassword()">
             <div class="card-body">
-              <h1>Personal Password</h1>
-              <p class="text-muted">Please confirm personal(2nd security) password</p>
+              <h1>{{'home.personalPassword' | translate }}</h1>
+              <p class="text-muted">{{'home.personalPasswordText2' | translate }}</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="icon-lock"></i>
                   </span>
                 </div>
-                <input class="form-control" type="password" placeholder="Please Enter Personal Password"
+                <input class="form-control" type="password" placeholder="{{'home.personalPasswordText1' | translate }}"
                   formControlName="personalPassword"
                   [ngClass]="{ 'is-invalid': verifyPPasswordSubmitted && ppf?.personalPassword?.errors }">
                 <div *ngIf="verifyPPasswordSubmitted && ppf['personalPassword'].errors" class="invalid-feedback">
-                  <div *ngIf="ppf['personalPassword'].errors.required">Personal Password is required</div>
+                  <div *ngIf="ppf['personalPassword'].errors.required">{{'home.personalPasswordReq' | translate }}</div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
-                  <input class="btn btn-primary px-4" type="submit" value="Login" />
+                  <input class="btn btn-primary px-4" type="submit" value="{{'home.login' | translate }}" />
                 </div>
               </div>
             </div>
           </form>
+          Please select a language
+          <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+            <option *ngFor="let language of translate.getLangs()" [value]="language"
+              [selected]="language === translate.currentLang">
+              {{ language }}
+            </option>
+          </select>
         </div>
       </div>
     </div>

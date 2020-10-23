@@ -1,0 +1,29 @@
+{
+  "home": {
+    "login": "Login",
+    "signInText": "Sign In to your account",
+    "username": "Username",
+    "password": "Password",
+    "passwordReq": "Password is required",
+    "passwordMinLen": "Password must be at least 6 characters",
+    "passwordMaxLen": "Password must have less than 20 characters",
+    "usernameReq": "Username is required",
+    "setPersonalPass": "Set Personal Password",
+    "personalPassword": "Personal Password",
+    "personalPasswordReq": "Personal Password is required",
+    "confirmPPassword": "Confirm personal password",
+    "personalPasswordCon": "Confirm personal Password is required",
+    "setPassword": "Set Password",
+    "setNewPassword": "Set your new Password",
+    "passwordNotMatch": "Passwords do not match",
+    "oldPassword": "Please Enter Old Password",
+    "oldPasswordReq": "Old Password is required",
+    "newPassword": "New Password",
+    "newPasswordReq": "New Password is required",
+    "confirmPassword": "Confirm the new password",
+    "confirmPasswordReq": "Confirm Password is required",
+    "personalPasswordText2": "Please confirm personal(2nd security) password",
+    "personalPasswordText1": "Please Enter Personal Password",
+    "setPasswordText": "Please set your personal(2nd security) password. For security purpose please set your 2nd security password and reconfirm your 2nd security password upon every login"
+  }
+}
