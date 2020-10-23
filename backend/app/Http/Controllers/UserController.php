@@ -57,13 +57,15 @@ class UserController extends Controller
         $phone    = $request->post('phone');
         $description = $request->post('description');
         //validation
+        $customMessages = [
+            'password.regex' => 'Password must have one uppercase and must be alphanumeric.',
+        ];
         $validator = Validator::make($request->all(), [
             // 'username' => 'required|numeric|unique:pgsql.users.user,username',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric',
-            'name'     => 'required',
-            'phone'    => 'required'
-        ]);
+            'name'     => 'required'
+        ],$customMessages);
 
         if($validator->fails()){
             return response()->json([

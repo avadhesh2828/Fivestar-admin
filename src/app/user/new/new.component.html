@@ -17,7 +17,7 @@
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="password">
               <div *ngIf="submitted && f['password'].errors" class="text-danger">
-
+                <div *ngIf="f['password'].errors.required">Password is required</div>
                 <div *ngIf="f['password'].errors.minlength">Password must have greater than 3 characters</div>
                 <div *ngIf="f['password'].errors.maxlength">Password must have less than 20 characters</div>
               </div>
@@ -40,7 +40,7 @@
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="name">
               <div *ngIf="submitted && f['name'].errors" class="text-danger">
-                <div *ngIf="f['password'].errors.required">Name is required</div>
+                <div *ngIf="f['name'].errors.required">Name is required</div>
                 <div *ngIf="f['name'].errors.minlength">Name must have greater than 3 characters</div>
                 <div *ngIf="f['name'].errors.maxlength">Name must have less than 50 characters</div>
               </div>
