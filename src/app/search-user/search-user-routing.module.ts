@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ListComponent } from './list/list.component';
+import { SetScoreComponent } from './set-score/set-score.component';
 
 const routes: Routes = [
   { path: 'list', component: ListComponent },
+  { path: ':userId', component: SetScoreComponent },
 ];
 
 @NgModule({
@@ -14,5 +16,6 @@ const routes: Routes = [
 export class SearchUserRoutingModule { }
 
 export const routedComponents: Array<any> = [
-  ListComponent
+  ListComponent,
+  SetScoreComponent
 ];

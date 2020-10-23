@@ -21,7 +21,7 @@ import { SearchUserRoutingModule, routedComponents } from './search-user-routing
     BsDatepickerModule.forRoot(),
   ],
   declarations: [
-    ...routedComponents
+    ...routedComponents,
   ],
   providers: [
   ]
