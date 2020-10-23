@@ -1,259 +1,183 @@
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-lg-12">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Agent Detail</h1>
-          <a class="btn back-btn" routerLink="/agents"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+          <h1 class="h3 mb-0 text-gray-800">Agent Management
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+                [routerLink]="['/agent/new']">
+                <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+          <!-- <span class="input-group-prepend">
+            <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
+          </span> -->
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
         </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <div *ngIf="error" class="alert alert-danger" role="alert">
-              There was an error
-            </div>
-            <div *ngIf="!error && !agent">Loading...</div>
-            <div *ngIf="agent" class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ agent.agent_name }}</h6>
-              </div>
-              <div class="card-body agent-detail">
-                <div *ngIf="!agent.agent_unique_id" class="text-danger"><b>Agent not found</b></div>
-                <div>
-                  <div class="col-sm-12">
-               
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Username</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="!enableEdit; else editUsername">
-                        <span *ngIf="agent.agent_user_name; else usernameNotAvailable">{{agent.agent_user_name}} </span>
-                        <ng-template #usernameNotAvailable>
-                          <span class="font-italic text-danger">Not Available </span>
-                        </ng-template>
-                        <button (click)="toggleEditUsername()" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                          Edit</button>
-                      </div>
-                      <ng-template #editUsername>
-                        <form class="col-12 col-sm-9 form-inline" (ngSubmit)="handleEdit()">
-                          <input class="form-control" id="username" maxlength="20" name="agent_username"
-                            [(ngModel)]="agent_username" (keypress)="validUsername($event)" />
-                          &nbsp;<button class="btn btn-sm btn-primary" type="submit">Submit</button>
-                          &nbsp;<button class="btn btn-sm btn-danger" (click)="toggleEditUsername()">Cancel</button>
-                        </form>
-                      </ng-template>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Agent Unique Id</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.agent_unique_id; else notAvailable">
-                        {{agent.agent_unique_id}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Phone Number</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.phone_number; else notAvailable">{{agent.phone_number}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Email</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.email; else notAvailable">{{agent.email}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Status</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.status; else notAvailable">
-                        <span class="badge" style="font-size:12px;"
-                          [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}">{{agentStatus[agent.status]
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Score</th>
+              <th>Last Login</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !agentList">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="agentList && !(agentList.length>0)">
+              <td colspan="7" class="text-center">No Agent Found</td>
+            </tr>
+            <tr *ngFor="let agent of agentList; let agentIndex = index">
+              <td class="username" (click)="agentPlayer(agent)">{{ agent.username || "-" }}</td>
+              <!-- <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td> -->
+              <td>{{ agent.name || "-" | titlecase }}</td>
+              <td>{{ agent.phone || "-" }}</td>
+              <td>{{ agent.balance}}</td>
+              <td>{{ formatDateTimeZone(agent.last_login) | date: dateFormatString}} </td>
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': (agent.status == 1), 'badge-secondary': (agent.status == 0), 'badge-danger': (agent.status > 1)}">{{AgentStatus[agent.status]
                   }}</span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Date of Birth</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.dob; else notAvailable">
-                        {{formatDateTimeZone(agent.dob)|date}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Address</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.address; else notAvailable">{{agent.address}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>City</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.city; else notAvailable">{{agent.city}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>State</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.state_name; else notAvailable">{{agent.state_name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Country</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.country_name; else notAvailable">{{agent.country_name}}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Pin Code</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.pincode; else notAvailable">{{agent.pincode}}</div>
-                    </div>
-                    <!-- business Address start -->
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Business Address</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.business_address; else notAvailable">{{agent.business_address}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Business City</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.business_city; else notAvailable">{{agent.business_city}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Business State</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.business_state_name; else notAvailable">{{agent.business_state_name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Business Country</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.business_country_name; else notAvailable">{{agent.business_country_name}}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Business Pin Code</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.business_pincode; else notAvailable">{{agent.business_pincode}}</div>
-                    </div>
-                    <!-- business Address end -->
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Website</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.website; else notAvailable">{{agent.website}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Total Available Balance</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.balance || agent.balance === 0; else notAvailable">
-                        {{currency_code}}{{+agent.balance}}</div>
-                    </div>
+              </td>
+              <td>
+                <!-- <a routerLink="/users/{{agent.admin_id}}"><i class="fa fa-address-book"></i>Details</a> -->
+                <!-- &nbsp;
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
+                    user_unique_id: agent.unique_id,
+                    status: agent.status,
+										user_id: agent.user_id,
+										balance: agent.balance,
+                    userIndex: userIndex
+                  })"><i class="fa fa-edit"></i>Edit</a> -->
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="agent.status == 0"
+                  (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="agent.status == 1"
+                  (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Commision Type</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="!enableEditCommisionType; else editCommissionType">
-                        <span *ngIf="agent.commission_type; else commissionTypeNotAvailable">{{commissionType[agent.commission_type]}} </span>
-                        <ng-template #commissionTypeNotAvailable>
-                          <span class="font-italic text-danger">Not Available </span>
-                        </ng-template>
-                        <button (click)="toggleEditCommissionType()" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                          Edit</button>
-                      </div>
-                     <ng-template #editCommissionType>
-                        <form class="col-12 col-sm-9 form-inline" (ngSubmit)="handleEditCommissionType()">
-                          <select class="form-control"  placeholder="Select Commision Type" name="commission_type" name="commission_type" [(ngModel)]="agent.commission_type">
-                            <option *ngFor="let type of commissionType | keyvalue" [value]="type.key">
-                              {{type.value}}
-                            </option>
-                          </select>
-
-                          &nbsp;<button class="btn btn-sm btn-primary" type="submit">Submit</button>
-                          &nbsp;<button class="btn btn-sm btn-danger" (click)="toggleEditCommissionType()">Cancel</button>
-                        </form>
-                      </ng-template>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Commision Amount</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="!enableEditCommisionAmount; else editCommissionAmount">
-                        <span *ngIf="agent.commission_amount; else commissionAmountNotAvailable">{{currency_code}}{{agent.commission_amount}} </span>
-                        <ng-template #commissionAmountNotAvailable>
-                          <span class="font-italic text-danger">Not Available </span>
-                        </ng-template>
-                        <button (click)="toggleEditCommissionAmount()" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                          Edit</button>
-                      </div>
-                     <ng-template #editCommissionAmount>
-                        <form class="col-12 col-sm-9 form-inline" (ngSubmit)="handleEditCommissionAmount()">
-                          <input type="number" class="form-control" id="commission_amount" maxlength="20" name="commission_amount"
-                            [(ngModel)]="agent.commission_amount" />
-                          &nbsp;<button class="btn btn-sm btn-primary" type="submit">Submit</button>
-                          &nbsp;<button class="btn btn-sm btn-danger" (click)="toggleEditCommissionAmount()">Cancel</button>
-                        </form>
-                      </ng-template>
-                    </div>
-               
-                    
-            
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Last IP</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.last_ip; else notAvailable">{{agent.last_ip}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Last Login</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.last_login; else notAvailable">
-                        {{formatDateTimeZone(this.agent.last_login)| date:dateFormatString }}</div>
-                    </div>
-                  </div>
-                </div>
-                <ng-template #notAvailable>
-                  <div class="col-12 col-sm-9 font-italic text-danger">Not Available</div>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!--agent kyc detail row -->
-         <div class="row">
-          <div class="col-sm-12">
-            <div *ngIf="error" class="alert alert-danger" role="alert">
-              There was an error
-            </div>
-            <div *ngIf="!error && !agent">Loading...</div>
-            <div *ngIf="agent" class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Kyc Information</h6>
-              </div>
-              <div class="card-body agent-detail">
-                <div *ngIf="!agent.agent_unique_id" class="text-danger"><b>Agent Kyc Info not found</b></div>
-                <div>
-                  <div class="col-sm-12">
-
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Kyc Proof Type</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.status; else notAvailable">
-                        {{kycType[agent.agent_proof_id]}}
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Kyc Status</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="!enableEditKyc; else editKycStatus">
-                        <span class="badge" style="font-size:12px;"
-                          [ngClass]="{'badge-success': (agent.kyc_status == 1), 'badge-secondary': (agent.kyc_status == 0), 'badge-danger': (agent.kyc_status > 1)}">{{kycStatus[agent.kyc_status]}}</span> &nbsp; &nbsp; 
-
-                          <button (click)="toggleEditKycStatus()" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                          Edit</button>
-                      </div>
-                    </div>
-
-                     <ng-template #editKycStatus>
-                        <form class="col-12 col-sm-9 form-inline" (ngSubmit)="handleEditStatus()">
-                          <select class="form-control"  placeholder="Select Kyc Status" name="kyc_type" name="kyc_type" [(ngModel)]="agent.kyc_status">
-                            <option *ngFor="let status of kycStatus | keyvalue" [value]="status.key">
-                              {{status.value}}
-                            </option>
-                          </select>
-
-                          &nbsp;<button class="btn btn-sm btn-primary" type="submit">Submit</button>
-                          &nbsp;<button class="btn btn-sm btn-danger" (click)="toggleEditKycStatus()">Cancel</button>
-                        </form>
-                      </ng-template>
-
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Id Proof Image </b></div>
-                      <div class="col-12 col-sm-9" *ngIf="agent.agent_proof_image; else notAvailable">
-                        <div  *ngFor="let image of _albums; let i=index">
-                          <img [src]="image.thumb" height="200"  (click)="open(i)" />
-                        </div>
-                        <!-- <img [src]="AgentIdProofImage" height="200" > -->
-                    </div>
-               
-                  </div>
-                </div>
-                <ng-template #notAvailable>
-                  <div class="col-12 col-sm-9 font-italic text-danger">Not Available</div>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-        </div>
-
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalAgents > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
 </div>
-  <app-loader></app-loader>
+<!-- <app-user-list></app-user-list> -->
+
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Player Management
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+                [routerLink]="['/users/new']">
+                <i class="nav-icon icon-plus"></i> Create</a></button>
+          </h1>
+          <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Score</th>
+              <th>Last Login</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !userList">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="userList && !(userList.length>0)">
+              <td colspan="7" class="text-center">No Player found</td>
+            </tr>
+            <tr *ngFor="let user of userList; let userIndex = index">
+              <td class="username" routerLink="/users/{{user.user_id}}" >{{ user.username || "-" }}</td>
+              <td>{{ user.name || "-" | titlecase }}</td>
+              <td>{{ user.phone || "-" }}</td>
+              <td>{{ user.balance}}</td>
+              <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
+
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]
+                  }}</span>
+              </td>
+              <td>
+                <!-- <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
+                &nbsp;
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
+                    user_unique_id: user.user_unique_id,
+                    status: user.status,
+										user_id: user.user_id,
+										balance: user.balance,
+                    userIndex: userIndex
+                  })"><i class="fa fa-edit"></i>Edit</a>
+                  &nbsp; -->
+                <a href="javascript:void(0);" *ngIf="user.status == 0"
+                  (click)="changeAgentStatus(user.user_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                &nbsp;
+                <a href="javascript:void(0);" *ngIf="user.status == 1"
+                  (click)="changeAgentStatus(user.user_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalUsers > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPageUser(-1)">Prev</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShowUser">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateListUser(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPagesUser">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPageUser(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-loader></app-loader>

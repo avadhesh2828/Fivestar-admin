@@ -157,6 +157,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
 
   public checkSubAgent(agent: any) {
     this.selectedAgent = agent.admin_id;
+    // localStorage.setItem('agentId', JSON.stringify(this.selectedAgent));
     this.getAgentList();
   }
 

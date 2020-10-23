@@ -33,7 +33,11 @@ class UserController extends Controller
         $user_id = $this->user->admin_id;
 
         $users = new User;
-        $users = $users->where('parent_id', $user_id);
+        if($request->parent_id != ''){
+            $users = $users->where('parent_id', $request->parent_id);
+        } else {
+            $users = $users->where('parent_id', $user_id);
+        }
         $users = $users->where('status', $request->status);
         $users = $users->orderBy('user_id','ASC');
         $users = $users->paginate($request->per_page);
@@ -77,7 +81,7 @@ class UserController extends Controller
         }
 
         User::create([
-            "username"      => random_string(000000000, 999999999),
+            "username"      => mt_rand(1111111111, 9999999999),
             "password"      => Hash::make($password),
             "balance"       => $score,
             "name"          => $name,
@@ -211,6 +215,19 @@ class UserController extends Controller
 
         return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
 
+    }
+
+
+    public function get_user_details($userId) {
+        $user = new User;
+        $user = $user->select('user.*', 'A.username AS agent_username');
+        $user = $user->join('users.admins as A', function($q) {
+            $q->on('A.admin_id', '=', 'user.parent_id');
+        });
+        $user = $user->where('user_id', $userId);
+        $user = $user->first();
+
+        return response()->json(['response_code'=> 200,'service_name' => 'get_user_details', 'message' => 'User details', 'data' => $user ],200);  
     }
 
 }

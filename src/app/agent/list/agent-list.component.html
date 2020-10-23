@@ -70,7 +70,6 @@
           <thead>
             <tr>
               <th>Username</th>
-              <th>Unique Code</th>
               <th>Name</th>
               <th>Phone Number</th>
               <th>Score</th>
@@ -81,17 +80,17 @@
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="9" class="table-danger">There was an error</td>
+              <td colspan="7" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !agentList">
-              <td colspan="9">Loading...</td>
+              <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="agentList && !(agentList.length>0)">
-              <td colspan="9" class="text-center">No Agent Found</td>
+              <td colspan="7" class="text-center">No Agent Found</td>
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
               <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td>
-              <td>{{ agent.unique_code }}</td>
+              <!-- <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td> -->
               <td>{{ agent.name || "-" | titlecase }}</td>
               <td>{{ agent.phone || "-" }}</td>
               <td>{{ agent.balance}}</td>
@@ -102,16 +101,6 @@
                   }}</span>
               </td>
               <td>
-                <!-- <a routerLink="/users/{{agent.admin_id}}"><i class="fa fa-address-book"></i>Details</a> -->
-                <!-- &nbsp;
-                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
-                    user_unique_id: agent.unique_id,
-                    status: agent.status,
-										user_id: agent.user_id,
-										balance: agent.balance,
-                    userIndex: userIndex
-                  })"><i class="fa fa-edit"></i>Edit</a> -->
-                &nbsp;
                 <a href="javascript:void(0);" *ngIf="agent.status == 0"
                   (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
                 &nbsp;

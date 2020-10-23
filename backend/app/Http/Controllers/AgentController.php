@@ -71,7 +71,7 @@ class AgentController extends Controller
             ], 400);
         }
 
-        $roles = AdminRoles::where('name', 'ADMIN')->first();
+        $roles = AdminRoles::where('name', 'AGENT')->first();
         
         Agent::create([
             "username"      => $username,
@@ -80,9 +80,9 @@ class AgentController extends Controller
             "name"          => $name,
             "phone"         => $phone,
             "description"   => $description,
-            "role_id"       => 2,
+            "role_id"       => $roles->role_id,
             "status"        => 1,
-            "parent_id"     => $roles->role_id,
+            "parent_id"     => $user_id,
             "unique_code"   => random_string('alnum', 9),
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')

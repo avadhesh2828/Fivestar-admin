@@ -86,7 +86,7 @@ export class NewComponent implements OnInit {
           this.authService.getUserDetails().subscribe((usr: any) => {
             this.userService.updateUser(usr.data.user_profile);
           });
-          this.router.navigate(['/users']);
+          this.router.navigate(['/agent']);
         }, err => {
           const errorMessage = '';
           this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while creating new Agent.');

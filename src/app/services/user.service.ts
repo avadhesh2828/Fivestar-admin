@@ -43,8 +43,8 @@ export class UserService {
     return this.http.post(`${environment.API_URL}/users/search-user`, data);
   }
 
-  getUserDetails(userId: string) {
-    return this.http.post(`${environment.API_URL}/user/get_user_detail`, { user_unique_id: userId });
+  getUserDetails(userId: any) {
+    return this.http.get(`${environment.API_URL}/users/get-user-details/${userId}`);
   }
 
   getAgentTicketDetails(params: object) {

@@ -78,7 +78,7 @@
           <thead>
             <tr>
               <th>Username</th>
-              <th>Unique Code</th>
+              <!-- <th>Unique Code</th> -->
               <th>Name</th>
               <th>Phone Number</th>
               <th>Score</th>
@@ -89,17 +89,17 @@
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="9" class="table-danger">There was an error</td>
+              <td colspan="7" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !userList">
-              <td colspan="9">Loading...</td>
+              <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="userList && !(userList.length>0)">
-              <td colspan="9" class="text-center">No Player found</td>
+              <td colspan="7" class="text-center">No Player found</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
-              <td class="username" (click)="checkSubAgent(user)">{{ user.username || "-" }}</td>
-              <td>{{ user.user_unique_id }}</td>
+              <td class="username" routerLink="/users/{{user.user_id}}" >{{ user.username || "-" }}</td>
+              <!-- <td>{{ user.user_unique_id }}</td> -->
               <td>{{ user.name || "-" | titlecase }}</td>
               <td>{{ user.phone || "-" }}</td>
               <td>{{ user.balance}}</td>

@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">User Detail</h1>
+          <h1 class="h3 mb-0 text-gray-800">Player Details</h1>
           <a class="btn back-btn" routerLink="/users"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="row">
@@ -22,119 +22,48 @@
                   <div class="row">
                   <div class="col-sm-6">
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>First Name</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.first_name; else notAvailable">{{user.first_name | titlecase}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Last Name</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.last_name; else notAvailable">{{user.last_name | titlecase}}</div>
+                      <div class="col-12 col-sm-3"><b>Player Name</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.name; else notAvailable">{{user.name}}</div>
                     </div>
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>Username</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="!enableEdit; else editUsername">
-                        <span *ngIf="user.user_name; else usernameNotAvailable">{{user.user_name}} </span>
-                        <ng-template #usernameNotAvailable>
-                          <span class="font-italic text-danger">Not Available </span>
-                        </ng-template>
-                        <!-- <button (click)="toggleEditUsername()" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                          Edit</button> -->
-                      </div>
-                      <!-- <ng-template #editUsername>
-                        <form class="col-12 col-sm-9 form-inline" (ngSubmit)="handleEdit()">
-                          <input class="form-control" id="username" maxlength="20" name="username"
-                            [(ngModel)]="username" (keypress)="validUsername($event)" />
-                          &nbsp;<button class="btn btn-sm btn-primary" type="submit">Submit</button>
-                          &nbsp;<button class="btn btn-sm btn-danger" (click)="toggleEditUsername()">Cancel</button>
-                        </form>
-                      </ng-template> -->
+                      <div class="col-12 col-sm-9" *ngIf="user.username; else notAvailable">{{user.username}}</div>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Member Since</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.member_since; else notAvailable">
-                        {{formatDateTimeZone(user.member_since)|date}}
-                      </div>
-                    </div> -->
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>User Unique Id</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.user_unique_id; else notAvailable">
-                        {{user.user_unique_id}}</div>
+                      <div class="col-12 col-sm-3"><b>Balance</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.balance; else notAvailable">{{user.balance}}</div>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Email</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.email; else notAvailable">{{user.email}}</div>
-                    </div> -->
-                   <!--  <div class="row">
-                      <div class="col-12 col-sm-3"><b>Phone Number</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.phone_number; else notAvailable">{{user.phone_number}}</div>
-                    </div> -->
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>Phone</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.phone; else notAvailable">{{user.phone}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>Agent Name</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.agent_username; else notAvailable">{{user.agent_username}}</div>
+                    </div>
+
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>Status</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.status; else notAvailable">
                         <span class="badge" style="font-size:12px;"
                           [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
                       </div>
+                    </div>            
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>Description</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.description; else notAvailable">{{user.description}}</div>
                     </div>
                     <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Date of Birth</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.dob; else notAvailable">
-                        {{formatDateTimeZone(user.dob)|date}} </div>
-                    </div> -->
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Address 1</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.address_1; else notAvailable">{{user.address_1}}</div>
-                    </div> -->
-                     <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Address 2</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.address_2; else notAvailable">{{user.address_2}}</div>
-                    </div> -->
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Country</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.master_country; else notAvailable">{{user.master_country.country_name}}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>State</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.master_state; else notAvailable">{{user.master_state.state_name}}</div>
-                    </div> -->
-                  <!--   <div class="row">
-                      <div class="col-12 col-sm-3"><b>City</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.city; else notAvailable">{{user.city}}</div>
-                    </div> -->
-                   <!--  <div class="row">
-                      <div class="col-12 col-sm-3"><b>Pin Code</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.pincode; else notAvailable">{{user.pincode}}</div>
-                    </div> -->
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Total Available Balance</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.balance || user.balance === 0; else notAvailable">
-                        {{currency_code}}{{+user.balance}}</div>
-                    </div>
-               
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Spend</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.spend; else notAvailable">{{currency_code}}{{user.spend}}</div>
-                    </div> -->
-            
-                    <div class="row">
                       <div class="col-12 col-sm-3"><b>Last IP</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.last_ip; else notAvailable">{{user.last_ip}}</div>
-                    </div>
+                    </div> -->
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>Last Login</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.last_login; else notAvailable">
                         {{formatDateTimeZone(this.user.last_login)| date:dateFormatString }}</div>
                     </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-3"><b>Balance</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.balance; else notAvailable">
-                        {{user.balance}}</div>
-                    </div>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="col-12 col-sm-9" *ngIf="user.image; else notAvailable">
-                      <img [src]="imgURL" height="100" *ngIf="imgURL">
-                    </div>
-                  </div>
+                
                 </div>
                 </div>
                 <ng-template #notAvailable>

@@ -38,8 +38,8 @@ export class UserDetailComponent implements OnInit {
 
   private getUserDetail() {
     this.loaderService.display(true);
-    const id = this.route.snapshot.paramMap.get('userId');
-    this.userService.getUserDetails(id)
+    const userId = this.route.snapshot.paramMap.get('userId');
+    this.userService.getUserDetails(userId)
       .subscribe((user) => {
         this.loaderService.display(false);
         if (user['data']) {

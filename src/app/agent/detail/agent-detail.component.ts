@@ -1,13 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { range ,formatDateTimeZone, dateFormatString } from '../../services/utils.service';
+import { Location } from '@angular/common';
+
 import { AgentService } from '../../services/agent.service';
-import { AGENT_STATUS, KYC_STATUS,KYC_TYPE, COMMISSION_TYPE } from '../constants';
+import { UserService } from '../../services/user.service';
+import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
+import { AGENT_STATUS, KYC_STATUS } from '../constants';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { LoaderService } from '../../shared/loader/loader.service';
-import { environment } from '../../../environments/environment';
-import { Lightbox } from 'ngx-lightbox';
 import { Constants } from '../../constants';
+import { ActivatedRoute } from '@angular/router';
+
+const INITIAL_PARAMS = {
+  per_page: 10,
+  current_page: 1,
+  parent_id: '',
+};
+
+// const INITIAL_PARAMS_USER = {
+//   per_page: 10,
+//   current_page: 1,
+//   status: 1,
+// };
 
 @Component({
   selector: 'app-agent-detail',
@@ -16,259 +31,205 @@ import { Constants } from '../../constants';
 })
 
 export class AgentDetailComponent implements OnInit {
-  public agent = null;
-  public error = false;
-  public enableEdit = false;
-  public enableEditKyc = false;
-  public enableEditCommisionType = false;
-  public enableEditCommisionAmount = false;
-  public agent_username = '';
-  public agent_kyc_status = '';
-  public agent_commission_type = '';
-  public agent_commission_amount = '';
-  public formatDateTimeZone = formatDateTimeZone;
-  public dateFormatString = dateFormatString;
-  public agentStatus = AGENT_STATUS;
-  public currency_code = Constants.CURRENCY_CODE;
-  public kycType = KYC_TYPE;
-  public kycStatus = KYC_STATUS;
-  public commissionType = COMMISSION_TYPE;
-  public oldagentName = '';
-  public oldkycStatus = '';
-  public oldCommissionType = '';
-  public oldCommissionAmount = '';
+  public params = { ...INITIAL_PARAMS };
+  public agentList = null;
+  public userList  = [];
   public totalAgents = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
-  public AgentIdProofImage: any = null;
-  private _albums = [];
-  imgURL: any;
+  public AgentStatus = AGENT_STATUS;
+  public currency_code = Constants.CURRENCY_CODE;
+  public kycStatus = KYC_STATUS;
+  public error = false;
+  public currentAgent = null;
+  public countryList = [];
+  public dateFormatString = dateFormatString;
+  public formatDateTimeZone = formatDateTimeZone;
+  public url = 'agent/list?';
+  public urlUser = 'users/list?';
+  formSubmitted = false;
+  selectedAgent: any = '';
+  selectedUser: any = 1;
+
+  // public totalUsers = 0;
+  // public totalPaginationShowUser = [];
+  // public totalPagesUser = 0;
 
   constructor(
-    private agentService: AgentService, private route: ActivatedRoute, private toastr: ToastrService,
-    private loaderService: LoaderService,private _lightbox: Lightbox) { }
+    private agentService: AgentService,
+    private userService: UserService,
+    private toastr: ToastrService,
+    private loaderService: LoaderService,
+    private location: Location,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.getagentDetail();
+    this.selectedAgent = this.route.snapshot.paramMap.get('agentId');
+    this.getAgentList();
+    this.getUserList();
   }
 
-  private getagentDetail() {
-    this.loaderService.display(true);
-    const id = this.route.snapshot.paramMap.get('agentId');
-    this.agentService.getAgentDetails(id)
-      .subscribe((agents) => {
-        this.loaderService.display(false);
-         if (agents['data']) {
-          this.imgURL = environment.IMG_URL;
-          this.AgentIdProofImage = this.imgURL+'agent_proof/'+agents['data'].agent_proof_image;  
-          this.agent = agents['data'];
-          this.oldagentName = this.agent.agent_user_name;
-          this.oldkycStatus = this.agent.kyc_status;
-          this.oldCommissionType = this.agent.commission_type;
-          this.oldCommissionAmount = this.agent.commission_amount;
+  goBack() {
+    this.location.back();
+  }
 
-          const src = this.AgentIdProofImage;
-          const thumb = this.AgentIdProofImage;
-          const album = {
-             src: src,
-             thumb: thumb
-          };
-          this._albums.push(album);
+  ngAfterViewInit() {
+    const that = this;
+    // Listen for bootstrap modal's hidden event to reset form
+    $('#editModal').on('hidden.bs.modal', function () {
+      that.currentAgent = null;
+      $(this).find('textarea').val('').end();
+    });
+  }
+
+  public getCountryList() {
+    this.agentService.getCountryList()
+      .subscribe((response: any) => {
+        this.countryList = response.result;
+        this.getAgentList();
+      }, (err: Error) => {
+        this.toastr.error(err.message || 'There was an error.');
+        this.error = true;
+      });
+  }
+
+  private createUrl() {
+    this.url = 'agent/list?';
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id=' + this.selectedAgent;
+  }
+
+  public getAgentList() {
+    this.loaderService.display(true);
+    this.createUrl();
+    this.agentService.getAgents(this.url)
+      .subscribe((agent: []) => {
+        this.loaderService.display(false);
+        if (agent['data'] && agent['data'].data) {
+          this.agentList = agent['data'].data;
+          this.createPaginationItem(agent['data'].total);
         }
-      }, (err: object) => {
+        this.error = false;
+      }, (err: Error) => {
         this.loaderService.display(false);
         this.error = true;
       });
   }
 
-  open(index: number): void {
-    // open lightbox
-    this._lightbox.open(this._albums, index);
-  }
- 
-  close(): void {
-    // close lightbox programmatically
-    this._lightbox.close();
-  }
-
-  // check it username is valid or not
-  validUsername(event: any) {
-    if ((event.key >= 'a' && event.key <= 'z') || (event.key >= 'A' && event.key <= 'Z')
-      || (event.key >= '0' && event.key <= '9') || (event.key >= '_')) {
-      return true;
-    }
-    return false;
+  private createPaginationItem(totalAgent: number) {
+    this.totalAgents = totalAgent;
+    const maxPages: number = Math.ceil(totalAgent / this.params.per_page);
+    const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
+    const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
+    this.totalPages = maxPages;
+    this.totalPaginationShow = range(end, start);
   }
 
-  public toggleEditUsername() {
-    this.agent_username = this.agent.agent_user_name || '';
-    this.enableEdit = !this.enableEdit;
+  public paginateList(newPage: number) {
+    if (this.params.current_page === newPage) { return false; }
+    this.params.current_page = newPage;
+    localStorage.setItem('agentFilters', JSON.stringify(this.params));
+    this.getAgentList();
   }
 
-  public toggleEditKycStatus()
-  {
-    this.agent_kyc_status = this.agent.kyc_status || '';
-    this.enableEditKyc = !this.enableEditKyc;
+  public nextOrPreviousPage(deviation: number) {
+    this.params.current_page = this.params.current_page + deviation;
+    localStorage.setItem('agentFilters', JSON.stringify(this.params));
+    this.getAgentList();
   }
 
-  public toggleEditCommissionType()
-  {
-    this.agent_commission_type = this.agent.commission_type || '';
-    this.enableEditCommisionType = !this.enableEditCommisionType;
+  public checkSubAgent(agent: any) {
+    this.selectedAgent = agent.admin_id;
+    // localStorage.setItem('agentId', JSON.stringify(this.selectedAgent));
+    this.getAgentList();
   }
 
-  public toggleEditCommissionAmount()
-  {
-    this.agent_commission_amount = this.agent.commission_amount || '';
-    this.enableEditCommisionAmount = !this.enableEditCommisionAmount;
-  }
-
-  public formatDate(date) {
-    if (date[date.length - 3] === '+') {
-      return new Date(date + ':00');
-    }
-    return new Date(date);
-  }
-
-  public handleEdit() {
-    // debugger;
-    if (!this.agent_username.trim()) {
-      this.toastr.error('agent user name can not be empty!');
-      return;
-    }
-    if (this.agent_username.length < 3) {
-      this.toastr.error('agent user name must be at least 3 characters!');
-      return;
-    }
-    this.loaderService.display(true);
-    if (this.oldagentName !== this.agent_username) {
-      this.agentService.editAgentUsername({ agent_unique_id: this.agent.agent_unique_id, agent_username: this.agent_username })
-        .subscribe((res: any) => {
-          this.loaderService.display(false);
-          this.enableEdit = false;
-          if (res && res.message) {
-            this.toastr.success(res.message || 'agents username updated successfully.');
-            this.agent.agent_user_name = this.agent_username;
-            this.oldagentName = this.agent_username;
-          }
-
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-          // this.agentname = this.agent.agent_name;
-          // this.enableEdit = false;
-        });
-    } else {
-      this.enableEdit = false;
-      this.loaderService.display(false);
-    }
-  }
-
-  public handleEditStatus()
-  {
-    this.loaderService.display(true);
-    if (this.oldkycStatus !== this.agent.kyc_status) {
-      this.agentService.editAgentKycStatus({ agent_unique_id: this.agent.agent_unique_id, kyc_status: this.agent.kyc_status })
+  public changeAgentStatus(agentId: any, status: any) {
+    this.formSubmitted = true;
+    const forminputdata = {
+      status: status
+    };
+    this.agentService.changeAgentStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
-          this.loaderService.display(false);
-          
-          this.enableEditKyc = false;
-          if (res && res.message) {
-            this.agent_kyc_status = this.agent.kyc_status;
-            this.oldkycStatus = this.agent.kyc_status;
-            this.toastr.success(res.message || 'agent kyc status updated successfully.');
-            
-          }
+        this.formSubmitted = false;
+        this.toastr.success(res.message || 'Agent status changed Sucessfully.');
+        this.getAgentList();
+      }, err => {
+        const errorMessage = '';
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
+        this.formSubmitted = false;
+      });
 
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-        });
-    }
-
-    else {
-      this.enableEditKyc = false;
-      this.loaderService.display(false);
-    }
   }
 
-  public handleEditCommissionType()
-  {
-    this.loaderService.display(true);
-    if (this.oldCommissionType !== this.agent.commission_type) {
-      this.agentService.editAgentCommissionType({ agent_unique_id: this.agent.agent_unique_id, commission_type: this.agent.commission_type })
-      .subscribe((res: any) => {
-          this.loaderService.display(false);
-          
-          this.enableEditCommisionType = false;
-          if (res && res.message) {
-            this.agent_commission_type = this.agent.commission_type;
-            this.oldCommissionType = this.agent.commission_type;
-            this.toastr.success(res.message || 'agent commission type updated successfully.');
-            
-          }
 
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-        });
-    }
 
-    else {
-      this.enableEditCommisionType = false;
-      this.loaderService.display(false);
-    }
+  private createUserUrl() {
+    this.urlUser = 'users/list?';
+    this.urlUser += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.selectedUser + '&parent_id=' + this.selectedAgent;
   }
 
-  public handleEditCommissionAmount()
-  {
-
-    if(!this.agent.commission_type){
-      this.toastr.error('Please select commission type first.');
-      return;
-    }
-    else if(this.agent.commission_type == 1 && (this.agent.commission_amount > 100 )){
-      this.toastr.error("You can't provide more than 100% commission amount.Please select fixed commission type instead.");
-      return;
-    }else if(this.agent.commission_type == 0 && (this.agent.commission_amount < 1 || this.agent.commission_amount > 9999999999)){
-      this.toastr.error("Commission amount must be 1 or between 1 to 9999999999.");
-      return;
-    }
-    /**/    
+  public getUserList() {
     this.loaderService.display(true);
-    if (this.oldCommissionAmount !== this.agent.commission_amount) {
-      this.agentService.editAgentCommissionAmount({ agent_unique_id: this.agent.agent_unique_id, commission_amount: this.agent.commission_amount })
+    this.createUserUrl();
+    this.userService.getAgents(this.urlUser)
+      .subscribe((user: []) => {
+        this.loaderService.display(false);
+        if (user['data'] && user['data']) {
+          this.userList = user['data'].data;
+          // this.createPaginationItemUser(user['data'].total);
+        }
+        this.error = false;
+      }, (err: Error) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+  }
+
+  // private createPaginationItemUser(totalUSer: number) {
+  //   this.totalUsers = totalUSer;
+  //   const maxPages: number = Math.ceil(totalUSer / this.params.per_page);
+  //   const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
+  //   const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
+  //   this.totalPagesUser = maxPages;
+  //   this.totalPaginationShowUser = range(end, start);
+  // }
+
+  // public paginateListUser(newPage: number) {
+  //   if (this.params.current_page === newPage) { return false; }
+  //   this.params.current_page = newPage;
+  //   // localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
+  //   this.getUserList();
+  // }
+
+  // public nextOrPreviousPageUser(deviation: number) {
+  //   this.params.current_page = this.params.current_page + deviation;
+  //   localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
+  //   this.getUserList();
+  // }
+
+  public agentPlayer(agent: any) {
+    this.selectedAgent = agent.admin_id;
+    this.getUserList();
+  }
+
+  public changeUserStatus(agentId: any, status: any) {
+    this.formSubmitted = true;
+    const forminputdata = {
+      status : status
+    };    
+    this.userService.changeUserStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
-          this.loaderService.display(false);
-          
-          this.enableEditCommisionAmount = false;
-          if (res && res.message) {
-            this.agent_commission_amount = this.agent.commission_amount;
-            this.oldCommissionAmount = this.agent.commission_amount;
-            this.toastr.success(res.message || 'agent commission amount updated successfully.');
-            
-          }
+        this.formSubmitted = false;
+        this.toastr.success(res.message || 'Player status changed Sucessfully.');
+        this.getUserList();
+      }, err => {
+        const errorMessage = '';
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
+        this.formSubmitted = false;
+      });
 
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-        });
-    }
-
-    else {
-      this.enableEditCommisionAmount = false;
-      this.loaderService.display(false);
-    }
-  }  
-
+  }
 
 
 }
