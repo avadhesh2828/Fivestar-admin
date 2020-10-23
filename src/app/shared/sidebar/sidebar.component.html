@@ -96,7 +96,7 @@
       </li> -->
 
 
-      <li class="nav-item nav-dropdown">
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#AdvSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
             class="nav-icon icon-rocket"></i> Advertisement</a>
         <ul class="collapse list-unstyled" id="AdvSubMenu">
@@ -112,7 +112,7 @@
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown">
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#notificationSubMenu" data-toggle="collapse" aria-expanded="false"
           class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i> Notifications</a>
         <ul class="collapse list-unstyled" id="notificationSubMenu">
@@ -129,7 +129,8 @@
       </li>
 
       <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/player-loginip/list']" routerLinkActive="active">
+        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/player-loginip/list']"
+          routerLinkActive="active">
           <img [src]="newsIcon" /> Player LoginIP</a>
       </li>
 
