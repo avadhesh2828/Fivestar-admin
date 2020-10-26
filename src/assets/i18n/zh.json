@@ -23,5 +23,12 @@
     "personalPasswordText2": "請確認個人（第二安全）密碼",
     "personalPasswordText1": "請輸入個人密碼",
     "setPasswordText": "請設置您的個人（第二安全）密碼。為了安全起見，請設置您的第二個安全密碼，並在每次登錄時再次確認您的第二個安全密碼"
+  },
+  "header": {
+    "heading": "管理面板",
+    "score": "我的分數",
+    "changePassword": "更改密碼",
+    "changePPassword": "修改個人密碼",
+    "logout": "登出"
   }
 }
