@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   logo: any;
   formType = 0;
   adminId: any;
+  imageURL = environment.IMG_URL;
 
   @ViewChild('captchaElem', { static: true }) captchaElem: ReCaptcha2Component;
 
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
 
   switchLang(lang: string) {
     this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   ngOnInit() {

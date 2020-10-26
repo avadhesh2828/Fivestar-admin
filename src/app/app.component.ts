@@ -14,5 +14,6 @@ export class AppComponent {
   ) {
     translate.addLangs(['en', 'zh']);
     translate.setDefaultLang('en');
+    localStorage.setItem('language', 'en');
   }
 }

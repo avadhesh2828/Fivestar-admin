@@ -25,5 +25,12 @@
     "personalPasswordText2": "Please confirm personal(2nd security) password",
     "personalPasswordText1": "Please Enter Personal Password",
     "setPasswordText": "Please set your personal(2nd security) password. For security purpose please set your 2nd security password and reconfirm your 2nd security password upon every login"
+  },
+  "header": {
+    "heading": "Admin Panel",
+    "score": "My score",
+    "changePassword": "Change Password",
+    "changePPassword": "Change Personal Password",
+    "logout": "Logout"
   }
 }
