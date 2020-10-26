@@ -4,4 +4,28 @@
 img{
     width: 90px;
 }
+.flags-img {
+    height: 40px;
+    width: 60px;
+ }
 
+ .flag-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+
+    li {
+        margin-right: 10px
+    }
+ }
+
+ .language {
+    justify-content: center;
+    display: flex
+ }
+
+ .language-div {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+ }

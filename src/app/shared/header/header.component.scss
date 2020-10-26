@@ -4,6 +4,21 @@
 .flags-img {
   height: 20px;
 }
+.flag-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  justify-content: center;
+  margin-bottom: 0;
+
+  li {
+      margin-right: 10px
+  }
+}
+.left-list {
+  display: flex;
+  align-items: center;
+}
 .user-data {
   display: flex;
     list-style: none;

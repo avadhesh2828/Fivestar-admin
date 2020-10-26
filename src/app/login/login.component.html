@@ -191,13 +191,14 @@
               </div>
             </div>
           </form>
-          Please select a language
-          <ul>
-            <li *ngFor="let language of translate.getLangs()" [value]="language" (click)="switchLang(language)">
-              {{ language }}
-              <img class="flags-img" [src]="imageURL + '/' + language+'.png'" />
-            </li>
-          </ul>
+          <div class="language-div">
+            <p class="language"> Please select a language </p>
+            <ul class="flag-list">
+              <li *ngFor="let language of translate.getLangs()" [value]="language" (click)="switchLang(language)">
+                <img class="flags-img" [src]="imageURL + '/' + language+'.png'" />
+              </li>
+            </ul>
+          </div>
           <!-- <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
             <option *ngFor="let language of translate.getLangs()" [value]="language"
               [selected]="language === translate.currentLang">
