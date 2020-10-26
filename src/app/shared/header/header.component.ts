@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class HeaderComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private userService: UserService,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public subscriptionService: SubscriptionService
     ) {
         this.userService.currentUser.subscribe((obj: any) => {
             if (this.userService.sizeOfObject(obj)) {
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
     switchLang(lang: string) {
         this.translate.use(lang);
-        localStorage.setItem('language', lang);
+        this.subscriptionService.siteLang = lang;
     }
 
     ngOnInit() {

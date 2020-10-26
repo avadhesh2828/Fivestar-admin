@@ -42,5 +42,22 @@
     "playerLoginIP": "Player Login IP",
     "searchUser": "Search User",
     "userManagement": "User Management"
+  },
+  "agent": {
+    "agentMng": "Agent Management",
+    "totalRecord": "Total Record",
+    "username": "Username",
+    "name": "Name",
+    "phone": "Phone Number",
+    "score": "Score",
+    "lastLogin": "Last Login",
+    "status": "Status",
+    "action": "Action",
+    "errorText": "There was an error",
+    "loading": "Loading",
+    "notFound": "No Agent Found",
+    "enable": "Enable",
+    "disable": "Disable",
+    "create": "Create"
   }
 }

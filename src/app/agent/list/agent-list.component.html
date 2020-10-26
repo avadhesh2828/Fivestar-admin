@@ -53,15 +53,15 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Agent Management
+          <h1 class="h3 mb-0 text-gray-800"> {{ 'agent.agentMng' | translate}}
             <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/agent/new']">
-                <i class="nav-icon icon-plus"></i> Create</a></button>
+                <i class="nav-icon icon-plus"></i> {{ 'agent.create' | translate}}</a></button>
           </h1>
           <!-- <span class="input-group-prepend">
             <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
           </span> -->
-          <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'agent.totalRecord' | translate}}: {{totalAgents}}</h5>
           <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
             <i class="icon-arrow-left-circle" aria-hidden="true"></i>
           </a>
@@ -69,24 +69,24 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Score</th>
-              <th>Last Login</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{{ 'agent.username' | translate}}</th>
+              <th>{{ 'agent.name' | translate}}</th>
+              <th>{{ 'agent.phone' | translate}} </th>
+              <th> {{ 'agent.score' | translate}}</th>
+              <th>{{ 'agent.lastLogin' | translate}}</th>
+              <th>{{ 'agent.status' | translate}} </th>
+              <th>{{ 'agent.action' | translate}} </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="7" class="table-danger">There was an error</td>
+              <td colspan="7" class="table-danger">{{ 'agent.errorText' | translate}} </td>
             </tr>
             <tr *ngIf="!error && !agentList">
-              <td colspan="7">Loading...</td>
+              <td colspan="7">{{ 'agent.loading' | translate}}...</td>
             </tr>
             <tr *ngIf="agentList && !(agentList.length>0)">
-              <td colspan="7" class="text-center">No Agent Found</td>
+              <td colspan="7" class="text-center">{{ 'agent.notFound' | translate}}</td>
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
               <!-- <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td> -->
@@ -102,11 +102,12 @@
               </td>
               <td>
                 <a href="javascript:void(0);" *ngIf="agent.status == 0"
-                  (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                  (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i>
+                  {{ 'agent.enable' | translate}}</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="agent.status == 1"
-                  (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
-
+                  (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i>
+                  {{ 'agent.disable' | translate}}</a>
               </td>
             </tr>
           </tbody>
