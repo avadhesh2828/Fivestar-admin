@@ -32,5 +32,15 @@
     "changePassword": "Change Password",
     "changePPassword": "Change Personal Password",
     "logout": "Logout"
+  },
+  "sidebar": {
+    "advertisement": "Advertisement",
+    "create": "Create",
+    "listing": "Listing",
+    "notifications": "Notifications",
+    "createForUser": "Create For User",
+    "playerLoginIP": "Player Login IP",
+    "searchUser": "Search User",
+    "userManagement": "User Management"
   }
 }
