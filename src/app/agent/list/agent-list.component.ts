@@ -1,9 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AgentService } from '../../services/agent.service';
 import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
+import { SubscriptionService } from '../../services/subscription.service';
 import { AGENT_STATUS, KYC_STATUS } from '../constants';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -43,8 +45,15 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     private agentService: AgentService,
     private toastr: ToastrService,
     private loaderService: LoaderService,
-    private location: Location
-  ) { }
+    private location: Location,
+    public translate: TranslateService,
+    public subscriptionService: SubscriptionService
+  ) {
+    translate.addLangs(['zh', 'en']);
+    subscriptionService.language.subscribe((lang) => {
+      translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     // this.params = localStorage.getItem('agentFilters')

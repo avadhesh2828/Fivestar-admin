@@ -41,7 +41,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     LoaderService,
   ],
   exports: [
-    LoaderComponent,
+    LoaderComponent
   ],
 })
 export class PostAuthenticationModule { }

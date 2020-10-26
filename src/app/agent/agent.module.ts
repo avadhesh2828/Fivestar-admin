@@ -10,6 +10,9 @@ import { DirectivesModule } from '../directives/directives.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { LightboxModule } from 'ngx-lightbox';
 import { UserModule } from '../user/user.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,7 +27,14 @@ import { UserModule } from '../user/user.module';
         BsDatepickerModule.forRoot(),
         ImageCropperModule,
         LightboxModule,
-        UserModule
+        UserModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpTranslateLoader,
+                deps: [HttpClient]
+            }
+        }),
 
     ],
     declarations: [
@@ -35,3 +45,6 @@ import { UserModule } from '../user/user.module';
     ]
 })
 export class AgentModule { }
+export function httpTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
