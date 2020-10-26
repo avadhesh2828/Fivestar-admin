@@ -5,7 +5,7 @@
         <!-- <a class="nav-link" href="javascript:void(0);" [routerLink]="['/users']" routerLinkActive="active">
           <i class="nav-icon icon-user"></i> User Management</a> -->
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/agent']" routerLinkActive="active">
-          <i class="nav-icon icon-user"></i> User Management</a>
+          <i class="nav-icon icon-user"></i> {{'sidebar.userManagement' | translate}} </a>
       </li>
       <!--
       <li class="nav-item nav-dropdown">
@@ -102,32 +102,33 @@
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#AdvSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-rocket"></i> Advertisement</a>
+            class="nav-icon icon-rocket"></i> {{'sidebar.advertisement' | translate}}</a>
         <ul class="collapse list-unstyled" id="AdvSubMenu">
           <li class="nav-item">
             <a class="nav-link" href="javascript:void(0);" [routerLink]="['/advertisement/new']"
               routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create</a>
+              <i class="nav-icon icon-pencil"></i> {{'sidebar.create' | translate}}</a>
           </li>
           <li class="nav-item" routerLinkActive="open">
             <a class="nav-link" href="javascript:void(0);" [routerLink]="['/advertisement']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Listing</a>
+              <i class="nav-icon icon-list"></i> {{'sidebar.listing' | translate}}</a>
           </li>
         </ul>
       </li>
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#notificationSubMenu" data-toggle="collapse" aria-expanded="false"
-          class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i> Notifications</a>
+          class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i>
+          {{'sidebar.notifications' | translate}}</a>
         <ul class="collapse list-unstyled" id="notificationSubMenu">
           <li class="nav-item">
             <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications/new']"
               routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create For User</a>
+              <i class="nav-icon icon-pencil"></i> {{'sidebar.createForUser' | translate}}</a>
           </li>
           <li class="nav-item" routerLinkActive="open">
             <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i> Listing</a>
+              <i class="nav-icon icon-list"></i>{{'sidebar.listing' | translate}}</a>
           </li>
         </ul>
       </li>
@@ -135,12 +136,12 @@
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/player-loginip/list']"
           routerLinkActive="active">
-          <img [src]="newsIcon" /> Player LoginIP</a>
+          <img [src]="newsIcon" /> {{'sidebar.playerLoginIP' | translate}} </a>
       </li>
 
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/search-user/list']" routerLinkActive="active">
-          <img [src]="newsIcon" /> Search User</a>
+          <img [src]="newsIcon" /> {{'sidebar.searchUser' | translate}}</a>
       </li>
 
       <!--
