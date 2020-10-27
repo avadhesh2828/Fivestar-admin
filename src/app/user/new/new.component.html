@@ -3,68 +3,73 @@
     <div class="card">
       <form class="form-horizontal" [formGroup]="newAgentForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
-          <strong>Create New Player</strong>
+          <strong>{{ 'player.createNew' | translate}}</strong>
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="username">User Agent <!-- <span class="text-danger">*</span>--></label>
+            <label class="col-md-3 col-form-label" for="username">{{ 'player.username' | translate}}
+              <!-- <span class="text-danger">*</span>--></label>
             <div class="col-md-9">
               <h4>{{userAgent}}</h4>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="password">Password<span class="text-danger">*</span></label>
+            <label class="col-md-3 col-form-label" for="password">{{ 'player.password' | translate}}<span
+                class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="password">
               <div *ngIf="submitted && f['password'].errors" class="text-danger">
-                <div *ngIf="f['password'].errors.required">Password is required</div>
-                <div *ngIf="f['password'].errors.minlength">Password must have greater than 3 characters</div>
-                <div *ngIf="f['password'].errors.maxlength">Password must have less than 20 characters</div>
+                <div *ngIf="f['password'].errors.required">{{ 'player.passwordReq' | translate}}</div>
+                <div *ngIf="f['password'].errors.minlength">{{ 'player.passwordMinLen' | translate}}</div>
+                <div *ngIf="f['password'].errors.maxlength">{{ 'player.passwordMaxLen' | translate}}</div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="score">Score<span class="text-danger">* (Max:
+            <label class="col-md-3 col-form-label" for="score">{{ 'player.score' | translate}}<span
+                class="text-danger">*
+                ({{ 'player.max' | translate}}:
                 {{maxBalance}})</span>
             </label>
             <div class="col-md-9">
               <input type="number" class="form-control" formControlName="score">
               <div *ngIf="submitted && f['score'].errors" class="text-danger">
-                <div *ngIf="f['score'].errors.required">Score is required</div>
-                <div *ngIf="f['score'].errors.max">Score should be equal to or less than {{maxBalance}}</div>
+                <div *ngIf="f['score'].errors.required">{{ 'player.scoreReq' | translate}}</div>
+                <div *ngIf="f['score'].errors.max">{{ 'player.scoreValidation' | translate}} {{maxBalance}}</div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="name">Name<span class="text-danger">*</span></label>
+            <label class="col-md-3 col-form-label" for="name">{{ 'player.name' | translate}}<span
+                class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="name">
               <div *ngIf="submitted && f['name'].errors" class="text-danger">
-                <div *ngIf="f['name'].errors.required">Name is required</div>
-                <div *ngIf="f['name'].errors.minlength">Name must have greater than 3 characters</div>
-                <div *ngIf="f['name'].errors.maxlength">Name must have less than 50 characters</div>
+                <div *ngIf="f['password'].errors.required">{{ 'player.nameReq' | translate}} </div>
+                <div *ngIf="f['name'].errors.minlength">{{ 'player.nameMinLen' | translate}}</div>
+                <div *ngIf="f['name'].errors.maxlength">{{ 'player.nameMaxLen' | translate}}</div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="description">Description</label>
+            <label class="col-md-3 col-form-label" for="description">{{ 'player.description' | translate}}</label>
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="description">
               <div *ngIf="submitted && f['description'].errors" class="text-danger">
-                <div *ngIf="f['description'].errors.minlength">Description must have greater than 5 characters</div>
-                <div *ngIf="f['description'].errors.maxlength">Description must have less than 50 characters</div>
+                <div *ngIf="f['description'].errors.minlength">{{ 'player.desMinLen' | translate}}</div>
+                <div *ngIf="f['description'].errors.maxlength">{{ 'player.desMaxLen' | translate}}</div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="phone">Phone</label>
+            <label class="col-md-3 col-form-label" for="phone">{{ 'player.phone' | translate}}</label>
             <div class="col-md-9">
               <input type="text" appNumeric numericType='number' class="form-control" id="phone"
                 formControlName="phone" />
               <div *ngIf="submitted && f['phone'].errors" class="text-danger">
-                <div *ngIf="f['phone'].errors.required">Phone Number is required</div>
+                <div *ngIf="f['phone'].errors.required">{{ 'player.phoneReq' | translate}}</div>
                 <div *ngIf="f['phone'].errors.pattern || f['phone'].errors.minlength|| f['phone'].errors.maxlength">
-                  Phone Number must be valid
+                  {{ 'player.phoneValidation' | translate}}
                 </div>
               </div>
             </div>
@@ -72,10 +77,10 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-            Submit</button>
+            {{ 'player.submit' | translate}}</button>
           &nbsp;
           <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
-            Reset</button>
+            {{ 'player.reset' | translate}}</button>
         </div>
       </form>
     </div>
