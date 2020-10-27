@@ -39,7 +39,7 @@
           <div class="col-6 col-sm-3">
             <span class="input-group-prepend">
               <a class="btn btn-warning" (click)="exportPDF();"><i class="fa fa-file-pdf-o"></i>
-                Create Agent</a>
+                Create player</a>
               <a class="btn btn-warning" (click)="exportPDF();"><i class="fa fa-file-pdf-o"></i>
                 Export PDF</a>
               <a class="btn btn-warning" (click)="exportExcel();"><i class="fa fa-file-excel-o"></i>
@@ -65,45 +65,46 @@
       </div> -->
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Player Management
+          <h1 class="h3 mb-0 text-gray-800">{{ 'player.playerMng' | translate}}
             <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/users/new']">
-                <i class="nav-icon icon-plus"></i> Create</a></button>
+                <i class="nav-icon icon-plus"></i> {{ 'player.create' | translate}}</a></button>
           </h1>
           
 
-          <h5 class="mb-0 text-gray-800">Total Record : {{totalUsers}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'player.totalRecord' | translate}}: {{totalUsers}}</h5>
         </div>
         <div class="player-btn">
             <button (click)="players('')"> All Player </button> |
             <button (click)="players(1)"> Enable Player </button> |
             <button (click)="players(0)"> Disable Player </button>
+          
+
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Username</th>
-              <!-- <th>Unique Code</th> -->
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Score</th>
-              <th>Last Login</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{{ 'player.username' | translate}}</th>
+              <th>{{ 'player.name' | translate}}</th>
+              <th>{{ 'player.phone' | translate}} </th>
+              <th> {{ 'player.score' | translate}}</th>
+              <th>{{ 'player.lastLogin' | translate}}</th>
+              <th>{{ 'player.status' | translate}} </th>
+              <th>{{ 'player.action' | translate}} </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="7" class="table-danger">There was an error</td>
+              <td colspan="7" class="table-danger">{{ 'player.errorText' | translate}} </td>
             </tr>
             <tr *ngIf="!error && !userList">
-              <td colspan="7">Loading...</td>
+              <td colspan="7">{{ 'player.loading' | translate}}...</td>
             </tr>
             <tr *ngIf="userList && !(userList.length>0)">
-              <td colspan="7" class="text-center">No Player found</td>
+              <td colspan="7" class="text-center">{{ 'player.notFound' | translate}}</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
-              <td class="username" routerLink="/users/{{user.user_id}}" >{{ user.username || "-" }}</td>
+              <td class="username" routerLink="/users/{{user.user_id}}">{{ user.username || "-" }}</td>
               <!-- <td>{{ user.user_unique_id }}</td> -->
               <td>{{ user.name || "-" | titlecase }}</td>
               <td>{{ user.phone || "-" }}</td>
@@ -127,10 +128,12 @@
                   })"><i class="fa fa-edit"></i>Edit</a>
                   &nbsp; -->
                 <a href="javascript:void(0);" *ngIf="user.status == 0"
-                  (click)="changeAgentStatus(user.user_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
+                  (click)="changeplayerStatus(user.user_id, '1')"><i class="fa fa-address-book"></i>
+                  {{ 'player.enable' | translate}}</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="user.status == 1"
-                  (click)="changeAgentStatus(user.user_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+                  (click)="changeplayerStatus(user.user_id, '0')"><i class="fa fa-address-book"></i>
+                  {{ 'player.disable' | translate}}</a>
 
               </td>
             </tr>

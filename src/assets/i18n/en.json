@@ -59,5 +59,22 @@
     "enable": "Enable",
     "disable": "Disable",
     "create": "Create"
+  },
+  "player": {
+    "playerMng": "Player Management",
+    "totalRecord": "Total Record",
+    "username": "Username",
+    "name": "Name",
+    "phone": "Phone Number",
+    "score": "Score",
+    "lastLogin": "Last Login",
+    "status": "Status",
+    "action": "Action",
+    "errorText": "There was an error",
+    "loading": "Loading",
+    "notFound": "No Player Found",
+    "enable": "Enable",
+    "disable": "Disable",
+    "create": "Create"
   }
 }
