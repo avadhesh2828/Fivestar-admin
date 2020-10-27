@@ -49,9 +49,8 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     public translate: TranslateService,
     public subscriptionService: SubscriptionService
   ) {
-    translate.addLangs(['zh', 'en']);
-    subscriptionService.language.subscribe((lang) => {
-      translate.setDefaultLang(lang);  // this will happen on every change
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
     });
   }
 
