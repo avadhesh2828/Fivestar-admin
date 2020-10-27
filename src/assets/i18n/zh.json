@@ -57,5 +57,22 @@
     "enable": "啟用",
     "disable": "禁用",
     "create": "創造"
+  },
+  "player": {
+    "playerMng": "球員管理",
+    "totalRecord": "總記錄",
+    "username": "用戶名",
+    "name": "名稱",
+    "phone": "電話號碼",
+    "score": "得分了",
+    "lastLogin": "上次登錄",
+    "status": "狀態",
+    "action": "行動",
+    "errorText": "有一個錯誤",
+    "loading": "載入中",
+    "notFound": "找不到玩家",
+    "enable": "啟用",
+    "disable": "禁用",
+    "create": "創造"
   }
 }

@@ -9,7 +9,9 @@ import { PostAuthenticationModule } from '../shared/layouts/post-authentication/
 import { DirectivesModule } from '../directives/directives.module';
 import { UserListComponent } from './list/user-list.component';
 
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
     imports: [
@@ -20,6 +22,13 @@ import { UserListComponent } from './list/user-list.component';
         PostAuthenticationModule,
         DirectivesModule,
         ReactiveFormsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpTranslateLoader,
+                deps: [HttpClient]
+            }
+        }),
 
     ],
     declarations: [
@@ -34,3 +43,6 @@ import { UserListComponent } from './list/user-list.component';
     ]
 })
 export class UserModule { }
+export function httpTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
