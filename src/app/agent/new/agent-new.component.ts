@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AgentService } from '../../services/agent.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
@@ -10,6 +11,8 @@ import { KYC_TYPE, KYC_STATUS, COMMISSION_TYPE } from '../constants';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { SubscriptionService } from '../../services/subscription.service';
+
 @Component({
   selector: 'app-agent-new',
   templateUrl: './agent-new.component.html',
@@ -46,11 +49,16 @@ export class AgentNewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    public translate: TranslateService,
+    public subscriptionService: SubscriptionService
   ) { }
 
   ngOnInit() {
     // this.getCountryList();
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
