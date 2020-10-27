@@ -39,8 +39,8 @@
               <td colspan="7" class="text-center">No Agent Found</td>
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
-              <td class="username" (click)="agentPlayer(agent)">{{ agent.username || "-" }}</td>
               <!-- <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td> -->
+              <td class="username"><a href="agent/{{agent.admin_id}}">{{ agent.username || "-" }} </a></td>
               <td>{{ agent.name || "-" | titlecase }}</td>
               <td>{{ agent.phone || "-" }}</td>
               <td>{{ agent.balance}}</td>
@@ -51,16 +51,6 @@
                   }}</span>
               </td>
               <td>
-                <!-- <a routerLink="/users/{{agent.admin_id}}"><i class="fa fa-address-book"></i>Details</a> -->
-                <!-- &nbsp;
-                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
-                    user_unique_id: agent.unique_id,
-                    status: agent.status,
-										user_id: agent.user_id,
-										balance: agent.balance,
-                    userIndex: userIndex
-                  })"><i class="fa fa-edit"></i>Edit</a> -->
-                &nbsp;
                 <a href="javascript:void(0);" *ngIf="agent.status == 0"
                   (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
                 &nbsp;
@@ -89,11 +79,11 @@
     </div>
   </div>
 </div>
-<!-- <app-user-list></app-user-list> -->
+<app-user-list></app-user-list>
 
 
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-body custom-listing-table">
@@ -120,41 +110,32 @@
           <tbody>
             <tr *ngIf="error">
               <td colspan="7" class="table-danger">There was an error</td>
-            </tr>
+            </tr> 
             <tr *ngIf="!error && !userList">
               <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="userList && !(userList.length>0)">
               <td colspan="7" class="text-center">No Player found</td>
             </tr>
-            <tr *ngFor="let user of userList; let userIndex = index">
-              <td class="username" routerLink="/users/{{user.user_id}}" >{{ user.username || "-" }}</td>
-              <td>{{ user.name || "-" | titlecase }}</td>
-              <td>{{ user.phone || "-" }}</td>
-              <td>{{ user.balance}}</td>
-              <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
+            <tr *ngFor="let player of userList; let userIndex = index">
+              <td class="username" routerLink="/users/{{player.user_id}}" >{{ player.username || "-" }}</td>
+              <td>{{ player.name || "-" | titlecase }}</td>
+              <td>{{ player.phone || "-" }}</td>
+              <td>{{ player.balance}}</td>
+              <td>{{ formatDateTimeZone(player.last_login) | date: dateFormatString}} </td>
 
               <td>
                 <span class="badge"
-                  [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]
+                  [ngClass]="{'badge-success': (player.status == 1), 'badge-secondary': (player.status == 0), 'badge-danger': (player.status > 1)}">{{userStatus[player.status]
                   }}</span>
               </td>
               <td>
-                <!-- <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
+               
+                <a href="javascript:void(0);" *ngIf="player.status == 0"
+                  (click)="changeAgentStatus(player.user_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
                 &nbsp;
-                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
-                    user_unique_id: user.user_unique_id,
-                    status: user.status,
-										user_id: user.user_id,
-										balance: user.balance,
-                    userIndex: userIndex
-                  })"><i class="fa fa-edit"></i>Edit</a>
-                  &nbsp; -->
-                <a href="javascript:void(0);" *ngIf="user.status == 0"
-                  (click)="changeAgentStatus(user.user_id, '1')"><i class="fa fa-address-book"></i> Enable</a>
-                &nbsp;
-                <a href="javascript:void(0);" *ngIf="user.status == 1"
-                  (click)="changeAgentStatus(user.user_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
+                <a href="javascript:void(0);" *ngIf="player.status == 1"
+                  (click)="changeAgentStatus(player.user_id, '0')"><i class="fa fa-address-book"></i> Disable</a>
 
               </td>
             </tr>
@@ -177,7 +158,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <app-loader></app-loader>

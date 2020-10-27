@@ -89,8 +89,8 @@
               <td colspan="7" class="text-center">No Agent Found</td>
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
-              <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td>
-              <!-- <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td> -->
+              <!-- <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td> -->
+              <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td>
               <td>{{ agent.name || "-" | titlecase }}</td>
               <td>{{ agent.phone || "-" }}</td>
               <td>{{ agent.balance}}</td>

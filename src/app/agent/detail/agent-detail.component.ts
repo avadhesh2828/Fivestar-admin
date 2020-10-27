@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
-
+import { Router } from '@angular/router';
 import { AgentService } from '../../services/agent.service';
 import { UserService } from '../../services/user.service';
 import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
@@ -51,9 +51,9 @@ export class AgentDetailComponent implements OnInit {
   selectedAgent: any = '';
   selectedUser: any = 1;
 
-  // public totalUsers = 0;
-  // public totalPaginationShowUser = [];
-  // public totalPagesUser = 0;
+  public totalUsers = 0;
+  public totalPaginationShowUser = [];
+  public totalPagesUser = 0;
 
   constructor(
     private agentService: AgentService,
@@ -61,7 +61,8 @@ export class AgentDetailComponent implements OnInit {
     private toastr: ToastrService,
     private loaderService: LoaderService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -108,6 +109,7 @@ export class AgentDetailComponent implements OnInit {
         if (agent['data'] && agent['data'].data) {
           this.agentList = agent['data'].data;
           this.createPaginationItem(agent['data'].total);
+          this.getUserList();
         }
         this.error = false;
       }, (err: Error) => {
@@ -186,14 +188,14 @@ export class AgentDetailComponent implements OnInit {
       });
   }
 
-  // private createPaginationItemUser(totalUSer: number) {
-  //   this.totalUsers = totalUSer;
-  //   const maxPages: number = Math.ceil(totalUSer / this.params.per_page);
-  //   const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
-  //   const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
-  //   this.totalPagesUser = maxPages;
-  //   this.totalPaginationShowUser = range(end, start);
-  // }
+  private createPaginationItemUser(totalUser: number) {
+    this.totalUsers = totalUser;
+    const maxPages: number = Math.ceil(totalUser / this.params.per_page);
+    const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
+    const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
+    this.totalPagesUser = maxPages;
+    this.totalPaginationShowUser = range(end, start);
+  }
 
   // public paginateListUser(newPage: number) {
   //   if (this.params.current_page === newPage) { return false; }
@@ -229,6 +231,11 @@ export class AgentDetailComponent implements OnInit {
         this.formSubmitted = false;
       });
 
+  }
+
+  public navigateSubAgent(agentId: any) {
+    console.log('agent =>', agentId);
+    // this.router.navigate(['/', agentId]);
   }
 
 

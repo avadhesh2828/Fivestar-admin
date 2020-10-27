@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { environment } from '../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 const INITIAL_PARAMS = {
   per_page: 10,
@@ -39,15 +40,25 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'users/list?';
   selectedUser: any = 1;
+  selectedAgent: any = '';
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+    if(this.route.snapshot.paramMap.get('agentId') == '' ||  this.route.snapshot.paramMap.get('agentId') ==  null ) {
+      this.selectedAgent = '';
+    } else {
+      this.selectedAgent = this.route.snapshot.paramMap.get('agentId');
+    }
+    
+
+
     this.getCountryList();
     // this.getAgentsList();
     this.searchTextChanged.pipe(debounceTime(1000))
@@ -90,7 +101,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   private createUrl() {
     this.url = 'users/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.selectedUser;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.selectedUser + '&parent_id=' +this.selectedAgent;
   }
 
   public getAgentsList() {
