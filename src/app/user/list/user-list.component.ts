@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 const INITIAL_PARAMS = {
   per_page: 10,
   current_page: 1,
-  status: 1,
+  status: '',
 };
 @Component({
   selector: 'app-user-list',
@@ -39,7 +39,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'users/list?';
-  selectedUser: any = 1;
+  selectedUser: any = '';
   selectedAgent: any = '';
   searchTextChanged: Subject<string> = new Subject<string>();
 
@@ -62,7 +62,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getCountryList();
     // this.getAgentsList();
     this.searchTextChanged.pipe(debounceTime(1000))
-      .subscribe(model => this.getAgentsList());
+      .subscribe(model => this.getUsersList());
   }
 
   search() {
@@ -86,7 +86,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.userService.getCountryList()
       .subscribe((response: any) => {
         this.countryList = response.result;
-        this.getAgentsList();
+        this.getUsersList();
       },
         (err: any) => {
           if (err.status !== 401) {
@@ -99,12 +99,17 @@ export class UserListComponent implements OnInit, AfterViewInit {
         });
   }
 
+  public players(status:any) {
+    this.selectedUser = status;
+    this.getUsersList();
+  }
+
   private createUrl() {
     this.url = 'users/list?';
     this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.selectedUser + '&parent_id=' +this.selectedAgent;
   }
 
-  public getAgentsList() {
+  public getUsersList() {
     this.loaderService.display(true);
     this.createUrl();
     this.userService.getAgents(this.url)
@@ -134,18 +139,18 @@ export class UserListComponent implements OnInit, AfterViewInit {
     if (this.params.current_page === newPage) { return false; }
     this.params.current_page = newPage;
     localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
-    this.getAgentsList();
+    this.getUsersList();
   }
 
   public nextOrPreviousPage(deviation: number) {
     this.params.current_page = this.params.current_page + deviation;
     localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
-    this.getAgentsList();
+    this.getUsersList();
   }
 
   public checkSubAgent(user: any) {
     this.selectedUser = user.user_id;
-    this.getAgentsList();
+    this.getUsersList();
   }
 
   public changeAgentStatus(agentId: any, status: any) {
@@ -157,7 +162,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
       .subscribe((res: any) => {
         this.formSubmitted = false;
         this.toastr.success(res.message || 'Agent status changed Sucessfully.');
-        this.getAgentsList();
+        this.getUsersList();
       }, err => {
         const errorMessage = '';
         this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
@@ -183,7 +188,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
       localStorage.removeItem('adminuserFilters');
     }
     this.params.current_page = 1;
-    this.getAgentsList();
+    this.getUsersList();
   }
 
   public startEdit(user) {
@@ -193,7 +198,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   public onStatusEdit(editStatus: any) {
     if (editStatus.success) {
-      this.getAgentsList();
+      this.getUsersList();
       this.userList[this.currentUser.userIndex].status = this.currentUser.status;
       this.userList[this.currentUser.userIndex].balance = this.currentUser.balance;
     }

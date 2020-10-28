@@ -38,7 +38,9 @@ class UserController extends Controller
         } else {
             $users = $users->where('parent_id', $user_id);
         }
-        $users = $users->where('status', $request->status);
+        if($request->status != '') {
+            $users = $users->where('status', $request->status);
+        } 
         $users = $users->orderBy('user_id','ASC');
         $users = $users->paginate($request->per_page);
         return response()->json(['response_code'=> 200,'service_name' => 'users_list','data' => $users],200);

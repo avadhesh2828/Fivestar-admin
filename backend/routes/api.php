@@ -59,7 +59,15 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('add_new_notification','NotificationController@add_new_notification')->middleware('can:isAdmin');
 		Route::post('get_all_notifications','NotificationController@get_all_notifications')->middleware('can:isAdmin');
 		Route::post('fcm_notifications','NotificationController@fcm_notifications')->middleware('can:isAdmin');
-	});			
+	});
+	
+	
+	//game 
+	Route::group(['prefix' => 'game'], function(){
+		Route::get('list','GameController@index')->middleware('can:isAdmin');
+		Route::post('change-game-status/{game_id}', 'GameController@change_game_status')->middleware('can:isAdmin');
+		Route::get('get-game-details/{gameId}', 'GameController@get_game_details')->middleware('can:isAdmin');
+	});
 
 
 	//route match api

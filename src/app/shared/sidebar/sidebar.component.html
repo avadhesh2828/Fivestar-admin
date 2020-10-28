@@ -95,6 +95,10 @@
           <i class="nav-icon icon-user"></i>Dispute Resolution</a>
       </li> -->
 
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin" routerLinkActive="open">
+        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/game/list']" routerLinkActive="active">
+          <img [src]="newsIcon" /> Game Management</a>
+      </li>
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#AdvSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
