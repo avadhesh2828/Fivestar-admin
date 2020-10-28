@@ -12,3 +12,16 @@
   padding: 0;
   font-size: 1.53125rem;
 }
+
+.player-btn {
+  margin-bottom: 10px;
+  
+  button {
+    background: none;
+    border: none;
+  }
+
+  button:hover {
+    background: #20a8d8;
+  }
+}
