@@ -148,7 +148,7 @@
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",
     "totalRecord": "Total Record",
-    "useName" : "User Name",
+    "userName" : "Username",
     "last": "Last",
     "enter": "Enter",
     "dataList": "LoginIP Data List",
