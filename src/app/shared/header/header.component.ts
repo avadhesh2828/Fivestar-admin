@@ -20,6 +20,11 @@ export class HeaderComponent implements OnInit {
     user: any;
     myDate = new Date();
     imageURL = environment.IMG_URL;
+    languages = {
+        en: 'English',
+        zh: 'Chinese'
+    };
+    selectedLanguage = 'en';
     constructor(
         private authService: AuthService,
         private router: Router,
@@ -38,6 +43,7 @@ export class HeaderComponent implements OnInit {
     }
 
     switchLang(lang: string) {
+        this.selectedLanguage = lang;
         this.translate.use(lang);
         this.subscriptionService.siteLang = lang;
     }

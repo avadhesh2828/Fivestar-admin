@@ -19,8 +19,17 @@
     </a>
     <div class="left-list">
       <ul class="flag-list">
-        <li *ngFor="let language of translate.getLangs()" [value]="language" (click)="switchLang(language)">
-          <img class="flags-img" [src]="imageURL + '/' + language+'.png'" />
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Select Language
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div href="javascript:void(0)" *ngFor="let language of translate.getLangs()" (click)="switchLang(language)">
+              <img class="flags-img" [src]="imageURL + '/' + language+'.png'" />
+              <span class="lang-text"
+                [ngClass]="selectedLanguage === language ? 'blue' : ''">{{languages[language]}}</span>
+            </div>
+          </div>
         </li>
       </ul>
       <ul class="nav navbar-nav">

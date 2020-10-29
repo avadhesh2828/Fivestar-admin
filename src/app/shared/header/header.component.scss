@@ -2,9 +2,17 @@
   font-weight: 600;
 }
 .flags-img {
-  height: 20px;
-  width: 30px;
+  height: 40px;
+  width: 22px;
   cursor: pointer;
+  min-width: 74px;
+  padding: 7px;
+}
+.lang-text {
+  cursor: pointer;
+}
+.blue {
+  color: #20a8d8;
 }
 .flag-list {
   list-style: none;
