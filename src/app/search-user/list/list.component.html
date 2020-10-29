@@ -3,20 +3,20 @@
     <div class="card">
       <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
-          <strong>Search User</strong>
+          <strong> {{'search.searchUser' | translate}}</strong>
         </div>
         <div class="card-body">
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="username"></label>
             <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="username" placeholder="Search">
+              <input type="text" class="form-control" formControlName="username" placeholder="{{'search.search' | translate}}">
               <div *ngIf="submitted && f['username'].errors" class="text-danger">
-                <div *ngIf="f['username'].errors.required">User Name is required</div>
+                <div *ngIf="f['username'].errors.required">{{'search.UserNameIsRequired' | translate}}</div>
               </div>
             </div>
             <div class="col-md-3">
               <button class="btn btn-lg-sm btn-primary" type="submit"><i class="fa fa-search"></i>
-                Submit</button>
+                {{'search.submit' | translate}}</button>
             </div>
           </div>
         </div>
@@ -27,13 +27,13 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Online</th>
-              <th>Agent</th>
-              <th>Balance</th>
-              <th>Phone</th>
-              <th>Description</th>
-              <th>Operation</th>
+              <th>{{'search.userName' | translate}}</th>
+              <th>{{'search.online' | translate}}</th>
+              <th>{{'search.agent' | translate}}</th>
+              <th>{{'search.balance' | translate}}</th>
+              <th>{{'search.phone' | translate}}</th>
+              <th>{{'search.description' | translate}}</th>
+              <th>{{'search.operation' | translate}} </th>
             </tr>
           </thead>
           <tbody>
@@ -44,27 +44,26 @@
               <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="userList && !(userList.length>0)">
-              <td colspan="7" class="text-center">No User found</td>
+              <td colspan="7" class="text-center"> {{'search.noLoginIpFound' | translate}} </td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
               <td>{{user.username}}</td>
-              <td>Off (0 day)</td>
+              <td>{{'search.off' | translate}} (0 day)</td>
               <td>{{ user.agent_name }}</td>
               <td>{{ user.balance }} </td>
               <td>{{ user.phone }} </td>
               <td>{{ user.description }} </td>
               <td>
-                <button href="javascript:void(0);" class="btn-warning" > Set Score </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Score Log </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Edit </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Reports </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Game Log </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Quit Game </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning" > {{'search.setScore' | translate}} </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> {{'search.scoreLog' | translate}} </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> {{'search.edit' | translate}} </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> {{'search.reports' | translate}} </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> {{'search.gameLog' | translate}} </button> &nbsp;
+                <button href="javascript:void(0);" class="btn-warning"> {{'search.quiteGame' | translate}} </button> &nbsp;
                 <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
-                (click)="changeUserStatus(user.user_id, '1')"> Enable </button> &nbsp;
+                (click)="changeUserStatus(user.user_id, '1')"> {{'search.enable' | translate}} </button> &nbsp;
                 <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
-                (click)="changeUserStatus(user.user_id, '0')"> Disable </button> &nbsp;
-                <button href="javascript:void(0);" class="btn-warning"> Bonus Log </button> &nbsp;
+                (click)="changeUserStatus(user.user_id, '0')"> {{'search.disable' | translate}} </button> &nbsp;
               </td>
             </tr>
           </tbody>

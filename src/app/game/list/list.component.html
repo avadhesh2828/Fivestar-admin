@@ -3,23 +3,23 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Game Management
+          <h1 class="h3 mb-0 text-gray-800">{{'games.gameMng' | translate}}
             <!-- <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/users/new']">
                 <i class="nav-icon icon-plus"></i> Create</a></button> -->
           </h1>
           
 
-          <h5 class="mb-0 text-gray-800">Total Record : {{totalGames}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'games.totalRecord' | translate}}: {{totalGames}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Game Name</th>
-              <th>Type</th>
-              <th>Bet</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{{'games.gameName' | translate}}</th>
+              <th>{{'games.type' | translate}}</th>
+              <th>{{'games.bet' | translate}}</th>
+              <th>{{'games.status' | translate}}</th>
+              <th>{{'games.action' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -30,7 +30,7 @@
               <td colspan="5">Loading...</td>
             </tr>
             <tr *ngIf="gameList && !(gameList.length>0)">
-              <td colspan="5" class="text-center">No Player found</td>
+              <td colspan="5" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
             </tr>
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.name || "-" }}</td>
@@ -42,7 +42,7 @@
                   }}</span>
               </td>
               <td>
-                <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>Details</a>
+                <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>{{'games.details' | translate}}</a>
                 &nbsp;
                 <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
                     user_unique_id: user.user_unique_id,
@@ -53,10 +53,10 @@
                   })"><i class="fa fa-edit"></i>Edit</a>
                   &nbsp; -->
                 <a href="javascript:void(0);" *ngIf="game.status == 0"
-                  (click)="changeGameStatus(game.id, '1')"> Disable</a>
+                  (click)="changeGameStatus(game.id, '1')"> {{'games.disable' | translate}}</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="game.status == 1"
-                  (click)="changeGameStatus(game.id, '0')"> Enable</a>
+                  (click)="changeGameStatus(game.id, '0')"> {{'games.enable' | translate}}</a>
 
               </td>
             </tr>

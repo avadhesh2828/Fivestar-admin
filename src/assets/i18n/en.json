@@ -41,7 +41,8 @@
     "createForUser": "Create For User",
     "playerLoginIP": "Player Login IP",
     "searchUser": "Search User",
-    "userManagement": "User Management"
+    "userManagement": "User Management",
+    "gameManagement": "Game Management"
   },
   "agent": {
     "agentMng": "Agent Management",
@@ -119,6 +120,67 @@
     "desMaxLen": "Description must have less than 50 characters",
     "phoneReq": "Phone Number is required",
     "phoneValidation": "Phone Number must be valid",
-    "max": "Max"
+    "max": "Max",
+    "allPlayer" : "All Player",
+    "enablePlayer" : "Enable Player",
+    "disablePlayer" : "Disable Player"
+  },
+  "games": {
+    "gameMng": "Game Management",
+    "totalRecord": "Total Record",
+    "gameName": "Game Name",
+    "type": "Type",
+    "bet": "Bet",
+    "numReels": "Num Reels",
+    "numRows": "Num Rows",
+    "numSelection": "Num Selection",
+    "gameImage": "Game Image",
+    "status": "Status",
+    "action": "Action",
+    "gameDetails": "Game Details",
+    "active": "Active",
+    "inactive": "Inactive",
+    "details": "Details",
+    "enable": "Enable",
+    "disable": "Disable",
+    "noPlayerFound" : "No Player Found"
+  },
+  "playerLoginIn": {
+    "queryplPlayerLoginIn": "Query Player LoginIP",
+    "totalRecord": "Total Record",
+    "useName" : "User Name",
+    "last": "Last",
+    "enter": "Enter",
+    "dataList": "LoginIP Data List",
+    "ipAddress": "IP Address",
+    "dateTime": "Date Time",
+    "UserNameIsRequired": "User Name is required",
+    "submit" : "Submit",
+    "reset"  : "Reset",
+    "noLoginIpFound" : "No LoginIP Found"
+  },
+  "search": {
+    "searchUser": "Search User",
+    "search": "Search",
+    "submit" : "Submit",
+    "userName": "Username",
+    "online": "Online",
+    "agent": "Agent",
+    "balance": "Balance",
+    "phone": "Phone",
+    "description": "Description",
+    "operation": "Operation",
+    "setScore": "Set Score",
+    "scoreLog": "Score Log",
+    "edit": "Edit",
+    "reports": "Reports",
+    "gameLog": "Game Log",
+    "quiteGame": "Quite Game",
+    "enable": "Enable",
+    "disable": "Disable",
+    "UserNameIsRequired": "User Name is required",
+    "noLoginIpFound" : "No LoginIP Found",
+    "on" : "On",
+    "off" : "Off"
   }
 }
