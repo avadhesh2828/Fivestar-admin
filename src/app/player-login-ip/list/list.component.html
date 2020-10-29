@@ -3,26 +3,26 @@
     <div class="card">
       <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
-          <strong>Query Player LoginIP</strong>
+          <strong>{{'playerLoginIn.queryplPlayerLoginIn' | translate}}</strong>
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label class="col-md-2 col-form-label" for="username">User Name<span class="text-danger">*</span></label>
+            <label class="col-md-2 col-form-label" for="username">{{'playerLoginIn.userName' | translate}}<span class="text-danger">*</span></label>
             <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="username" placeholder="Enter Player">
+              <input type="text" class="form-control" formControlName="username" placeholder="{{'playerLoginIn.enter' | translate}}">
               <div *ngIf="submitted && f['username'].errors" class="text-danger">
-                <div *ngIf="f['username'].errors.required">User Name is required</div>
+                <div *ngIf="f['username'].errors.required">{{'playerLoginIn.userNameIsRequired' | translate}}</div>
               </div>
             </div>
-            <div class="col-md-4"><span> Last 10</span></div>
+            <div class="col-md-4"><span> {{'playerLoginIn.last' | translate}} 10</span></div>
           </div>
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-            Submit</button>
+            {{'playerLoginIn.submit' | translate}}</button>
           &nbsp;
           <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
-            Reset</button>
+            {{'playerLoginIn.reset' | translate}}</button>
         </div>
       </form>
     </div>
@@ -36,7 +36,7 @@
       <div class="card-header">
         <div class="row">
           <div class="col-12 col-sm-6">
-            <h4>LoginIP Data List</h4>
+            <h4>{{'playerLoginIn.dataList' | translate}} </h4>
           </div>
         </div>
       </div>
@@ -46,9 +46,9 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>IP Address</th>
-              <th>Date Time</th>
+              <th>{{'playerLoginIn.userName' | translate}}</th>
+              <th>{{'playerLoginIn.ipAddress' | translate}}</th>
+              <th>{{'playerLoginIn.dateTime' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -59,7 +59,7 @@
               <td colspan="3">Loading...</td>
             </tr>
             <tr *ngIf="palyerIPList && !(palyerIPList.length>0)">
-              <td colspan="9" class="text-center">No LoginIP found</td>
+              <td colspan="9" class="text-center">{{'playerLoginIn.noLoginIpFound' | translate}}</td>
             </tr>
             <tr *ngFor="let dat of palyerIPList; let playerIndex = index">
               <td>{{ dat.username }}</td>

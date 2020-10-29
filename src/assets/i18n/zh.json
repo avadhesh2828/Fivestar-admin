@@ -39,7 +39,8 @@
     "createForUser": "為用戶創建",
     "playerLoginIP": "玩家登錄IP",
     "searchUser": "搜索用戶",
-    "userManagement": "用戶管理"
+    "userManagement": "用戶管理",
+    "gameManagement":"遊戲管理"
   },
   "agent": {
     "agentMng": "代理商管理",
@@ -117,6 +118,67 @@
     "desMaxLen": "說明必須少於50個字符",
     "phoneReq": "電話號碼為必填項",
     "phoneValidation": "電話號碼必須有效",
-    "max": "最高"
+    "max": "最高",
+    "allPlayer" : "所有玩家",
+    "enablePlayer" : "啟用播放器",
+    "disablePlayer" : "禁用播放器"
+  },
+  "games": {
+    "gameMng": "遊戲管理",
+    "totalRecord": "總記錄",
+    "gameName": "遊戲名稱",
+    "type": "類型",
+    "bet": "賭注",
+    "numReels": "是否捲軸",
+    "numRows": "行數",
+    "numSelection": "數字選擇",
+    "gameImage": "遊戲形象",
+    "status": "狀態",
+    "action": "行動",
+    "gameDetails": "遊戲詳情",
+    "active": "活性",
+    "inactive": "不活躍",
+    "details": "細節",
+    "enable": "啟用",
+    "disable": "禁用",
+    "noPlayerFound" : "找不到玩家"
+  },
+  "playerLoginIn": {
+    "queryplPlayerLoginIn": "查詢播放器登錄IP",
+    "totalRecord": "總記錄",
+    "userName" : "用戶名",
+    "last": "持續",
+    "enter": "輸入",
+    "dataList": "登錄IP數據列表",
+    "ipAddress": "IP地址",
+    "dateTime": "約會時間",
+    "UserNameIsRequired": "用戶名為必填項",
+    "submit" : "提交",
+    "reset"  : "重啟",
+    "noLoginIpFound" : "找不到登錄IP"
+  },
+  "search": {
+    "searchUser": "搜索用戶",
+    "search": "搜索",
+    "submit" : "提交",
+    "userName": "用戶名",
+    "online": "線上",
+    "agent": "代理商",
+    "balance": "平衡",
+    "phone": "電話",
+    "description": "描述",
+    "operation": "運作方式",
+    "setScore": "設定分數",
+    "scoreLog": "分數記錄",
+    "edit": "編輯",
+    "reports": "報告書",
+    "gameLog": "遊戲記錄",
+    "quiteGame": "相當遊戲",
+    "enable": "啟用",
+    "disable": "禁用",
+    "UserNameIsRequired": "用戶名為必填項",
+    "noLoginIpFound" : "找不到登錄IP",
+    "on" : "上",
+    "off" : "關"
   }
 }

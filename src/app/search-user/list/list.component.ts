@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { UserService } from 'src/app/services/user.service';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -26,7 +28,13 @@ export class ListComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
-  ) { }
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({

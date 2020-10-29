@@ -6,6 +6,8 @@ import { STATUS } from '../constants';
 import { Subject } from 'rxjs';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const INITIAL_PARAMS = {
   per_page: 10,
@@ -37,7 +39,13 @@ export class ListComponent implements OnInit {
     private gamesService: GamesService,
     private toastr: ToastrService,
     private loaderService: LoaderService,
-  ) { }
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.getGameList();

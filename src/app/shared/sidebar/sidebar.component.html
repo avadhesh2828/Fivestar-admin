@@ -97,7 +97,7 @@
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/game/list']" routerLinkActive="active">
-          <img [src]="newsIcon" /> Game Management</a>
+          <img [src]="newsIcon" />{{'sidebar.gameManagement' | translate}}  </a>
       </li>
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
