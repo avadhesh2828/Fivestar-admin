@@ -9,6 +9,8 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const INITIAL_PARAMS = {
   per_page: 20,
@@ -52,7 +54,13 @@ export class AdvListComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private loaderService: LoaderService,
     private location: Location,
-  ) { }
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.params = localStorage.getItem('agentFilters')

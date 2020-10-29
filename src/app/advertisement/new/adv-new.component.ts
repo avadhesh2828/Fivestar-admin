@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-adv-new',
   templateUrl: './adv-new.component.html',
@@ -40,8 +43,14 @@ export class AdvNewComponent implements OnInit {
   constructor(
     private advService: AdvertisementService, private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private router: Router, private location: Location
-  ) { }
+    private router: Router, private location: Location,
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';

@@ -3,6 +3,8 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { NotificationService } from '../../services/notification.service';
 import { range } from '../../services/utils.service';
 import { Location } from '@angular/common';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const INITIAL_PARAMS = {
   itemsPerPage: 20,
@@ -25,8 +27,14 @@ export class NotificationListComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private loaderService: LoaderService,
-    private location: Location
-  ) { }
+    private location: Location,
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.getNotifications();
