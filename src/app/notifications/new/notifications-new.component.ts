@@ -9,6 +9,8 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const INITIAL_PARAMS = {
   items_perpage: 20,
@@ -37,8 +39,13 @@ export class NotificationNewComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService, private userService: UserService, private toastr: ToastrService,
-    private loaderService: LoaderService, private location: Location
-  ) { }
+    private loaderService: LoaderService, private location: Location, public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.getUsers();

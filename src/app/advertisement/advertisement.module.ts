@@ -8,6 +8,9 @@ import { PostAuthenticationModule } from '../shared/layouts/post-authentication/
 import { DirectivesModule } from '../directives/directives.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { LightboxModule } from 'ngx-lightbox';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -22,6 +25,13 @@ import { LightboxModule } from 'ngx-lightbox';
         BsDatepickerModule.forRoot(),
         ImageCropperModule,
         LightboxModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpTranslateLoader,
+                deps: [HttpClient]
+            }
+        }), 
 
     ],
     declarations: [
@@ -31,3 +41,6 @@ import { LightboxModule } from 'ngx-lightbox';
     ]
 })
 export class AdvertisementModule { }
+export function httpTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+  }

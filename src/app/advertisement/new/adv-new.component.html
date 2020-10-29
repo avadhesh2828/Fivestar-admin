@@ -3,7 +3,7 @@
     <div class="card">
       <form class="form-horizontal" [formGroup]="newAdvForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
-          <strong>Create New Advertisement</strong>
+          <strong>{{'advertisement.createNewAdvertisement' | translate}}</strong>
           <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
             <i class="icon-arrow-left-circle" aria-hidden="true"></i>
           </a>
@@ -11,47 +11,45 @@
         <div class="card-body">
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="sports">Advertisement Name<span
+            <label class="col-md-3 col-form-label" for="sports">{{'advertisement.advertisementName' | translate}} <span
                 class="text-danger">*</span></label>
             <div class="col-md-9">
-              <input type="text" class="form-control" formControlName="advName" placeholder="Advertisement Name">
+              <input type="text" class="form-control" formControlName="advName" placeholder="{{'advertisement.advertisementName' | translate}}">
               <div *ngIf="submitted && f['advName'].errors" class="text-danger">
-                <div *ngIf="f['advName'].errors.required">Advertisement Name is required</div>
-                <div *ngIf="f['advName'].errors.minlength">Advertisement Name must have greater than 4 characters
-                </div>
-                <div *ngIf="f['advName'].errors.maxlength">Advertisement Name must have less than 30 characters
-                </div>
+                <div *ngIf="f['advName'].errors.required">{{'advertisement.advertisementNameIsRequired' | translate}} </div>
+                <div *ngIf="f['advName'].errors.minlength">{{'advertisement.advertisementNameMustHaveGreaterThan' | translate}} </div>
+                <div *ngIf="f['advName'].errors.maxlength">{{'advertisement.advertisementNameMustHaveGreaterThan' | translate}} </div>
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="target_url">Target Url<span class="text-danger">*</span></label>
+            <label class="col-md-3 col-form-label" for="target_url">{{'advertisement.targetUrl' | translate}}<span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" class="form-control" id="target_url" formControlName="target_url"
-                placeholder="Target URL" />
+                placeholder="{{'advertisement.targetUrl' | translate}}" />
               <div *ngIf="submitted && f['target_url'].errors" class="text-danger">
-                <div *ngIf="f['target_url'].errors.required">Target url is required</div>
-                <div *ngIf="f['target_url'].errors.pattern">Target url must be valid</div>
+                <div *ngIf="f['target_url'].errors.required">{{'advertisement.targetUrlIsRequired' | translate}} </div>
+                <div *ngIf="f['target_url'].errors.pattern">{{'advertisement.targetUrlMustBeValid' | translate}} </div>
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="ad_position">Ads Position<span
+            <label class="col-md-3 col-form-label" for="ad_position">{{'advertisement.adsPosition' | translate}} <span
                 class="text-danger">*</span></label>
             <div class="col-md-9">
 
               <select class="form-control" placeholder="Select Id Proof" name="ad_position"
                 formControlName="ad_position" (change)="getImageRatio()">
-                <option value="">Select Ad Position</option>
+                <option value="">{{'advertisement.selectAdsPosition' | translate}} </option>
                 <option *ngFor="let position of advPositionList" [value]="position.ad_position_id">
                   {{position.ad_type | titlecase}}
                 </option>
               </select>
 
               <div *ngIf="submitted && f['ad_position'].errors" class="text-danger">
-                <div *ngIf="f['ad_position'].errors.required">Ads Position is required </div>
+                <div *ngIf="f['ad_position'].errors.required">{{'advertisement.adsPositionIsRequired' | translate}} </div>
               </div>
 
 
@@ -59,7 +57,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="website">Upload Image<span class="text-danger">*</span> <span
+            <label class="col-md-3 col-form-label" for="website">{{'advertisement.uploadImage' | translate}} <span class="text-danger">*</span> <span
                 *ngIf="currentPosition">{{currentPosition}}</span></label>
             <div class="col-md-9">
               <input #file type="file" formControlName="adv_image" name="adv_image" accept='image/*'
@@ -69,7 +67,7 @@
                 <img [src]="imgURL" height="100" width="700" *ngIf="imgURL">
               </div>
               <div *ngIf="submitted && f['adv_image'].errors" class="text-danger">
-                <div *ngIf="f['adv_image'].errors.required"> Image is required</div>
+                <div *ngIf="f['adv_image'].errors.required"> {{'advertisement.imageIsRequired' | translate}} </div>
               </div>
               <div *ngIf="imgErrorMsg" class="text-danger">{{imgErrorMsg}}</div>
             </div>
@@ -77,10 +75,10 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-            Submit</button>
+            {{'advertisement.submit' | translate}}</button>
           &nbsp;
           <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
-            Reset</button>
+            {{'advertisement.reset' | translate}}</button>
         </div>
       </form>
     </div>

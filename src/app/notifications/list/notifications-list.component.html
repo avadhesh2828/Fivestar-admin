@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Notifications
+          <h1 class="h3 mb-0 text-gray-800">{{'notification.notifications' | translate}}
             <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/notifications/new']">
-                <i class="nav-icon icon-plus"></i> Create</a></button>
+                <i class="nav-icon icon-plus"></i> {{'notification.create' | translate}}</a></button>
           </h1>
           <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
             <i class="icon-arrow-left-circle" aria-hidden="true"></i>
@@ -15,9 +15,9 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Receiver's Username</th>
-              <th>Title</th>
-              <th>Message</th>
+              <th>{{'notification.receiverUsername' | translate}} </th>
+              <th>{{'notification.title' | translate}} Title</th>
+              <th>{{'notification.message' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -25,7 +25,7 @@
               <td colspan="3" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !notificationList">
-              <td colspan="3">Loading...</td>
+              <td colspan="3">{{'notification.loading' | translate}}...</td>
             </tr>
             <tr *ngFor="let notification of notificationList">
               <td>{{ notification.receiver_username }} {{ notification.receiver_agentname }}</td>
@@ -37,14 +37,14 @@
         <nav *ngIf="totalNotifications > params.itemsPerPage">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.currentPage > 1">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'notification.prev' | translate}}</a>
             </li>
             <li class="page-item active" [ngClass]="{'active': (page == params.currentPage)}"
               *ngFor="let page of totalPaginationShow">
               <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
             </li>
             <li class="page-item" *ngIf="params.currentPage != totalPages">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'notification.next' | translate}}</a>
             </li>
           </ul>
         </nav>

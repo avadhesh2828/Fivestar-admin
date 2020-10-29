@@ -5,8 +5,8 @@
         <div class="row">
           <div class="col-12 col-sm-6">
             <div class="input-group">
-              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
-                <option value="-1">Select a status</option>
+              <select class="form-control" [(ngModel)]="params['status']" placeholder="" name="status">
+                <option value="-1">{{'advertisement.selectAStatus' | translate}}</option>
                 <option *ngFor="let status of AdvStatus | keyvalue" [value]="status.key">
                   {{status.value}}
                 </option>
@@ -16,7 +16,7 @@
           <div class="col-12 col-sm-3">
             <span class="input-group-prepend">
               <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
-                Filter</button>&nbsp;
+                {{'advertisement.filter' | translate}}</button>&nbsp;
             </span>
 
           </div>
@@ -25,7 +25,7 @@
           <div class="col-12 col-sm-6">
             <div class="input-group">
               <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
-                name="search_keyword" placeholder="Search by advertisment name" (ngModelChange)="search()"
+                name="search_keyword" placeholder="{{'advertisement.searchByAdvertismentName' | translate}}" (ngModelChange)="search()"
                 autocomplete="off">
             </div>
           </div>
@@ -33,7 +33,7 @@
             <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
               <i class="fa fa-search"></i> Search</button>&nbsp; -->
             <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
-              Reset Filters</button>
+              {{'advertisement.resetFilters' | translate}}</button>
             <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
               <i class="icon-arrow-left-circle" aria-hidden="true"></i>
             </a>
@@ -42,19 +42,19 @@
       </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Advertisement</h1>
-          <h5 class="mb-0 text-gray-800">Total Record : {{totalAdv}}</h5>
+          <h1 class="h3 mb-0 text-gray-800">{{'advertisement.advertisement' | translate}} </h1>
+          <h5 class="mb-0 text-gray-800"> {{'advertisement.totalRecord' | translate}} : {{totalAdv}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Target Url</th>
-              <th>Ads Position</th>
-              <th>Ads Size</th>
-              <th>Click</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{{'advertisement.name' | translate}}</th>
+              <th>{{'advertisement.targetUrl' | translate}}</th>
+              <th>{{'advertisement.adsPosition' | translate}}</th>
+              <th>{{'advertisement.adsSize' | translate}}</th>
+              <th>{{'advertisement.click' | translate}}</th>
+              <th>{{'advertisement.status' | translate}}</th>
+              <th>{{'advertisement.action' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -62,10 +62,10 @@
               <td colspan="9" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !advList">
-              <td colspan="9">Loading...</td>
+              <td colspan="9">{{'advertisement.loading' | translate}}...</td>
             </tr>
             <tr *ngIf="advList && !(advList.length>0)">
-              <td colspan="9" class="text-center">No advertisment found</td>
+              <td colspan="9" class="text-center"> {{'advertisement.noAdvertismentFound' | translate}}</td>
             </tr>
             <tr *ngFor="let advertisment of advList; let agentIndex = index">
               <td>{{ advertisment.ad_name | titlecase }}</td>
@@ -90,11 +90,11 @@
               <td>
 
                 <a href="javascript:void(0);" *ngIf="!advertisment.isEditabel"
-                  (click)="advertisment.isEditabel = !advertisment.isEditabel"><i class="fa fa-edit"></i>Edit</a>&nbsp;
+                  (click)="advertisment.isEditabel = !advertisment.isEditabel"><i class="fa fa-edit"></i>{{'advertisement.edit' | translate}}</a>&nbsp;
                 <a href="javascript:void(0);" (click)="deleteAdvertisementconfirm(advertisment)"><i
-                    class="fa fa-trash"></i>Delete</a> &nbsp;
+                    class="fa fa-trash"></i>{{'advertisement.delete' | translate}}</a> &nbsp;
                 <a href="javascript:void(0);" *ngIf="advertisment.isEditabel" (click)="onStatusSubmit(advertisment)"><i
-                    class="fa fa-edit"></i>Save</a>
+                    class="fa fa-edit"></i>{{'advertisement.save' | translate}}</a>
               </td>
             </tr>
           </tbody>
@@ -118,7 +118,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                   (click)="deleteAdv();">Delete</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{{'advertisement.cancel' | translate}}</button>
               </div>
 
             </div>
@@ -128,14 +128,14 @@
         <nav *ngIf="totalAdv > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">Prev</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'advertisement.prev' | translate}}</a>
             </li>
             <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
               *ngFor="let page of totalPaginationShow">
               <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
             </li>
             <li class="page-item" *ngIf="params.current_page != totalPages">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">Next</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'advertisement.next' | translate}}</a>
             </li>
           </ul>
         </nav>
