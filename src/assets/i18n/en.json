@@ -42,7 +42,8 @@
     "playerLoginIP": "Player Login IP",
     "searchUser": "Search User",
     "userManagement": "User Management",
-    "gameManagement": "Game Management"
+    "gameManagement": "Game Management",
+    "history": "Operate history"
   },
   "agent": {
     "agentMng": "Agent Management",
@@ -121,9 +122,9 @@
     "phoneReq": "Phone Number is required",
     "phoneValidation": "Phone Number must be valid",
     "max": "Max",
-    "allPlayer" : "All Player",
-    "enablePlayer" : "Enable Player",
-    "disablePlayer" : "Disable Player"
+    "allPlayer": "All Player",
+    "enablePlayer": "Enable Player",
+    "disablePlayer": "Disable Player"
   },
   "games": {
     "gameMng": "Game Management",
@@ -146,27 +147,27 @@
     "details": "Details",
     "enable": "Enable",
     "disable": "Disable",
-    "noPlayerFound" : "No Player Found",
+    "noPlayerFound": "No Player Found",
     "notAvailable": "Not Available"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",
     "totalRecord": "Total Record",
-    "userName" : "Username",
+    "userName": "Username",
     "last": "Last",
     "enter": "Enter",
     "dataList": "LoginIP Data List",
     "ipAddress": "IP Address",
     "dateTime": "Date Time",
     "UserNameIsRequired": "User Name is required",
-    "submit" : "Submit",
-    "reset"  : "Reset",
-    "noLoginIpFound" : "No LoginIP Found"
+    "submit": "Submit",
+    "reset": "Reset",
+    "noLoginIpFound": "No LoginIP Found"
   },
   "search": {
     "searchUser": "Search User",
     "search": "Search",
-    "submit" : "Submit",
+    "submit": "Submit",
     "userName": "Username",
     "online": "Online",
     "agent": "Agent",
@@ -183,16 +184,16 @@
     "enable": "Enable",
     "disable": "Disable",
     "UserNameIsRequired": "User Name is required",
-    "noLoginIpFound" : "No LoginIP Found",
-    "on" : "On",
-    "off" : "Off"
+    "noLoginIpFound": "No LoginIP Found",
+    "on": "On",
+    "off": "Off"
   },
   "notification": {
     "notifications": "Notifications",
     "createNotification": "Create Notification",
     "placeholder": "Search by name,username,email",
-    "resetFilters": "Reset Filters", 
-    "title" : "Title",
+    "resetFilters": "Reset Filters",
+    "title": "Title",
     "message": "Message",
     "selectReceivers": "Select Receivers",
     "selectedReceivers": "Selected Receivers",
@@ -201,19 +202,19 @@
     "userName": "Username",
     "balance": "Balance",
     "loading": "Loading",
-    "submit" : "Submit",
-    "reset"  : "Reset",
+    "submit": "Submit",
+    "reset": "Reset",
     "create": "Create",
     "receiverUsername": "Receiver's Username",
     "next": "Next",
-    "prev": "Prev" 
+    "prev": "Prev"
   },
   "advertisement": {
     "createNewAdvertisement": "Create New Advertisement",
     "advertisementName": "Advertisement Name",
     "targetUrl": "Target Url",
-    "adsPosition": "Ads Position", 
-    "selectAdsPosition" : "Select Ads Position",
+    "adsPosition": "Ads Position",
+    "selectAdsPosition": "Select Ads Position",
     "uploadImage": "Upload Image",
     "submit": "Submit",
     "reset": "Reset",
@@ -236,13 +237,21 @@
     "save": "Save",
     "cancel": "Cancel",
     "noAdvertismentFound": "No advertisment found",
-    "searchByAdvertismentName" : "Search by advertisment name",
-    "advertisementNameIsRequired" : "Advertisement Name is required", 
-    "advertisementNameMustHaveGreaterThan" : "Advertisement Name must have greater than 4 characters",
-    "advertisementNameMustHaveLessThan" : "Advertisement Name must have less than 30 characters",
+    "searchByAdvertismentName": "Search by advertisment name",
+    "advertisementNameIsRequired": "Advertisement Name is required",
+    "advertisementNameMustHaveGreaterThan": "Advertisement Name must have greater than 4 characters",
+    "advertisementNameMustHaveLessThan": "Advertisement Name must have less than 30 characters",
     "targetUrlIsRequired": "Target url is required",
     "targetUrlMustBeValid": "Target url must be valid",
     "adsPositionIsRequired": "Ads Position is required",
     "imageIsRequired": "Image is required"
+  },
+  "transactions": {
+    "action": "Action",
+    "account": "Account",
+    "username": "Username",
+    "IP": "IP",
+    "description": "Description",
+    "dateTime": "DateTime"
   }
 }
