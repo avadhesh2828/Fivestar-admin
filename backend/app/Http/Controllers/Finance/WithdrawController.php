@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\PaymentWithdrawTransaction;
 use App\Models\PaymentHistoryTransaction;
 use App\Models\Notification_model;
+use App\Models\User;
+use Auth;
 
 # Helpers & Libraries
 use Validator;
@@ -18,34 +20,40 @@ class WithdrawController extends Controller
 {
 
   public function transaction_history( Request $request ) {
-    $historyTransaction = new PaymentHistoryTransaction;
-    // $historyTransaction = $historyTransaction->whereNull('payment_withdraw_transaction_id');
-    // Eager load relationship
-    // $historyTransaction = $historyTransaction->with(['payment_deposit_transaction', 'user']);
+    $this->user = Auth::user();
+    $user_id = $this->user->admin_id;
+    $role_id = $this->user->role_id;
 
+    $historyTransaction = new PaymentHistoryTransaction;
+    $historyTransaction = $historyTransaction->select('payment_history_transactions.*', 'U.username');
+    $historyTransaction = $historyTransaction->join((new User)->getTable(). ' as U', function($j) {
+      $j->on('U.user_id', '=', 'payment_history_transactions.user_id');
+    });
+
+    if($role_id == 2 ) {
+      $historyTransaction = $historyTransaction->where('U.parent_id', $user_id);  
+    }
+    
     // Date Range Filter
     $dates = json_decode($request->dates);
     if( isset($dates->fromdate) && isset($dates->todate) ){
-      $historyTransaction = $historyTransaction->whereBetween('created_at', [$dates->fromdate , $dates->todate]);
+      $historyTransaction = $historyTransaction->whereBetween('payment_history_transactions.created_at', [$dates->fromdate , $dates->todate]);
     }
 
-    // // Partial Keyword Search Filter (Relationship) Filter
-    // $historyTransaction = $historyTransaction->whereHas('user', function($q) use ($request){
-    //   if( $request->keyword != "" ){
-    //     $q->where('email', 'LIKE', '%'.$request->keyword.'%')
-    //     ->orWhereRaw('LOWER(username) LIKE \'%'.$request->keyword.'%\'');
-    //   }
-    // });
+    if( $request->keyword != "" ){
+        $historyTransaction = $historyTransaction->where('U.username', 'LIKE', '%'.$request->keyword.'%');
+    }
 
     // Paginated records
     $historyTransaction = $historyTransaction->paginate($request->perPage);
 
     if($historyTransaction->count() == 0){
       return response()->json([
-        'response_code'=> 404,
+        'response_code'=> 500,
         'service_name' => 'transaction_history',
+        'data' => [],
         'global_error'=> 'No history transaction found',
-      ], 404);
+      ], 500);
     }
 
     return response()->json([
