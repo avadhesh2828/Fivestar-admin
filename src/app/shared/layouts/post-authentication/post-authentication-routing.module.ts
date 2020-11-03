@@ -42,7 +42,7 @@ const routes: Routes = [
 
             // { path: 'contest', loadChildren: () => import('../../../contest/contest.module').then(m => m.ContestModule) },
             // { path: 'finances/transactions/deposit', component: TransactionHistoryListComponent },
-            // { path: 'finances/transactions/withdraw', component: WithdrawListComponent },
+            { path: 'finances/transactions/withdraw', component: WithdrawListComponent },
             // { path: 'finances/agent/transactions', component: TransactionHistoryAgentListComponent },
             // { path: 'finances/jackpot-transactions', component: JackpotTransactionComponent },
             {

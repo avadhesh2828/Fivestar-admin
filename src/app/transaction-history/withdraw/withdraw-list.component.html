@@ -70,12 +70,12 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>Full Name / Username</th>
-              <th>Amount ({{currency_code}})</th>
-              <th>Withdraw Type</th>
-              <th>Transaction Date & Time</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>{{ 'transactions.action' | translate}}</th>
+              <th>{{ 'transactions.account' | translate}}</th>
+              <th>{{ 'transactions.username' | translate}}</th>
+              <th>{{ 'transactions.IP' | translate}}</th>
+              <th>{{ 'transactions.dateTime' | translate}}</th>
+              <th>{{ 'transactions.description' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -89,29 +89,14 @@
               <td colspan="9" class="text-center">There are no transactions to show</td>
             </tr>
             <tr *ngFor="let transaction of withdrawList">
-              <td>{{ (transaction.user.name)?(transaction.user.name | titlecase  ):transaction.user.user_name }} </td>
+              <td>{{ transaction.action}} </td>
               <td>{{ transaction.amount }}</td>
               <td>{{ withdrawType[transaction.withdraw_type] }}</td>
+              <td>{{ transaction.ip }}</td>
               <td>
                 {{ formatDateTimeZone(transaction.created_date) | date:'MMM d, y, h:mm:ss a' }}
               </td>
-              <td>
-                <span class="badge" [ngClass]="{'badge-success': (transaction.status == 1),
-                'badge-secondary': (transaction.status == 0), 'badge-danger': (transaction.status == 2)}">
-                  <i class="fa fa-times-circle" aria-hidden="true" *ngIf="transaction.status==0"></i>
-                  <i class="fa fa-check-circle" aria-hidden="true" *ngIf="transaction.status==1"></i>
-                  <i class="fa fa-clock-o" aria-hidden="true" *ngIf="transaction.status==2"></i>
-                  {{ isProcessed[transaction.status] }}
-                </span>
-              </td>
-              <td>
-                <button class="btn btn-success" [disabled]="transaction.status==1" (click)="ChangeStatus({
-                status: 1,
-                transaction_unique_id:transaction.transaction_unique_id})">Approve</button>&nbsp;
-                <button class="btn btn-danger" [disabled]="transaction.status==1 || transaction.status==2" (click)="ChangeStatus({
-                status: 2,
-                transaction_unique_id:transaction.transaction_unique_id})">Reject</button>
-              </td>
+              <td>{{ transaction.description }}</td>
             </tr>
           </tbody>
         </table>
