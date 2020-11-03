@@ -17,6 +17,46 @@ use App\Helpers\Paypal;
 class WithdrawController extends Controller
 {
 
+  public function transaction_history( Request $request ) {
+    $historyTransaction = new PaymentHistoryTransaction;
+    // $historyTransaction = $historyTransaction->whereNull('payment_withdraw_transaction_id');
+    // Eager load relationship
+    // $historyTransaction = $historyTransaction->with(['payment_deposit_transaction', 'user']);
+
+    // Date Range Filter
+    $dates = json_decode($request->dates);
+    if( isset($dates->fromdate) && isset($dates->todate) ){
+      $historyTransaction = $historyTransaction->whereBetween('created_at', [$dates->fromdate , $dates->todate]);
+    }
+
+    // // Partial Keyword Search Filter (Relationship) Filter
+    // $historyTransaction = $historyTransaction->whereHas('user', function($q) use ($request){
+    //   if( $request->keyword != "" ){
+    //     $q->where('email', 'LIKE', '%'.$request->keyword.'%')
+    //     ->orWhereRaw('LOWER(username) LIKE \'%'.$request->keyword.'%\'');
+    //   }
+    // });
+
+    // Paginated records
+    $historyTransaction = $historyTransaction->paginate($request->perPage);
+
+    if($historyTransaction->count() == 0){
+      return response()->json([
+        'response_code'=> 404,
+        'service_name' => 'transaction_history',
+        'global_error'=> 'No history transaction found',
+      ], 404);
+    }
+
+    return response()->json([
+      'response_code'=> 200,
+      'service_name' => 'transaction_history',
+      'data' => $historyTransaction,
+      'message'=> 'History transaction found',
+    ],200);
+}  
+
+
   public function withdraw_list( Request $request ){
 
     \DB::enableQueryLog();

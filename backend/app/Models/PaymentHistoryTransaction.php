@@ -13,15 +13,17 @@ class PaymentHistoryTransaction extends Model
     protected $primaryKey = 'payment_history_transaction_id';
 
     protected $fillable = [
+        'payment_history_transaction_id',
         'user_id',
-        'amount',
-        'gateway_customer_id',
-        'payment_for',
-        'created_date',
-        'is_processed',
-        'payment_type',
         'description',
-        'payment_deposit_transaction_id',
+        'action',
+        'ip',
+        'game_id',
+        'win',
+        'begin_money',
+        'end_money',
+        'created_at',
+        'updated_at'
     ];
 
     public function payment_deposit_transaction(){
