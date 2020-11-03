@@ -10,6 +10,7 @@ use App\Models\PaymentHistoryTransaction;
 
 class DepositController extends Controller
 {
+  
   public function deposit_list( Request $request ){
     \DB::enableQueryLog();
     $historyTransaction = new PaymentHistoryTransaction;
