@@ -3,39 +3,25 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-<<<<<<< HEAD
           <h1 class="h3 mb-0 text-gray-800">{{'games.gameMng' | translate}}
-=======
-          <h1 class="h3 mb-0 text-gray-800">Game Management
->>>>>>> game management | integrate game api
             <!-- <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/users/new']">
                 <i class="nav-icon icon-plus"></i> Create</a></button> -->
           </h1>
           
 
-<<<<<<< HEAD
           <h5 class="mb-0 text-gray-800">{{ 'games.totalRecord' | translate}}: {{totalGames}}</h5>
-=======
-          <h5 class="mb-0 text-gray-800">Total Record : {{totalGames}}</h5>
->>>>>>> game management | integrate game api
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-<<<<<<< HEAD
+              <th>{{'games.gameId' | translate}}</th>
               <th>{{'games.gameName' | translate}}</th>
               <th>{{'games.type' | translate}}</th>
-              <th>{{'games.bet' | translate}}</th>
+              <th>{{'games.maxBet' | translate}}</th>
+              <th>{{'games.gameImage' | translate}}</th>
               <th>{{'games.status' | translate}}</th>
               <th>{{'games.action' | translate}}</th>
-=======
-              <th>Game Name</th>
-              <th>Type</th>
-              <th>Bet</th>
-              <th>Status</th>
-              <th>Action</th>
->>>>>>> game management | integrate game api
             </tr>
           </thead>
           <tbody>
@@ -46,27 +32,21 @@
               <td colspan="5">Loading...</td>
             </tr>
             <tr *ngIf="gameList && !(gameList.length>0)">
-<<<<<<< HEAD
               <td colspan="5" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
-=======
-              <td colspan="5" class="text-center">No Player found</td>
->>>>>>> game management | integrate game api
             </tr>
             <tr *ngFor="let game of gameList; let gameIndex = index">
+              <td>{{ game.game_id || "-" }}</td>
               <td>{{ game.name || "-" }}</td>
               <td>{{ game.type || "-" }}</td>
-              <td>{{ game.bet }}</td>
+              <td>{{ game.max_bet }}</td>
+              <td><img src="{{game.image}}&type=circular_framed" class="game-thumbnails"/></td>
               <td>
                 <span class="badge"
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
                   }}</span>
               </td>
               <td>
-<<<<<<< HEAD
                 <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>{{'games.details' | translate}}</a>
-=======
-                <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>Details</a>
->>>>>>> game management | integrate game api
                 &nbsp;
                 <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
                     user_unique_id: user.user_unique_id,
@@ -77,17 +57,10 @@
                   })"><i class="fa fa-edit"></i>Edit</a>
                   &nbsp; -->
                 <a href="javascript:void(0);" *ngIf="game.status == 0"
-<<<<<<< HEAD
                   (click)="changeGameStatus(game.id, '1')"> {{'games.disable' | translate}}</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="game.status == 1"
                   (click)="changeGameStatus(game.id, '0')"> {{'games.enable' | translate}}</a>
-=======
-                  (click)="changeGameStatus(game.id, '1')"> Disable</a>
-                &nbsp;
-                <a href="javascript:void(0);" *ngIf="game.status == 1"
-                  (click)="changeGameStatus(game.id, '0')"> Enable</a>
->>>>>>> game management | integrate game api
 
               </td>
             </tr>

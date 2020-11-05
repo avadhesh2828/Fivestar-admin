@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Game Details</h1>
+          <h1 class="h3 mb-0 text-gray-800"> {{'games.gameDetails' | translate}}</h1>
           <a class="btn back-btn" routerLink="/game/list"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="row">
@@ -17,33 +17,48 @@
                 <h6 class="m-0 font-weight-bold text-primary">{{ game.name | titlecase }} <span> ({{game.type | titlecase}}) </span></h6>
               </div>
               <div class="card-body user-detail">
-                <div *ngIf="!game.id" class="text-danger"><b>Game not found</b></div>
+                <div *ngIf="!game.id" class="text-danger"><b>{{'games.noPlayerFound' | translate}}</b></div>
                 <div>
                   <div class="row">
                   <div class="col-sm-6">
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Game Name</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.gameId' | translate}} </b></div>
+                      <div class="col-12 col-sm-9" *ngIf="game.game_id; else notAvailable">{{game.game_id}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'games.gameName' | translate}} </b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.name; else notAvailable">{{game.name}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Game Type</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.type' | translate}} </b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.type; else notAvailable">{{game.type}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Num Reels</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.variantType' | translate}} </b></div>
+                      <div class="col-12 col-sm-9" *ngIf="game.variant_type; else notAvailable">{{game.variant_type}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'games.numReels' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.num_reels; else notAvailable">{{game.num_reels}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Num Rows</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.numRows' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.num_rows; else notAvailable">{{game.num_rows}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Num Selection</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.numSelection' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.num_selection; else notAvailable">{{game.num_selection}}</div>
                     </div>
-
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Status</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'games.maxBet' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="game.max_bet; else notAvailable">{{game.max_bet}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'games.availableBets' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="game.availableBets; else notAvailable">{{game.availableBets}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'games.status' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.status; else notAvailable">
                         <span class="badge" style="font-size:12px;"
                           [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]}}</span>
@@ -51,8 +66,8 @@
                     </div>  
                     &nbsp;          
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Game Image</b></div>
-                      <div class="col-12 col-sm-9"> <img [src]="game && game.image ? game.image : 'assets/images/game_image.png'" class="game-icon" /> </div>
+                      <div class="col-12 col-sm-3"><b>{{'games.gameImage' | translate}}</b></div>
+                      <div class="col-12 col-sm-9"> <img src="{{game.image}}&type=circular_framed" class="game-icon" /> </div>
                     </div>
                     
                   </div>
@@ -60,7 +75,7 @@
                 </div>
                 </div>
                 <ng-template #notAvailable>
-                  <div class="col-12 col-sm-9 font-italic text-danger">Not Available</div>
+                  <div class="col-12 col-sm-9 font-italic text-danger">{{'games.gameMng' | translate}}</div>
                 </ng-template>
               </div>
             </div>

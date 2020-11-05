@@ -7,6 +7,8 @@ import { STATUS } from '../constants';
 import { Constants } from '../../constants';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { environment } from '../../../environments/environment';
+import { SubscriptionService } from '../../services/subscription.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-details',
@@ -30,8 +32,14 @@ export class DetailsComponent implements OnInit {
     private gamesService: GamesService, 
     private route: ActivatedRoute, 
     private toastr: ToastrService,
-    private loaderService: LoaderService
-  ) { }
+    private loaderService: LoaderService,
+    public subscriptionService: SubscriptionService,
+    public translate: TranslateService,
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.getGameDetail();
