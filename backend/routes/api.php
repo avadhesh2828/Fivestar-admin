@@ -44,6 +44,13 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('get-user-details/{userId}', 'UserController@get_user_details');
 	});
 
+	//red packet
+	Route::group(['prefix' => 'red-packet'], function(){
+		Route::get('list','RedPacketController@index')->middleware('can:isAdmin');
+		Route::post('create','RedPacketController@create')->middleware('can:isAdmin');
+		// Route::post('fcm_notifications','RedPacketController@fcm_notifications')->middleware('can:isAdmin');
+	});
+
 	//advertisment route
 	Route::group(['prefix' => 'advertisements'], function(){
 		Route::get('get_advertisement','Advertisements@get_advertisement')->middleware('can:isAdmin');
