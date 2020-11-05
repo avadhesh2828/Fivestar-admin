@@ -126,14 +126,17 @@
   "games": {
     "gameMng": "遊戲管理",
     "totalRecord": "總記錄",
+    "gameId": "遊戲編號",
     "gameName": "遊戲名稱",
     "type": "類型",
-    "bet": "賭注",
+    "variantType": "遊戲編號",
+    "maxBet": "最大賭注",
     "numReels": "是否捲軸",
     "numRows": "行數",
     "numSelection": "數字選擇",
     "gameImage": "遊戲形象",
     "status": "狀態",
+    "availableBets": "可用投注",
     "action": "行動",
     "gameDetails": "遊戲詳情",
     "active": "活性",
@@ -141,7 +144,8 @@
     "details": "細節",
     "enable": "啟用",
     "disable": "禁用",
-    "noPlayerFound" : "找不到玩家"
+    "noPlayerFound" : "找不到玩家",
+    "notAvailable": "無法使用"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "查詢播放器登錄IP",

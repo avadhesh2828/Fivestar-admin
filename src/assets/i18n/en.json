@@ -128,13 +128,16 @@
   "games": {
     "gameMng": "Game Management",
     "totalRecord": "Total Record",
+    "gameId": "Game ID",
     "gameName": "Game Name",
     "type": "Type",
-    "bet": "Bet",
+    "variantType": "Variant Type",
+    "maxBet": "Max Bet",
     "numReels": "Num Reels",
     "numRows": "Num Rows",
     "numSelection": "Num Selection",
     "gameImage": "Game Image",
+    "availableBets": "Available Bets",
     "status": "Status",
     "action": "Action",
     "gameDetails": "Game Details",
@@ -143,7 +146,8 @@
     "details": "Details",
     "enable": "Enable",
     "disable": "Disable",
-    "noPlayerFound" : "No Player Found"
+    "noPlayerFound" : "No Player Found",
+    "notAvailable": "Not Available"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",
