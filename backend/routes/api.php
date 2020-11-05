@@ -48,7 +48,7 @@ Route::middleware('auth:api')->group(function () {
 	Route::group(['prefix' => 'red-packet'], function(){
 		Route::get('list','RedPacketController@index')->middleware('can:isAdmin');
 		Route::post('create','RedPacketController@create')->middleware('can:isAdmin');
-		// Route::post('fcm_notifications','RedPacketController@fcm_notifications')->middleware('can:isAdmin');
+		Route::post('change-status/{redPacketId}','RedPacketController@change_status')->middleware('can:isAdmin');
 	});
 
 	//advertisment route

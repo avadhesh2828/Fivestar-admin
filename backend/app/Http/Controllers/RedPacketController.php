@@ -46,7 +46,6 @@ class RedPacketController extends Controller
             'drop_rates'      => 'required'
         ]);
 
-
         if($validator->fails()){
             return response()->json([
             'response_code'=> 400,
@@ -74,4 +73,45 @@ class RedPacketController extends Controller
             'message'=> 'Red Packet Created Successfully',
         ],200);
     }
+
+    /**
+     * Change red packet status.
+     *
+     */
+    public function change_status($packet_id, Request $request)
+    {
+
+        $status = $request->post('status');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "status" => ['required']
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'change_status',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $update = RedPacket::where('red_packet_id', $packet_id)->update(["status" => $status, "updated_at"  => date('Y-m-d H:i:s')]);
+        if($update > 0){
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'change_status',
+                'message'=> 'Status changed Successfully',
+            ],200);
+        }else{
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'change_status',
+                'message'=> 'Someting wrong for updating status',
+            ],500);
+        }
+
+
+    }
+
 }
