@@ -90,11 +90,11 @@
             </tr>
             <tr *ngFor="let transaction of withdrawList">
               <td>{{ transaction.action}} </td>
-              <td>{{ transaction.amount }}</td>
-              <td>{{ withdrawType[transaction.withdraw_type] }}</td>
+              <td>{{ transaction.win }}</td>
+              <td>{{ transaction.username }}</td>
               <td>{{ transaction.ip }}</td>
               <td>
-                {{ formatDateTimeZone(transaction.created_date) | date:'MMM d, y, h:mm:ss a' }}
+                {{ formatDateTimeZone(transaction.created_at) | date:'MMM d, y, h:mm:ss a' }}
               </td>
               <td>{{ transaction.description }}</td>
             </tr>
