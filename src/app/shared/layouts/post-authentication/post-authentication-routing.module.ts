@@ -38,7 +38,11 @@ const routes: Routes = [
 
             // { path: 'pages-list', loadChildren: () => import('../../../page-content/pages.module').then(m => m.PagesModule) },
 
-            { path: 'advertisement', loadChildren: () => import('../../../advertisement/advertisement.module').then(m => m.AdvertisementModule) },
+            {
+                path: 'advertisement',
+                loadChildren: () => import('../../../advertisement/advertisement.module').then(m => m.AdvertisementModule)
+            },
+            { path: 'red-packet', loadChildren: () => import('../../../red-packet/red-pkt.module').then(m => m.RedPktModule) },
 
             // { path: 'contest', loadChildren: () => import('../../../contest/contest.module').then(m => m.ContestModule) },
             // { path: 'finances/transactions/deposit', component: TransactionHistoryListComponent },
@@ -52,7 +56,10 @@ const routes: Routes = [
             // { path: 'disputes', loadChildren: () => import('../../../dispute/dispute.module').then(m => m.DisputeModule) },
             { path: 'players', loadChildren: () => import('../../../player/player.module').then(m => m.PlayerModule) },
             { path: 'password', loadChildren: () => import('../../../password/password.module').then(m => m.PasswordModule) },
-            { path: 'player-loginip', loadChildren: () => import('../../../player-login-ip/player-login-ip.module').then(m => m.PlayerLoginIpModule) },
+            {
+                path: 'player-loginip',
+                loadChildren: () => import('../../../player-login-ip/player-login-ip.module').then(m => m.PlayerLoginIpModule)
+            },
             { path: 'search-user', loadChildren: () => import('../../../search-user/search-user.module').then(m => m.SearchUserModule) },
             { path: 'game', loadChildren: () => import('../../../game/game.module').then(m => m.GameModule) },
 

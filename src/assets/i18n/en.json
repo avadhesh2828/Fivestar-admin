@@ -43,7 +43,8 @@
     "searchUser": "Search User",
     "userManagement": "User Management",
     "gameManagement": "Game Management",
-    "history": "Operate history"
+    "history": "Operate history",
+    "redPacket": " Red Packet"
   },
   "agent": {
     "agentMng": "Agent Management",
@@ -253,5 +254,26 @@
     "IP": "IP",
     "description": "Description",
     "dateTime": "DateTime"
+  },
+  "redPacket": {
+    "redPacket": "Red Packet",
+    "notFound": "No data found",
+    "createNew": "Create New",
+    "min": "Minimum",
+    "max": "Maximum",
+    "dropMinAmt": "Drop min amount",
+    "dropMaxAmt": "Drop max amount",
+    "dropRate": "Drop rate",
+    "games": "Games",
+    "minReq": "Minimum Value is required",
+    "maxRequired": "Maximun Value is required",
+    "dropMinRequired": "Drop Minimum Value is required",
+    "dropMaxRequired": "Drop Maximun Value is required",
+    "dropRateRequired": "Drop Rate is required",
+    "submit": "Submit",
+    "reset": "Reset",
+    "status": "Status",
+    "action": "Action",
+    "totalRecord": "Total Record"
   }
 }
