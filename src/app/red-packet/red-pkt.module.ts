@@ -42,5 +42,5 @@ import { environment } from '../../environments/environment';
 })
 export class RedPktModule { }
 export function httpTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+    return new TranslateHttpLoader(http, environment.LANG_URL, '.json');
 }
