@@ -11,6 +11,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { HttpClient } from '@angular/common/http';
                 useFactory: httpTranslateLoader,
                 deps: [HttpClient]
             }
-        }), 
+        }),
 
     ],
     declarations: [
@@ -42,5 +43,5 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdvertisementModule { }
 export function httpTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http);
-  }
+    return new TranslateHttpLoader(http, environment.LANG_URL, '.json');
+}

@@ -26,6 +26,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { environment } from '../environments/environment';
 
 
 
@@ -75,5 +76,5 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 export class AppModule { }
 
 export function httpTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, environment.LANG_URL, '.json');
 }

@@ -9,6 +9,7 @@ import { GameRoutingModule, routedComponents } from './game-routing.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
@@ -22,11 +23,11 @@ import { HttpClient } from '@angular/common/http';
     BsDatepickerModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: httpTranslateLoader,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
       }
-  }),
+    }),
   ],
   declarations: [
     ...routedComponents
@@ -36,5 +37,5 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameModule { }
 export function httpTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, environment.LANG_URL, '.json');
 }

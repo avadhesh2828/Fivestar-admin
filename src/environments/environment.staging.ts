@@ -7,4 +7,5 @@ export const environment = {
   PLAYER_IMG_URL: 'http://128.199.205.140/admin/backend/storage/app/uploads/players',
   USER_IMG_URL: 'http://128.199.205.140/front-api/storage/app/uploads/profile_image',
   NEWS_IMG_URL: 'http://128.199.205.140/admin/backend/storage/app/uploads/news',
+  LANG_URL: '/admin/assets/i18n/'
 };
