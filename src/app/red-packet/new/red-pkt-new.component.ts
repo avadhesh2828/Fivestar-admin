@@ -87,13 +87,13 @@ export class RedPktNewComponent implements OnInit {
         .subscribe((res: any) => {
           this.formSubmitted = false;
           if (res) {
-            this.toastr.success(res.message || 'New Advertisement Created Sucessfully.');
+            this.toastr.success(res.message || 'New Red Packet Created Sucessfully.');
             this.handleReset();
 
           }
         }, err => {
           const errorMessage = '';
-          this.toastr.error(errorMessage || err.error.GlobalError || 'Some error occurred while creating new Advertisment.');
+          this.toastr.error(errorMessage || err.error.GlobalError || 'Some error occurred while creating new Red Packet.');
           this.formSubmitted = false;
         });
     }
