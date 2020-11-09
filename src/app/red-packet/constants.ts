@@ -1,6 +1,6 @@
 export const ADVERTISMENT_STATUS = {
-  '0': 'Inactive',
-  '1': 'Active',
+  '0': 'Active',
+  '1': 'Inactive',
 };
 
 export const KYC_STATUS = {
