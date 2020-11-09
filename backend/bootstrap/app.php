@@ -15,7 +15,7 @@ if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])){
     case 'production':
   	Dotenv::create(__DIR__.'/../../../all-config/production', '.env')->overload();
       break;
-    case '167.99.153.31':
+    case '128.199.205.140':
     	Dotenv::create(__DIR__.'/../../../all-config/staging', '.env')->overload();
       break;
     default:
