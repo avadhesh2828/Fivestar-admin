@@ -123,6 +123,21 @@
       </li>
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
+        <a href="#RedPktMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
+            class="nav-icon icon-rocket"></i> {{'sidebar.redPacket' | translate}}</a>
+        <ul class="collapse list-unstyled" id="RedPktMenu">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/red-packet/new']" routerLinkActive="active">
+              <i class="nav-icon icon-pencil"></i> {{'sidebar.create' | translate}}</a>
+          </li>
+          <li class="nav-item" routerLinkActive="open">
+            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/red-packet']" routerLinkActive="active">
+              <i class="nav-icon icon-list"></i> {{'sidebar.listing' | translate}}</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#notificationSubMenu" data-toggle="collapse" aria-expanded="false"
           class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i>
           {{'sidebar.notifications' | translate}}</a>

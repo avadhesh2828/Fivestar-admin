@@ -41,7 +41,8 @@
     "searchUser": "搜索用戶",
     "userManagement": "用戶管理",
     "gameManagement": "遊戲管理",
-    "history": "經營歷史"
+    "history": "經營歷史",
+    "redPacket": "紅包"
   },
   "agent": {
     "agentMng": "代理商管理",
@@ -251,5 +252,26 @@
     "IP": "知識產權",
     "description": "描述",
     "dateTime": "約會時間"
+  },
+  "redPacket": {
+    "redPacket": "紅包",
+    "notFound": "沒有找到數據",
+    "createNew": "創建新的",
+    "min": "最低要求",
+    "max": "最大",
+    "dropMinAmt": "下降最小金額",
+    "dropMaxAmt": "下降最大金額",
+    "dropRate": "下降率",
+    "games": "遊戲類",
+    "minReq": "要求最小值",
+    "maxRequired": "需要最大值",
+    "dropMinRequired": "必須輸入最低值",
+    "dropMaxRequired": "要求落下最大值",
+    "dropRateRequired": "需要掉落率",
+    "submit": "提交",
+    "reset": "重啟",
+    "status": "狀態",
+    "action": "行動",
+    "totalRecord": "總記錄"
   }
 }

@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="newForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>{{'redPacket.createNew' | translate}}</strong>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="min">{{'redPacket.min' | translate}} <span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="min"
+                placeholder="{{'redPacket.min' | translate}}">
+              <div *ngIf="submitted && f['min'].errors" class="text-danger">
+                <div *ngIf="f['min'].errors.required">{{'redPacket.minReq' | translate}} </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="min">{{'redPacket.min' | translate}}<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="min" formControlName="min"
+                placeholder="{{'redPacket.max' | translate}}" />
+              <div *ngIf="submitted && f['max'].errors" class="text-danger">
+                <div *ngIf="f['max'].errors.required">{{'redPacket.maxRequired' | translate}} </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="dropMinAmt">{{'redPacket.dropMinAmt' | translate}}<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="dropMinAmt" formControlName="dropMinAmt"
+                placeholder="{{'redPacket.dropMinAmt' | translate}}" />
+              <div *ngIf="submitted && f['dropMinAmt'].errors" class="text-danger">
+                <div *ngIf="f['dropMinAmt'].errors.required">{{'redPacket.dropMinRequired' | translate}} </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="dropMaxAmt">{{'redPacket.dropMaxAmt' | translate}}<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="dropMaxAmt" formControlName="dropMaxAmt"
+                placeholder="{{'redPacket.dropMaxAmt' | translate}}" />
+              <div *ngIf="submitted && f['dropMaxAmt'].errors" class="text-danger">
+                <div *ngIf="f['dropMaxAmt'].errors.required">{{'redPacket.dropMaxRequired' | translate}} </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="dropRate">{{'redPacket.dropRate' | translate}}<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="dropRate" formControlName="dropRate"
+                placeholder="{{'redPacket.dropRate' | translate}}" />
+              <div *ngIf="submitted && f['dropRate'].errors" class="text-danger">
+                <div *ngIf="f['dropRate'].errors.required">{{'redPacket.dropRateRequired' | translate}} </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'redPacket.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'redPacket.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

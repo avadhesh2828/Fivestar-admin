@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">{{'redPacket.redPacket' | translate}} </h1>
+          <h5 class="mb-0 text-gray-800"> {{'redPacket.totalRecord' | translate}} : {{totalAdv}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'redPacket.min' | translate}}</th>
+              <th>{{'redPacket.max' | translate}}</th>
+              <th>{{'redPacket.dropMinAmt' | translate}}</th>
+              <th>{{'redPacket.dropMaxAmt' | translate}}</th>
+              <th>{{'redPacket.dropRate' | translate}}</th>
+              <th>{{'redPacket.status' | translate}}</th>
+              <th>{{'redPacket.action' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="9" class="table-danger">There was an error</td>
+            </tr>
+            <tr *ngIf="!error && !advList">
+              <td colspan="9">{{'advertisement.loading' | translate}}...</td>
+            </tr>
+            <tr *ngIf="advList && !(advList.length>0)">
+              <td colspan="9" class="text-center"> {{'redPacket.notFound' | translate}}</td>
+            </tr>
+            <tr *ngFor="let pkt of advList; let agentIndex = index">
+              <td>{{ pkt.min }}</td>
+              <td>{{ pkt.max }}</td>
+              <td>{{ pkt.drop_min_amount }} </td>
+              <td>{{ pkt.drop_max_amount }}</td>
+              <td>{{pkt.drop_rates}} </td>
+
+              <td *ngIf="!pkt.isEditabel">
+                <span class="badge"
+                  [ngClass]="{'badge-success': (pkt.status == 1), 'badge-secondary': (pkt.status == 0), 'badge-danger': (pkt.status > 1)}">{{AdvStatus[pkt.status]
+                  }}</span>
+              </td>
+              <td *ngIf="pkt.isEditabel">
+                <select class="form-control" placeholder="Select Status" name="kyc_type" name="status"
+                  [(ngModel)]="pkt.status" [disabled]="!pkt.isEditabel">
+                  <option *ngFor="let status of AdvStatus | keyvalue" [value]="status.key">
+                    {{status.value}}
+                  </option>
+                </select>
+              </td>
+              <td>
+
+                <a href="javascript:void(0);" *ngIf="!pkt.isEditabel" (click)="pkt.isEditabel = !pkt.isEditabel"><i
+                    class="fa fa-edit"></i>{{'advertisement.edit' | translate}}</a>&nbsp;
+                <a href="javascript:void(0);" *ngIf="pkt.isEditabel" (click)="onStatusSubmit(pkt)"><i
+                    class="fa fa-edit"></i>{{'advertisement.save' | translate}}</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- The Model End -->
+        <nav *ngIf="totalAdv > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);"
+                (click)="nextOrPreviousPage(-1)">{{'advertisement.prev' | translate}}</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);"
+                (click)="nextOrPreviousPage(1)">{{'advertisement.next' | translate}}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader></app-loader>
