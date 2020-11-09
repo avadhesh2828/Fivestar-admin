@@ -30,7 +30,7 @@ export class GamesService {
   createRedPkt(data: object) {
     return this.http.post(`${environment.API_URL}/red-packet/create`, data);
   }
-  editRedPkt(data: object) {
-    return this.http.post(`${environment.API_URL}/red-packet/change-status/2`, data);
+  editRedPkt(redPacketId:any , data: object) {
+    return this.http.post(`${environment.API_URL}/red-packet/change-status/${redPacketId}`, data);
   }
 }

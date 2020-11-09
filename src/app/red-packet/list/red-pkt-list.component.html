@@ -37,7 +37,7 @@
 
               <td *ngIf="!pkt.isEditabel">
                 <span class="badge"
-                  [ngClass]="{'badge-success': (pkt.status == 1), 'badge-secondary': (pkt.status == 0), 'badge-danger': (pkt.status > 1)}">{{AdvStatus[pkt.status]
+                  [ngClass]="{'badge-secondary': (pkt.status == 1), 'badge-success': (pkt.status == 0), 'badge-danger': (pkt.status > 1)}">{{AdvStatus[pkt.status]
                   }}</span>
               </td>
               <td *ngIf="pkt.isEditabel">

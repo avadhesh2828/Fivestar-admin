@@ -151,17 +151,17 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public onStatusSubmit(adv) {
-
+  public onStatusSubmit(pkt) {
+    console.log(pkt);
     this.loaderService.display(true);
-    adv.isEditabel = false;
+    pkt.isEditabel = false;
     if (this.oldStatus !== this.advList.status) {
-      this.gameService.editRedPkt({ status: adv.status })
+      this.gameService.editRedPkt(pkt.red_packet_id, { status: pkt.status })
         .subscribe((res: any) => {
           this.loaderService.display(false);
           if (res && res.message) {
             this.getRedPktList();
-            this.toastr.success(res.message || 'advertisment status updated successfully.');
+            this.toastr.success(res.message || 'Status updated successfully.');
           }
 
         }, (err: any) => {
