@@ -11,6 +11,7 @@ export const environment = {
   PLAYER_IMG_URL: 'http://localhost/mylance/admin/backend/storage/app/uploads/players',
   USER_IMG_URL: 'http://localhost/mylance/front-api/storage/app/uploads/profile_image',
   NEWS_IMG_URL: 'http://localhost/mylance/admin/backend/storage/app/uploads/news',
+  LANG_URL: '/assets/i18n/'
 };
 
 /*

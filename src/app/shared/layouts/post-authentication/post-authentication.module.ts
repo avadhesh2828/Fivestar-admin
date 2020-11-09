@@ -13,6 +13,7 @@ import { LoaderComponent } from '../../../shared/loader/loader.component';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from '../../../../environments/environment';
 
 
 @NgModule({
@@ -47,5 +48,5 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export class PostAuthenticationModule { }
 
 export function httpTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, environment.LANG_URL, '.json');
 }
