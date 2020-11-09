@@ -49,11 +49,11 @@ class WithdrawController extends Controller
 
     if($historyTransaction->count() == 0){
       return response()->json([
-        'response_code'=> 500,
+        'response_code'=> 200,
         'service_name' => 'transaction_history',
         'data' => [],
         'global_error'=> 'No history transaction found',
-      ], 500);
+      ], 200);
     }
 
     return response()->json([
