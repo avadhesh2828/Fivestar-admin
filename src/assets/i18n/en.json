@@ -253,7 +253,18 @@
     "username": "Username",
     "IP": "IP",
     "description": "Description",
-    "dateTime": "DateTime"
+    "dateTime": "DateTime",
+    "totalRecord": "Total Record",
+    "WithdrawTransaction" : "Withdraw Transaction",
+    "placeholder": "Search by name,username,playername",
+    "selectDateRange": "Select a date range",
+    "selectStatus": "Select a Status",
+    "resetFilters": "Reset Filters",
+    "filter": "Filter",
+    "search": "Search",
+    "next": "Next",
+    "prev": "Prev",
+    "noTransactionsFound" : "There are no transactions to show"
   },
   "redPacket": {
     "redPacket": "Red Packet",

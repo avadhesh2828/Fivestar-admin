@@ -26,13 +26,13 @@
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="5" class="table-danger">There was an error</td>
+              <td colspan="7" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !gameList">
-              <td colspan="5">Loading...</td>
+              <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="gameList && !(gameList.length>0)">
-              <td colspan="5" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
+              <td colspan="7" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
             </tr>
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.game_id || "-" }}</td>
