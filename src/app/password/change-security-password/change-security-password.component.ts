@@ -54,7 +54,7 @@ export class ChangeSecurityPasswordComponent implements OnInit {
           .subscribe((res: any) => {
             this.formSubmitted = false;
             this.toastr.success(res.message || 'Security Password changed Sucessfully.');
-            this.router.navigate(['/users']);
+            this.router.navigate(['/agent']);
           }, err => {
             const errorMessage = '';
             this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while changing sucurity password.');
