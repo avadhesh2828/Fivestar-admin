@@ -148,8 +148,12 @@
     "details": "Details",
     "enable": "Enable",
     "disable": "Disable",
-    "noPlayerFound": "No Player Found",
-    "notAvailable": "Not Available"
+    "noPlayerFound": "No Game Found",
+    "notAvailable": "Not Available",
+    "selectAStatus": "Select a Status",
+    "filter": "Filter",
+    "resetFilters": "Reset Filters",
+    "searchByGameName": "Search By Game Name"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",

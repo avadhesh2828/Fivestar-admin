@@ -153,7 +153,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getUsersList();
   }
 
-  public changeAgentStatus(agentId: any, status: any) {
+  public changeplayerStatus(agentId: any, status: any) {
     this.formSubmitted = true;
     const forminputdata = {
       status : status

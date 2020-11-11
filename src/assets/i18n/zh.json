@@ -146,8 +146,12 @@
     "details": "細節",
     "enable": "啟用",
     "disable": "禁用",
-    "noPlayerFound": "找不到玩家",
-    "notAvailable": "無法使用"
+    "noPlayerFound": "找不到游戏",
+    "notAvailable": "無法使用",
+    "selectAStatus": "選擇狀態",
+    "filter": "過濾",
+    "resetFilters": "重置過濾器",
+    "searchByGameName": "按游戏名称搜索"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "查詢播放器登錄IP",

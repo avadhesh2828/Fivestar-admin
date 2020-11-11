@@ -8,10 +8,14 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
+import { debounceTime } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 const INITIAL_PARAMS = {
   per_page: 10,
-  current_page: 1
+  current_page: 1,
+  status: -1,
+  keyword: ''
 };
 
 @Component({
@@ -34,10 +38,12 @@ export class ListComponent implements OnInit {
   public url = 'game/list?';
   formSubmitted = false;
 
+  searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private gamesService: GamesService,
     private toastr: ToastrService,
+    private location: Location,
     private loaderService: LoaderService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
@@ -49,11 +55,19 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.getGameList();
+    this.searchTextChanged.pipe(debounceTime(1000))
+      .subscribe(model => this.getGameList());
   }
+
+  search() {
+    this.params.current_page = 1;
+    this.searchTextChanged.next();
+  }
+
 
   private createUrl() {
     this.url = 'game/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.params.status + '&keyword=' + this.params.keyword;
   }
 
   public getGameList() {
@@ -61,7 +75,6 @@ export class ListComponent implements OnInit {
     this.createUrl();
     this.gamesService.getGames(this.url)
       .subscribe((game: []) => {
-        console.log(game);
         this.loaderService.display(false);
         if (game['data'] && game['data'].data) {
           this.gameList = game['data'].data;
@@ -94,6 +107,14 @@ export class ListComponent implements OnInit {
     this.getGameList();
   }
 
+  public searchFilter(type?: string) {
+    if (type === 'reset') {
+      this.params = { ...INITIAL_PARAMS };
+    }
+    this.params.current_page = 1;
+    this.getGameList();
+  }
+
   public changeGameStatus(gameId: any, status: any) {
     this.formSubmitted = true;
     const forminputdata = {
@@ -110,6 +131,10 @@ export class ListComponent implements OnInit {
         this.formSubmitted = false;
       });
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
