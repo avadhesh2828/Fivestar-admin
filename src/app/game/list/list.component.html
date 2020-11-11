@@ -1,6 +1,48 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
+      <!--filter-->
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['status']" placeholder="" name="status">
+                <option value="-1">{{'games.selectAStatus' | translate}}</option>
+                <option *ngFor="let status of gameStatus | keyvalue" [value]="status.key">
+                  {{status.value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <span class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+                {{'games.filter' | translate}}</button>&nbsp;
+            </span>
+
+          </div>
+        </div>
+        <form class="row mt-1">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
+                name="search_keyword" placeholder="{{'games.searchByGameName' | translate}}" (ngModelChange)="search()"
+                autocomplete="off">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+              <i class="fa fa-search"></i> Search</button>&nbsp; -->
+            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+              {{'games.resetFilters' | translate}}</button>
+            <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+              <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+            </a>
+          </div>
+        </form>
+      </div>
+      <!---->
+      
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">{{'games.gameMng' | translate}}

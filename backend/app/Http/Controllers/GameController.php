@@ -21,6 +21,12 @@ class GameController extends Controller
         $user_id = $this->user->admin_id;
 
         $game = new Game;
+        if($request->status != -1){
+            $game = $game->where('status', $request->status);    
+        }
+        if($request->keyword != ''){
+            $game = $game->where('name', 'ilike', '%' . $request->keyword . '%');
+        }
         $game = $game->orderBy('id','ASC');
         $game = $game->paginate($request->per_page);
         return response()->json(['response_code'=> 200, 'service_name' => 'game_list', 'data' => $game],200);
