@@ -50,7 +50,7 @@
             <div class="col-md-9">
               <input type="text" class="form-control" formControlName="name">
               <div *ngIf="submitted && f['name'].errors" class="text-danger">
-                <div *ngIf="f['password'].errors.required">{{ 'agent.nameReq' | translate}} </div>
+                <div *ngIf="f['name'].errors.required">{{ 'agent.nameReq' | translate}} </div>
                 <div *ngIf="f['name'].errors.minlength">{{ 'agent.nameMinLen' | translate}}</div>
                 <div *ngIf="f['name'].errors.maxlength">{{ 'agent.nameMaxLen' | translate}}</div>
               </div>
