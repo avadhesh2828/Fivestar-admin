@@ -257,7 +257,7 @@ export class AgentNewComponent implements OnInit {
           this.toastr.success(res.message || 'New Agent Created Sucessfully.');
           this.handleReset();
           this.authService.getUserDetails().subscribe((usr: any) => {
-            this.userService.updateUser(usr.data.user_profile);
+            this.userService.updateUser(usr.data);
           });
           this.router.navigate(['/agent']);
         }, err => {
