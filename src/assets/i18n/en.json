@@ -164,7 +164,7 @@
     "dataList": "LoginIP Data List",
     "ipAddress": "IP Address",
     "dateTime": "Date Time",
-    "UserNameIsRequired": "User Name is required",
+    "userNameIsRequired": "User Name is required",
     "submit": "Submit",
     "reset": "Reset",
     "noLoginIpFound": "No LoginIP Found"

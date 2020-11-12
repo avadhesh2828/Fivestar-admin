@@ -162,7 +162,7 @@
     "dataList": "登錄IP數據列表",
     "ipAddress": "IP地址",
     "dateTime": "約會時間",
-    "UserNameIsRequired": "用戶名為必填項",
+    "userNameIsRequired": "用戶名為必填項",
     "submit": "提交",
     "reset": "重啟",
     "noLoginIpFound": "找不到登錄IP"
