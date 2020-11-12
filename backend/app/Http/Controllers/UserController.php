@@ -167,18 +167,29 @@ class UserController extends Controller
             ], 400);
         }
 
-        $playerIp = new LoginHistory;
-        $playerIp = $playerIp->select('user_login_history.*', 'U.username');
-        $playerIp = $playerIp->join('users.user as U', function($q) {
-            $q->on('U.user_id', '=', 'user_login_history.user_id');
-        });
-        $playerIp = $playerIp->where('U.parent_id', $admin_id);
-        $playerIp = $playerIp->where('U.username', $username);
-        $playerIp = $playerIp->orderBy('user_login_history.created_at', 'DESC');
-        $playerIp = $playerIp->limit(10);
-        $playerIp = $playerIp->get();
+        $checkPlayer = User::where('username', $username);
+        if($this->user->role_id != 1){
+            $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
+        }
+        $checkPlayer = $checkPlayer->first();
+        if($checkPlayer) {
+            $playerIp = new LoginHistory;
+            $playerIp = $playerIp->select('user_login_history.*', 'U.username');
+            $playerIp = $playerIp->join('users.user as U', function($q) {
+                $q->on('U.user_id', '=', 'user_login_history.user_id');
+            });
+            $playerIp = $playerIp->where('U.parent_id', $admin_id);
+            $playerIp = $playerIp->where('U.username', $username);
+            $playerIp = $playerIp->orderBy('user_login_history.created_at', 'DESC');
+            $playerIp = $playerIp->limit(10);
+            $playerIp = $playerIp->get();
 
-        return response()->json(['response_code'=> 200,'service_name' => 'get_login_history','data' => $playerIp],200);
+            return response()->json(['response_code'=> 200,'service_name' => 'get_login_history','data' => $playerIp],200);
+        } else {
+            return response()->json(['response_code'=> 500,'service_name' => 'get_login_history','message'=> "Username does't exist",
+            'global_error'=> "Username does't exist"],500);
+        }
+        echo json_encode($checkPlayer);die;
 
     }
 
@@ -206,16 +217,27 @@ class UserController extends Controller
             ], 400);
         }
 
-        $user = new User;
-        $user = $user->select('user.*', 'A.username as agent_name');
-        $user = $user->join('users.admins as A', function($q) {
-            $q->on('A.admin_id', '=', 'user.parent_id');
-        });
-        $user = $user->where('user.parent_id', $admin_id);
-        $user = $user->where('user.username', $username);
-        $user = $user->get();
 
-        return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
+        $checkPlayer = User::where('username', $username);
+        if($this->user->role_id != 1){
+            $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
+        }
+        $checkPlayer = $checkPlayer->first();
+        if($checkPlayer) {
+            $user = new User;
+            $user = $user->select('user.*', 'A.username as agent_name');
+            $user = $user->join('users.admins as A', function($q) {
+                $q->on('A.admin_id', '=', 'user.parent_id');
+            });
+            $user = $user->where('user.parent_id', $admin_id);
+            $user = $user->where('user.username', $username);
+            $user = $user->get();
+
+            return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
+        } else {
+            return response()->json(['response_code'=> 500,'service_name' => 'search_user','message'=> "Username does't exist",
+            'global_error'=> "Username does't exist"],500);
+        }      
 
     }
 
