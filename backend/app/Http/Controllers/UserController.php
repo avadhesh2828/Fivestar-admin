@@ -155,7 +155,7 @@ class UserController extends Controller
         $username = $request->post('username');
         //validation
         $validator = Validator::make($request->all(), [
-            "username" => ['required']
+            "username" => 'required|numeric'
         ]);
 
         if($validator->fails()){
