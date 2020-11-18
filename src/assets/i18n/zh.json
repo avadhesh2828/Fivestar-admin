@@ -66,7 +66,7 @@
     "submit": "提交",
     "reset": "重啟",
     "userNameRequired": "用戶名為必填項",
-    "userNameMinLength": "用戶名必須大於7個字符",
+    "userNameMinLength": "用户名超过7个字符",
     "userNameMaxLength": "用戶名必須少於50個字符",
     "userNameValidation": "用戶名必須以字母開頭，並且只能包含字母數字字符或_（下劃線）",
     "passwordMinLen": "密碼必須超過3個字符",

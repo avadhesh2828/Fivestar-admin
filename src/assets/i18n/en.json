@@ -68,7 +68,7 @@
     "submit": "Submit",
     "reset": "Reset",
     "userNameRequired": "User Name is required",
-    "userNameMinLength": "User Name must have greater than 7 characters",
+    "userNameMinLength": "User Name more than 7 characters",
     "userNameMaxLength": "User Name must have less than 50 characters",
     "userNameValidation": "User Name must begin with a letter and must only contain alphanumeric characters or _(underscore)",
     "passwordMinLen": "Password must have greater than 3 characters",
