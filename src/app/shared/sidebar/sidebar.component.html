@@ -137,7 +137,8 @@
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
+      <!-- notification -->
+      <!-- <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
         <a href="#notificationSubMenu" data-toggle="collapse" aria-expanded="false"
           class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i>
           {{'sidebar.notifications' | translate}}</a>
@@ -152,7 +153,7 @@
               <i class="nav-icon icon-list"></i>{{'sidebar.listing' | translate}}</a>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/player-loginip/list']"
