@@ -79,6 +79,7 @@
     "nameReq": "Name is required",
     "nameMinLen": "Name must have greater than 3 characters",
     "nameMaxLen": "Name must have less than 50 characters",
+    "nameValidation": "Name must have alphabets",
     "desMinLen": "Description must have greater than 5 characters",
     "desMaxLen": "Description must have less than 50 characters",
     "phoneReq": "Phone Number is required",

@@ -77,6 +77,7 @@
     "nameReq": "名稱為必填項",
     "nameMinLen": "名稱必須超過3個字符",
     "nameMaxLen": "名稱必須少於50個字符",
+    "nameValidation": "名称必须有字母",
     "desMinLen": "說明必須超過5個字符",
     "desMaxLen": "說明必須少於50個字符",
     "phoneReq": "電話號碼為必填項",

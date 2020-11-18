@@ -53,6 +53,7 @@
                 <div *ngIf="f['name'].errors.required">{{ 'agent.nameReq' | translate}} </div>
                 <div *ngIf="f['name'].errors.minlength">{{ 'agent.nameMinLen' | translate}}</div>
                 <div *ngIf="f['name'].errors.maxlength">{{ 'agent.nameMaxLen' | translate}}</div>
+                <div *ngIf="f['name'].errors.pattern"> {{ 'agent.nameValidation' | translate}}</div>
               </div>
             </div>
           </div>
