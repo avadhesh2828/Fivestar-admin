@@ -79,7 +79,7 @@
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.game_id || "-" }}</td>
               <td>{{ game.name || "-" }}</td>
-              <td>{{ game.type || "-" }}</td>
+              <td>{{ game.game_type || "-" }}</td>
               <td>{{ game.max_bet }}</td>
               <td><img src="{{game.image}}&type=circular_framed" class="game-thumbnails"/></td>
               <td>

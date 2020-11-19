@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Game;
+use App\Models\GameType;
 use Auth;
 use DB;
 use Validator;
@@ -21,6 +22,11 @@ class GameController extends Controller
         $user_id = $this->user->admin_id;
 
         $game = new Game;
+        $game = $game->select('game.*','GT.game_type'); 
+        $game = $game->join((new GameType)->getTable().' as GT', function($m){
+            $m->on('GT.game_type_id', '=', 'game.type');
+        });
+      
         if($request->status != -1){
             $game = $game->where('status', $request->status);    
         }
@@ -79,6 +85,10 @@ class GameController extends Controller
     public function get_game_details($gameId) {
         
         $game = new Game;
+        $game = $game->select('game.*','GT.game_type'); 
+        $game = $game->join((new GameType)->getTable().' as GT', function($m){
+            $m->on('GT.game_type_id', '=', 'game.type');
+        });
         $game = $game->where('id', $gameId);
         $game = $game->first();
 
