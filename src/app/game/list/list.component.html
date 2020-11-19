@@ -81,7 +81,7 @@
               <td>{{ game.name || "-" }}</td>
               <td>{{ game.game_type || "-" }}</td>
               <td>{{ game.max_bet }}</td>
-              <td><img src="{{game.image}}&type=circular_framed" class="game-thumbnails"/></td>
+              <td><img src="{{game.image}}" class="game-thumbnails"/></td>
               <td>
                 <span class="badge"
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
