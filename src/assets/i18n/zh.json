@@ -152,7 +152,8 @@
     "selectAStatus": "選擇狀態",
     "filter": "過濾",
     "resetFilters": "重置過濾器",
-    "searchByGameName": "按游戏名称搜索"
+    "searchByGameName": "按游戏名称搜索",
+    "gameProvider": "游戏供应商"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "查詢播放器登錄IP",

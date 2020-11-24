@@ -86,6 +86,7 @@ class GameController extends Controller
         
         $game = new Game;
         $game = $game->select('game.*','GT.game_type'); 
+        $game = $game->with(['provider']); 
         $game = $game->join((new GameType)->getTable().' as GT', function($m){
             $m->on('GT.game_type_id', '=', 'game.type');
         });

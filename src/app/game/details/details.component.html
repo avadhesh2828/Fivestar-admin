@@ -14,7 +14,7 @@
             <div *ngIf="!error && !game">Loading...</div>
             <div *ngIf="game" class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ game.name | titlecase }} <span> ({{game.type | titlecase}}) </span></h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ game.name | titlecase }} <span> ({{game.game_type | titlecase}}) </span></h6>
               </div>
               <div class="card-body user-detail">
                 <div *ngIf="!game.id" class="text-danger"><b>{{'games.noPlayerFound' | translate}}</b></div>
@@ -56,6 +56,10 @@
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'games.availableBets' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="game.availableBets; else notAvailable">{{game.availableBets}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'games.gameProvider' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="game.availableBets; else notAvailable">{{game.provider.provider_name}}</div>
                     </div>
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'games.status' | translate}}</b></div>

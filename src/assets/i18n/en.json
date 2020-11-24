@@ -154,7 +154,8 @@
     "selectAStatus": "Select a Status",
     "filter": "Filter",
     "resetFilters": "Reset Filters",
-    "searchByGameName": "Search By Game Name"
+    "searchByGameName": "Search By Game Name",
+    "gameProvider": "Game Provider"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",
