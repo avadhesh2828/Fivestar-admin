@@ -3,7 +3,7 @@
     <ul class="nav">
       <li class="nav-item" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/dashboard']" routerLinkActive="active">
-          <i class="nav-icon icon-speedometer "></i> Dashboard</a>
+          <i class="nav-icon icon-speedometer "></i> {{'sidebar.dashboard' | translate}}</a>
       </li>
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <!-- <a class="nav-link" href="javascript:void(0);" [routerLink]="['/users']" routerLinkActive="active">
@@ -291,7 +291,7 @@
 
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" (click)="adminLogout()" routerLinkActive="active">
-          <i class="nav-icon fa fa-power-off"></i> Sign Out</a>
+          <i class="nav-icon fa fa-power-off"></i> {{'sidebar.signOut' | translate}}</a>
       </li>
       
 

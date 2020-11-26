@@ -1,4 +1,9 @@
 {
+  "dashboard": {
+    "title": "Dashboard",
+    "totalAgent": "Total Agent",
+    "totalPlayer": "Total Player"
+  },
   "home": {
     "login": "Login",
     "signInText": "Sign In to your account",
@@ -34,6 +39,7 @@
     "logout": "Logout"
   },
   "sidebar": {
+    "dashboard": "Dashboard",
     "advertisement": "Advertisement",
     "create": "Create",
     "listing": "Listing",
@@ -44,7 +50,8 @@
     "userManagement": "User Management",
     "gameManagement": "Game Management",
     "history": "Operate history",
-    "redPacket": " Red Packet"
+    "redPacket": " Red Packet",
+    "signOut": " Sign Out"
   },
   "agent": {
     "agentMng": "Agent Management",
