@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Player Details</h1>
+          <h1 class="h3 mb-0 text-gray-800">{{'playerDetail.playerInfo' | translate}}</h1>
           <a class="btn back-btn" routerLink="/users"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="row">
@@ -22,35 +22,35 @@
                   <div class="row">
                   <div class="col-sm-6">
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Player Name</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.playerName' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.name; else notAvailable">{{user.name}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Username</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.userName' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.username; else notAvailable">{{user.username}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Balance</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.balance' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.balance; else notAvailable">{{user.balance}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Phone</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.phone' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.phone; else notAvailable">{{user.phone}}</div>
                     </div>
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Agent Name</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.agent' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.agent_username; else notAvailable">{{user.agent_username}}</div>
                     </div>
 
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Status</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.status' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.status; else notAvailable">
                         <span class="badge" style="font-size:12px;"
                           [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
                       </div>
                     </div>            
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Description</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.description' | translate}} </b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.description; else notAvailable">{{user.description}}</div>
                     </div>
                     <!-- <div class="row">
@@ -58,7 +58,7 @@
                       <div class="col-12 col-sm-9" *ngIf="user.last_ip; else notAvailable">{{user.last_ip}}</div>
                     </div> -->
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>Last Login</b></div>
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.lastLogin' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.last_login; else notAvailable">
                         {{formatDateTimeZone(this.user.last_login)| date:dateFormatString }}</div>
                     </div>
@@ -67,11 +67,57 @@
                 </div>
                 </div>
                 <ng-template #notAvailable>
-                  <div class="col-12 col-sm-9 font-italic text-danger">Not Available</div>
+                  <div class="col-12 col-sm-9 font-italic text-danger">{{'playerDetail.notAvailable' | translate}}</div>
                 </ng-template>
               </div>
             </div>
           </div>
+
+          <!-- table -->
+          <div class="card-body custom-listing-table" *ngIf="user"> 
+            <table class="table table-responsive-sm table-bordered table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>{{'playerDetail.userName' | translate}}</th>
+                  <th>{{'playerDetail.online' | translate}}</th>
+                  <th>{{'playerDetail.agent' | translate}}</th>
+                  <th>{{'playerDetail.balance' | translate}}</th>
+                  <th>{{'playerDetail.phone' | translate}}</th>
+                  <th>{{'playerDetail.description' | translate}}</th>
+                  <th>{{'playerDetail.operation' | translate}} </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="error">
+                  <td colspan="7" class="table-danger">{{'playerDetail.error' | translate}}</td>
+                </tr>
+                <tr *ngIf="!error && !user">
+                  <td colspan="7">{{'playerDetail.loading' | translate}}...</td>
+                </tr>
+                <tr>
+                  <td>{{user.username}}</td>
+                  <td>{{'search.off' | translate}} (0 {{'playerDetail.day' | translate}})</td>
+                  <td>{{ user.agent_name }}</td>
+                  <td>{{ user.balance }} </td>
+                  <td>{{ user.phone }} </td>
+                  <td>{{ user.description }} </td>
+                  <td>
+                    <button href="javascript:void(0);" class="btn-warning" > {{'playerDetail.setScore' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.scoreLog' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.edit' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.reports' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.gameLog' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.quiteGame' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
+                    (click)="changeUserStatus(user.user_id, '1')"> {{'playerDetail.enable' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
+                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button> &nbsp;
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end -->
         </div>
        
 
