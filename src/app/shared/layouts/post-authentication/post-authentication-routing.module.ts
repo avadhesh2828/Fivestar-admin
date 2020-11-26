@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PostAuthenticationComponent } from './post-authentication.component';
 import { AuthGuard } from '../../../auth-guard/auth.guard';
-
+import { DashboardComponent } from '../../../dashboard/dashboard.component';
 import { TransactionHistoryListComponent } from '../../../transaction-history/deposit/transaction-history-list.component';
 import { WithdrawListComponent } from '../../../transaction-history/withdraw/withdraw-list.component';
 import { TransactionHistoryAgentListComponent } from '../../../transaction-history/agent-list/transaction-history-agent-list.component';
@@ -18,6 +18,7 @@ const routes: Routes = [
         component: PostAuthenticationComponent,
         canActivate: [AuthGuard],
         children: [
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'users', loadChildren: () => import('../../../user/user.module').then(m => m.UserModule) },
             {
                 path: 'agent',
@@ -78,6 +79,7 @@ const routes: Routes = [
 export class PostAuthenticationRoutingModule { }
 
 export const routedComponents: Array<any> = [
+    DashboardComponent,
     PostAuthenticationComponent,
     TransactionHistoryListComponent,
     WithdrawListComponent,

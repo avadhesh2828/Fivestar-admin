@@ -1,6 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { UserService } from 'src/app/services/user.service';
+import { first } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+
+
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +20,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   contestIcon: any;
   isSuperAdmin: boolean;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.newsIcon = environment.IMG_URL + '/news.png';
@@ -36,4 +41,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       $(this).addClass('active');
     });
   }
+
+  adminLogout() {
+    this.authService.logout().pipe(first())
+        .subscribe(() => {
+            this.router.navigate(['/login']);
+        }, err => { }
+        );
+  }
+
 }

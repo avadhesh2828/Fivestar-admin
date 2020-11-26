@@ -1,3 +1,3 @@
 export const Constants = {
-  CURRENCY_CODE : '$',
+  CURRENCY_CODE : 'RM',
 };

@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Agent;
 use App\Models\PaymentHistoryTransaction;
 use App\Models\User;
 use App\Models\Player;
+use Auth;
+use DB;
 
 class DashboardController extends Controller
 {
     public function get_all_stats(Request $request)
     {
+        $this->user = Auth::user();
         $data['total_user_available_balance'] = $this->get_total_user_balance();
         $data['total_deposit_amount'] = $this->get_total_deposited_amount();
         $data['total_withdraw_amount'] = $this->get_total_withdraw_amount();
         $data['total_winning_amount'] = $this->get_total_winning_amount();
-        $data['total_user'] = $this->get_total_user();
-        $data['total_player'] = $this->get_total_player();
+        $data['total_agent'] = $this->get_total_agent($this->user);
+        $data['total_player'] = $this->get_total_player($this->user);
         return response()->json([
             'response_code'=>200,
             'service_name'=>'dashboard',
@@ -49,14 +53,24 @@ class DashboardController extends Controller
         return $withdraw;
     }
 
-    private function get_total_user()
+    private function get_total_agent($user)
     {
-        $withdraw = User::all()->count('user_id');
-        return $withdraw;
+        if($user->parent_id > 0) {
+            $agent = Agent::where('parent_id', $user->parent_id)->count();    
+
+        } else {
+            $agent = Agent::all()->count();    
+        }
+        return $agent;
     }
-    private function get_total_player()
+    private function get_total_player($user)
     {
-        $player = Player::all()->count('user_id');
+        if($user->parent_id > 0) {
+            $player = User::where('parent_id', $user->parent_id)->count();    
+
+        } else {
+            $player = User::all()->count();    
+        }
         return $player;
     }
 }

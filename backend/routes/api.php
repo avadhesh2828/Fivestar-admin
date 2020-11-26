@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['prefix' => 'dashboard'], function(){
-	Route::post('get_all_stats', 'DashboardController@get_all_stats');
-});
+// Route::group(['prefix' => 'dashboard'], function(){
+// 	Route::post('get_all_stats', 'DashboardController@get_all_stats');
+// });
 
 Route::post('login', 'AdminController@login');
 Route::post('verify-personal-password', 'AdminController@verify_personal_password');
@@ -26,6 +26,12 @@ Route::middleware('auth:api')->group(function () {
 	Route::post('change-password', 'AdminController@change_password');
 	Route::post('change-security-password', 'AdminController@change_security_password');
 	Route::get('get-details', 'AdminController@get_details');
+
+	//dashboard
+	Route::group(['prefix' => 'dashboard'], function(){
+		Route::post('get_all_stats', 'DashboardController@get_all_stats');
+	});
+
 
 	//agent
 	Route::group(['prefix' => 'agent'], function(){

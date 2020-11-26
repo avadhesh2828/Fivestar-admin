@@ -14,6 +14,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../../../../environments/environment';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { environment } from '../../../../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     DirectivesModule,
+    NgxChartsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
