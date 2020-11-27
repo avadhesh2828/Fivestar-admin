@@ -171,6 +171,13 @@
           <img [src]="newsIcon" /> {{'sidebar.searchUser' | translate}}</a>
       </li>
 
+      <!-- score log -->
+      <li class="nav-item nav-dropdown" routerLinkActive="open">
+        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/score-log/log']" routerLinkActive="active">
+          <i class="nav-icon icon-list"></i> {{'sidebar.scoreLog' | translate}} </a>
+      </li>
+      <!-- end -->
+
       <!--
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications']" routerLinkActive="active">

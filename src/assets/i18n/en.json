@@ -51,6 +51,7 @@
     "gameManagement": "Game Management",
     "history": "Operate history",
     "redPacket": " Red Packet",
+    "scoreLog": "Score Log",
     "signOut": " Sign Out"
   },
   "agent": {
@@ -133,7 +134,14 @@
     "max": "Max",
     "allPlayer": "All Player",
     "enablePlayer": "Enable Player",
-    "disablePlayer": "Disable Player"
+    "disablePlayer": "Disable Player",
+    "operation": "Operation",
+    "setScore": "Set Score",
+    "scoreLog": "Score Log",
+    "edit": "Edit",
+    "reports": "Reports",
+    "gameLog": "Game Log",
+    "quiteGame": "Quite Game"
   },
   "playerDetail": {
     "playerName": "Player Name",
@@ -328,5 +336,22 @@
     "status": "Status",
     "action": "Action",
     "totalRecord": "Total Record"
+  },
+  "scoreLog": {
+    "setScore": "Set Score",
+    "currentScore": "Current Score",
+    "maxValue": "Max Value",
+    "score": "Score",
+    "scoreIsRequired": "Score is required",
+    "scoreCheck":"Score should be equal to or less than",
+    "submit": "Submit",
+    "reset": "Reset",
+    "setScoreLog": "Set Score Log",
+    "userName": "Username",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "enter": "Enter Username",
+    "userNameIsRequired": "Username is required",
+    "dateIsRequired": "Date is required"
   }
 }

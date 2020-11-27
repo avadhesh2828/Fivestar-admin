@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>{{'scoreLog.setScoreLog' | translate}}</strong>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.userName' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="userName" placeholder="{{'scoreLog.enter' | translate}}">
+            
+              <div *ngIf="submitted && f['userName'].errors" class="text-danger">
+                <div *ngIf="f['userName'].errors.required">{{ 'scoreLog.userNameIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.startDate' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="date" placeholder="{{'scoreLog.score' | translate}}">
+            
+              <div *ngIf="submitted && f['date'].errors" class="text-danger">
+                <div *ngIf="f['date'].errors.required">{{ 'scoreLog.dateIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'scoreLog.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'scoreLog.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

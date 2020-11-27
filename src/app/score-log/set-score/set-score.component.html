@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>{{'scoreLog.setScore' | translate}}</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.currentScore' | translate}}</label>
+            <div class="col-md-10">
+              <label class="col-md-2 col-form-label btn-score" >{{user.balance}}</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.setScore' | translate}} <span class="text-danger">*</span> &nbsp; <span class="max-value">{{'scoreLog.maxValue' | translate}} {{maxBalance}}</span> </label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="score" placeholder="{{'scoreLog.score' | translate}}">
+            
+              <div *ngIf="submitted && f['score'].errors" class="text-danger">
+                <div *ngIf="f['score'].errors.required">{{ 'scoreLog.scoreIsRequired' | translate}}</div>
+                <div *ngIf="f['score'].errors.max">{{ 'scoreLog.scoreCheck' | translate}} {{maxBalance}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'scoreLog.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'scoreLog.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

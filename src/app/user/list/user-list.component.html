@@ -89,7 +89,7 @@
               <th> {{ 'player.score' | translate}}</th>
               <th>{{ 'player.lastLogin' | translate}}</th>
               <th>{{ 'player.status' | translate}} </th>
-              <th>{{ 'player.action' | translate}} </th>
+              <th>{{ 'player.operation' | translate}} </th>
             </tr>
           </thead>
           <tbody>
@@ -116,23 +116,16 @@
                   }}</span>
               </td>
               <td>
-                <!-- <a routerLink="/users/{{user.user_unique_id}}"><i class="fa fa-address-book"></i>Details</a>
-                &nbsp;
-                <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
-                    user_unique_id: user.user_unique_id,
-                    status: user.status,
-										user_id: user.user_id,
-										balance: user.balance,
-                    userIndex: userIndex
-                  })"><i class="fa fa-edit"></i>Edit</a>
-                  &nbsp; -->
-                <a href="javascript:void(0);" *ngIf="user.status == 0"
-                  (click)="changeplayerStatus(user.user_id, '1')"><i class="fa fa-address-book"></i>
-                  {{ 'player.enable' | translate}}</a>
-                &nbsp;
-                <a href="javascript:void(0);" *ngIf="user.status == 1"
-                  (click)="changeplayerStatus(user.user_id, '0')"><i class="fa fa-address-book"></i>
-                  {{ 'player.disable' | translate}}</a>
+                <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/{{user.user_id}}"> {{'player.setScore' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/log"> {{'player.scoreLog' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning"> {{'player.edit' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning"> {{'player.reports' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning"> {{'player.gameLog' | translate}} </button>
+                
+                <button href="javascript:void(0);" class="btn-warning" *ngIf="user.status == 0"
+                (click)="changeplayerStatus(user.user_id, '1')"> {{'player.enable' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning" *ngIf="user.status == 1"
+                (click)="changeplayerStatus(user.user_id, '0')"> {{'player.disable' | translate}} </button>
 
               </td>
             </tr>

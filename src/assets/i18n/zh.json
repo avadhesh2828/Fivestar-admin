@@ -49,6 +49,7 @@
     "gameManagement": "遊戲管理",
     "history": "經營歷史",
     "redPacket": "紅包",
+    "scoreLog": "分數記錄",
     "signOut": " 登出"
   },
   "agent": {
@@ -131,7 +132,14 @@
     "max": "最高",
     "allPlayer": "所有玩家",
     "enablePlayer": "啟用播放器",
-    "disablePlayer": "禁用播放器"
+    "disablePlayer": "禁用播放器",
+    "operation": "運作方式",
+    "setScore": "設定分數",
+    "scoreLog": "分數記錄",
+    "edit": "編輯",
+    "reports": "報告書",
+    "gameLog": "遊戲記錄",
+    "quiteGame": "相當遊戲"
   },
   "playerDetail": {
     "playerName": "参赛者姓名",
@@ -329,5 +337,22 @@
     "status": "狀態",
     "action": "行動",
     "totalRecord": "總記錄"
+  },
+  "scoreLog": {
+    "setScore": "設定分數",
+    "currentScore": "當前分數",
+    "maxValue": "最大值",
+    "score": "得分了",
+    "scoreIsRequired": "分數為必填項",
+    "scoreCheck":"分數應等於或小於",
+    "submit": "提交",
+    "reset": "重啟",
+    "setScoreLog": "設定分數記錄",
+    "userName": "用戶名",
+    "startDate": "開始日期",
+    "endDate": "結束日期",
+    "enter": "輸入用戶名",
+    "userNameIsRequired": "用戶名為必填項",
+    "dateIsRequired": "日期為必填項"
   }
 }
