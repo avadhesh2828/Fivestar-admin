@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 # Models
 use App\Models\PaymentHistoryTransaction;
+use App\Models\PaymentDepositTransaction;
+use App\Models\User;
 
 class DepositController extends Controller
 {
@@ -62,6 +64,39 @@ class DepositController extends Controller
       'service_name' => 'deposit_list',
       'data' => $historyTransaction,
       'message'=> 'History transaction found',
+    ]);
+  }
+
+  public function score_logs( Request $request ){
+    $transaction = new PaymentDepositTransaction;
+    $transaction = $transaction->select('payment_deposit_transactions.*', 'U.username');
+    $transaction = $transaction->join((new User)->getTable().' as U', function($j){
+        $j->on('U.user_id', '=', 'payment_deposit_transactions.user_id');
+    });
+
+    // Date Range Filter
+    $dates = $request->post('dates');
+    if( isset($dates) ){
+      $transaction = $transaction->whereBetween('date_created', [date('Y-m-d H:i:s', strtotime($dates[0])) , date('Y-m-d H:i:s', strtotime($dates[1]))]);
+    }
+
+    $transaction = $transaction->where('U.username', $request->post('username'));
+    // Paginated records
+    $transaction = $transaction->paginate($request->per_page);
+
+    if($transaction->count() == 0){
+      return response()->json([
+        'response_code'=> 404,
+        'service_name' => 'score_logs',
+        'global_error'=> 'No score log transaction found',
+      ]);
+    }
+
+    return response()->json([
+      'response_code'=> 200,
+      'service_name' => 'score_logs',
+      'data' => $transaction,
+      'message'=> 'Score log transaction found',
     ]);
   }
 }

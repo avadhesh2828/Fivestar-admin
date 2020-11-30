@@ -10,6 +10,7 @@ use App\Models\Agent;
 use App\Models\User_Portfolio;
 use App\Models\User_Watchlist;
 use App\Http\Controllers\Payment_transaction;
+use App\Models\PaymentDepositTransaction;
 use App\Exports\UsersExport;
 use Excel;
 use PDF;
@@ -241,7 +242,10 @@ class UserController extends Controller
 
     }
 
-
+    /**
+     * Get User Details.
+     *
+     */
     public function get_user_details($userId) {
         $user = new User;
         $user = $user->select('user.*', 'A.username AS agent_username');
@@ -252,6 +256,66 @@ class UserController extends Controller
         $user = $user->first();
 
         return response()->json(['response_code'=> 200,'service_name' => 'get_user_details', 'message' => 'User details', 'data' => $user ],200);  
+    }
+
+    /**
+     * Set User Score.
+     *
+     */
+    public function set_score(Request $request) {
+
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+
+        $player_id = $request->post('player_id');
+        $score = $request->post('score');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "player_id" => 'required',
+            "score" => 'required|numeric'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'set_score',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $checkPlayer = User::where('user_id', $player_id)->first();
+        if($checkPlayer) {
+            $updateBalance = User::where('user_id', $checkPlayer->user_id)->update(['balance' => $checkPlayer->balance + $score]);
+
+            PaymentDepositTransaction::insert([
+                'user_id'      => $checkPlayer->user_id,
+                'admin_id'     => $admin_id,
+                'set_score'    => $score,
+                'before_score' => $checkPlayer->balance,
+                'after_score'  => $checkPlayer->balance + $score,
+                'ip'           => \Request::ip(),
+                'date_created' => date('Y-m-d H:i:s'),
+                'date_modified'=> date('Y-m-d H:i:s')
+            ]);
+
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'set_score', 
+                'message' => 'Score set successfuly', 
+                'data' => $checkPlayer 
+            ],200);
+
+        } else {
+        
+            return response()->json([
+                'response_code'=> 500,
+                'service_name' => 'set_score',
+                'message'=> "Username does't exist",
+                'global_error'=> "Username does't exist"
+            ],500);
+        }     
+
     }
 
 }

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <form class="form-horizontal" [formGroup]="scoreForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong>{{'scoreLog.setScore' | translate}}</strong>
         </div>
@@ -17,10 +17,10 @@
             <label class="col-md-2 col-form-label" for="username">{{'scoreLog.setScore' | translate}} <span class="text-danger">*</span> &nbsp; <span class="max-value">{{'scoreLog.maxValue' | translate}} {{maxBalance}}</span> </label>
             <div class="col-md-6">
               <input type="text" class="form-control" formControlName="score" placeholder="{{'scoreLog.score' | translate}}">
-            
               <div *ngIf="submitted && f['score'].errors" class="text-danger">
                 <div *ngIf="f['score'].errors.required">{{ 'scoreLog.scoreIsRequired' | translate}}</div>
-                <div *ngIf="f['score'].errors.max">{{ 'scoreLog.scoreCheck' | translate}} {{maxBalance}}</div>
+                <div *ngIf="f['score'].errors.min">{{ 'scoreLog.scoreMin' | translate}} 1</div>
+                <div *ngIf="f['score'].errors.max">{{ 'scoreLog.scoreMax' | translate}} {{maxBalance}}</div>
               </div>
             </div>
             <div class="col-md-4"></div>

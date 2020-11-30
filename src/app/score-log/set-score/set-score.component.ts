@@ -22,7 +22,7 @@ export class SetScoreComponent implements OnInit {
   maxBalance : any;
   
 
-  public searchForm: FormGroup;
+  public scoreForm: FormGroup;
   formSubmitted = false;
   formError: any;
   submitted = false;
@@ -49,8 +49,8 @@ export class SetScoreComponent implements OnInit {
       this.getUserDetail();
       this.userService.currentUser.subscribe((usr: any) => {
         this.maxBalance = usr.balance;
-        this.searchForm = this.formBuilder.group({
-          'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
+        this.scoreForm = this.formBuilder.group({
+          'score': ['', [Validators.required, Validators.min(1), Validators.max(this.maxBalance)]],
         });
       });
   }
@@ -71,24 +71,27 @@ export class SetScoreComponent implements OnInit {
   }
 
   get f() {
-    return this.searchForm.controls;
+    return this.scoreForm.controls;
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.searchForm.invalid || this.formError) {
+    if (this.scoreForm.invalid || this.formError) {
       return;
     } else {
+      var playerId = this.route.snapshot.paramMap.get('playerId');
       const forminputdata = {
-        'username': this.f.username.value,
+        'player_id': playerId,
+        'score'    : this.f.score.value
       };
       this.formSubmitted = true;
-      this.userService.searchPlayerLoginIP(forminputdata).pipe()
+      this.userService.setPlayerScore(forminputdata).pipe()
         .subscribe((res: any) => {
           this.formSubmitted = false;
           this.showLoginIPList = true;
           this.palyerIPList = res.data;
           this.toastr.success(res.message || 'Player LoginIp Found.');
+          this.getUserDetail();
         }, err => {
           const errorMessage = '';
           this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while fetching player login ip.');
@@ -99,7 +102,7 @@ export class SetScoreComponent implements OnInit {
 
   handleReset() {
     this.showLoginIPList = false;
-    this.searchForm.reset();
+    this.scoreForm.reset();
   }
 
 }

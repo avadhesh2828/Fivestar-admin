@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('get-login-history', 'UserController@get_login_history');
 		Route::post('search-user', 'UserController@search_user');
 		Route::get('get-user-details/{userId}', 'UserController@get_user_details');
+		Route::post('set-score', 'UserController@set_score');
 	});
 
 	//red packet
@@ -80,6 +81,16 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list','GameController@index')->middleware('can:isAdmin');
 		Route::post('change-game-status/{game_id}', 'GameController@change_game_status')->middleware('can:isAdmin');
 		Route::get('get-game-details/{gameId}', 'GameController@get_game_details')->middleware('can:isAdmin');
+	});
+
+
+	// Payment Withdrawl Routes
+	Route::group(['prefix' => 'finance'], function(){
+		Route::post('score-log', 'Finance\DepositController@score_logs');
+		// Route::get('transaction-history', 'Finance\WithdrawController@transaction_history');
+		// Route::get('deposit-list', 'Finance\DepositController@deposit_list');
+		// Route::get('withdraw-list', 'Finance\WithdrawController@withdraw_list');
+		// Route::post('manage-withdraw-status', 'Finance\WithdrawController@manage_status');
 	});
 
 
@@ -155,13 +166,7 @@ Route::middleware('auth:api')->group(function () {
 	//admin logout route
 	Route::post('logout','AdminController@logout');
 
-	// Payment Withdrawl Routes
-	Route::group(['prefix' => 'finance'], function(){
-		Route::get('transaction-history', 'Finance\WithdrawController@transaction_history');
-		Route::get('deposit-list', 'Finance\DepositController@deposit_list');
-		Route::get('withdraw-list', 'Finance\WithdrawController@withdraw_list');
-		Route::post('manage-withdraw-status', 'Finance\WithdrawController@manage_status');
-	});
+	
 
 	// Contest Routes
 	Route::group(['prefix' => 'contest', 'namespace' => 'Contest'], function(){

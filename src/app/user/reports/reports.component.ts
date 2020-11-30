@@ -7,7 +7,6 @@ import { formatDateTime, formatDate, formatDateTimeZone, range } from '../../ser
 import { TransactionService } from 'src/app/services/transaction.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
-
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,12 +16,14 @@ const INITIAL_PARAMS = {
   current_page: 1,
 };
 
+
 @Component({
-  selector: 'app-log',
-  templateUrl: './log.component.html',
-  styleUrls: ['./log.component.scss']
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  styleUrls: ['./reports.component.scss']
 })
-export class LogComponent implements OnInit {
+export class ReportsComponent implements OnInit {
+  
   public user = null;
   public error = false;
   maxBalance : any;

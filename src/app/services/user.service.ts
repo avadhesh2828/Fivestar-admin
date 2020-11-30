@@ -47,6 +47,10 @@ export class UserService {
     return this.http.get(`${environment.API_URL}/users/get-user-details/${userId}`);
   }
 
+  setPlayerScore(data: object) {
+    return this.http.post(`${environment.API_URL}/users/set-score`, data);
+  }
+
   getAgentTicketDetails(params: object) {
     return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`, params);
   }
