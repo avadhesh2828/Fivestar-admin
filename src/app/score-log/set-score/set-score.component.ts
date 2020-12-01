@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetScoreComponent implements OnInit {
   public user = null;
   public error = false;
+  playerUserName :any;
   playerBalance : any;
   maxBalance : any;
   
@@ -28,7 +29,6 @@ export class SetScoreComponent implements OnInit {
   formError: any;
   submitted = false;
   palyerIPList = [];
-  showLoginIPList = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,6 +65,7 @@ export class SetScoreComponent implements OnInit {
         if (user['data']) {
           this.user = user['data'];
           this.playerBalance = this.user.balance;
+          this.playerUserName = this.user.username;
         }
       }, (err: object) => {
         this.loaderService.display(false);
@@ -90,7 +91,6 @@ export class SetScoreComponent implements OnInit {
       this.userService.setPlayerScore(forminputdata).pipe()
         .subscribe((res: any) => {
           this.formSubmitted = false;
-          this.showLoginIPList = true;
           this.palyerIPList = res.data;
           this.toastr.success(res.message || 'Player LoginIp Found.');
           this.getUserDetail();
@@ -103,7 +103,6 @@ export class SetScoreComponent implements OnInit {
   }
 
   handleReset() {
-    this.showLoginIPList = false;
     this.scoreForm.reset();
   }
 

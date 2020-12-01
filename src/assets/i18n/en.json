@@ -339,6 +339,7 @@
   },
   "scoreLog": {
     "setScore": "Set Score",
+    "player": "Player",
     "currentScore": "Current Score",
     "maxValue": "Max Value",
     "score": "Score",

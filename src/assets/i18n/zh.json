@@ -340,6 +340,7 @@
   },
   "scoreLog": {
     "setScore": "設定分數",
+    "player": "播放器",
     "currentScore": "當前分數",
     "maxValue": "最大值",
     "score": "得分了",
