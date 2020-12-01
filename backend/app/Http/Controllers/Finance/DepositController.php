@@ -76,8 +76,8 @@ class DepositController extends Controller
 
     // Date Range Filter
     $dates = $request->post('dates');
-    if( isset($dates) ){
-      $transaction = $transaction->whereBetween('date_created', [date('Y-m-d H:i:s', strtotime($dates[0])) , date('Y-m-d H:i:s', strtotime($dates[1]))]);
+    if( isset($dates['fromdate']) && isset($dates['todate']) ){
+      $transaction = $transaction->whereBetween('date_created', [$dates['fromdate'] , $dates['todate']]);
     }
 
     $transaction = $transaction->where('U.username', $request->post('username'));
@@ -86,8 +86,10 @@ class DepositController extends Controller
 
     if($transaction->count() == 0){
       return response()->json([
-        'response_code'=> 404,
+        'response_code'=> 500,
         'service_name' => 'score_logs',
+        'data' => [],
+        'message'=> 'No score log transaction found',
         'global_error'=> 'No score log transaction found',
       ]);
     }

@@ -1,9 +1,10 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <form class="form-horizontal" [formGroup]="scorLogForm" (ngSubmit)="onSubmit()">
+      <form class="form-horizontal" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong>{{'reports.report' | translate}}</strong>
+          <a class="btn back-btn" routerLink="/agent"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="card-body">
 

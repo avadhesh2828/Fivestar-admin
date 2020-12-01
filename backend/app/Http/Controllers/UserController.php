@@ -337,7 +337,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id'  => 'required',
             'score'    => 'required|numeric|min:0'.$maxBalance,
-            'phone'    => 'required'
+            'phone'    => 'required|numeric|digits:10'
         ]);
 
         if($validator->fails()){

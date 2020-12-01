@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">{{'playerDetail.playerInfo' | translate}}</h1>
-          <a class="btn back-btn" routerLink="/users"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+          <a class="btn back-btn" routerLink="/agent"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="row">
           <div class="col-sm-12">
@@ -115,7 +115,7 @@
                 <tr>
                   <td>{{user.username}}</td>
                   <td>{{'search.off' | translate}} (0 {{'playerDetail.day' | translate}})</td>
-                  <td>{{ user.agent_name }}</td>
+                  <td>{{ user.agent_username }}</td>
                   <td>{{ user.balance }} </td>
                   <td>{{ user.phone }} </td>
                   <td>{{ user.description }} </td>

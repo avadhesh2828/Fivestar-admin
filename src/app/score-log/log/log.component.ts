@@ -61,56 +61,50 @@ export class LogComponent implements OnInit {
   }
 
   ngOnInit() {
-      // this.getUserDetail();
       this.scorLogForm = this.formBuilder.group({
         'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
       });
   }
 
-  // private getUserDetail() {
-  //   this.loaderService.display(true);
-  //   const userId = this.route.snapshot.paramMap.get('playerId');
-  //   this.userService.getUserDetails(userId)
-  //     .subscribe((user) => {
-  //       this.loaderService.display(false);
-  //       if (user['data']) {
-  //         this.user = user['data'];
-  //       }
-  //     }, (err: object) => {
-  //       this.loaderService.display(false);
-  //       this.error = true;
-  //     });
-  // }
-
-  get f() {
-    return this.scorLogForm.controls;
-  }
   
   private createUrl() {
     this.url = 'finance/score-log?';
     this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;;
   }
 
+  get f() {
+    return this.scorLogForm.controls;
+  }
+  
   onSubmit() {
+    const date = this.f.date.value.length == 2 ? {
+      fromdate: `${formatDate( this.f.date.value[0])} 00:00:00`,
+      todate: `${formatDate( this.f.date.value[1])} 23:59:59`,
+      time_zone:  this.f.date.value[0].toString().split(' ')[5],
+    } : [];
+    
     this.submitted = true;
-    this.loaderService.display(true);
     this.createUrl();
     if (this.scorLogForm.invalid || this.formError) {
       return;
     } else {
       const forminputdata = {
         'username': this.f.userName.value,
-        'dates'   : this.f.date.value,
+        'dates'   : date,
       };
       this.formSubmitted = true;
+      this.loaderService.display(true);
       this.transactionService.playerScoreLog(this.url, forminputdata)
       .subscribe((log: []) => {
         this.loaderService.display(false);
         if (log['data'] && log['data'].data) {
           this.scoreLogList = log['data'].data;
           this.createPaginationItem(log['data'].total);
+        } else {
+          this.scoreLogList = log['data'];
         }
+        this.loaderService.display(false);
         this.error = false;
       }, (err: Error) => {
         this.loaderService.display(false);
@@ -118,8 +112,8 @@ export class LogComponent implements OnInit {
       });
     }
 
-    this.loaderService.display(true);
-    this.createUrl();
+    // this.loaderService.display(true);
+    // this.createUrl();
     
   }
 

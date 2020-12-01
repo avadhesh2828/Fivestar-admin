@@ -132,13 +132,14 @@ export class UserDetailComponent implements OnInit {
         .subscribe((response: any) => {
           if (response) {
             this.toastr.success(response.message);
+            this.editPlayerId = 0;
           }
         }, (error: any) => {
-          this.toastr.error(error.error['message']);
+          this.toastr.error(error.error['global_error']);
         });
 
     }
-    this.editPlayerId = 0;
+    
   }
 
 }

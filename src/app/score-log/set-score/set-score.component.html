@@ -4,6 +4,7 @@
       <form class="form-horizontal" [formGroup]="scoreForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong>{{'scoreLog.setScore' | translate}}</strong>
+          <a class="btn back-btn" routerLink="/agent"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
         </div>
         <div class="card-body">
           <div class="form-group row">

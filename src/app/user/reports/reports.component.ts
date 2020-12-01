@@ -29,7 +29,7 @@ export class ReportsComponent implements OnInit {
   maxBalance : any;
   
 
-  public scorLogForm: FormGroup;
+  public reportForm: FormGroup;
   formSubmitted = false;
   formError: any;
   submitted = false;
@@ -63,7 +63,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
       // this.getUserDetail();
-      this.scorLogForm = this.formBuilder.group({
+      this.reportForm = this.formBuilder.group({
         'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
       });
@@ -85,7 +85,7 @@ export class ReportsComponent implements OnInit {
   // }
 
   get f() {
-    return this.scorLogForm.controls;
+    return this.reportForm.controls;
   }
   
   private createUrl() {
@@ -95,9 +95,9 @@ export class ReportsComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.loaderService.display(true);
+    
     this.createUrl();
-    if (this.scorLogForm.invalid || this.formError) {
+    if (this.reportForm.invalid || this.formError) {
       return;
     } else {
       const forminputdata = {
@@ -105,23 +105,23 @@ export class ReportsComponent implements OnInit {
         'dates'   : this.f.date.value,
       };
       this.formSubmitted = true;
+      this.loaderService.display(true);
       this.transactionService.playerScoreLog(this.url, forminputdata)
       .subscribe((log: []) => {
         this.loaderService.display(false);
         if (log['data'] && log['data'].data) {
           this.scoreLogList = log['data'].data;
           this.createPaginationItem(log['data'].total);
+          this.formSubmitted = false;
         }
         this.error = false;
       }, (err: Error) => {
         this.loaderService.display(false);
+        this.formSubmitted = false;
         this.error = true;
       });
     }
-
-    this.loaderService.display(true);
-    this.createUrl();
-    
+    // this.loaderService.display(false);
   }
 
   private createPaginationItem(totalScore: number) {
@@ -146,7 +146,7 @@ export class ReportsComponent implements OnInit {
 
   handleReset() {
     this.showLoginIPList = false;
-    this.scorLogForm.reset();
+    this.reportForm.reset();
   }
 
 }
