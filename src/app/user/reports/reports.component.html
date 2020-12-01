@@ -22,7 +22,7 @@
               </label>
 
               <div *ngIf="submitted && f['userName'].errors" class="text-danger">
-                <div *ngIf="f['userName'].errors.required">{{ 'scoreLog.userNameIsRequired' | translate}}</div>
+                <div *ngIf="f['userName'].errors.required">{{ 'reports.typeIsRequired' | translate}}</div>
               </div>
             </div>
             <div class="col-md-4"></div>
@@ -46,10 +46,10 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-            {{'scoreLog.submit' | translate}}</button>
+            {{'reports.submit' | translate}}</button>
           &nbsp;
           <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
-            {{'scoreLog.reset' | translate}}</button>
+            {{'reports.reset' | translate}}</button>
         </div>
       </form>
     </div>
@@ -63,37 +63,27 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h5 class="mb-0 text-gray-800">{{ 'scoreLog.totalRecord' | translate}}: {{totalScoreLog}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'reports.totalRecord' | translate}}: {{totalScoreLog}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th>{{'scoreLog.account' | translate}}</th>
-              <th>{{'scoreLog.userName' | translate}}</th>
-              <th>{{'scoreLog.SetScore' | translate}}</th>
-              <th>{{'scoreLog.beforeScore' | translate}}</th>
-              <th>{{'scoreLog.afterScore' | translate}}</th>
-              <th>{{'scoreLog.ipAddress' | translate}}</th>
-              <th>{{'scoreLog.dateTime' | translate}}</th>
+              <th>{{'reports.dateTime' | translate}}</th>
+              <th>{{'reports.win' | translate}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="7" class="table-danger">{{'scoreLog.thereWasError' | translate}} </td>
+              <td colspan="7" class="table-danger">{{'reports.thereWasError' | translate}} </td>
             </tr>
             <tr *ngIf="!error && !scoreLogList">
               <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="scoreLogList && !(scoreLogList.length>0)">
-              <td colspan="7" class="text-center"> {{'scoreLog.noTransactionFound' | translate}}</td>
+              <td colspan="7" class="text-center"> {{'reports.noDataFound' | translate}}</td>
             </tr>
             <tr *ngFor="let score of scoreLogList; let scoreIndex = index">
-              <td>{{ score.username || "-" }}</td>
-              <td>{{ score.username || "-" }}</td>
-              <td>{{ score.set_score || "-" }}</td>
-              <td>{{ score.before_score || "-" }}</td>
-              <td>{{ score.after_score || "-" }}</td>
-              <td>{{ score.ip || "-" }}</td>
+              <td>{{ score.date_created || "-" }}</td>
               <td>{{ score.date_created || "-" }}</td>
             </tr>
           </tbody>
@@ -101,14 +91,14 @@
         <nav *ngIf="totalScoreLog > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'scoreLog.prev' | translate}}</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'reports.prev' | translate}}</a>
             </li>
             <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
               *ngFor="let page of totalPaginationShow">
               <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
             </li>
             <li class="page-item" *ngIf="params.current_page != totalPages">
-              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'scoreLog.next' | translate}}</a>
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'reports.next' | translate}}</a>
             </li>
           </ul>
         </nav>

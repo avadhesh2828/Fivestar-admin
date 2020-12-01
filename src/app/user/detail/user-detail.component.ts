@@ -28,6 +28,7 @@ export class UserDetailComponent implements OnInit {
   public oldUserName = '';
   public currency_code = Constants.CURRENCY_CODE;
   imgURL: any;
+  public editPlayerId = 0;
 
 
   constructor(
@@ -49,7 +50,6 @@ export class UserDetailComponent implements OnInit {
       .subscribe((user) => {
         this.loaderService.display(false);
         if (user['data']) {
-          console.log('test ===>', user['data']);
           this.user = user['data'];
           this.oldUserName = this.user['user_name'];
           this.imgURL = environment.USER_IMG_URL+'/'+this.user['image'];  
@@ -115,4 +115,30 @@ export class UserDetailComponent implements OnInit {
       this.loaderService.display(false);
     }
   }
+
+  //edit and update player details
+  setPlayerEditable(user_id: number) {
+    this.editPlayerId = user_id;
+  }
+
+  savePlayerDetails(user: any) {
+    if (user.user_id) {
+      const forminputdata = {
+        'user_id': user.user_id,
+        'score'  : user.balance,
+        'phone'  : user.phone     
+      };
+      this.userService.updatePlayer(forminputdata)
+        .subscribe((response: any) => {
+          if (response) {
+            this.toastr.success(response.message);
+          }
+        }, (error: any) => {
+          this.toastr.error(error.error['message']);
+        });
+
+    }
+    this.editPlayerId = 0;
+  }
+
 }

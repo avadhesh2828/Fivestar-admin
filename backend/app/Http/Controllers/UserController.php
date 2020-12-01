@@ -63,6 +63,8 @@ class UserController extends Controller
         $name     = $request->post('name');
         $phone    = $request->post('phone');
         $description = $request->post('description');
+
+        $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
         //validation
         $customMessages = [
             'password.regex' => 'Password must have one uppercase and must be alphanumeric.',
@@ -70,7 +72,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             // 'username' => 'required|numeric|unique:pgsql.users.user,username',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'score'    => 'required|numeric',
+            'score'    => 'required|numeric|min:0'.$maxBalance,
             'name'     => 'required'
         ],$customMessages);
 
@@ -316,6 +318,52 @@ class UserController extends Controller
             ],500);
         }     
 
+    }
+
+    /**
+     * update user details.
+     *
+     */
+    public function update_user(Request $request)
+    {
+        $this->user = Auth::user();
+        $agent_id = $this->user->admin_id;
+        $user_id  = $request->post('user_id');
+        $score    = $request->post('score');
+        $phone    = $request->post('phone');
+
+        $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
+        //validation
+        $validator = Validator::make($request->all(), [
+            'user_id'  => 'required',
+            'score'    => 'required|numeric|min:0'.$maxBalance,
+            'phone'    => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'update_user',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $update = User::where('user_id', $user_id)->update(["balance" => $score, "phone" => $phone, "updated_at" => date('Y-m-d H:i:s')]);
+        if($update > 0) {
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'update_user',
+                'message'=> 'User updated Successfully',
+            ],200);
+        } else {
+            return response()->json([
+                'response_code'=> 500,
+                'service_name' => 'update_user',
+                'message'=> 'Something wrong for updating user details',
+            ],500);
+        }
+        
     }
 
 }

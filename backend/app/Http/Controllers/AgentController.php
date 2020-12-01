@@ -49,6 +49,8 @@ class AgentController extends Controller
         $name     = $request->post('name');
         $phone    = $request->post('phone');
         $description = $request->post('description');
+
+        $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
         //validation
         $customMessages = [
             'password.regex' => 'Password must have one uppercase and must be alphanumeric.',
@@ -57,7 +59,7 @@ class AgentController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:pgsql.users.admins,username|min:7|max:16',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'score'    => 'required|numeric|min:0|max:'.$this->user->balance,
+            'score'    => 'required|numeric|min:0'.$maxBalance,
             'name'     => 'required'
         ],$customMessages);
 

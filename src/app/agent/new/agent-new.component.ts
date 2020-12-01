@@ -62,7 +62,7 @@ export class AgentNewComponent implements OnInit {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
-      this.maxBalance = usr.balance;
+      this.maxBalance = (usr.role_id == 1)? '':usr.balance;
       this.minDate = new Date();
       this.newAgentForm = this.formBuilder.group({
         // agentName: ['',   [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(pattern)]],

@@ -49,7 +49,8 @@ export class NewComponent implements OnInit {
     });
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
-      this.maxBalance = usr.balance;
+      // this.maxBalance =  usr.balance;s
+      this.maxBalance = (usr.role_id == 1)? '':usr.balance;
       this.userAgent = usr.username;
       this.minDate = new Date();
       this.newAgentForm = this.formBuilder.group({

@@ -14,7 +14,19 @@
             <div *ngIf="!error && !user">Loading...</div>
             <div *ngIf="user" class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ user.first_name | titlecase }} {{ user.last_name | titlecase }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ user.name | titlecase }}
+
+                <span class="badge"
+                [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
+
+                <a href="javascript:void(0);" (click)="setPlayerEditable(user.user_id)" [hidden]="editPlayerId === user.user_id" class="edit" >
+                  <i class="fa fa-edit"></i>&nbsp;Edit
+                </a>
+                <a href="javascript:void(0);" (click)="savePlayerDetails(user)"
+                  [hidden]="editPlayerId !== user.user_id" class="save">
+                  <i class="fa fa-save"></i>&nbsp;Save
+                </a>
+                </h6>
               </div>
               <div class="card-body user-detail">
                 <div *ngIf="!user.user_unique_id" class="text-danger"><b>User not found</b></div>
@@ -31,11 +43,17 @@
                     </div>
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.balance' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.balance; else notAvailable">{{user.balance}}</div>
+                      <div class="col-12 col-sm-3">
+                        <!-- {{user.balance}} -->
+                        <input type="text" name="balance" [(ngModel)]="user.balance" class="form-control" placeholder="0" [disabled]="editPlayerId !== user.user_id">
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.phone' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.phone; else notAvailable">{{user.phone}}</div>
+                      <div class="col-12 col-sm-3">
+                        <!-- {{user.phone}} -->
+                        <input type="text" name="phone" [(ngModel)]="user.phone" class="form-control" placeholder="Mobile" [disabled]="editPlayerId !== user.user_id">
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.agent' | translate}}</b></div>
@@ -102,16 +120,17 @@
                   <td>{{ user.phone }} </td>
                   <td>{{ user.description }} </td>
                   <td>
-                    <button href="javascript:void(0);" class="btn-warning" > {{'playerDetail.setScore' | translate}} </button> &nbsp;
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.scoreLog' | translate}} </button> &nbsp;
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.edit' | translate}} </button> &nbsp;
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.reports' | translate}} </button> &nbsp;
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.gameLog' | translate}} </button> &nbsp;
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.quiteGame' | translate}} </button> &nbsp;
+                    <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/{{user.user_id}}"> {{'playerDetail.setScore' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/log"> {{'playerDetail.scoreLog' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" routerLink="/users/{{user.user_id}}"> {{'playerDetail.edit' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" routerLink="/users/reports/{{user.user_id}}"> {{'playerDetail.reports' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.gameLog' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.quiteGame' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
-                    (click)="changeUserStatus(user.user_id, '1')"> {{'playerDetail.enable' | translate}} </button> &nbsp;
+                    (click)="changeUserStatus(user.user_id, '1')"> {{'playerDetail.enable' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
-                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button> &nbsp;
+                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button>
+                  
                   </td>
                 </tr>
               </tbody>

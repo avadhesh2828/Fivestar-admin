@@ -51,6 +51,10 @@ export class UserService {
     return this.http.post(`${environment.API_URL}/users/set-score`, data);
   }
 
+  updatePlayer(params: object) {
+    return this.http.post(`${environment.API_URL}/users/update-user`,params);
+  }
+
   getAgentTicketDetails(params: object) {
     return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`, params);
   }

@@ -49,6 +49,7 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('search-user', 'UserController@search_user');
 		Route::get('get-user-details/{userId}', 'UserController@get_user_details');
 		Route::post('set-score', 'UserController@set_score');
+		Route::post('update-user', 'UserController@update_user');
 	});
 
 	//red packet
