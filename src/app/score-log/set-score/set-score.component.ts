@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetScoreComponent implements OnInit {
   public user = null;
   public error = false;
+  playerBalance : any;
   maxBalance : any;
   
 
@@ -63,6 +64,7 @@ export class SetScoreComponent implements OnInit {
         this.loaderService.display(false);
         if (user['data']) {
           this.user = user['data'];
+          this.playerBalance = this.user.balance;
         }
       }, (err: object) => {
         this.loaderService.display(false);
