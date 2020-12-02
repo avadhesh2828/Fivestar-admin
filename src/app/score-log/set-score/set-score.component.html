@@ -23,7 +23,10 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.setScore' | translate}} <span class="text-danger">*</span> &nbsp; <span class="max-value">{{'scoreLog.maxValue' | translate}} {{maxBalance}}</span> </label>
+            <label class="col-md-2 col-form-label" for="username">{{'scoreLog.setScore' | translate}} <span class="text-danger">*</span> &nbsp; 
+              <span class="max-value" *ngIf="maxBalance == ''">{{ 'scoreLog.noLimit' | translate}}</span> 
+              <span class="max-value" *ngIf="maxBalance !== ''">{{ 'scoreLog.maxValue' | translate}} {{maxBalance}}</span> 
+            </label>
             <div class="col-md-6">
               <input type="text" class="form-control" formControlName="score" placeholder="{{'scoreLog.score' | translate}}">
               <div *ngIf="submitted && f['score'].errors" class="text-danger">

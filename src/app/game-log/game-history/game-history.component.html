@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="scorLogForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>{{'gameHistory.playerGameLog' | translate}}</strong>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'gameHistory.userName' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="userName" placeholder="{{'gameHistory.enter' | translate}}">
+            
+              <div *ngIf="submitted && f['userName'].errors" class="text-danger">
+                <div *ngIf="f['userName'].errors.required">{{ 'gameHistory.userNameIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'gameHistory.selectDateRange' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+
+              <input type="text" class="form-control cursor-pointer"
+                placeholder="{{'scoreLog.selectDateRange' | translate}}" #dp="bsDaterangepicker" formControlName="date" bsDaterangepicker readonly autocomplete="off" [maxDate]="maxDate" [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false }">
+            
+              <div *ngIf="submitted && f['date'].errors" class="text-danger">
+                <div *ngIf="f['date'].errors.required">{{ 'gameHistory.dateIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'gameHistory.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'gameHistory.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row" *ngIf="gameHistory && (gameHistory.length>0)">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h5 class="mb-0 text-gray-800">{{ 'gameHistory.totalRecord' | translate}}: {{totalScoreLog}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'gameHistory.gameName' | translate}}</th>
+              <th>{{'gameHistory.bet' | translate}}</th>
+              <th>{{'gameHistory.win' | translate}}</th>
+              <th>{{'gameHistory.beginMoney' | translate}}</th>
+              <th>{{'gameHistory.endMoney' | translate}}</th>
+              <th>{{'gameHistory.dateTime' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">{{'gameHistory.thereWasError' | translate}} </td>
+            </tr>
+            <tr *ngIf="!error && !gameHistory">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="gameHistory && !(gameHistory.length>0)">
+              <td colspan="7" class="text-center"> {{'gameHistory.noDataFound' | translate}}</td>
+            </tr>
+            <tr *ngFor="let history of gameHistory; let scoreIndex = index">
+              <td>{{ history.game_detail.name || "-" }}</td>
+              <td>{{ history.bet || "-" }}</td>
+              <td>{{ history.win || "-" }}</td>
+              <td>{{ history.begin_money || "-" }}</td>
+              <td>{{ history.end_money || "-" }}</td>
+              <td>{{ history.created_at || "-" }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalGameHistory > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'gameHistory.prev' | translate}}</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'gameHistory.next' | translate}}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>

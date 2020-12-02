@@ -37,7 +37,6 @@ export class SetScoreComponent implements OnInit {
     private userService: UserService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
-
     private route: ActivatedRoute, 
     private loaderService: LoaderService,
   ) { 
@@ -49,7 +48,8 @@ export class SetScoreComponent implements OnInit {
   ngOnInit() {
       this.getUserDetail();
       this.userService.currentUser.subscribe((usr: any) => {
-        this.maxBalance = usr.balance;
+        // this.maxBalance = usr.balance;
+        this.maxBalance = (usr.role_id == 1)? '':usr.balance;
         this.scoreForm = this.formBuilder.group({
           'score': ['', [Validators.required, Validators.min(1), Validators.max(this.maxBalance)]],
         });

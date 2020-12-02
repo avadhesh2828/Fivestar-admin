@@ -16,31 +16,27 @@ const INITIAL_PARAMS = {
 };
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+  selector: 'app-game-history',
+  templateUrl: './game-history.component.html',
+  styleUrls: ['./game-history.component.scss']
 })
-export class ReportsComponent implements OnInit {
-  
-  // public user = null;
+export class GameHistoryComponent implements OnInit {
   public error = false;
-  // maxBalance : any;  
-
-  public reportForm: FormGroup;
+  public scorLogForm: FormGroup;
   formSubmitted = false;
   formError: any;
   submitted = false;
   // showLoginIPList = false;
 
   public params = { ...INITIAL_PARAMS };
-  public gameReport = [];
-  public totalGameReport = 0;
+  public gameHistory = [];
+  public totalGameHistory = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
 
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
-  public url = 'finance/game-report?';
+  public url = 'finance/game-history?';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,19 +54,19 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.reportForm = this.formBuilder.group({
-        'gender': ['female', [Validators.required]],
+      this.scorLogForm = this.formBuilder.group({
+        'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
       });
   }
-  
+
   private createUrl() {
-    this.url = 'finance/game-report?';
+    this.url = 'finance/game-history?';
     this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;;
   }
 
   get f() {
-    return this.reportForm.controls;
+    return this.scorLogForm.controls;
   }
   
   onSubmit() {
@@ -82,14 +78,12 @@ export class ReportsComponent implements OnInit {
     
     this.submitted = true;
     this.createUrl();
-    const userId = this.route.snapshot.paramMap.get('userId');
-    if (this.reportForm.invalid || this.formError) {
+    if (this.scorLogForm.invalid || this.formError) {
       return;
     } else {
       const forminputdata = {
-        'player_id'   : userId,
-        'game_type_id': this.f.userName.value,
-        'dates'       : date
+        'username': this.f.userName.value,
+        'dates'   : date,
       };
       this.formSubmitted = true;
       this.loaderService.display(true);
@@ -97,10 +91,10 @@ export class ReportsComponent implements OnInit {
       .subscribe((log: []) => {
         this.loaderService.display(false);
         if (log['data'] && log['data'].data) {
-          this.gameReport = log['data'].data;
+          this.gameHistory = log['data'].data;
           this.createPaginationItem(log['data'].total);
         } else {
-          this.gameReport = log['data'];
+          this.gameHistory = log['data'];
         }
         this.loaderService.display(false);
         this.error = false;
@@ -109,10 +103,14 @@ export class ReportsComponent implements OnInit {
         this.error = true;
       });
     }
+
+    // this.loaderService.display(true);
+    // this.createUrl();
+    
   }
 
   private createPaginationItem(totalGame: number) {
-    this.totalGameReport = totalGame;
+    this.totalGameHistory = totalGame;
     const maxPages: number = Math.ceil(totalGame / this.params.per_page);
     const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
     const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
@@ -132,8 +130,8 @@ export class ReportsComponent implements OnInit {
   }
 
   handleReset() {
-    this.gameReport = [];
-    this.reportForm.reset();
+    this.gameHistory = [];
+    this.scorLogForm.reset();
   }
 
 }

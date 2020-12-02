@@ -19,12 +19,17 @@ class PaymentHistoryTransaction extends Model
         'action',
         'ip',
         'game_id',
+        'bet',
         'win',
         'begin_money',
         'end_money',
         'created_at',
         'updated_at'
     ];
+
+    public function game_detail(){
+        return $this->belongsTo('App\Models\Game', 'game_id', 'game_id');
+    }
 
     public function payment_deposit_transaction(){
         return $this->belongsTo('App\Models\PaymentDepositTransaction', 'payment_deposit_transaction_id', 'payment_transaction_id');

@@ -88,10 +88,13 @@ Route::middleware('auth:api')->group(function () {
 	// Payment Withdrawl Routes
 	Route::group(['prefix' => 'finance'], function(){
 		Route::post('score-log', 'Finance\DepositController@score_logs');
-		// Route::get('transaction-history', 'Finance\WithdrawController@transaction_history');
-		// Route::get('deposit-list', 'Finance\DepositController@deposit_list');
-		// Route::get('withdraw-list', 'Finance\WithdrawController@withdraw_list');
-		// Route::post('manage-withdraw-status', 'Finance\WithdrawController@manage_status');
+		Route::get('transaction-history', 'Finance\WithdrawController@transaction_history');
+		Route::post('game-history', 'Finance\GameHistoryController@game_history');
+		Route::post('game-report', 'Finance\GameHistoryController@game_report');
+
+		Route::get('deposit-list', 'Finance\DepositController@deposit_list');
+		Route::get('withdraw-list', 'Finance\WithdrawController@withdraw_list');
+		Route::post('manage-withdraw-status', 'Finance\WithdrawController@manage_status');
 	});
 
 

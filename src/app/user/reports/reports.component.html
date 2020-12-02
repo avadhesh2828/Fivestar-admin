@@ -13,13 +13,13 @@
             <div class="col-md-6">
               <!-- <input type="text" class="form-control" formControlName="userName" placeholder="{{'scoreLog.enter' | translate}}"> -->
               <label class="md-check">
-                <input type="radio" value="0" name="gender" formControlName="userName">
-                {{'reports.report' | translate}}
+                <input type="radio" value="male" name="gender" formControlName="gender">
+                {{'reports.singleGame' | translate}}
               </label>
               &nbsp;
               <label class="md-check">
-                <input type="radio" value="1" name="gender" formControlName="userName">     
-                {{'reports.report' | translate}}
+                <input type="radio" value="female" name="gender" formControlName="gender">     
+                {{'reports.liveGame' | translate}}
               </label>
 
               <div *ngIf="submitted && f['userName'].errors" class="text-danger">
@@ -59,7 +59,7 @@
 
 
 
-<div class="row">
+<div class="row" *ngIf="gameReport && (gameReport.length>0)">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-body custom-listing-table">
@@ -77,19 +77,19 @@
             <tr *ngIf="error">
               <td colspan="7" class="table-danger">{{'reports.thereWasError' | translate}} </td>
             </tr>
-            <tr *ngIf="!error && !scoreLogList">
+            <tr *ngIf="!error && !gameReport">
               <td colspan="7">Loading...</td>
             </tr>
-            <tr *ngIf="scoreLogList && !(scoreLogList.length>0)">
+            <tr *ngIf="gameReport && !(gameReport.length>0)">
               <td colspan="7" class="text-center"> {{'reports.noDataFound' | translate}}</td>
             </tr>
-            <tr *ngFor="let score of scoreLogList; let scoreIndex = index">
-              <td>{{ score.date_created || "-" }}</td>
-              <td>{{ score.date_created || "-" }}</td>
+            <tr *ngFor="let report of gameReport; let reportIndex = index">
+              <td>{{ report.created_at || "-" }}</td>
+              <td>{{ report.win_amount || "-" }}</td>
             </tr>
           </tbody>
         </table>
-        <nav *ngIf="totalScoreLog > params.per_page">
+        <nav *ngIf="totalGameReport > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
               <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'reports.prev' | translate}}</a>
