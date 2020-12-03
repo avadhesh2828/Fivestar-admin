@@ -75,12 +75,16 @@ export class GameHistoryComponent implements OnInit {
         this.loaderService.display(false);
         if (user['data']) {
           this.user = user['data'];
-          // s
+          this.setValue(this.user.username);
         }
       }, (err: object) => {
         this.loaderService.display(false);
         this.error = true;
       });
+  }
+
+  setValue(username){
+    this.scorLogForm.setValue({userName: username,date: ''})
   }
 
   private createUrl() {

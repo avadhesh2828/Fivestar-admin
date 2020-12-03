@@ -4,7 +4,7 @@ import { SetScoreComponent } from './set-score/set-score.component';
 import { LogComponent } from './log/log.component';
 
 const routes: Routes = [
-  { path: 'log', component: LogComponent },
+  { path: '', component: LogComponent },
   { path: ':playerId', component: SetScoreComponent },
 ];
 

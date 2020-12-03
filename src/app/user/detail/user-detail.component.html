@@ -120,17 +120,15 @@
                   <td>{{ user.phone }} </td>
                   <td>{{ user.description }} </td>
                   <td>
-                    <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/{{user.user_id}}"> {{'playerDetail.setScore' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning" routerLink="/score-log/log"> {{'playerDetail.scoreLog' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning" routerLink="/users/{{user.user_id}}"> {{'playerDetail.edit' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning" routerLink="/users/reports/{{user.user_id}}"> {{'playerDetail.reports' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.gameLog' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning"> {{'playerDetail.quiteGame' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/score-log', user.user_id]"> {{'playerDetail.setScore' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/score-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.scoreLog' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/users', user.user_id]"> {{'playerDetail.edit' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/agent/reports', user.user_id]"> {{'playerDetail.reports' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/game-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.gameLog' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
                     (click)="changeUserStatus(user.user_id, '1')"> {{'playerDetail.enable' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
-                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button>
-                  
+                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button> 
                   </td>
                 </tr>
               </tbody>

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate, formatDateTimeZone, range } from '../../services/utils.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { UserService } from '../../services/user.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -50,9 +51,9 @@ export class LogComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private transactionService : TransactionService,
+    private userService : UserService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
-
     private route: ActivatedRoute, 
     private loaderService: LoaderService,
   ) { 
@@ -62,10 +63,34 @@ export class LogComponent implements OnInit {
   }
 
   ngOnInit() {
+      const userId = this.route.snapshot.queryParams.user_id;
+      if(userId) {
+        this.getUserDetail(userId);
+      }
+
       this.scorLogForm = this.formBuilder.group({
         'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
       });
+  }
+
+  private getUserDetail(userId) {
+    this.loaderService.display(true);
+    this.userService.getUserDetails(userId)
+      .subscribe((user) => {
+        this.loaderService.display(false);
+        if (user['data']) {
+          this.user = user['data'];
+          this.setValue(this.user.username);
+        }
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+  }
+
+  setValue(username){
+    this.scorLogForm.setValue({userName: username,date: ''})
   }
 
   
