@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GameHistoryComponent } from './game-history/game-history.component';
 
 const routes: Routes = [
-  { path: 'game-history', component: GameHistoryComponent },
+  { path: '', component: GameHistoryComponent },
 ];
 
 @NgModule({

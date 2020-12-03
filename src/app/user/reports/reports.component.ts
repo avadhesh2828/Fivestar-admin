@@ -21,23 +21,18 @@ const INITIAL_PARAMS = {
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-  
-  // public user = null;
-  public error = false;
-  // maxBalance : any;  
-
-  public reportForm: FormGroup;
-  formSubmitted = false;
-  formError: any;
-  submitted = false;
-  // showLoginIPList = false;
 
   public params = { ...INITIAL_PARAMS };
+  public error = false;
+  public reportForm: FormGroup;
+  public formSubmitted = false;
+  public formError: any;
+  public submitted = false;
+  public showTable = false;
   public gameReport = [];
   public totalGameReport = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
-
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
   public url = 'finance/game-report?';
@@ -59,7 +54,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
       this.reportForm = this.formBuilder.group({
-        'gender': ['female', [Validators.required]],
+        'game_type': ['0', [Validators.required]],
         'date': ['', [Validators.required]]
       });
   }
@@ -88,7 +83,7 @@ export class ReportsComponent implements OnInit {
     } else {
       const forminputdata = {
         'player_id'   : userId,
-        'game_type_id': this.f.userName.value,
+        'game_type_id': this.f.game_type.value,
         'dates'       : date
       };
       this.formSubmitted = true;
@@ -96,6 +91,7 @@ export class ReportsComponent implements OnInit {
       this.transactionService.playerScoreLog(this.url, forminputdata)
       .subscribe((log: []) => {
         this.loaderService.display(false);
+        this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.gameReport = log['data'].data;
           this.createPaginationItem(log['data'].total);
@@ -132,6 +128,7 @@ export class ReportsComponent implements OnInit {
   }
 
   handleReset() {
+    this.showTable = false;
     this.gameReport = [];
     this.reportForm.reset();
   }

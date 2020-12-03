@@ -32,7 +32,8 @@ export class LogComponent implements OnInit {
   formSubmitted = false;
   formError: any;
   submitted = false;
-  showLoginIPList = false;
+  // showLoginIPList = false;
+  showTable = false;
 
   public params = { ...INITIAL_PARAMS };
   public scoreLogList = [];
@@ -97,11 +98,13 @@ export class LogComponent implements OnInit {
       this.loaderService.display(true);
       this.transactionService.playerScoreLog(this.url, forminputdata)
       .subscribe((log: []) => {
-        this.loaderService.display(false);
+        this.loaderService.display(false);  
+        this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.scoreLogList = log['data'].data;
           this.createPaginationItem(log['data'].total);
         } else {
+          
           this.scoreLogList = log['data'];
         }
         this.loaderService.display(false);
@@ -138,7 +141,7 @@ export class LogComponent implements OnInit {
   }
 
   handleReset() {
-    this.showLoginIPList = false;
+    this.showTable = false;
     this.scorLogForm.reset();
   }
 

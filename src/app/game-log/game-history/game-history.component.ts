@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate, formatDateTimeZone, range } from '../../services/utils.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { UserService } from '../../services/user.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
 import { SubscriptionService } from '../../services/subscription.service';
@@ -21,12 +22,13 @@ const INITIAL_PARAMS = {
   styleUrls: ['./game-history.component.scss']
 })
 export class GameHistoryComponent implements OnInit {
+  public user = null;
   public error = false;
   public scorLogForm: FormGroup;
-  formSubmitted = false;
-  formError: any;
-  submitted = false;
-  // showLoginIPList = false;
+  public formSubmitted = false;
+  public formError: any;
+  public submitted = false;
+  public showTable = false;
 
   public params = { ...INITIAL_PARAMS };
   public gameHistory = [];
@@ -43,6 +45,7 @@ export class GameHistoryComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private transactionService : TransactionService,
+    private userService : UserService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
     private route: ActivatedRoute, 
@@ -54,9 +57,29 @@ export class GameHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
+      const userId = this.route.snapshot.queryParams.user_id;
+      if(userId) {
+        this.getUserDetail(userId);
+      }
+
       this.scorLogForm = this.formBuilder.group({
         'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
+      });
+  }
+
+  private getUserDetail(userId) {
+    this.loaderService.display(true);
+    this.userService.getUserDetails(userId)
+      .subscribe((user) => {
+        this.loaderService.display(false);
+        if (user['data']) {
+          this.user = user['data'];
+          // s
+        }
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
       });
   }
 
@@ -90,6 +113,7 @@ export class GameHistoryComponent implements OnInit {
       this.transactionService.playerScoreLog(this.url, forminputdata)
       .subscribe((log: []) => {
         this.loaderService.display(false);
+        this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.gameHistory = log['data'].data;
           this.createPaginationItem(log['data'].total);
@@ -126,6 +150,7 @@ export class GameHistoryComponent implements OnInit {
   }
 
   handleReset() {
+    this.showTable = false; 
     this.gameHistory = [];
     this.scorLogForm.reset();
   }

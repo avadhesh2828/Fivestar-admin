@@ -13,17 +13,17 @@
             <div class="col-md-6">
               <!-- <input type="text" class="form-control" formControlName="userName" placeholder="{{'scoreLog.enter' | translate}}"> -->
               <label class="md-check">
-                <input type="radio" value="male" name="gender" formControlName="gender">
+                <input type="radio" value="0" name="game_type" formControlName="game_type">
                 {{'reports.singleGame' | translate}}
               </label>
               &nbsp;
               <label class="md-check">
-                <input type="radio" value="female" name="gender" formControlName="gender">     
+                <input type="radio" value="1" name="game_type" formControlName="game_type">     
                 {{'reports.liveGame' | translate}}
               </label>
 
-              <div *ngIf="submitted && f['userName'].errors" class="text-danger">
-                <div *ngIf="f['userName'].errors.required">{{ 'reports.typeIsRequired' | translate}}</div>
+              <div *ngIf="submitted && f['game_type'].errors" class="text-danger">
+                <div *ngIf="f['game_type'].errors.required">{{ 'reports.typeIsRequired' | translate}}</div>
               </div>
             </div>
             <div class="col-md-4"></div>
@@ -59,12 +59,12 @@
 
 
 
-<div class="row" *ngIf="gameReport && (gameReport.length>0)">
+<div class="row" *ngIf="showTable === true">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h5 class="mb-0 text-gray-800">{{ 'reports.totalRecord' | translate}}: {{totalScoreLog}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'reports.totalRecord' | translate}}: {{totalGameReport}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>

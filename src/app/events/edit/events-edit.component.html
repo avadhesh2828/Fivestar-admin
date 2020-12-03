@@ -9,6 +9,7 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="sports">Event Name<span class="text-danger">*</span></label>
             <div class="col-md-9">
+              {{userId}}
               <input type="text" class="form-control" [(ngModel)]="event.event_name" formControlName="eventName"
                 placeholder="Event Name">
               <div *ngIf="submitted && f['eventName'].errors" class="text-danger">
