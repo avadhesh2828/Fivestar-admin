@@ -103,10 +103,6 @@ export class GameHistoryComponent implements OnInit {
         this.error = true;
       });
     }
-
-    // this.loaderService.display(true);
-    // this.createUrl();
-    
   }
 
   private createPaginationItem(totalGame: number) {
