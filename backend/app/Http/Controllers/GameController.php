@@ -24,7 +24,7 @@ class GameController extends Controller
         $game = new Game;
         $game = $game->select('game.*','GT.game_type'); 
         $game = $game->join((new GameType)->getTable().' as GT', function($m){
-            $m->on('GT.game_type_id', '=', 'game.type');
+            $m->on('GT.game_type_id', '=', 'game.game_type_id');
         });
       
         if($request->status != -1){
@@ -88,7 +88,7 @@ class GameController extends Controller
         $game = $game->select('game.*','GT.game_type'); 
         $game = $game->with(['provider']); 
         $game = $game->join((new GameType)->getTable().' as GT', function($m){
-            $m->on('GT.game_type_id', '=', 'game.type');
+            $m->on('GT.game_type_id', '=', 'game.game_type_id');
         });
         $game = $game->where('id', $gameId);
         $game = $game->first();
