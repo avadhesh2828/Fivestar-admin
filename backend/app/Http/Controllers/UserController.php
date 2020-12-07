@@ -331,13 +331,17 @@ class UserController extends Controller
         $user_id  = $request->post('user_id');
         $score    = $request->post('score');
         $phone    = $request->post('phone');
+        $new_password     = $request->post('new_password');
+        $confirm_password = $request->post('confirm_password');
 
         $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
         //validation
         $validator = Validator::make($request->all(), [
-            'user_id'  => 'required',
-            'score'    => 'required|numeric|min:0'.$maxBalance,
-            'phone'    => 'required|numeric|digits:10'
+            'user_id'          => 'required',
+            'score'            => 'nullable|numeric|min:0'.$maxBalance,
+            'phone'            => 'required|numeric|digits:10',
+            'new_password'     => 'nullable|min:6',
+            'confirm_password' => 'nullable|required_with:new_password|same:new_password|min:6'
         ]);
 
         if($validator->fails()){
@@ -349,8 +353,26 @@ class UserController extends Controller
             ], 400);
         }
 
-        $update = User::where('user_id', $user_id)->update(["balance" => $score, "phone" => $phone, "updated_at" => date('Y-m-d H:i:s')]);
+        $user_data = User::where('user_id', $user_id)->first();  
+        if($score > 0) {
+            $data = array(
+                "balance"    => $user_data->balance + $score, 
+                "phone"      => $phone, 
+                "updated_at" => date('Y-m-d H:i:s')
+            );
+            $this->scoreHistory($user_data, $score);
+        } else {
+            $data = array(
+                "phone"      => $phone, 
+                "updated_at" => date('Y-m-d H:i:s')
+            );
+        }     
+
+        $update = User::where('user_id', $user_id)->update($data);    
         if($update > 0) {
+            if(isset($new_password)) {
+                User::where('user_id', $user_id)->update(['password' => Hash::make($new_password)]);
+            }
             return response()->json([
                 'response_code'=> 200,
                 'service_name' => 'update_user',
@@ -364,6 +386,25 @@ class UserController extends Controller
             ],500);
         }
         
+    }
+
+    /**
+     * Save deposit score history.
+     *
+     */
+    private function scoreHistory($user, $score) {
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+        PaymentDepositTransaction::insert([
+            'user_id'      => $user->user_id,
+            'admin_id'     => $admin_id,
+            'set_score'    => $score,
+            'before_score' => $user->balance,
+            'after_score'  => $user->balance + $score,
+            'ip'           => \Request::ip(),
+            'date_created' => date('Y-m-d H:i:s'),
+            'date_modified'=> date('Y-m-d H:i:s')
+        ]);
     }
 
 }

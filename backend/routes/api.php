@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
 	Route::post('change-password', 'AdminController@change_password');
 	Route::post('change-security-password', 'AdminController@change_security_password');
 	Route::get('get-details', 'AdminController@get_details');
+	Route::get('category', 'CommonController@get_category');
 
 	//dashboard
 	Route::group(['prefix' => 'dashboard'], function(){

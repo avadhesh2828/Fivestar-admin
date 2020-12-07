@@ -155,6 +155,9 @@
     "online": "線上",
     "agent": "代理商",
     "balance": "得分了",
+    "currentScore" : "當前分數",
+    "newPassword" : "新密碼",
+    "confirmPassword" : "確認密碼", 
     "phone": "電話",
     "description": "描述",
     "operation": "運作方式",
@@ -172,7 +175,9 @@
     "off": "關",
     "day": "天",
     "error": "有一个错误",
-    "loading": "载入中"
+    "loading": "载入中",
+    "noLimit": "沒有限制",
+    "maxValue": "最大值"
   },
   "games": {
     "gameMng": "遊戲管理",
@@ -180,6 +185,7 @@
     "gameId": "遊戲編號",
     "gameName": "遊戲名稱",
     "type": "類型",
+    "category": "類別",
     "variantType": "遊戲編號",
     "maxBet": "最大賭注",
     "numReels": "是否捲軸",
@@ -198,6 +204,7 @@
     "noPlayerFound": "找不到游戏",
     "notAvailable": "無法使用",
     "selectAStatus": "選擇狀態",
+    "selectCategory": "選擇類別",
     "filter": "過濾",
     "resetFilters": "重置過濾器",
     "searchByGameName": "按游戏名称搜索",

@@ -28,6 +28,7 @@ export class UserDetailComponent implements OnInit {
   public oldUserName = '';
   public currency_code = Constants.CURRENCY_CODE;
   imgURL: any;
+  maxBalance : any;
   public editPlayerId = 0;
 
 
@@ -41,6 +42,9 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getUserDetail();
+    this.userService.currentUser.subscribe((usr: any) => {
+      this.maxBalance = (usr.role_id == 1)? '':usr.balance;
+    });
   }
 
   private getUserDetail() {
@@ -107,8 +111,6 @@ export class UserDetailComponent implements OnInit {
           if (err && err.error && err.error.message) {
             this.toastr.error(err.error.message || 'There was an error');
           }
-          // this.username = this.user.user_name;
-          // this.enableEdit = false;
         });
     } else {
       this.enableEdit = false;
@@ -124,15 +126,18 @@ export class UserDetailComponent implements OnInit {
   savePlayerDetails(user: any) {
     if (user.user_id) {
       const forminputdata = {
-        'user_id': user.user_id,
-        'score'  : user.balance,
-        'phone'  : user.phone     
+        'user_id'          : user.user_id,
+        'score'            : user.setMoreScore,
+        'phone'            : user.phone,
+        'new_password'     : user.new_password,
+        'confirm_password' : user.confirm_password  
       };
       this.userService.updatePlayer(forminputdata)
         .subscribe((response: any) => {
           if (response) {
             this.toastr.success(response.message);
             this.editPlayerId = 0;
+            this.getUserDetail();
           }
         }, (error: any) => {
           this.toastr.error(error.error['global_error']);

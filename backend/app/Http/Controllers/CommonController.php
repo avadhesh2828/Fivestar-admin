@@ -12,9 +12,16 @@ use App\Models\Events;
 use App\Models\MasterGameStyle;
 use App\Models\CombatTypes;
 use App\Models\VictoryTypes;
+use App\Models\GameType;
 
 class CommonController extends Controller
 {
+
+  public function get_category(Request $request){
+      $category = GameType::get();
+      return response()->json(['response_code'=> 200,'service_name' => 'get_category','data' => $category]);
+  }
+
 
   public function country_list(Request $request)
   {

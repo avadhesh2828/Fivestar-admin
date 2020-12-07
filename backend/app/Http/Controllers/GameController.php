@@ -30,6 +30,9 @@ class GameController extends Controller
         if($request->status != -1){
             $game = $game->where('status', $request->status);    
         }
+        if($request->category != -1){
+            $game = $game->where('game.game_type_id', $request->category);    
+        }
         if($request->keyword != ''){
             $game = $game->where('name', 'ilike', '%' . $request->keyword . '%');
         }

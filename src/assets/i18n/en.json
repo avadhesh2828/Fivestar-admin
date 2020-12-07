@@ -154,6 +154,11 @@
     "online": "Online",
     "agent": "Agent",
     "balance": "Score",
+    "currentScore" : "Current Score",
+    "newPassword" : "New Password",
+    "enterNewPassword" : "Enter New Password",
+    "confirmPassword" : "Confirm Password",
+    "enterConfirmPassword" : "Enter Confirm Password", 
     "phone": "Phone",
     "description": "Description",
     "operation": "Operation",
@@ -171,7 +176,9 @@
     "off": "Off",
     "day": "day",
     "error": "There was an error",
-    "loading": "Loading"
+    "loading": "Loading",
+    "noLimit": "No Limit",
+    "maxValue": "Max Value"
   },
   "games": {
     "gameMng": "Game Management",
@@ -179,6 +186,7 @@
     "gameId": "Game ID",
     "gameName": "Game Name",
     "type": "Type",
+    "category": "Category",
     "variantType": "Variant Type",
     "maxBet": "Max Bet",
     "numReels": "Num Reels",
@@ -197,6 +205,7 @@
     "noPlayerFound": "No Game Found",
     "notAvailable": "Not Available",
     "selectAStatus": "Select a Status",
+    "selectCategory": "Select Category",
     "filter": "Filter",
     "resetFilters": "Reset Filters",
     "searchByGameName": "Search By Game Name",

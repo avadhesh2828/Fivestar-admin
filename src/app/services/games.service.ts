@@ -33,4 +33,8 @@ export class GamesService {
   editRedPkt(redPacketId:any , data: object) {
     return this.http.post(`${environment.API_URL}/red-packet/change-status/${redPacketId}`, data);
   }
+
+  category() {
+    return this.http.get(`${environment.API_URL}/category`);
+  }
 }
