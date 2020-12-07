@@ -34,6 +34,7 @@ export class ListComponent implements OnInit {
   public totalPages = 0;
   public gameStatus = STATUS;
   public error = false;
+  public isFeatured:boolean;
 
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
@@ -153,6 +154,11 @@ export class ListComponent implements OnInit {
         this.loaderService.display(false);
         this.error = true;
       });
+  }
+
+  public onSaveUsernameChanged(value:boolean){
+    this.isFeatured = value;
+    console.log('testtttttttt====>', this.isFeatured);
   }
 
 }

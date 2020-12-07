@@ -82,6 +82,7 @@ Route::middleware('auth:api')->group(function () {
 	Route::group(['prefix' => 'game'], function(){
 		Route::get('list','GameController@index')->middleware('can:isAdmin');
 		Route::post('change-game-status/{game_id}', 'GameController@change_game_status')->middleware('can:isAdmin');
+		Route::post('change-featured/{game_id}', 'GameController@change_featured')->middleware('can:isAdmin');
 		Route::get('get-game-details/{gameId}', 'GameController@get_game_details')->middleware('can:isAdmin');
 	});
 

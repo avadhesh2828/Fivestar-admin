@@ -81,6 +81,48 @@ class GameController extends Controller
         }
     }
 
+
+    /**
+     * Change featured status.
+     *
+     */
+    public function change_featured($game_id, Request $request)
+    {
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+
+        $is_featured = $request->post('is_featured');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "is_featured" => ['required']
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'change_featured',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $update = Game::where('id', $game_id)->update(["is_featured" => $is_featured, "updated_at"  => date('Y-m-d H:i:s')]);
+        if($update > 0){
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'change_featured',
+                'message'=> 'featured status changed Successfully',
+            ],200);
+        }else{
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'change_featured',
+                'message'=> 'Someting wrong for updating featured status',
+            ],500);
+        }
+    }
+
+
     /**
      * Game details.
      *

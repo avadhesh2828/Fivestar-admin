@@ -209,7 +209,8 @@
     "filter": "Filter",
     "resetFilters": "Reset Filters",
     "searchByGameName": "Search By Game Name",
-    "gameProvider": "Game Provider"
+    "gameProvider": "Game Provider",
+    "featured" : "Featured"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",

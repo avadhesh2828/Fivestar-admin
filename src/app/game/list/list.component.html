@@ -73,18 +73,19 @@
               <th>{{'games.maxBet' | translate}}</th>
               <th>{{'games.gameImage' | translate}}</th>
               <th>{{'games.status' | translate}}</th>
+              <th>{{'games.featured' | translate}}</th>
               <th>{{'games.action' | translate}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="7" class="table-danger">There was an error</td>
+              <td colspan="8" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !gameList">
-              <td colspan="7">Loading...</td>
+              <td colspan="8">Loading...</td>
             </tr>
             <tr *ngIf="gameList && !(gameList.length>0)">
-              <td colspan="7" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
+              <td colspan="8" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
             </tr>
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.game_id || "-" }}</td>
@@ -96,6 +97,14 @@
                 <span class="badge"
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
                   }}</span>
+              </td>
+              <td> {{game.is_featured}}
+                  <!-- Default switch -->
+                  <div class="custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitches" [checked]="isFeatured" 
+                    (change)="onSaveUsernameChanged(game.is_featured)">
+                    <label class="custom-control-label" for="customSwitches"></label>
+                  </div>
               </td>
               <td>
                 <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>{{'games.details' | translate}}</a>
