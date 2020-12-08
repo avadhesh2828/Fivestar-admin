@@ -101,13 +101,10 @@
                   }}</span>
               </td>
               <td>
-                <a href="javascript:void(0);" *ngIf="agent.status == 0"
-                  (click)="changeAgentStatus(agent.admin_id, '1')"><i class="fa fa-address-book"></i>
-                  {{ 'agent.enable' | translate}}</a>
-                &nbsp;
-                <a href="javascript:void(0);" *ngIf="agent.status == 1"
-                  (click)="changeAgentStatus(agent.admin_id, '0')"><i class="fa fa-address-book"></i>
-                  {{ 'agent.disable' | translate}}</a>
+                <button href="javascript:void(0);" class="btn-warning" [routerLink]="['set-score', agent.admin_id]"> {{'agent.setScore' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning" [routerLink]="['edit', agent.admin_id]"> {{'agent.edit' | translate}} </button>
+                <button href="javascript:void(0);" *ngIf="agent.status == 0" class="btn-warning" (click)="changeAgentStatus(agent.admin_id, '1')">{{ 'agent.enable' | translate}}</button>
+                <button href="javascript:void(0);" *ngIf="agent.status == 1" class="btn-warning" (click)="changeAgentStatus(agent.admin_id, '0')">{{ 'agent.disable' | translate}}</button>
               </td>
             </tr>
           </tbody>

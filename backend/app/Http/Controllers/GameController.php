@@ -106,7 +106,8 @@ class GameController extends Controller
             ], 400);
         }
 
-        $update = Game::where('id', $game_id)->update(["is_featured" => $is_featured, "updated_at"  => date('Y-m-d H:i:s')]);
+        $is_featured = ($is_featured == 1)? 'true':'false';
+        $update = Game::where('game_id', $game_id)->update(["is_featured" => $is_featured, "updated_at"  => date('Y-m-d H:i:s')]);
         if($update > 0){
             return response()->json([
                 'response_code'=> 200,

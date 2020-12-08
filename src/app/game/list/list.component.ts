@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
   public totalPages = 0;
   public gameStatus = STATUS;
   public error = false;
-  public isFeatured:boolean;
+  public gameInfo :any;
 
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
@@ -156,9 +156,23 @@ export class ListComponent implements OnInit {
       });
   }
 
-  public onSaveUsernameChanged(value:boolean){
-    this.isFeatured = value;
-    console.log('testtttttttt====>', this.isFeatured);
+  public onSaveFeaturedChanged(game:object, value:boolean){
+    this.gameInfo = game;
+    console.log('testtttttttt====>', game);
+    this.formSubmitted = true;
+    const forminputdata = {
+      is_featured : value
+    };    
+    this.gamesService.changeGameFeaturedStatus(this.gameInfo.game_id, forminputdata).pipe()
+      .subscribe((res: any) => {
+        this.formSubmitted = false;
+        this.toastr.success(res.message || 'Game status changed Sucessfully.');
+        this.getGameList();
+      }, err => {
+        const errorMessage = '';
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change game status.');
+        this.formSubmitted = false;
+      });
   }
 
 }

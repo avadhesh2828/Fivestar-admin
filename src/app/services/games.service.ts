@@ -20,6 +20,10 @@ export class GamesService {
     return this.http.post(`${environment.API_URL}/game/change-game-status/${gameId}`, data);
   }
 
+  changeGameFeaturedStatus(gameId: any, data: object) {
+    return this.http.post(`${environment.API_URL}/game/change-featured/${gameId}`, data);
+  }
+
   getGameDetails(gameId: any) {
     return this.http.get(`${environment.API_URL}/game/get-game-details/${gameId}`);
   }

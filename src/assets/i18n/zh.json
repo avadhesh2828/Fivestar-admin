@@ -91,7 +91,32 @@
     "desMaxLen": "說明必須少於50個字符",
     "phoneReq": "電話號碼為必填項",
     "phoneValidation": "電話號碼必須有效",
-    "max": "最高"
+    "max": "最高",
+    "setScore": "設定分數",
+    "edit": "編輯"
+  },
+  "agentDetail": {
+    "agentName": "代理名稱",
+    "userName": "用戶名",
+    "balance": "得分了",
+    "phone": "電話號碼",
+    "description": "描述",
+    "status": "狀態",
+    "lastLogin": "上次登錄",
+    "notAvailable": "無法使用",
+    "setScore": "設定分數",
+    "currentScore" : "當前分數",
+    "newPassword" : "新密碼",
+    "enterNewPassword" : "輸入新密碼",
+    "confirmPassword" : "確認密碼",
+    "enterConfirmPassword" : "輸入確認密碼",
+    "agentInfo": "代理商詳細信息",
+    "error": "有一個錯誤",
+    "loading": "載入中",
+    "noLimit": "沒有限制",
+    "maxValue": "最大值",
+    "edit": "編輯",
+    "save": "救"
   },
   "player": {
     "playerMng": "球員管理",

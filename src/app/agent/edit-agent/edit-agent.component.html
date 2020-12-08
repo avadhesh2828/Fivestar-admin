@@ -1,52 +1,129 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true"
-  data-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Agent Account Status</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form *ngIf="agent && agent.status" #editForm="ngForm" (ngSubmit)="onSubmit(editForm.value)">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="reason">Add Balance</label>
-            <input class="form-control" type="text" id="add_balance" appNumeric numericType="number" name="add_balance"
-              placeholder="Add Balance (optional)" maxlength="5" [(ngModel)]="addBalance" />
-            <div class="alert alert-danger" style="padding: 5px ;"
-              *ngIf="oldData.addBalance==addBalance && error.addBalance">
-              {{error.addBalance}}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">{{'agentDetail.agentInfo' | translate}}</h1>
+          <a class="btn back-btn" routerLink="/agent"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              There was an error
+            </div>
+            <div *ngIf="!error && !agents">Loading...</div>
+            <div *ngIf="agents" class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{ agents.name | titlecase }}
+
+                <span class="badge"
+                [ngClass]="{'badge-success': (agents.status == 1), 'badge-secondary': (agents.status == 0), 'badge-danger': (agents.status > 1)}">{{agentStatus[agents.status]}}</span>
+
+                <a href="javascript:void(0);" (click)="setAgentEditable(agents.admin_id)" [hidden]="editAgentId === agents.admin_id" class="edit" >
+                  <i class="fa fa-edit"></i>&nbsp;{{'agentDetail.edit' | translate}}
+                </a>
+                <a href="javascript:void(0);" (click)="saveAgentDetails(agents)"
+                  [hidden]="editAgentId !== agents.admin_id" class="save">
+                  <i class="fa fa-save"></i>&nbsp;{{'agentDetail.save' | translate}}
+                </a>
+                </h6>
+              </div>
+              <div class="card-body user-detail">
+                <div *ngIf="!agents.admin_id" class="text-danger"><b>User not found</b></div>
+                <div>
+                  <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.agentName' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="agents.name; else notAvailable">{{agents.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.userName' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="agents.username; else notAvailable">{{agents.username}}</div>
+                    </div>
+                    
+                    <div class="row" *ngIf="editAgentId !== agents.admin_id">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.balance' | translate}}</b></div>
+                      <div class="col-12 col-sm-3"> {{agents.balance}} </div>
+                    </div>
+
+                    <div class="row" *ngIf="editAgentId == agents.admin_id">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.currentScore' | translate}}</b></div>
+                      <div class="col-12 col-sm-3 score-btn"> {{agents.balance}} </div>
+                    </div>
+
+                    <div class="row" *ngIf="editAgentId == agents.admin_id">
+                      <div class="col-12 col-sm-3">
+                          <b>{{'agentDetail.setScore' | translate}}</b> &nbsp; 
+                          <span class="max-value" *ngIf="maxBalance == ''">{{ 'agentDetail.noLimit' | translate}}</span> 
+                          <span class="max-value" *ngIf="maxBalance !== ''">{{ 'agentDetail.maxValue' | translate}} {{maxBalance}}</span> 
+                      </div>
+                      <div class="col-12 col-sm-3">
+                        <input type="text" name="balance" [(ngModel)]="agents.setMoreScore" class="form-control" placeholder="0" >
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.phone' | translate}}</b></div>
+                      <div class="col-12 col-sm-3">
+                        <input type="text" name="phone" [(ngModel)]="agents.phone" class="form-control" placeholder="Mobile" [disabled]="editAgentId !== agents.admin_id">
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="editAgentId == agents.admin_id">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.newPassword' | translate}}</b></div>
+                      <div class="col-12 col-sm-3">
+                        <input type="password" name="new_password" [(ngModel)]="agents.new_password" class="form-control" placeholder="{{'agentDetail.enterNewPassword' | translate}}" >
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="editAgentId == agents.admin_id">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.confirmPassword' | translate}}</b></div>
+                      <div class="col-12 col-sm-3">
+                        <input type="password" name="confirm_password" [(ngModel)]="agents.confirm_password" class="form-control" placeholder="{{'agentDetail.enterConfirmPassword' | translate}}" >
+                      </div>
+                    </div>
+
+                    <!-- <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.agent' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.agent_username; else notAvailable">{{user.agent_username}}</div>
+                    </div> -->
+
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.status' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="agents.status; else notAvailable">
+                        <span class="badge" style="font-size:12px;"
+                          [ngClass]="{'badge-success': (agents.status == 1), 'badge-secondary': (agents.status == 0), 'badge-danger': (agents.status > 1)}">{{agentStatus[agents.status]}}</span>
+                      </div>
+                    </div>            
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.description' | translate}} </b></div>
+                      <div class="col-12 col-sm-9" *ngIf="agents.description; else notAvailable">{{agents.description}}</div>
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-12 col-sm-3"><b>Last IP</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="user.last_ip; else notAvailable">{{user.last_ip}}</div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-12 col-sm-3"><b>{{'agentDetail.lastLogin' | translate}}</b></div>
+                      <div class="col-12 col-sm-9" *ngIf="agents.last_login; else notAvailable">
+                        {{formatDateTimeZone(this.agents.last_login)| date:dateFormatString }}</div>
+                    </div>
+                  </div>
+                
+                </div>
+                </div>
+                <ng-template #notAvailable>
+                  <div class="col-12 col-sm-9 font-italic text-danger">{{'agentDetail.notAvailable' | translate}}</div>
+                </ng-template>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="status">Status</label>
-            <select class="form-control" id="status" name="status" [(ngModel)]="currentStatus">
-              <ng-container *ngFor="let statusProperty of agentStatus | keyvalue">
-                <option [value]="statusProperty.key">
-                  {{statusProperty.value}}</option>
-              </ng-container>
-            </select>
-          </div>
-          <div *ngIf="currentStatus === '3'" class="form-group">
-            <label for="ban_period">Blackout Period</label>
-            <select class="form-control" id="ban_period" name="ban_period" [(ngModel)]="selectedBlackoutPeriod">
-              <option value="1 day">{{blackoutPeriods['1 day']}}</option>
-              <option value="1 week">{{blackoutPeriods['1 week']}}</option>
-              <option value="1 month">{{blackoutPeriods['1 month']}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="reason">Reason</label>
-            <textarea class="form-control" id="reason" name="reason" rows="5" placeholder="Reason (optional)"
-              maxlength="255" ngModel></textarea>
-          </div>
+
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
+       
+
+      </div>
     </div>
   </div>
-</div>
+  <app-loader></app-loader>

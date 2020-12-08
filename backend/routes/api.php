@@ -39,6 +39,9 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list', 'AgentController@index');
 		Route::post('create', 'AgentController@create');
 		Route::post('change-agent-status/{agent_id}', 'AgentController@change_agent_status');
+		Route::get('get-agent-details/{agentId}', 'AgentController@get_agent_details');
+		Route::post('set-score', 'AgentController@set_score');
+		Route::post('update-agent', 'AgentController@update_agent');
 	});	
 
 	//User

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Agent;
 use App\Models\AdminRoles;
+use App\Models\PaymentDepositTransaction;
 use Auth;
 use DB;
 use Validator;
@@ -138,5 +139,138 @@ class AgentController extends Controller
 
 
     }
+
+    /**
+     * Get Agent Details.
+     *
+     */
+    public function get_agent_details($agentId) {
+        $agent = new Agent;
+        $agent = $agent->where('admin_id', $agentId);
+        $agent = $agent->first();
+
+        return response()->json(['response_code'=> 200,'service_name' => 'get_agent_details', 'message' => 'Agent details', 'data' => $agent ],200);  
+    }
+
+
+    /**
+     * update agent details.
+     *
+     */
+    public function update_agent(Request $request)
+    {
+
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+        $agent_id  = $request->post('agent_id');
+        $score    = $request->post('score');
+        $phone    = $request->post('phone');
+        $new_password     = $request->post('new_password');
+        $confirm_password = $request->post('confirm_password');
+
+        $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
+        //validation
+        $validator = Validator::make($request->all(), [
+            'agent_id'         => 'required',
+            'score'            => 'nullable|numeric|min:0'.$maxBalance,
+            'phone'            => 'required|numeric|digits:10',
+            'new_password'     => 'nullable|min:6',
+            'confirm_password' => 'nullable|required_with:new_password|same:new_password|min:6'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'update_agent',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $agent_data = Agent::where('admin_id', $agent_id)->first();  
+        if($score > 0) {
+            $data = array(
+                "balance"    => $agent_data->balance + $score, 
+                "phone"      => $phone, 
+                "updated_at" => date('Y-m-d H:i:s')
+            );
+        } else {
+            $data = array(
+                "phone"      => $phone, 
+                "updated_at" => date('Y-m-d H:i:s')
+            );
+        }     
+
+        $update = Agent::where('admin_id', $agent_id)->update($data);    
+        if($update > 0) {
+            if(isset($new_password)) {
+                Agent::where('admin_id', $agent_id)->update(['password' => Hash::make($new_password)]);
+            }
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'update_agent',
+                'message'=> 'Agent updated Successfully',
+            ],200);
+        } else {
+            return response()->json([
+                'response_code'=> 500,
+                'service_name' => 'update_agent',
+                'message'=> 'Something wrong for updating agent details',
+            ],500);
+        }
+        
+    }
+
+
+    /**
+     * Set User Score.
+     *
+     */
+    public function set_score(Request $request) {
+
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+
+        $agent_id = $request->post('agent_id');
+        $score = $request->post('score');
+        //validation
+        $validator = Validator::make($request->all(), [
+            "agent_id" => 'required',
+            "score" => 'required|numeric'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+            'response_code'=> 400,
+            'service_name' => 'set_score',
+            'message'=> 'Validation Failed',
+            'global_error'=> $validator->errors()->first(),
+            ], 400);
+        }
+
+        $checkAgent = Agent::where('admin_id', $agent_id)->first();
+        if($checkAgent) {
+            $updateBalance = Agent::where('admin_id', $checkAgent->admin_id)->update(['balance' => $checkAgent->balance + $score]);
+
+            return response()->json([
+                'response_code'=> 200,
+                'service_name' => 'set_score', 
+                'message' => 'Score set successfuly', 
+                'data' => $checkAgent 
+            ],200);
+
+        } else {
+        
+            return response()->json([
+                'response_code'=> 500,
+                'service_name' => 'set_score',
+                'message'=> "Agent does't exist",
+                'global_error'=> "Agent does't exist"
+            ],500);
+        }     
+
+    }    
+
+
 
 }

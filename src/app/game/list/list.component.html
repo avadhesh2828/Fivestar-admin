@@ -98,13 +98,8 @@
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
                   }}</span>
               </td>
-              <td> {{game.is_featured}}
-                  <!-- Default switch -->
-                  <div class="custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitches" [checked]="isFeatured" 
-                    (change)="onSaveUsernameChanged(game.is_featured)">
-                    <label class="custom-control-label" for="customSwitches"></label>
-                  </div>
+              <td>
+                  <ui-switch [checked]="game.is_featured == 'true'" (change)="onSaveFeaturedChanged(game, $event)"></ui-switch>
               </td>
               <td>
                 <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>{{'games.details' | translate}}</a>

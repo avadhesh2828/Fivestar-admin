@@ -93,7 +93,32 @@
     "desMaxLen": "Description must have less than 50 characters",
     "phoneReq": "Phone Number is required",
     "phoneValidation": "Phone Number must be valid",
-    "max": "Max"
+    "max": "Max",
+    "setScore": "Set Score",
+    "edit": "Edit"
+  },
+  "agentDetail": {
+    "agentName": "Agent Name",
+    "userName": "Username",
+    "balance": "Score",
+    "phone": "Phone",
+    "description": "Description",
+    "status": "Status",
+    "lastLogin": "Last Login",
+    "notAvailable": "Not Available",
+    "setScore": "Set Score",
+    "currentScore" : "Current Score",
+    "newPassword" : "New Password",
+    "enterNewPassword" : "Enter New Password",
+    "confirmPassword" : "Confirm Password",
+    "enterConfirmPassword" : "Enter Confirm Password",
+    "agentInfo": "Agent Details",
+    "error": "There was an error",
+    "loading": "Loading",
+    "noLimit": "No Limit",
+    "maxValue": "Max Value",
+    "edit": "Edit",
+    "save": "Save"
   },
   "player": {
     "playerMng": "Player Management",

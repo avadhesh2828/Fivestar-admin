@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AgentRoutingModule, routedComponents } from './agent-routing.module';
 import { FantasyPipeModule } from '../pipes/pipes.module';
-import { EditAgentComponent } from './edit-agent/edit-agent.component';
 import { PostAuthenticationModule } from '../shared/layouts/post-authentication/post-authentication.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -14,6 +13,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+
 
 @NgModule({
     imports: [
@@ -39,7 +39,6 @@ import { environment } from '../../environments/environment';
     ],
     declarations: [
         ...routedComponents,
-        EditAgentComponent,
     ],
     providers: [
     ]

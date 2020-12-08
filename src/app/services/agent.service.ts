@@ -20,8 +20,16 @@ export class AgentService {
   }
 
 
-  getAgentDetails(agentId: string) {
-    return this.http.post(`${environment.API_URL}/agent/get_agent_detail`, { agent_unique_id: agentId });
+  getAgentDetails(agentId: any) {
+    return this.http.get(`${environment.API_URL}/agent/get-agent-details/${agentId}`);
+  }
+
+  setAgentScore(data: object) {
+    return this.http.post(`${environment.API_URL}/agent/set-score`, data);
+  }
+
+  updateAgent(params: object) {
+    return this.http.post(`${environment.API_URL}/agent/update-agent`,params);
   }
 
   getAgentTicketDetails(params: object) {
