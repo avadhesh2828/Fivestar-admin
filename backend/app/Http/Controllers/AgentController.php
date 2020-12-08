@@ -194,6 +194,7 @@ class AgentController extends Controller
                 "phone"      => $phone, 
                 "updated_at" => date('Y-m-d H:i:s')
             );
+            // $this->scoreHistory($user_data, $score);
         } else {
             $data = array(
                 "phone"      => $phone, 
@@ -221,6 +222,25 @@ class AgentController extends Controller
         
     }
 
+    /**
+     * Save deposit score history.
+     *
+     */
+    private function scoreHistory($user, $score) {
+        $this->user = Auth::user();
+        $admin_id = $this->user->admin_id;
+        PaymentDepositTransaction::insert([
+            'user_id'      => $user->user_id,
+            'admin_id'     => $admin_id,
+            'set_score'    => $score,
+            'before_score' => $user->balance,
+            'after_score'  => $user->balance + $score,
+            'ip'           => \Request::ip(),
+            'type'         => 'agent',
+            'date_created' => date('Y-m-d H:i:s'),
+            'date_modified'=> date('Y-m-d H:i:s')
+        ]);
+    }
 
     /**
      * Set User Score.
@@ -251,6 +271,18 @@ class AgentController extends Controller
         $checkAgent = Agent::where('admin_id', $agent_id)->first();
         if($checkAgent) {
             $updateBalance = Agent::where('admin_id', $checkAgent->admin_id)->update(['balance' => $checkAgent->balance + $score]);
+
+            // PaymentDepositTransaction::insert([
+            //     'user_id'      => $checkAgent->admin_id,
+            //     'admin_id'     => $admin_id,
+            //     'set_score'    => $score,
+            //     'before_score' => $checkAgent->balance,
+            //     'after_score'  => $checkAgent->balance + $score,
+            //     'ip'           => \Request::ip(),
+            //     'type'         => 'agent',
+            //     'date_created' => date('Y-m-d H:i:s'),
+            //     'date_modified'=> date('Y-m-d H:i:s')
+            // ]);
 
             return response()->json([
                 'response_code'=> 200,

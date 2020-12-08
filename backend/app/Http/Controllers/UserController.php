@@ -297,6 +297,7 @@ class UserController extends Controller
                 'before_score' => $checkPlayer->balance,
                 'after_score'  => $checkPlayer->balance + $score,
                 'ip'           => \Request::ip(),
+                'type'         => 'player',
                 'date_created' => date('Y-m-d H:i:s'),
                 'date_modified'=> date('Y-m-d H:i:s')
             ]);
@@ -402,6 +403,7 @@ class UserController extends Controller
             'before_score' => $user->balance,
             'after_score'  => $user->balance + $score,
             'ip'           => \Request::ip(),
+            'type'         => 'player',
             'date_created' => date('Y-m-d H:i:s'),
             'date_modified'=> date('Y-m-d H:i:s')
         ]);
