@@ -375,6 +375,7 @@
   },
   "scoreLog": {
     "setScore": "Set Score",
+    "agent": "Agent",
     "player": "Player",
     "currentScore": "Current Score",
     "noLimit": "No Limit",

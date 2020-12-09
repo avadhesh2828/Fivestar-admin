@@ -20,8 +20,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetScoreComponent implements OnInit {
   public user = null;
   public error = false;
-  playerUserName :any;
-  playerBalance : any;
+  agentUserName :any;
+  agentBalance : any;
   maxBalance : any;
   
 
@@ -66,8 +66,8 @@ export class SetScoreComponent implements OnInit {
         this.loaderService.display(false);
         if (user['data']) {
           this.user = user['data'];
-          this.playerBalance = this.user.balance;
-          this.playerUserName = this.user.username;
+          this.agentBalance = this.user.balance;
+          this.agentUserName = this.user.username;
         }
       }, (err: object) => {
         this.loaderService.display(false);

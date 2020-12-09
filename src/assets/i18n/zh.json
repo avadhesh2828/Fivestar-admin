@@ -374,6 +374,7 @@
   },
   "scoreLog": {
     "setScore": "設定分數",
+    "agent": "代理商",
     "player": "播放器",
     "currentScore": "當前分數",
     "maxValue": "最大值",

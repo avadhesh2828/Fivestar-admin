@@ -194,7 +194,7 @@ class AgentController extends Controller
                 "phone"      => $phone, 
                 "updated_at" => date('Y-m-d H:i:s')
             );
-            $this->scoreHistory($user_data, $score);
+            $this->scoreHistory($agent_data, $score);
         } else {
             $data = array(
                 "phone"      => $phone, 
