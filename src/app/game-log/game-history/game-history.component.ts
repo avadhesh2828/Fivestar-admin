@@ -39,6 +39,7 @@ export class GameHistoryComponent implements OnInit {
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
   public url = 'finance/game-history?';
+  public gameLog = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -157,6 +158,12 @@ export class GameHistoryComponent implements OnInit {
     this.showTable = false; 
     this.gameHistory = [];
     this.scorLogForm.reset();
+  }
+
+
+  gameLogModel(game) {
+    this.gameLog = game;
+    $('#gameLogModel').modal('show');
   }
 
 }

@@ -194,7 +194,7 @@ class AgentController extends Controller
                 "phone"      => $phone, 
                 "updated_at" => date('Y-m-d H:i:s')
             );
-            // $this->scoreHistory($user_data, $score);
+            $this->scoreHistory($user_data, $score);
         } else {
             $data = array(
                 "phone"      => $phone, 
@@ -272,17 +272,17 @@ class AgentController extends Controller
         if($checkAgent) {
             $updateBalance = Agent::where('admin_id', $checkAgent->admin_id)->update(['balance' => $checkAgent->balance + $score]);
 
-            // PaymentDepositTransaction::insert([
-            //     'user_id'      => $checkAgent->admin_id,
-            //     'admin_id'     => $admin_id,
-            //     'set_score'    => $score,
-            //     'before_score' => $checkAgent->balance,
-            //     'after_score'  => $checkAgent->balance + $score,
-            //     'ip'           => \Request::ip(),
-            //     'type'         => 'agent',
-            //     'date_created' => date('Y-m-d H:i:s'),
-            //     'date_modified'=> date('Y-m-d H:i:s')
-            // ]);
+            PaymentDepositTransaction::insert([
+                'user_id'      => $checkAgent->admin_id,
+                'admin_id'     => $admin_id,
+                'set_score'    => $score,
+                'before_score' => $checkAgent->balance,
+                'after_score'  => $checkAgent->balance + $score,
+                'ip'           => \Request::ip(),
+                'type'         => 'agent',
+                'date_created' => date('Y-m-d H:i:s'),
+                'date_modified'=> date('Y-m-d H:i:s')
+            ]);
 
             return response()->json([
                 'response_code'=> 200,

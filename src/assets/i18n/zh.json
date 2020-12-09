@@ -444,6 +444,7 @@
     "totalRecord": "總記錄",
     "thereWasError" : "有一個錯誤",
     "next": "下一個",
-    "prev": "上一個"
+    "prev": "上一個",
+    "lineName" : "行名"
   }
 }

@@ -445,6 +445,7 @@
     "totalRecord": "Total Record",
     "thereWasError" : "There was an error",
     "next": "Next",
-    "prev": "Prev"
+    "prev": "Prev",
+    "lineName" : "Line Name"
   }
 }
