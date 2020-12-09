@@ -230,7 +230,7 @@ class AgentController extends Controller
         $this->user = Auth::user();
         $admin_id = $this->user->admin_id;
         PaymentDepositTransaction::insert([
-            'user_id'      => $user->user_id,
+            'user_id'      => $user->admin_id,
             'admin_id'     => $admin_id,
             'set_score'    => $score,
             'before_score' => $user->balance,
