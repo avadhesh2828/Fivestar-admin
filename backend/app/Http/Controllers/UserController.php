@@ -289,6 +289,9 @@ class UserController extends Controller
         $checkPlayer = User::where('user_id', $player_id)->first();
         if($checkPlayer) {
             $updateBalance = User::where('user_id', $checkPlayer->user_id)->update(['balance' => $checkPlayer->balance + $score]);
+            if($this->user->role_id == 2) {
+                Agent::where('admin_id', $admin_id)->decrement('balance', $score); 
+            }
 
             PaymentDepositTransaction::insert([
                 'user_id'      => $checkPlayer->user_id,
@@ -361,6 +364,9 @@ class UserController extends Controller
                 "phone"      => $phone, 
                 "updated_at" => date('Y-m-d H:i:s')
             );
+            if($this->user->role_id == 2) {
+                Agent::where('admin_id', $agent_id)->decrement('balance', $score);
+            }
             $this->scoreHistory($user_data, $score);
         } else {
             $data = array(

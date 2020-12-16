@@ -92,11 +92,11 @@ export class SetScoreComponent implements OnInit {
         .subscribe((res: any) => {
           this.formSubmitted = false;
           this.palyerIPList = res.data;
-          this.toastr.success(res.message || 'Player LoginIp Found.');
+          this.toastr.success(res.message || 'Score set successfully.');
           this.getUserDetail();
         }, err => {
           const errorMessage = '';
-          this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while fetching player login ip.');
+          this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while fetching score set.');
           this.formSubmitted = false;
         });
     }

@@ -60,8 +60,8 @@ export class NewComponent implements OnInit {
         // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
         // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
-        'name': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-        'phone': ['', [Validators.minLength(5), Validators.maxLength(15)]],
+        'name': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+        'phone': ['', [Validators.minLength(1), Validators.maxLength(15)]],
         'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
       });
     });

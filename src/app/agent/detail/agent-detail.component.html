@@ -1,6 +1,16 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
+      <div class="head">
+        <span class="detail">
+          <a (click)="goBack()"> Agent Details </a> 
+           <i class="fa fa-chevron-right"></i> 
+           <span class="agent-title" > {{parentAgentInfo.username}}</span> 
+        </span>
+        <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+          <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+        </a>
+      </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Agent Management
@@ -12,9 +22,6 @@
             <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
           </span> -->
           <h5 class="mb-0 text-gray-800">Total Record : {{totalAgents}}</h5>
-          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
-            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
-          </a>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>

@@ -33,6 +33,7 @@ const INITIAL_PARAMS = {
 export class AgentDetailComponent implements OnInit {
   public params = { ...INITIAL_PARAMS };
   public agentList = null;
+  public parentAgentInfo = null;
   public userList  = [];
   public totalAgents = 0;
   public totalPaginationShow = [];
@@ -67,8 +68,10 @@ export class AgentDetailComponent implements OnInit {
 
   ngOnInit() {
     this.selectedAgent = this.route.snapshot.paramMap.get('agentId');
+    this.getAgentDetail();
     this.getAgentList();
     this.getUserList();
+
   }
 
   goBack() {
@@ -82,6 +85,20 @@ export class AgentDetailComponent implements OnInit {
       that.currentAgent = null;
       $(this).find('textarea').val('').end();
     });
+  }
+
+  private getAgentDetail() {
+    this.loaderService.display(true);
+    this.agentService.getAgentDetails(this.selectedAgent)
+      .subscribe((dat) => {
+        this.loaderService.display(false);
+        if (dat['data']) {
+          this.parentAgentInfo = dat['data'];
+        }
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
   }
 
   public getCountryList() {

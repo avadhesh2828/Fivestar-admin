@@ -5,6 +5,8 @@
 .back-btn {
   padding: 0;
   font-size: 1.53125rem;
+  float: right;
+  margin-right: 15px;
 }
 
 
@@ -16,6 +18,15 @@ tr.custom-table-heading {
 .username {
   text-decoration: underline;
 }
-// .alert {
-//   background-color: #f0f3f4;
-// }
+
+.head {
+  margin-top: 25px;
+}
+.detail {
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.agent-title {
+  color : #22a8d8 !important;
+}

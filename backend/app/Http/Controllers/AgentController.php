@@ -195,6 +195,9 @@ class AgentController extends Controller
                 "updated_at" => date('Y-m-d H:i:s')
             );
             $this->scoreHistory($agent_data, $score);
+            if($this->user->role_id == 2) {
+                Agent::where('admin_id', $admin_id)->decrement('balance', $score); 
+            }
         } else {
             $data = array(
                 "phone"      => $phone, 
@@ -271,6 +274,9 @@ class AgentController extends Controller
         $checkAgent = Agent::where('admin_id', $agent_id)->first();
         if($checkAgent) {
             $updateBalance = Agent::where('admin_id', $checkAgent->admin_id)->update(['balance' => $checkAgent->balance + $score]);
+            if($this->user->role_id == 2) {
+                Agent::where('admin_id', $admin_id)->decrement('balance', $score); 
+            }
 
             PaymentDepositTransaction::insert([
                 'user_id'      => $checkAgent->admin_id,
