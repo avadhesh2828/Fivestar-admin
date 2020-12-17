@@ -11,6 +11,7 @@ use App\Models\User_Portfolio;
 use App\Models\User_Watchlist;
 use App\Http\Controllers\Payment_transaction;
 use App\Models\PaymentDepositTransaction;
+use App\Models\History;
 use App\Exports\UsersExport;
 use Excel;
 use PDF;
@@ -98,6 +99,9 @@ class UserController extends Controller
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
         ]);
+
+        $InsertplayerId = DB::getPdo()->lastInsertId();
+        History::create(['action_for' => 4, 'to_id' => $InsertplayerId, 'from_id' => $agent_id, 'name' => $name, 'description' => 'Player created successfully', 'last_ip' => \Request::ip(), 'type' => '1', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 
         return response()->json([
             'response_code'=> 200,
@@ -304,6 +308,8 @@ class UserController extends Controller
                 'date_created' => date('Y-m-d H:i:s'),
                 'date_modified'=> date('Y-m-d H:i:s')
             ]);
+
+            History::create(['action_for' => 0, 'to_id' => $checkPlayer->user_id, 'from_id' => $admin_id, 'name' => $checkPlayer->username, 'description' => 'Score set successfully', 'last_ip' => \Request::ip(), 'type' => 1, 'set_score' => $score, 'before_score' => $checkPlayer->balance, 'after_score'  => $checkPlayer->balance + $score, 'payment_type' => 0, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 
             return response()->json([
                 'response_code'=> 200,

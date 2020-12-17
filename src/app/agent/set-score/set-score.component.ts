@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AgentService } from 'src/app/services/agent.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
@@ -36,6 +37,7 @@ export class SetScoreComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
+    private authService: AuthService,
     private agentService: AgentService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
@@ -96,6 +98,9 @@ export class SetScoreComponent implements OnInit {
           this.palyerIPList = res.data;
           this.toastr.success(res.message || 'Score set successfully.');
           this.getAgentDetail();
+          this.authService.getUserDetails().subscribe((res: any) => {
+            this.userService.updateUser(res.data);
+          });
         }, err => {
           const errorMessage = '';
           this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while set score.');

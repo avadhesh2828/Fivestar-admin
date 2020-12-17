@@ -342,15 +342,20 @@
     "dateTime": "DateTime",
     "totalRecord": "Total Record",
     "WithdrawTransaction" : "Withdraw Transaction",
-    "placeholder": "Search by name,username,playername",
+    "placeholder": "Search by Username",
     "selectDateRange": "Select a date range",
-    "selectStatus": "Select a Status",
+    "selectAction": "Select a Action",
     "resetFilters": "Reset Filters",
     "filter": "Filter",
     "search": "Search",
     "next": "Next",
     "prev": "Prev",
-    "noTransactionsFound" : "There are no transactions to show"
+    "noTransactionsFound" : "There are no transactions to show",
+    "add-coins": "Add Score",
+    "deduct-coins": "Deduct Score",
+    "win": "Win",
+    "new-agent": "New Agent",
+    "new-player": "New Player"
   },
   "redPacket": {
     "redPacket": "Red Packet",
