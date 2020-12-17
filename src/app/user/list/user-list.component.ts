@@ -128,7 +128,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   private createPaginationItem(totalUSer: number) {
     this.totalUsers = totalUSer;
-    const maxPages: number = Math.ceil(totalUSer / this.params.items_perpage);
+    const maxPages: number = Math.ceil(totalUSer / this.params.per_page);
     const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
     const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
     this.totalPages = maxPages;

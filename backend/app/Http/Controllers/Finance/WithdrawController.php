@@ -41,6 +41,7 @@ class WithdrawController extends Controller
     if( $request->status != "" ){
       $history = $history->where('action_for', $request->status);
     }
+    $history = $history->orderBy('history_id', 'DESC');
     $history = $history->limit(1000);
     // Paginated records
     $history = $history->paginate($request->perPage);

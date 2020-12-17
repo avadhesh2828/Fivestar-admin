@@ -64,9 +64,10 @@
       </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h3 class="h3 mb-0 text-gray-800">{{ 'transactions.WithdrawTransaction' | translate}}</h3>
+          <h3 class="h3 mb-0 text-gray-800">{{ 'transactions.OperationLog' | translate}}</h3>
           <h4 class="mb-0 text-gray-800">{{ 'transactions.totalRecord' | translate}}: {{' '}}{{(totalWithdraws)?totalWithdraws:0}} </h4>
         </div>
+        <h6>{{ 'transactions.showLast' | translate}} {{currentUser.username}} {{ 'transactions.operationLog' | translate}}. </h6>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
@@ -79,16 +80,18 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngIf="error">
-              <td colspan="9" class="table-danger text-center">There was an error</td>
-            </tr> -->
-            <!-- <tr *ngIf="!error && !withdrawList">
-              <td colspan="9">Loading...</td>
-            </tr> -->
+
             <tr *ngIf="error">
-              <td colspan="9" class="text-center"> {{ 'transactions.noTransactionsFound' | translate}}</td>
+              <td colspan="9" class="table-danger">There was an error</td>
             </tr>
-            <tr *ngFor="let transaction of withdrawList">
+            <tr *ngIf="!error && !withdrawList">
+              <td colspan="9">{{'transactions.loading' | translate}}...</td>
+            </tr>
+            <tr *ngIf="withdrawList && !(withdrawList.length>0)">
+              <td colspan="9" class="text-center"> {{'transactions.noTransactionsFound' | translate}}</td>
+            </tr>
+
+            <tr *ngFor="let transaction of withdrawList; let tranIndex = index">
               <td> {{ actionFor[transaction.action_for | translate] }} </td>
               <td>{{ transaction.agent_detail.username || transaction.agent_detail.name }} </td>
               <td>{{ transaction.name }}</td>
