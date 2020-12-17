@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TransactionService } from '../../services/transaction.service';
 import { formatDate, formatDateTimeZone, range } from '../../services/utils.service';
-import { PAYMENT_FOR, STATUS } from '../constants';
+import { PAYMENT_FOR, STATUS, ACTION_FOR } from '../constants';
 import { Constants } from '../../constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../shared/loader/loader.service';
@@ -31,6 +31,7 @@ export class WithdrawListComponent implements OnInit {
   public error = false;
   public paymentFor = PAYMENT_FOR;
   public currency_code = Constants.CURRENCY_CODE;
+  public actionFor = ACTION_FOR;
   public isProcessed = STATUS;
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
@@ -62,7 +63,7 @@ export class WithdrawListComponent implements OnInit {
           this.withdrawList = response.data.data;
           this.createPaginationItem(response.data.total);
         } else {
-          this.withdrawList = [];
+          this.withdrawList = response.data
         }
         this.error = false;
       }, () => {

@@ -341,15 +341,20 @@
     "dateTime": "約會時間",
     "totalRecord": "總記錄",
     "WithdrawTransaction" : "提款交易",
-    "placeholder": "按名稱，用戶名，玩家名搜索",
+    "placeholder": "按用戶名搜索",
     "selectDateRange": "選擇日期範圍",
-    "selectStatus": "選擇狀態",
+    "selectAction": "選擇一個動作",
     "resetFilters": "重置過濾器",
     "filter": "過濾",
     "search": "搜索",
     "next": "下一個",
     "prev": "上一個",
-    "noTransactionsFound" : "沒有可顯示的交易"
+    "noTransactionsFound" : "沒有可顯示的交易",
+    "add-coins": "加分",
+    "deduct-coins": "分數",
+    "win": "贏得",
+    "new-agent": "新代理",
+    "new-player": "新玩家"
   },
   "redPacket": {
     "redPacket": "紅包",

@@ -11,7 +11,7 @@ class GameProvider extends Model
     protected $primaryKey = 'provider_id';
 
     protected $fillable = [
-        'provider_id', 'provider_name','created_at','updated_at'
+        'provider_id', 'provider_name', 'language', 'created_at', 'updated_at'
     ];
 
     public $timestamps = false;

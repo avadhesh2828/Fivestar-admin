@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Models\Agent;
 use App\Models\AdminRoles;
 use App\Models\PaymentDepositTransaction;
+use App\Models\History;
 use Auth;
 use DB;
 use Validator;
@@ -90,6 +91,9 @@ class AgentController extends Controller
             "created_at"    => date('Y-m-d H:i:s'),
             "updated_at"    => date('Y-m-d H:i:s')
         ]);
+
+        $InsertAgentId = DB::getPdo()->lastInsertId();
+        History::create(['action_for' => 3, 'to_id' => $InsertAgentId, 'from_id' => $user_id, 'name' => $name, 'description' => 'Agent created successfully', 'last_ip' => \Request::ip(), 'type' => '0', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);    
 
         return response()->json([
             'response_code'=> 200,
@@ -289,6 +293,8 @@ class AgentController extends Controller
                 'date_created' => date('Y-m-d H:i:s'),
                 'date_modified'=> date('Y-m-d H:i:s')
             ]);
+
+            History::create(['action_for' => 0, 'to_id' => $checkAgent->admin_id, 'from_id' => $admin_id, 'name' => $checkAgent->username, 'description' => 'Score set successfully', 'last_ip' => \Request::ip(), 'type' => 0, 'set_score' => $score, 'before_score' => $checkAgent->balance, 'after_score'  => $checkAgent->balance + $score, 'payment_type' => 0 ,'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 
             return response()->json([
                 'response_code'=> 200,

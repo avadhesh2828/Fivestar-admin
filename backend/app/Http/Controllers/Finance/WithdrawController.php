@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 # Models
 use App\Models\PaymentWithdrawTransaction;
 use App\Models\PaymentHistoryTransaction;
+use App\Models\History;
 use App\Models\Notification_model;
 use App\Models\User;
 use Auth;
@@ -24,45 +25,87 @@ class WithdrawController extends Controller
     $user_id = $this->user->admin_id;
     $role_id = $this->user->role_id;
 
-    $historyTransaction = new PaymentHistoryTransaction;
-    $historyTransaction = $historyTransaction->select('payment_history_transactions.*', 'U.username');
-    $historyTransaction = $historyTransaction->join((new User)->getTable(). ' as U', function($j) {
-      $j->on('U.user_id', '=', 'payment_history_transactions.user_id');
-    });
-
+    $history = new History;
+    $history = $history->with(['agent_detail']);
     if($role_id == 2 ) {
-      $historyTransaction = $historyTransaction->where('U.parent_id', $user_id);  
+      $history = $history->where('from_id', $user_id);  
     }
-    
     // Date Range Filter
     $dates = json_decode($request->dates);
     if( isset($dates->fromdate) && isset($dates->todate) ){
-      $historyTransaction = $historyTransaction->whereBetween('payment_history_transactions.created_at', [$dates->fromdate , $dates->todate]);
+      $history = $history->whereBetween('history.created_at', [$dates->fromdate , $dates->todate]);
     }
-
     if( $request->keyword != "" ){
-        $historyTransaction = $historyTransaction->where('U.username', 'LIKE', '%'.$request->keyword.'%');
+        $history = $history->where('name', 'LIKE', '%'.$request->keyword.'%');
     }
-
+    if( $request->status != "" ){
+      $history = $history->where('action_for', $request->status);
+    }
+    $history = $history->limit(1000);
     // Paginated records
-    $historyTransaction = $historyTransaction->paginate($request->perPage);
+    $history = $history->paginate($request->perPage);
 
-    if($historyTransaction->count() == 0){
+    if($history->count() == 0){
       return response()->json([
-        'response_code'=> 200,
+        'response_code'=> 500,
         'service_name' => 'transaction_history',
         'data' => [],
         'global_error'=> 'No history transaction found',
-      ], 200);
+      ], 500);
     }
 
     return response()->json([
       'response_code'=> 200,
       'service_name' => 'transaction_history',
-      'data' => $historyTransaction,
+      'data' => $history,
       'message'=> 'History transaction found',
     ],200);
-}  
+} 
+
+  // public function transaction_history( Request $request ) {
+  //     $this->user = Auth::user();
+  //     $user_id = $this->user->admin_id;
+  //     $role_id = $this->user->role_id;
+
+  //     $historyTransaction = new PaymentHistoryTransaction;
+  //     $historyTransaction = $historyTransaction->select('payment_history_transactions.*', 'U.username');
+  //     $historyTransaction = $historyTransaction->join((new User)->getTable(). ' as U', function($j) {
+  //       $j->on('U.user_id', '=', 'payment_history_transactions.user_id');
+  //     });
+
+  //     if($role_id == 2 ) {
+  //       $historyTransaction = $historyTransaction->where('U.parent_id', $user_id);  
+  //     }
+      
+  //     // Date Range Filter
+  //     $dates = json_decode($request->dates);
+  //     if( isset($dates->fromdate) && isset($dates->todate) ){
+  //       $historyTransaction = $historyTransaction->whereBetween('payment_history_transactions.created_at', [$dates->fromdate , $dates->todate]);
+  //     }
+
+  //     if( $request->keyword != "" ){
+  //         $historyTransaction = $historyTransaction->where('U.username', 'LIKE', '%'.$request->keyword.'%');
+  //     }
+
+  //     // Paginated records
+  //     $historyTransaction = $historyTransaction->paginate($request->perPage);
+
+  //     if($historyTransaction->count() == 0){
+  //       return response()->json([
+  //         'response_code'=> 200,
+  //         'service_name' => 'transaction_history',
+  //         'data' => [],
+  //         'global_error'=> 'No history transaction found',
+  //       ], 200);
+  //     }
+
+  //     return response()->json([
+  //       'response_code'=> 200,
+  //       'service_name' => 'transaction_history',
+  //       'data' => $historyTransaction,
+  //       'message'=> 'History transaction found',
+  //     ],200);
+  // }  
 
 
   public function withdraw_list( Request $request ){
