@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { TransactionService } from '../../services/transaction.service';
 import { formatDate, formatDateTimeZone, range } from '../../services/utils.service';
 import { PAYMENT_FOR, STATUS, ACTION_FOR } from '../constants';
 import { Constants } from '../../constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { UserService } from 'src/app/services/user.service';
 
 const INITIAL_PARAMS = {
   per_page: 20,
@@ -24,7 +24,8 @@ const INITIAL_PARAMS = {
 export class WithdrawListComponent implements OnInit {
   public params: any = { ...INITIAL_PARAMS };
   public url = 'finance/withdraw-list?';
-  public withdrawList = [];
+  public withdrawList = null;
+  public currentUser = null;
   public totalWithdraws = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
@@ -39,10 +40,14 @@ export class WithdrawListComponent implements OnInit {
     private transactionService: TransactionService,
     private toastr: ToastrService,
     private loaderService: LoaderService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
     this.getWithdrawHistory();
+    this.userService.currentUser.subscribe((usr: any) => {
+      this.currentUser = usr;
+    });
   }
 
   private createUrl(date) {
@@ -51,6 +56,7 @@ export class WithdrawListComponent implements OnInit {
   }
 
   private getWithdrawHistory() {
+    this.loaderService.display(true);
     const date = this.params.dates.length === 2 ? {
       fromdate: `${formatDate(this.params.dates[0])} 00:00:00`,
       todate: `${formatDate(this.params.dates[1])} 23:59:59`,
@@ -59,14 +65,22 @@ export class WithdrawListComponent implements OnInit {
     this.createUrl(date);
     this.transactionService.getWithdraws(this.url)
       .subscribe((response: any) => {
-        if (response.response_code === 200) {
-          this.withdrawList = response.data.data;
-          this.createPaginationItem(response.data.total);
-        } else {
-          this.withdrawList = response.data
+        // if (response.response_code === 200) {
+        //   this.withdrawList = response.data.data;
+        //   this.createPaginationItem(response.data.total);
+        // } else {
+        //   this.withdrawList = response.data
+        // }
+        // this.error = false;
+        this.loaderService.display(false);
+        if (response['data'] && response['data'].data) {
+          this.withdrawList = response['data'].data;
+          // this.oldStatus = this.advList.status;
+          this.createPaginationItem(response['data'].total);
         }
         this.error = false;
       }, () => {
+        this.loaderService.display(false);
         this.error = true;
       });
   }
