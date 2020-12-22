@@ -343,6 +343,7 @@ class UserController extends Controller
         $phone    = $request->post('phone');
         $new_password     = $request->post('new_password');
         $confirm_password = $request->post('confirm_password');
+        $description = $request->post('description');
 
         $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
         //validation
@@ -368,6 +369,7 @@ class UserController extends Controller
             $data = array(
                 "balance"    => $user_data->balance + $score, 
                 "phone"      => $phone, 
+                "description" => $description,
                 "updated_at" => date('Y-m-d H:i:s')
             );
             if($this->user->role_id == 2) {
@@ -377,6 +379,7 @@ class UserController extends Controller
         } else {
             $data = array(
                 "phone"      => $phone, 
+                "description" => $description,
                 "updated_at" => date('Y-m-d H:i:s')
             );
         }     

@@ -55,7 +55,7 @@ export class SetScoreComponent implements OnInit {
         // this.maxBalance = usr.balance;
         this.maxBalance = (usr.role_id == 1)? '':usr.balance;
         this.scoreForm = this.formBuilder.group({
-          'score': ['', [Validators.required, Validators.min(1), Validators.max(this.maxBalance)]],
+          'score': ['', [Validators.required, Validators.min(-this.agentBalance), Validators.max(this.maxBalance)]],
         });
       });
   }

@@ -50,9 +50,9 @@
     "userManagement": "User Management",
     "gameManagement": "Game Management",
     "history": "Operate history",
-    "redPacket": " Red Packet",
-    "scoreLog": "Score Log",
-    "gameLog": "Game Log",
+    "redPacket": "Red Packet",
+    "scoreLog": "Player Score Log",
+    "gameLog": "Player Game Log",
     "signOut": " Sign Out"
   },
   "agent": {

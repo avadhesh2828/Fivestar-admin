@@ -96,14 +96,18 @@
                           [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
                       </div>
                     </div>            
-                    <div class="row">
+                    <div class="row" *ngIf="editPlayerId !== user.user_id">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.description' | translate}} </b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.description; else notAvailable">{{user.description}}</div>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-12 col-sm-3"><b>Last IP</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.last_ip; else notAvailable">{{user.last_ip}}</div>
-                    </div> -->
+
+                    <div class="row" *ngIf="editPlayerId == user.user_id">
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.description' | translate}}</b></div>
+                      <div class="col-12 col-sm-3">
+                        <textarea type="text" name="description" [(ngModel)]="user.description" class="form-control" placeholder="{{'playerDetail.description' | translate}}" ></textarea>
+                      </div>
+                    </div>
+                    
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.lastLogin' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.last_login; else notAvailable">
