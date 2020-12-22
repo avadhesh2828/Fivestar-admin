@@ -92,7 +92,8 @@ export class EditAgentComponent implements OnChanges {
         'score'            : agent.setMoreScore,
         'phone'            : agent.phone,
         'new_password'     : agent.new_password,
-        'confirm_password' : agent.confirm_password  
+        'confirm_password' : agent.confirm_password,
+        'description'      : agent.description 
       };
       this.agentService.updateAgent(forminputdata)
         .subscribe((response: any) => {
@@ -104,37 +105,7 @@ export class EditAgentComponent implements OnChanges {
         }, (error: any) => {
           this.toastr.error(error.error['global_error']);
         });
-
     }
-    
   }
 
-  // public onSubmit(data) {
-
-  //   this.agentService.changeAgentStatus({ ...this.agent, ...data }).subscribe(
-
-  //     (response: any) => {
-  //       if (response) {
-  //         this.toastr.success("Agent Updated Successfully!");
-  //       }
-  //       this.agent.status = data.status;
-  //       this.agent.balance = parseInt(this.agent.balance, 10) + parseInt(this.addBalance, 10);
-  //       this.editedStatus.emit({ success: true, update_balance: data.add_balance });
-  //       $('#editModal').modal('hide');
-  //     },
-  //     (error: any) => {
-  //       if (error.error.error) {
-  //         this.oldData.addBalance = this.addBalance;
-  //         this.error.addBalance = error.error.error.add_balance;
-  //       } else {
-  //         this.toastr.error(error.error['error']);
-  //         this.editedStatus.emit({
-  //           success: false,
-  //           error: error.message || 'There was an error'
-  //         });
-  //         $('#editModal').modal('hide');
-  //       }
-  //     }
-  //   );
-  // }
 }

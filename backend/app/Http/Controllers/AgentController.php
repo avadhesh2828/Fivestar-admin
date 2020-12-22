@@ -165,12 +165,13 @@ class AgentController extends Controller
     {
 
         $this->user = Auth::user();
-        $admin_id = $this->user->admin_id;
-        $agent_id  = $request->post('agent_id');
-        $score    = $request->post('score');
-        $phone    = $request->post('phone');
+        $admin_id         = $this->user->admin_id;
+        $agent_id         = $request->post('agent_id');
+        $score            = $request->post('score');
+        $phone            = $request->post('phone');
         $new_password     = $request->post('new_password');
         $confirm_password = $request->post('confirm_password');
+        $description      = $request->post('description');
 
         $maxBalance = ($this->user->role_id == 1) ? '':'|max:'.$this->user->balance; 
         //validation
@@ -194,9 +195,10 @@ class AgentController extends Controller
         $agent_data = Agent::where('admin_id', $agent_id)->first();  
         if($score > 0) {
             $data = array(
-                "balance"    => $agent_data->balance + $score, 
-                "phone"      => $phone, 
-                "updated_at" => date('Y-m-d H:i:s')
+                "balance"     => $agent_data->balance + $score, 
+                "phone"       => $phone, 
+                "description" => $description,
+                "updated_at"  => date('Y-m-d H:i:s')
             );
             $this->scoreHistory($agent_data, $score);
             if($this->user->role_id == 2) {
@@ -204,8 +206,9 @@ class AgentController extends Controller
             }
         } else {
             $data = array(
-                "phone"      => $phone, 
-                "updated_at" => date('Y-m-d H:i:s')
+                "phone"       => $phone, 
+                "description" => $description,
+                "updated_at"  => date('Y-m-d H:i:s')
             );
         }     
 
