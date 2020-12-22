@@ -49,7 +49,7 @@ export class NewComponent implements OnInit {
     });
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
-      // this.maxBalance =  usr.balance;s
+      // this.maxBalance =  usr.balance;
       this.maxBalance = (usr.role_id == 1)? '':usr.balance;
       this.userAgent = usr.username;
       this.minDate = new Date();
@@ -61,7 +61,7 @@ export class NewComponent implements OnInit {
         // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
         'name': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-        'phone': ['', [Validators.minLength(1), Validators.maxLength(15)]],
+        'phone': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]],
         'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
       });
     });

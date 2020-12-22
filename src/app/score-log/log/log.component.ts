@@ -118,6 +118,7 @@ export class LogComponent implements OnInit {
       const forminputdata = {
         'username': this.f.userName.value,
         'dates'   : date,
+        'type'    : 'player'
       };
       this.formSubmitted = true;
       this.loaderService.display(true);

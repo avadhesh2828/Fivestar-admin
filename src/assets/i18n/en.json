@@ -95,6 +95,7 @@
     "phoneValidation": "Phone Number must be valid",
     "max": "Max",
     "setScore": "Set Score",
+    "scoreLog": "Score Log",
     "edit": "Edit"
   },
   "agentDetail": {

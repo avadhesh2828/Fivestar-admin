@@ -8,6 +8,7 @@ import { AgentDetailComponent } from './detail/agent-detail.component';
 import { AgentNewComponent } from './new/agent-new.component';
 import { EditAgentComponent } from './edit-agent/edit-agent.component';
 import { SetScoreComponent } from './set-score/set-score.component';
+import { ScoreLogComponent } from './score-log/score-log.component';
 
 const routes: Routes = [
     { path: '', component: AgentListComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: ':agentId', component: AgentDetailComponent },
     { path: 'edit/:agentId', component: EditAgentComponent },
     { path: 'set-score/:agentId', component: SetScoreComponent },
+    { path: 'score-log/:agentId', component: ScoreLogComponent },
     { path: 'tickets-info/:agentId', component: AgentTicketInfoComponent },
     
    
@@ -39,5 +41,6 @@ export const routedComponents: Array<any> = [
     AgentTicketInfoComponent,
     AgentNewComponent,
     EditAgentComponent,
-    SetScoreComponent
+    SetScoreComponent,
+    ScoreLogComponent
 ];
