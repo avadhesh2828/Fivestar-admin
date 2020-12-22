@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\PaymentHistoryTransaction;
 use App\Models\PaymentDepositTransaction;
 use App\Models\User;
+use App\Models\Agent;
+use Auth;
 
 class DepositController extends Controller
 {
@@ -68,19 +70,39 @@ class DepositController extends Controller
   }
 
   public function score_logs( Request $request ){
+    $this->user = Auth::user();
+    $user_id = $this->user->admin_id;
+
+    $logType = $request->post('type');
+
     $transaction = new PaymentDepositTransaction;
-    $transaction = $transaction->select('payment_deposit_transactions.*', 'U.username');
-    $transaction = $transaction->join((new User)->getTable().' as U', function($j){
-        $j->on('U.user_id', '=', 'payment_deposit_transactions.user_id');
-    });
+
+    if($logType == 'agent') {
+      $transaction = $transaction->select('payment_deposit_transactions.*', 'A.username');
+      $transaction = $transaction->join((new Agent)->getTable().' as A', function($j) use ($logType){
+          $j->on('A.admin_id', '=', 'payment_deposit_transactions.user_id');
+          $j->where('payment_deposit_transactions.type', $logType);
+      });
+    }
+
+    if($logType == 'player') {
+      $transaction = $transaction->select('payment_deposit_transactions.*', 'U.*');
+      $transaction = $transaction->join((new User)->getTable().' as U', function($j) use ($logType){
+          $j->on('U.user_id', '=', 'payment_deposit_transactions.user_id');
+          $j->where('payment_deposit_transactions.type', $logType);
+      }); 
+    }
+
+    $transaction = $transaction->with(['account']);
 
     // Date Range Filter
     $dates = $request->post('dates');
     if( isset($dates['fromdate']) && isset($dates['todate']) ){
-      $transaction = $transaction->whereBetween('date_created', [$dates['fromdate'] , $dates['todate']]);
+      $transaction = $transaction->whereBetween('payment_deposit_transactions.date_created', [$dates['fromdate'] , $dates['todate']]);
     }
 
-    $transaction = $transaction->where('U.username', $request->post('username'));
+    $transaction = $transaction->where('payment_deposit_transactions.admin_id', $user_id);  
+    $transaction = $transaction->orderBy('payment_deposit_transactions.date_created', 'desc');
     // Paginated records
     $transaction = $transaction->paginate($request->per_page);
 

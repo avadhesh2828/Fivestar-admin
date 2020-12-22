@@ -14,20 +14,21 @@ class PaymentDepositTransaction extends Model
 
     protected $fillable = [
         'payment_transaction_unique_id',
-        'payment_method',
         'user_id',
-        'payment_request',
-        'payer_id',
-        'payer_email',
-        'phone',
-        'first_name',
-        'last_name',
-        'transaction_id',
-        'order_time',
         'payment_status',
-        'status',
-        'added_to_user_balance',
+        'payment_transaction_id',   
+        'admin_id',
+        'set_score',
+        'befor_score',
+        'after_score',
+        'ip',
+        'type',
         'date_created',
         'date_modified',
     ];
+
+    public function account()
+	{
+		return $this->belongsTo('App\Models\Agent','admin_id','admin_id');	
+	}
 }

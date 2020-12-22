@@ -93,6 +93,7 @@
     "phoneValidation": "電話號碼必須有效",
     "max": "最高",
     "setScore": "設定分數",
+    "scoreLog": "分數記錄",
     "edit": "編輯"
   },
   "agentDetail": {
