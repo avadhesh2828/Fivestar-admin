@@ -31,7 +31,7 @@
               <input type="text" class="form-control" formControlName="score" placeholder="{{'scoreLog.score' | translate}}">
               <div *ngIf="submitted && f['score'].errors" class="text-danger">
                 <div *ngIf="f['score'].errors.required">{{ 'scoreLog.scoreIsRequired' | translate}}</div>
-                <div *ngIf="f['score'].errors.min">{{ 'scoreLog.scoreMin' | translate}} 1</div>
+                <div *ngIf="f['score'].errors.min">{{ 'scoreLog.scoreMin' | translate}} -{{agentBalance}}</div>
                 <div *ngIf="f['score'].errors.max">{{ 'scoreLog.scoreMax' | translate}} {{maxBalance}}</div>
               </div>
             </div>

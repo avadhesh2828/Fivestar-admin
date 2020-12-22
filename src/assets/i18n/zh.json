@@ -49,8 +49,8 @@
     "gameManagement": "遊戲管理",
     "history": "經營歷史",
     "redPacket": "紅包",
-    "scoreLog": "分數記錄",
-    "gameLog": "遊戲記錄",
+    "scoreLog": "玩家分數記錄",
+    "gameLog": "玩家遊戲日誌",
     "signOut": " 登出"
   },
   "agent": {

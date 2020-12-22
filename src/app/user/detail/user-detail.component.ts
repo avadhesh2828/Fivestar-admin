@@ -130,7 +130,8 @@ export class UserDetailComponent implements OnInit {
         'score'            : user.setMoreScore,
         'phone'            : user.phone,
         'new_password'     : user.new_password,
-        'confirm_password' : user.confirm_password  
+        'confirm_password' : user.confirm_password,
+        'description'      : user.description  
       };
       this.userService.updatePlayer(forminputdata)
         .subscribe((response: any) => {
