@@ -61,8 +61,8 @@ export class NewComponent implements OnInit {
         // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
         'name': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-        'phone': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]],
-        'description': ['', [Validators.minLength(5), Validators.maxLength(200)]],
+        'phone': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
+        'description': [''],
       });
     });
   }

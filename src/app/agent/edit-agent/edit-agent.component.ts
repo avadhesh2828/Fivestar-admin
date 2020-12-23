@@ -89,6 +89,7 @@ export class EditAgentComponent implements OnChanges {
     if (agent.admin_id) {
       const forminputdata = {
         'agent_id'         : agent.admin_id,
+        'name'             : agent.name,
         'score'            : agent.setMoreScore,
         'phone'            : agent.phone,
         'new_password'     : agent.new_password,

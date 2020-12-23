@@ -33,10 +33,18 @@
                 <div>
                   <div class="row">
                   <div class="col-sm-6">
-                    <div class="row">
+                    <div class="row" *ngIf="editPlayerId !== user.user_id">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.playerName' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.name; else notAvailable">{{user.name}}</div>
                     </div>
+
+                    <div class="row" *ngIf="editPlayerId == user.user_id">
+                      <div class="col-12 col-sm-3"><b>{{'playerDetail.playerName' | translate}}</b></div>
+                      <div class="col-12 col-sm-3">
+                        <input type="text" name="name" [(ngModel)]="user.name" class="form-control" placeholder="{{'playerDetail.playerName' | translate}}" >
+                      </div>
+                    </div>
+
                     <div class="row">
                       <div class="col-12 col-sm-3"><b>{{'playerDetail.userName' | translate}}</b></div>
                       <div class="col-12 col-sm-9" *ngIf="user.username; else notAvailable">{{user.username}}</div>

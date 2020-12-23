@@ -337,10 +337,11 @@ class UserController extends Controller
     public function update_user(Request $request)
     {
         $this->user = Auth::user();
-        $agent_id = $this->user->admin_id;
-        $user_id  = $request->post('user_id');
-        $score    = $request->post('score');
-        $phone    = $request->post('phone');
+        $agent_id  = $this->user->admin_id;
+        $user_id   = $request->post('user_id');
+        $name      = $request->post('name');
+        $score     = $request->post('score');
+        $phone     = $request->post('phone');
         $new_password     = $request->post('new_password');
         $confirm_password = $request->post('confirm_password');
         $description = $request->post('description');
@@ -367,9 +368,10 @@ class UserController extends Controller
         $user_data = User::where('user_id', $user_id)->first();  
         if($score > 0) {
             $data = array(
+                "name"       => $name,
                 "balance"    => $user_data->balance + $score, 
                 "phone"      => $phone, 
-                "description" => $description,
+                "description"=> $description,
                 "updated_at" => date('Y-m-d H:i:s')
             );
             if($this->user->role_id == 2) {
@@ -378,9 +380,10 @@ class UserController extends Controller
             $this->scoreHistory($user_data, $score);
         } else {
             $data = array(
-                "phone"      => $phone, 
+                "name"        => $name,
+                "phone"       => $phone, 
                 "description" => $description,
-                "updated_at" => date('Y-m-d H:i:s')
+                "updated_at"  => date('Y-m-d H:i:s')
             );
         }     
 
