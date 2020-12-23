@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-
+import { LoaderService } from '../../shared/loader/loader.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -29,6 +29,7 @@ export class NewComponent implements OnInit {
   public message: string;
   maxBalance: any;
   userAgent: any;
+  public unique_username:any;
 
   // public show:boolean = false;
   public isSameAdd = false;
@@ -40,13 +41,17 @@ export class NewComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     public translate: TranslateService,
-    public subscriptionService: SubscriptionService
-  ) { }
-
-  ngOnInit() {
+    public subscriptionService: SubscriptionService,
+    private loaderService: LoaderService,
+  ) { 
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
     });
+  }
+
+  ngOnInit() {
+    this.getUniqueUserName();
+    
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
       // this.maxBalance =  usr.balance;
@@ -67,6 +72,21 @@ export class NewComponent implements OnInit {
     });
   }
 
+
+  private getUniqueUserName() {
+    this.loaderService.display(true);
+    this.userService.getUniquePlayerUserName()
+      .subscribe((dat) => {
+        this.loaderService.display(false);
+        if (dat['data']) {
+          this.unique_username = dat['data']; 
+        }
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+  }
+
   // getting form control values
   get f() {
     return this.newAgentForm.controls;
@@ -78,7 +98,7 @@ export class NewComponent implements OnInit {
       return;
     } else {
       const forminputdata = {
-        // 'username': this.f.username.value,
+        'username': this.unique_username,
         'password': this.f.password.value,
         'score': this.f.score.value,
         'name': this.f.name.value,

@@ -86,4 +86,8 @@ export class UserService {
   createNewPlayer(params: object) {
     return this.http.post(`${environment.API_URL}/users/create`, params);
   }
+
+  getUniquePlayerUserName() {
+    return this.http.get(`${environment.API_URL}/users/fetch-player-username`);
+  }
 }
