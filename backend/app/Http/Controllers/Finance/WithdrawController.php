@@ -27,9 +27,9 @@ class WithdrawController extends Controller
 
     $history = new History;
     $history = $history->with(['agent_detail']);
-    if($role_id == 2 ) {
+    // if($role_id == 2 ) {
       $history = $history->where('from_id', $user_id);  
-    }
+    // }
     // Date Range Filter
     $dates = json_decode($request->dates);
     if( isset($dates->fromdate) && isset($dates->todate) ){
