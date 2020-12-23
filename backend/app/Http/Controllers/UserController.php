@@ -58,7 +58,7 @@ class UserController extends Controller
         $this->user = Auth::user();
         $agent_id = $this->user->admin_id;
 
-        // $username = $request->post('username');
+        $username = $request->post('username');
         $password = $request->post('password');
         $score    = $request->post('score');
         $name     = $request->post('name');
@@ -71,7 +71,7 @@ class UserController extends Controller
             'password.regex' => 'Password must have one uppercase and must be alphanumeric.',
         ];
         $validator = Validator::make($request->all(), [
-            // 'username' => 'required|numeric|unique:pgsql.users.user,username',
+            'username' => 'required|numeric|unique:pgsql.users.user,username',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'score'    => 'required|numeric|min:0'.$maxBalance,
             'name'     => 'required'
@@ -87,7 +87,7 @@ class UserController extends Controller
         }
 
         User::create([
-            "username"      => mt_rand(1111111111, 9999999999),
+            "username"      => $username, //mt_rand(1111111111, 9999999999),
             "password"      => Hash::make($password),
             "balance"       => $score,
             "name"          => $name,
@@ -426,5 +426,17 @@ class UserController extends Controller
             'date_modified'=> date('Y-m-d H:i:s')
         ]);
     }
+
+
+    /**
+     * Generate 10 digit unique username for Player.
+     *
+     */
+    public function generate_unique_username(Request $request)
+    {
+        $unique_username = random_string('numeric',10);
+        return response()->json(['response_code'=> 200,'service_name' => 'generate_unique_username','data' => $unique_username],200);
+    }
+
 
 }
