@@ -127,6 +127,7 @@ export class UserDetailComponent implements OnInit {
     if (user.user_id) {
       const forminputdata = {
         'user_id'          : user.user_id,
+        'name'             : user.name,
         'score'            : user.setMoreScore,
         'phone'            : user.phone,
         'new_password'     : user.new_password,

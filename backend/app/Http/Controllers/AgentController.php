@@ -167,6 +167,7 @@ class AgentController extends Controller
         $this->user = Auth::user();
         $admin_id         = $this->user->admin_id;
         $agent_id         = $request->post('agent_id');
+        $name             = $request->post('name');
         $score            = $request->post('score');
         $phone            = $request->post('phone');
         $new_password     = $request->post('new_password');
@@ -195,6 +196,7 @@ class AgentController extends Controller
         $agent_data = Agent::where('admin_id', $agent_id)->first();  
         if($score > 0) {
             $data = array(
+                "name"        => $name,
                 "balance"     => $agent_data->balance + $score, 
                 "phone"       => $phone, 
                 "description" => $description,
@@ -206,6 +208,7 @@ class AgentController extends Controller
             }
         } else {
             $data = array(
+                "name"        => $name,
                 "phone"       => $phone, 
                 "description" => $description,
                 "updated_at"  => date('Y-m-d H:i:s')
