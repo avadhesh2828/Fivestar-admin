@@ -179,7 +179,7 @@ class AgentController extends Controller
         $validator = Validator::make($request->all(), [
             'agent_id'         => 'required',
             'score'            => 'nullable|numeric|min:0'.$maxBalance,
-            'phone'            => 'required|numeric|digits:10',
+            'phone'            => 'nullable|numeric|min:1|max:10',
             'new_password'     => 'nullable|min:6',
             'confirm_password' => 'nullable|required_with:new_password|same:new_password|min:6'
         ]);
