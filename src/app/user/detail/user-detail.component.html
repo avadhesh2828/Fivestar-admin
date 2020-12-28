@@ -14,7 +14,7 @@
             <div *ngIf="!error && !user">Loading...</div>
             <div *ngIf="user" class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ user.name | titlecase }}
+                <h6 class="m-0 font-weight-bold text-primary">{{ user.username }}
 
                 <span class="badge"
                 [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>

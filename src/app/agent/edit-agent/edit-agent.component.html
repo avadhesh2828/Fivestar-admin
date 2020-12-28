@@ -14,7 +14,7 @@
             <div *ngIf="!error && !agents">Loading...</div>
             <div *ngIf="agents" class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ agents.name | titlecase }}
+                <h6 class="m-0 font-weight-bold text-primary">{{ agents.username | titlecase }}
 
                 <span class="badge"
                 [ngClass]="{'badge-success': (agents.status == 1), 'badge-secondary': (agents.status == 0), 'badge-danger': (agents.status > 1)}">{{agentStatus[agents.status]}}</span>
