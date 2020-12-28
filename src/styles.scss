@@ -13446,10 +13446,10 @@ html[dir="rtl"] .aside-menu-show .aside-menu {
     color: #fff;
   }
   .app-header .navbar-brand {
-    position: absolute;
+    // position: absolute;
     top: 0;
     left: 50%;
-    margin-left: -77.5px;
+    // margin-left: -77.5px;
   }
   .app-body {
     margin-top: 55px;
@@ -14054,11 +14054,33 @@ button.bg-gray-900:focus {
   .d-sm-down-none {
     display: none !important;
   }
+  .app-header {
+    height: auto;
+  }
+  .app-header .navbar-brand {
+    top: 0;
+    left: 50%;
+    position: absolute;
+    margin-left: -77px;
+  }
+  .admin-right {
+    width: 100% !important;
+  }
+  .user-data {
+    margin-top: 30px !important;
+  }
+
 }
 
 @media (max-width: 991.98px) {
   .d-md-down-none {
     display: none !important;
+  }
+}
+
+@media(min-width:768px) and (max-width:1024px) {
+  .admin-right {
+    width: 42% !important;
   }
 }
 
