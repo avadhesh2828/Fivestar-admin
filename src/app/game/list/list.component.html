@@ -73,6 +73,7 @@
               <th>{{'games.maxBet' | translate}}</th>
               <th>{{'games.gameImage' | translate}}</th>
               <th>{{'games.status' | translate}}</th>
+              <th>{{'games.position' | translate}}</th>
               <th>{{'games.featured' | translate}}</th>
               <th>{{'games.action' | translate}}</th>
             </tr>
@@ -98,25 +99,24 @@
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
                   }}</span>
               </td>
+              <td *ngIf="!game.isEditabel"> {{ game.position }} </td>
+              <td *ngIf="game.isEditabel">
+                <input type="text" class="form-control" placeholder="Enter Position" name="position" [(ngModel)]="game.position" [disabled]="!game.isEditabel" />
+              </td>
               <td>
                   <ui-switch [checked]="game.is_featured == 'true'" (change)="onSaveFeaturedChanged(game, $event)"></ui-switch>
               </td>
               <td>
-                <a routerLink="/game/{{game.id}}"><i class="fa fa-address-book"></i>{{'games.details' | translate}}</a>
+                <a routerLink="/game/{{game.id}}">{{'games.details' | translate}}</a>
                 &nbsp;
-                <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal" (click)="startEdit({
-                    user_unique_id: user.user_unique_id,
-                    status: user.status,
-										user_id: user.user_id,
-										balance: user.balance,
-                    userIndex: userIndex
-                  })"><i class="fa fa-edit"></i>Edit</a>
-                  &nbsp; -->
                 <a href="javascript:void(0);" *ngIf="game.status == 0"
                   (click)="changeGameStatus(game.id, '1')"> {{'games.disable' | translate}}</a>
                 &nbsp;
                 <a href="javascript:void(0);" *ngIf="game.status == 1"
                   (click)="changeGameStatus(game.id, '0')"> {{'games.enable' | translate}}</a>
+                &nbsp;  
+                <a href="javascript:void(0);" *ngIf="!game.isEditabel" (click)="game.isEditabel = !game.isEditabel">{{'games.edit' | translate}}</a>&nbsp;
+                <a href="javascript:void(0);" *ngIf="game.isEditabel" (click)="onStatusSubmit(game)">{{'games.save' | translate}}</a>
 
               </td>
             </tr>

@@ -235,7 +235,10 @@
     "resetFilters": "重置過濾器",
     "searchByGameName": "按游戏名称搜索",
     "gameProvider": "游戏供应商",
-    "featured" : "精選"
+    "featured" : "精選",
+    "position" : "位置",
+    "save" : "保存",
+    "edit" : "編輯"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "查詢播放器登錄IP",
