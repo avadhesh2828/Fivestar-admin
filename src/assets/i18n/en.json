@@ -236,7 +236,10 @@
     "resetFilters": "Reset Filters",
     "searchByGameName": "Search By Game Name",
     "gameProvider": "Game Provider",
-    "featured" : "Featured"
+    "featured" : "Featured",
+    "position" : "Position",
+    "save" : "Save",
+    "edit" : "Edit"
   },
   "playerLoginIn": {
     "queryplPlayerLoginIn": "Query Player LoginIP",

@@ -158,7 +158,6 @@ export class ListComponent implements OnInit {
 
   public onSaveFeaturedChanged(game:object, value:boolean){
     this.gameInfo = game;
-    console.log('testtttttttt====>', game);
     this.formSubmitted = true;
     const forminputdata = {
       is_featured : value
@@ -171,6 +170,26 @@ export class ListComponent implements OnInit {
       }, err => {
         const errorMessage = '';
         this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change game status.');
+        this.formSubmitted = false;
+      });
+  }
+
+  public onStatusSubmit(game) {
+    console.log(game);
+    this.loaderService.display(true);
+    game.isEditabel = false;
+    const forminputdata = {
+      position : game.position
+    }; 
+    console.log('aaa',forminputdata);   
+    this.gamesService.changeGamePosition(game.id, forminputdata).pipe()
+      .subscribe((result: any) => {
+        this.formSubmitted = false;
+        this.toastr.success(result.message || 'Position changed Sucessfully.');
+        this.getGameList();
+      }, err => {
+        const errorMessage = '';
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change position.');
         this.formSubmitted = false;
       });
   }
