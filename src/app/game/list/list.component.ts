@@ -35,6 +35,7 @@ export class ListComponent implements OnInit {
   public gameStatus = STATUS;
   public error = false;
   public gameInfo :any;
+  public isEditabel = 0;
 
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
@@ -174,10 +175,14 @@ export class ListComponent implements OnInit {
       });
   }
 
-  public onStatusSubmit(game) {
-    console.log(game);
+  //edit and update agent details
+  positionEditable(id: number) {
+    this.isEditabel = id;
+  }
+
+  public movePosition(game) {
     this.loaderService.display(true);
-    game.isEditabel = false;
+    this.isEditabel =  game.id; //false;
     const forminputdata = {
       position : game.position
     }; 
@@ -185,10 +190,12 @@ export class ListComponent implements OnInit {
     this.gamesService.changeGamePosition(game.id, forminputdata).pipe()
       .subscribe((result: any) => {
         this.formSubmitted = false;
+        this.isEditabel = 0;
         this.toastr.success(result.message || 'Position changed Sucessfully.');
         this.getGameList();
       }, err => {
         const errorMessage = '';
+        this.isEditabel = 0;
         this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change position.');
         this.formSubmitted = false;
       });

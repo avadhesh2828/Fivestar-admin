@@ -99,24 +99,34 @@
                   [ngClass]="{'badge-success': (game.status == 0), 'badge-secondary': (game.status == 1), 'badge-danger': (game.status > 1)}">{{gameStatus[game.status]
                   }}</span>
               </td>
-              <td *ngIf="!game.isEditabel"> {{ game.position }} </td>
-              <td *ngIf="game.isEditabel">
-                <input type="text" class="form-control" placeholder="Enter Position" name="position" [(ngModel)]="game.position" [disabled]="!game.isEditabel" />
+              <td *ngIf="isEditabel !== game.id" > {{ game.position }} </td>
+              <td *ngIf="isEditabel == game.id" >
+                <input type="text" class="form-control" placeholder="Enter Position" name="position" [(ngModel)]="game.position"/>
               </td>
               <td>
                   <ui-switch [checked]="game.is_featured == 'true'" (change)="onSaveFeaturedChanged(game, $event)"></ui-switch>
               </td>
               <td>
-                <a routerLink="/game/{{game.id}}">{{'games.details' | translate}}</a>
-                &nbsp;
+                <a routerLink="/game/{{game.id}}">
+                  <i class="fa fa-eye action-icon" aria-hidden="true"></i> 
+                  <!-- {{'games.details' | translate}} -->
+                </a>
                 <a href="javascript:void(0);" *ngIf="game.status == 0"
-                  (click)="changeGameStatus(game.id, '1')"> {{'games.disable' | translate}}</a>
-                &nbsp;
+                  (click)="changeGameStatus(game.id, '1')"> <i class="fa fa-toggle-on action-icon" aria-hidden="true"></i> 
+                  <!-- {{'games.disable' | translate}} -->
+                </a>
                 <a href="javascript:void(0);" *ngIf="game.status == 1"
-                  (click)="changeGameStatus(game.id, '0')"> {{'games.enable' | translate}}</a>
-                &nbsp;  
-                <a href="javascript:void(0);" *ngIf="!game.isEditabel" (click)="game.isEditabel = !game.isEditabel">{{'games.edit' | translate}}</a>&nbsp;
-                <a href="javascript:void(0);" *ngIf="game.isEditabel" (click)="onStatusSubmit(game)">{{'games.save' | translate}}</a>
+                  (click)="changeGameStatus(game.id, '0')"> <i class="fa fa-toggle-off action-icon" aria-hidden="true"></i> 
+                  <!-- {{'games.enable' | translate}} -->
+                </a>  
+                <a href="javascript:void(0);" (click)="positionEditable(game.id)" [hidden]="isEditabel == game.id">
+                  <i class="fa fa-pencil-square-o action-icon" aria-hidden="true"></i>
+                  <!-- {{'games.edit' | translate}} -->
+                </a>
+                <a href="javascript:void(0);" [hidden]="isEditabel !== game.id" (click)="movePosition(game)"> 
+                  <i class="fa fa-floppy-o action-icon" aria-hidden="true"></i>
+                  <!-- {{'games.save' | translate}} -->
+                </a>
 
               </td>
             </tr>
