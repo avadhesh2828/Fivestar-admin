@@ -53,6 +53,7 @@
     "redPacket": "Red Packet",
     "scoreLog": "Player Score Log",
     "gameLog": "Player Game Log",
+    "jackpot": "Jackpot",
     "signOut": " Sign Out"
   },
   "agent": {
@@ -460,5 +461,14 @@
     "next": "Next",
     "prev": "Prev",
     "lineName" : "Line Name"
+  },
+  "jackpot": {
+    "jackPot": "Jackpot",
+    "notFound": "No data found",
+    "serial": "S. No.",
+    "jackpotValue": "Jackpot Value",
+    "resetValue": "Reset Value",
+    "action": "Action",
+    "totalRecord": "Total Record"
   }
 }

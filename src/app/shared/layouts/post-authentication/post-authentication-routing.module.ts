@@ -65,6 +65,7 @@ const routes: Routes = [
             { path: 'game', loadChildren: () => import('../../../game/game.module').then(m => m.GameModule) },
             { path: 'score-log', loadChildren: () => import('../../../score-log/score-log.module').then(m => m.ScoreLogModule) },
             { path: 'game-log', loadChildren: () => import('../../../game-log/game-log.module').then(m => m.GameLogModule) },
+            { path: 'jackpot', loadChildren: () => import('../../../jackpot/jackpot.module').then(m => m.JackpotModule) },
 
         ]
     },
