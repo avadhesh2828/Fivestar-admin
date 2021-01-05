@@ -64,6 +64,12 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('change-status/{redPacketId}','RedPacketController@change_status')->middleware('can:isAdmin');
 	});
 
+	//jackpot
+	Route::group(['prefix' => 'jackpot'], function(){
+		Route::get('list','JackpotController@index')->middleware('can:isAdmin');
+		Route::post('update','JackpotController@update')->middleware('can:isAdmin');
+	});
+
 	//advertisment route
 	Route::group(['prefix' => 'advertisements'], function(){
 		Route::get('get_advertisement','Advertisements@get_advertisement')->middleware('can:isAdmin');
