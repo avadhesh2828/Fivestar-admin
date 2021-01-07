@@ -151,7 +151,8 @@ class GameController extends Controller
         $this->user = Auth::user();
         $admin_id = $this->user->admin_id;
 
-        $position = $request->post('position');
+        $position     = $request->post('position');
+        $game_type_id = $request->post('game_type_id');
         //validation
         $validator = Validator::make($request->all(), [
             "position" => ['required']
@@ -173,7 +174,19 @@ class GameController extends Controller
                 $update = Game::where('id', $pos->id)->update(["position" => $postion_count + 1, "updated_at"  => date('Y-m-d H:i:s')]);
                 $postion_count ++;
             }
-            Game::where('id', $id)->update(["position" => $position, "updated_at"  => date('Y-m-d H:i:s')]);
+            if($game_type_id != ''){
+                $update_data = array(
+                    "position"     => $position, 
+                    "game_type_id" => $game_type_id,
+                    "updated_at"   => date('Y-m-d H:i:s')
+                );    
+            }else{
+                $update_data = array(
+                    "position"    => $position, 
+                    "updated_at"  => date('Y-m-d H:i:s')
+                ); 
+            }
+            Game::where('id', $id)->update($update_data);
             return response()->json([
                 'response_code'=> 200,
                 'service_name' => 'change_position',

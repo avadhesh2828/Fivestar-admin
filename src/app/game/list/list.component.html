@@ -91,7 +91,16 @@
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.game_id || "-" }}</td>
               <td>{{ game.name || "-" }}</td>
-              <td>{{ game.game_type || "-" }}</td>
+              <td *ngIf="isEditabel !== game.id" >{{ game.game_type || "-" }}</td>
+              <td *ngIf="isEditabel == game.id">
+                
+                <select class="form-control" [(ngModel)]="game.game_type_id" placeholder="" name="category">
+                  <option value="-1">{{'games.selectCategory' | translate}}</option>
+                  <option *ngFor="let category of categories; let categoryIndex = index" [value]="category.game_type_id">
+                    {{category.game_type}}
+                  </option>
+                </select>
+              </td>
               <td>{{ game.max_bet }}</td>
               <td><img src="{{game.image}}" class="game-thumbnails"/></td>
               <td>
