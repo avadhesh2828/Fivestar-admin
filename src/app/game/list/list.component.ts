@@ -184,9 +184,9 @@ export class ListComponent implements OnInit {
     this.loaderService.display(true);
     this.isEditabel =  game.id; //false;
     const forminputdata = {
-      position : game.position
-    }; 
-    console.log('aaa',forminputdata);   
+      position     : game.position,
+      game_type_id : game.game_type_id
+    };  
     this.gamesService.changeGamePosition(game.id, forminputdata).pipe()
       .subscribe((result: any) => {
         this.formSubmitted = false;
