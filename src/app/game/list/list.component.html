@@ -4,7 +4,7 @@
       <!--filter-->
       <div class="card-header">
         <div class="row">
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-2">
             <div class="input-group">
               <select class="form-control" [(ngModel)]="params['status']" placeholder="" name="status">
                 <option value="-1">{{'games.selectAStatus' | translate}}</option>
@@ -14,7 +14,7 @@
               </select>
             </div>
           </div>
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-2">
             <div class="input-group">
               <select class="form-control" [(ngModel)]="params['category']" placeholder="" name="category">
                 <option value="-1">{{'games.selectCategory' | translate}}</option>
@@ -24,12 +24,21 @@
               </select>
             </div>
           </div>
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-2">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="params['provider']" placeholder="" name="provider">
+                <option value="-1">{{'games.selectProvider' | translate}}</option>
+                <option *ngFor="let provider of supplier; let providerIndex = index" [value]="provider.provider_id">
+                  {{provider.provider_name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-2">
             <span class="input-group-prepend">
               <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
                 {{'games.filter' | translate}}</button>&nbsp;
             </span>
-
           </div>
         </div>
         <form class="row mt-1">
@@ -80,13 +89,13 @@
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="8" class="table-danger">There was an error</td>
+              <td colspan="9" class="table-danger">There was an error</td>
             </tr>
             <tr *ngIf="!error && !gameList">
-              <td colspan="8">Loading...</td>
+              <td colspan="9">Loading...</td>
             </tr>
             <tr *ngIf="gameList && !(gameList.length>0)">
-              <td colspan="8" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
+              <td colspan="9" class="text-center"> {{'games.noPlayerFound' | translate}}</td>
             </tr>
             <tr *ngFor="let game of gameList; let gameIndex = index">
               <td>{{ game.game_id || "-" }}</td>
