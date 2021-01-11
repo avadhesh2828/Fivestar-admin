@@ -43,6 +43,10 @@ export class GamesService {
   }
 
   category() {
-    return this.http.get(`${environment.API_URL}/category`);
+    return this.http.get(`${environment.API_URL}/game/categories`);
+  }
+
+  provider() {
+    return this.http.get(`${environment.API_URL}/game/provider`);
   }
 }

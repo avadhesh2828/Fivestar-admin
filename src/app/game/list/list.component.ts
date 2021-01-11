@@ -16,6 +16,7 @@ const INITIAL_PARAMS = {
   current_page: 1,
   status: -1,
   category: -1,
+  provider: -1,
   keyword: ''
 };
 
@@ -29,6 +30,7 @@ export class ListComponent implements OnInit {
   public params = { ...INITIAL_PARAMS };
   public gameList = [];
   public categories = [];
+  public supplier = [];
   public totalGames = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
@@ -59,6 +61,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.getCategory();
+    this.getProvider();
     this.getGameList();
     this.searchTextChanged.pipe(debounceTime(1000))
       .subscribe(model => this.getGameList());
@@ -72,7 +75,7 @@ export class ListComponent implements OnInit {
 
   private createUrl() {
     this.url = 'game/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.params.status + '&category=' + this.params.category + '&keyword=' + this.params.keyword;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&status=' + this.params.status + '&category=' + this.params.category + '&provider=' + this.params.provider + '&keyword=' + this.params.keyword;
   }
 
   public getGameList() {
@@ -149,6 +152,21 @@ export class ListComponent implements OnInit {
         this.loaderService.display(false);
         if (cat['data']) {
           this.categories = cat['data'];
+        }
+        this.error = false;
+      }, (err: Error) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+  }
+
+  public getProvider() {
+    this.loaderService.display(true);
+    this.gamesService.provider()
+      .subscribe((supplier: []) => {
+        this.loaderService.display(false);
+        if (supplier['data']) {
+          this.supplier = supplier['data'];
         }
         this.error = false;
       }, (err: Error) => {

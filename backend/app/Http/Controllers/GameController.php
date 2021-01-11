@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\GameType;
+use App\Models\GameProvider;
 use Auth;
 use DB;
 use Validator;
@@ -32,6 +33,9 @@ class GameController extends Controller
         }
         if($request->category != -1){
             $game = $game->where('game.game_type_id', $request->category);    
+        }
+        if($request->provider != -1){
+            $game = $game->where('game.provider_id', $request->provider);    
         }
         if($request->keyword != ''){
             $game = $game->where('name', 'ilike', '%' . $request->keyword . '%');
@@ -200,5 +204,24 @@ class GameController extends Controller
             ],500);
         }
     }
+
+    /**
+     * game categories.
+     *
+     */
+    public function get_categories(Request $request){
+        $category = GameType::get();
+        return response()->json(['response_code'=> 200,'service_name' => 'get_categories','data' => $category]);
+    }
+
+    /**
+     * game provider.GameType
+     *
+     */
+    public function get_provider(Request $request){
+        $provider = GameProvider::get();
+        return response()->json(['response_code'=> 200,'service_name' => 'get_provider','data' => $provider]);
+    }
+
 
 }

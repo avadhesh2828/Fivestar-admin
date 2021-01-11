@@ -233,6 +233,7 @@
     "notAvailable": "Not Available",
     "selectAStatus": "Select a Status",
     "selectCategory": "Select Category",
+    "selectProvider": "Select Provider",
     "filter": "Filter",
     "resetFilters": "Reset Filters",
     "searchByGameName": "Search By Game Name",
