@@ -23,7 +23,7 @@ class GameController extends Controller
         $user_id = $this->user->admin_id;
 
         $game = new Game;
-        $game = $game->select('game.*','GT.game_type'); 
+        $game = $game->select('game.*','GT.game_type',  DB::raw('(CASE WHEN game.position = 0 THEN NULL ELSE game.position END) AS is_position')); 
         $game = $game->join((new GameType)->getTable().' as GT', function($m){
             $m->on('GT.game_type_id', '=', 'game.game_type_id');
         });
@@ -40,7 +40,8 @@ class GameController extends Controller
         if($request->keyword != ''){
             $game = $game->where('name', 'ilike', '%' . $request->keyword . '%');
         }
-        $game = $game->orderBy('position','ASC');
+        $game = $game->orderByRaw('is_position ASC NULLS LAST');
+        // $game = $game->orderBy('position','ASC');
         $game = $game->paginate($request->per_page);
         return response()->json(['response_code'=> 200, 'service_name' => 'game_list', 'data' => $game],200);
     }
