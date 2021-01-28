@@ -35,16 +35,16 @@ class RedPacketController extends Controller
         $drop_min_amount = $request->post('drop_min_amount');
         $drop_max_amount = $request->post('drop_max_amount');
         $drop_rates      = $request->post('drop_rates');
-        $games           = $request->post('games');
+        // $games           = $request->post('games');
 
         //validation
 
         $validator = Validator::make($request->all(), [
-            'min' => 'required',
-            'max' => 'required',
-            'drop_min_amount' => 'required',
-            'drop_max_amount' => 'required',
-            'drop_rates'      => 'required'
+            'min' => 'required|numeric',
+            'max' => 'required|numeric',
+            'drop_min_amount' => 'required|numeric',
+            'drop_max_amount' => 'required|numeric|gt:'.$drop_min_amount,
+            'drop_rates'      => 'required|numeric'
         ]);
 
         if($validator->fails()){
@@ -62,7 +62,7 @@ class RedPacketController extends Controller
             "drop_min_amount"=> $drop_min_amount,
             "drop_max_amount"=> $drop_max_amount,
             "drop_rates"     => $drop_rates,
-            "games"          => json_encode($games),
+            // "games"          => json_encode($games),
             "status"         => 0,
             "created_at"     => date('Y-m-d H:i:s'),
             "updated_at"     => date('Y-m-d H:i:s')
@@ -167,7 +167,10 @@ class RedPacketController extends Controller
         }
     }
 
-
+    /**
+     * Delete a Red Packet
+     *
+     */    
     public function delete_red_packet(Request $request)
     {
         $red_packet_id   = $request->post('red_packet_id');

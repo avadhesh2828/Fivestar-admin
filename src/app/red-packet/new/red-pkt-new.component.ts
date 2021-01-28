@@ -48,11 +48,11 @@ export class RedPktNewComponent implements OnInit {
 
   ngOnInit() {
     this.newForm = this.formBuilder.group({
-      min: [0, [Validators.required]],
-      max: [0, [Validators.required]],
-      dropMinAmt: [0, [Validators.required]],
-      dropMaxAmt: [0, [Validators.required]],
-      dropRate: [0, [Validators.required]]
+      min: ['', [Validators.required]],
+      max: ['', [Validators.required]],
+      dropMinAmt: ['', [Validators.required]],
+      dropMaxAmt: ['', [Validators.required]],
+      dropRate: ['', [Validators.required]]
     });
   }
 
@@ -94,7 +94,7 @@ export class RedPktNewComponent implements OnInit {
           }
         }, err => {
           const errorMessage = '';
-          this.toastr.error(errorMessage || err.error.GlobalError || 'Some error occurred while creating new Red Packet.');
+          this.toastr.error(errorMessage || err.error.global_error || 'Some error occurred while creating new Red Packet.');
           this.formSubmitted = false;
         });
     }
