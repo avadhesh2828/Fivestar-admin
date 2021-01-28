@@ -10,7 +10,7 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
-import { GamesService } from '../../services/games.service';
+import { RedpacketService } from '../../services/redpacket.service';
 
 const INITIAL_PARAMS = {
   per_page: 20,
@@ -35,16 +35,19 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   public currency_code = Constants.CURRENCY_CODE;
   public error = false;
   public currentAgent = null;
-  public countryList = [];
+  public categories = [];
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public currentAdv: any;
+  public packet : any;
   public url = 'red-packet/list?';
+  public isCategoryEditabel = 0;
+  public title: string;
 
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
-    private gameService: GamesService,
+    private redpacketService: RedpacketService,
     private toastr: ToastrService,
     private loaderService: LoaderService,
     private location: Location,
@@ -92,7 +95,7 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   public getRedPktList() {
     this.loaderService.display(true);
     this.createUrl();
-    this.gameService.getRedPktList(this.url)
+    this.redpacketService.getRedPktList(this.url)
       .subscribe((adv: []) => {
         this.loaderService.display(false);
         if (adv['data'] && adv['data'].data) {
@@ -152,11 +155,10 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   }
 
   public onStatusSubmit(pkt) {
-    console.log(pkt);
     this.loaderService.display(true);
     pkt.isEditabel = false;
     if (this.oldStatus !== this.advList.status) {
-      this.gameService.editRedPkt(pkt.red_packet_id, { status: pkt.status })
+      this.redpacketService.editRedPkt(pkt.red_packet_id, { status: pkt.status })
         .subscribe((res: any) => {
           this.loaderService.display(false);
           if (res && res.message) {
@@ -174,4 +176,72 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
       this.loaderService.display(false);
     }
   }
+
+  public gameCategoryModel() {
+    this.loaderService.display(true);
+    this.redpacketService.redPacketCategory()
+      .subscribe((cat: []) => {
+        this.loaderService.display(false);
+        if (cat['data']) {
+          this.categories = cat['data'];
+        }
+        this.error = false;
+      }, (err: Error) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+    $('#gameCategoryModel').modal('show');
+  }
+
+  //edit and update agent details
+  timingEditable(id: number) {
+    this.isCategoryEditabel = id;
+  }
+
+  public updateTiming(cat) {
+    this.loaderService.display(true);
+    this.isCategoryEditabel =  cat.game_type_id;
+    const forminputdata = {
+      game_type_id : cat.game_type_id,
+      time         : cat.redpacket_time
+    };  
+    this.redpacketService.updateCategoryTime(forminputdata).pipe()
+      .subscribe((result: any) => {
+        this.isCategoryEditabel = 0;
+        this.toastr.success(result.message || 'Time upated Sucessfully.');
+        this.loaderService.display(false);
+      }, err => {
+        const errorMessage = '';
+        this.isCategoryEditabel = 0;
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while updating timing.');
+        this.loaderService.display(false);
+      });
+  }
+
+  // delete confirmation
+  public openConfirmationDialog(pkt) {
+    this.packet = pkt;
+    $('#openConfirmationDialog').modal('show');
+     this.title = "Are you sure to delete?";
+  }
+
+  // delete confirmation
+  public deleteRedPacket(packet) {
+    const forminputdata = {
+      red_packet_id : packet.red_packet_id
+    }; 
+    this.loaderService.display(true);
+    this.redpacketService.delete(forminputdata).pipe()
+    .subscribe((del: any) => {
+      this.toastr.success(del.message || 'Red packet deleted Sucessfully.');
+      this.loaderService.display(false);
+      $('#openConfirmationDialog').modal('hide');
+      this.getRedPktList();
+    }, err => {
+      const errorMessage = '';
+      this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while deleting red packet.');
+      this.loaderService.display(false);
+    });
+  }
+
 }

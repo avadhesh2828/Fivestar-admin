@@ -3,7 +3,10 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">{{'redPacket.redPacket' | translate}} </h1>
+          <h1 class="h3 mb-0 text-gray-800">{{'redPacket.redPacket' | translate}}
+          <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" (click)="gameCategoryModel()">
+            <i class="nav-icon icon-plus"></i> {{ 'redPacket.category' | translate}}</a></button>
+          </h1>
           <h5 class="mb-0 text-gray-800"> {{'redPacket.totalRecord' | translate}} : {{totalAdv}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -51,9 +54,18 @@
               <td>
 
                 <a href="javascript:void(0);" *ngIf="!pkt.isEditabel" (click)="pkt.isEditabel = !pkt.isEditabel"><i
-                    class="fa fa-edit"></i>{{'advertisement.edit' | translate}}</a>&nbsp;
+                    class="fa fa-edit action-icon"></i>
+                    <!-- {{'advertisement.edit' | translate}} -->
+                  </a>
                 <a href="javascript:void(0);" *ngIf="pkt.isEditabel" (click)="onStatusSubmit(pkt)"><i
-                    class="fa fa-edit"></i>{{'advertisement.save' | translate}}</a>
+                    class="fa fa-save action-icon"></i>
+                    <!-- {{'advertisement.save' | translate}} -->
+                </a>
+
+                <a href="javascript:void(0);" (click)="openConfirmationDialog(pkt)">
+                  <i class="fa fa-trash action-icon" aria-hidden="true"></i> 
+                </a>
+
               </td>
             </tr>
           </tbody>
@@ -81,4 +93,70 @@
     </div>
   </div>
 </div>
+
+
+<!-- Category Modal Start-->
+<div class="modal fade" id="gameCategoryModel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4> Update Red Packet 
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="categories">
+        <div>
+            <table class="table table-responsive-sm table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th>{{'redPacket.category' | translate}}</th>
+                  <th>{{'redPacket.time' | translate}}</th>
+                  <th>{{'redPacket.action' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cat of categories; let catIndex = index">
+                  <td>{{cat.game_type}}</td>
+                  <td>
+                    <input class="form-control" placeholder="Set Time" name="time" [(ngModel)]="cat.redpacket_time" [readonly]="isCategoryEditabel !== cat.game_type_id">
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="timingEditable(cat.game_type_id)" [hidden]="isCategoryEditabel == cat.game_type_id">
+                      <i class="fa fa-pencil-square-o action-icon" aria-hidden="true"></i>
+                    </a>
+                    <a href="javascript:void(0);" [hidden]="isCategoryEditabel !== cat.game_type_id" (click)="updateTiming(cat)"> 
+                      <i class="fa fa-floppy-o action-icon" aria-hidden="true"></i>
+                    </a>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Category Model End -->
+
+
+<!-- Delete Red packet-->
+<div class="modal fade" id="openConfirmationDialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+          <h4 class="modal-title">{{ title }}</h4>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel </button>
+          <button type="button" class="btn btn-primary" (click)="deleteRedPacket(this.packet)"> Ok </button>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
 <app-loader></app-loader>

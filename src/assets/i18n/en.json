@@ -385,7 +385,9 @@
     "reset": "Reset",
     "status": "Status",
     "action": "Action",
-    "totalRecord": "Total Record"
+    "totalRecord": "Total Record",
+    "category": "Red Packet Category",
+    "time": "Time"
   },
   "scoreLog": {
     "setScore": "Set Score",

@@ -6,6 +6,7 @@ export const ACTION_FOR = {
   '4': 'new-player',
   '5': 'change-password',
   '6': 'change-personal-password',
+  '7': 'red-packet',
 };
 
 export const PAYMENT_TYPE = {
