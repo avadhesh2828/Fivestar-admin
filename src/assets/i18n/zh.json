@@ -384,7 +384,9 @@
     "reset": "重啟",
     "status": "狀態",
     "action": "行動",
-    "totalRecord": "總記錄"
+    "totalRecord": "總記錄",
+    "category": "紅包類別",
+    "time": "時間"
   },
   "scoreLog": {
     "setScore": "設定分數",

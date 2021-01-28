@@ -11,7 +11,7 @@ class GameType extends Model
     protected $primaryKey = 'game_type_id';
 
     protected $fillable = [
-        'game_type_id', 'game_type','description', 'created_at','updated_at'
+        'game_type_id', 'game_type', 'description', 'image', 'is_active', 'redpacket_time', 'created_at', 'updated_at'
     ];
 
     public $timestamps = false;

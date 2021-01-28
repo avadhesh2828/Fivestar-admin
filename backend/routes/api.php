@@ -62,6 +62,10 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list','RedPacketController@index')->middleware('can:isAdmin');
 		Route::post('create','RedPacketController@create')->middleware('can:isAdmin');
 		Route::post('change-status/{redPacketId}','RedPacketController@change_status')->middleware('can:isAdmin');
+		Route::get('red-packet-category','RedPacketController@red_packet_category')->middleware('can:isAdmin');
+		Route::post('update-category-time','RedPacketController@update_category_time')->middleware('can:isAdmin');
+		Route::post('delete-red-packet','RedPacketController@delete_red_packet')->middleware('can:isAdmin');
+		
 	});
 
 	//jackpot

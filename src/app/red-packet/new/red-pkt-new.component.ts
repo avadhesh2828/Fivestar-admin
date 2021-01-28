@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
-import { GamesService } from 'src/app/services/games.service';
+import { RedpacketService } from 'src/app/services/redpacket.service';
 
 @Component({
   selector: 'app-red-pkt-new',
@@ -39,7 +39,7 @@ export class RedPktNewComponent implements OnInit {
     private router: Router, private location: Location,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
-    public gameService: GamesService,
+    public redpacketService: RedpacketService,
   ) {
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -83,11 +83,12 @@ export class RedPktNewComponent implements OnInit {
 
       this.formSubmitted = true;
 
-      this.gameService.createRedPkt(forminputdata).pipe()
+      this.redpacketService.createRedPkt(forminputdata).pipe()
         .subscribe((res: any) => {
           this.formSubmitted = false;
           if (res) {
             this.toastr.success(res.message || 'New Red Packet Created Sucessfully.');
+            this.router.navigate(['/red-packet']);
             this.handleReset();
 
           }

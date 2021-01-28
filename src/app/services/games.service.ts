@@ -32,16 +32,6 @@ export class GamesService {
     return this.http.get(`${environment.API_URL}/game/get-game-details/${gameId}`);
   }
 
-  getRedPktList(url: string) {
-    return this.http.get(`${environment.API_URL}/${url}`);
-  }
-  createRedPkt(data: object) {
-    return this.http.post(`${environment.API_URL}/red-packet/create`, data);
-  }
-  editRedPkt(redPacketId:any , data: object) {
-    return this.http.post(`${environment.API_URL}/red-packet/change-status/${redPacketId}`, data);
-  }
-
   category() {
     return this.http.get(`${environment.API_URL}/game/categories`);
   }

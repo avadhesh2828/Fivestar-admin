@@ -50,6 +50,7 @@ class GameHistoryController extends Controller
         }
     
         $gameHistory = $gameHistory->where('U.username', $username);
+        $gameHistory = $gameHistory->orderBy('payment_history_transactions.payment_history_transaction_id', 'DESC');
         // Paginated records
         $gameHistory = $gameHistory->paginate($request->per_page);
     
