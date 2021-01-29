@@ -8,7 +8,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 import { UserService } from '../../services/user.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -56,6 +56,7 @@ export class LogComponent implements OnInit {
     public translate: TranslateService,
     private route: ActivatedRoute, 
     private loaderService: LoaderService,
+    private location: Location,
   ) { 
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -169,6 +170,10 @@ export class LogComponent implements OnInit {
   handleReset() {
     this.showTable = false;
     this.scorLogForm.reset();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
