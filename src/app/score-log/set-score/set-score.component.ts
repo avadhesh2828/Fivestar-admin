@@ -45,10 +45,11 @@ export class SetScoreComponent implements OnInit {
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
     });
+
+    this.getUserDetail();
   }
 
   ngOnInit() {
-      this.getUserDetail();
       this.userService.currentUser.subscribe((usr: any) => {
         // this.maxBalance = usr.balance;
         this.maxBalance = (usr.role_id == 1)? '':usr.balance;
