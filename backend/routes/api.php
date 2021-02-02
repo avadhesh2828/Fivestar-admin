@@ -74,6 +74,11 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('update','JackpotController@update')->middleware('can:isAdmin');
 	});
 
+	 // suggestion Routes
+	 Route::group(['prefix' => 'suggestion'], function(){
+		Route::get('list', 'SuggestionController@index');
+	  });
+
 	//advertisment route
 	Route::group(['prefix' => 'advertisements'], function(){
 		Route::get('get_advertisement','Advertisements@get_advertisement')->middleware('can:isAdmin');

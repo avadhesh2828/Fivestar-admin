@@ -11,93 +11,6 @@
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/agent']" routerLinkActive="active">
           <i class="nav-icon icon-user"></i> {{'sidebar.userManagement' | translate}} </a>
       </li>
-      <!--
-      <li class="nav-item nav-dropdown">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/leagues']">
-          <i class="nav-icon icon-social-dribbble"></i>Leagues</a>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#ContestSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle">
-          <img [src]="contestIcon" />Contest</a>
-        <ul class="collapse list-unstyled nav-clickable-item" id="ContestSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/contest/create-new']">
-              <i class="nav-icon icon-plus"></i> Create</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/contest/list']">
-              <i class="nav-icon icon-list"></i> Listing</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/contest/list']" routerLinkActive="active">
-          <img class="route_image" [src]="contestIcon" />Contest</a>
-      </li> -->
-
-      <!-- <li class="nav-item" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/matches']" routerLinkActive="active">
-          <i class="nav-icon icon-trophy"></i> Matches</a>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#MatchSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle">
-          <img [src]="fightIcon" />Fight </a>
-        <ul class="collapse list-unstyled nav-clickable-item" id="MatchSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/matches/create']">
-              <i class="nav-icon icon-plus"></i> Create</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/matches']">
-              <i class="nav-icon icon-list"></i> Listing</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/matches']" routerLinkActive="active">
-          <img [src]="fightIcon" /> Fight</a>
-      </li> -->
-
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#PlayerSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle">
-          <img [src]="fighterIcon" />Fighter </a>
-        <ul class="collapse list-unstyled nav-clickable-item" id="PlayerSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/players/create']">
-              <i class="nav-icon icon-plus"></i> Create</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/players']">
-              <i class="nav-icon icon-list"></i> Listing</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/players']" routerLinkActive="active">
-          <img [src]="fighterIcon" /> Fighter</a>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#TeamSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-people"></i>Team </a>
-        <ul class="collapse list-unstyled nav-clickable-item" id="TeamSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/teams']">
-              <i class="nav-icon icon-list"></i> Listing</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <!--
-      <li class="nav-item nav-clickable-item" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/disputes']" routerLinkActive="active">
-          <i class="nav-icon icon-user"></i>Dispute Resolution</a>
-      </li> -->
 
       <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/game/list']" routerLinkActive="active">
@@ -142,24 +55,6 @@
         </ul>
       </li>
 
-      <!-- notification -->
-      <!-- <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin">
-        <a href="#notificationSubMenu" data-toggle="collapse" aria-expanded="false"
-          class="nav-link nav-dropdown-toggle"><i class="nav-icon icon-bell"></i>
-          {{'sidebar.notifications' | translate}}</a>
-        <ul class="collapse list-unstyled" id="notificationSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications/new']"
-              routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> {{'sidebar.createForUser' | translate}}</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>{{'sidebar.listing' | translate}}</a>
-          </li>
-        </ul>
-      </li> -->
-
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/player-loginip/list']"
           routerLinkActive="active">
@@ -192,123 +87,12 @@
       </li>
       <!-- end -->
 
-      <!--
+      <!-- suggestion -->
       <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/notifications']" routerLinkActive="active">
-          <i class="nav-icon icon-bell"></i> Notifications</a>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#scoringSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-social-dribbble"></i> Scoring</a>
-        <ul class="collapse list-unstyled" id="scoringSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/scoring/1']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Football</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/scoring/2']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Cricket</a>
-          </li>
-        </ul>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#NewsSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle">
-          <img [src]="newsIcon" /> News</a>
-        <ul class="collapse list-unstyled" id="NewsSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/news/add']"
-              routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/news']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Listing</a>
-          </li>
-        </ul>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/news']" routerLinkActive="active">
-          <img [src]="newsIcon" /> News</a>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#EventSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-rocket"></i>Events</a>
-        <ul class="collapse list-unstyled" id="EventSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/events/create-new']"
-              routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/events']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Listing</a>
-          </li>
-        </ul>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/events']" routerLinkActive="active">
-          <i class="nav-icon icon-rocket"></i> Events</a>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#PromotionSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-rocket"></i>Promotion</a>
-        <ul class="collapse list-unstyled" id="PromotionSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/promotions/create-new']"
-              routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/promotions']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Listing</a>
-          </li>
-        </ul>
-      </li> -->
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/promotions']" routerLinkActive="active">
-          <i class="nav-icon icon-rocket"></i> Promotion</a>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown">
-        <a href="#WeightclassSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-rocket"></i>Weightclass</a>
-        <ul class="collapse list-unstyled" id="WeightclassSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/weightclass/create-new']"
-              routerLinkActive="active">
-              <i class="nav-icon icon-pencil"></i> Create</a>
-          </li>
-          <li class="nav-item" routerLinkActive="open">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/weightclass']" routerLinkActive="active">
-              <i class="nav-icon icon-list"></i>Listing</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/weightclass']" routerLinkActive="active">
-          <i class="nav-icon icon-rocket"></i> Weightclass</a>
+        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/suggestion']" routerLinkActive="active">
+          <i class="nav-icon icon-rocket"></i> {{'sidebar.suggestion' | translate}} </a>
       </li>
-
-      <li class="nav-item nav-dropdown">
-        <a href="#financeSubMenu" data-toggle="collapse" aria-expanded="false" class="nav-link nav-dropdown-toggle"><i
-            class="nav-icon icon-credit-card"></i>Transactions</a>
-        <ul class="collapse list-unstyled nav-clickable-item" id="financeSubMenu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/finances/transactions/deposit']">
-              <i class="nav-icon icon-list"></i>Deposit</a>
-            <a class="nav-link" href="javascript:void(0);" [routerLink]="['/finances/transactions/withdraw']">
-              <i class="nav-icon icon-list"></i>Withdraw</a>
-          </li>
-        </ul>
-      </li>
-
-      <li class="nav-item nav-dropdown" routerLinkActive="open">
-        <a class="nav-link" href="javascript:void(0);" [routerLink]="['/pages-list']" routerLinkActive="active">
-          <i class="nav-icon icon-user"></i> Page Content</a>
-      </li> -->
+      <!-- end -->
 
       <li class="nav-item nav-dropdown" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" (click)="adminLogout()" routerLinkActive="active">
