@@ -54,6 +54,7 @@
     "scoreLog": "Player Score Log",
     "gameLog": "Player Game Log",
     "jackpot": "Jackpot",
+    "suggestion": "Suggestion",
     "signOut": " Sign Out"
   },
   "agent": {
@@ -474,5 +475,19 @@
     "resetValue": "Reset Value",
     "action": "Action",
     "totalRecord": "Total Record"
+  },
+  "sugg": {
+    "suggestion": "Suggestions",
+    "totalRecord": "Total Record",
+    "suggestionId": "Suggestion Id",
+    "suggestionType": "Suggestion Type",
+    "userName": "UserName",
+    "message": "Suggestion", 
+    "phone": "Phone",
+    "email": "Email",
+    "prev": "Prev",
+    "next": "Next",
+    "noSuggestionFound": "No Suggestion Found",
+    "thereWasAnError": "There was an error"
   }
 }

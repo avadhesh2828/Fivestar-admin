@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card filter">
+      <!--filter-->
+      <div class="card-header">
+        <div class="row">
+
+        </div>
+        <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+          <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+        </a>
+      </div>
+      <!---->
+      
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">{{'sugg.suggestion' | translate}}</h1>
+          
+
+          <h5 class="mb-0 text-gray-800">{{ 'sugg.totalRecord' | translate}}: {{totalSuggestion}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'sugg.suggestionId' | translate}}</th>
+              <th>{{'sugg.suggestionType' | translate}}</th>
+              <th>{{'sugg.userName' | translate}}</th>
+              <th>{{'sugg.message' | translate}}</th>
+              <th>{{'sugg.phone' | translate}}</th>
+              <th>{{'sugg.email' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="9" class="table-danger">{{'sugg.thereWasAnError' | translate}}</td>
+            </tr>
+            <tr *ngIf="!error && !suggestionList">
+              <td colspan="9">Loading...</td>
+            </tr>
+            <tr *ngIf="suggestionList && !(suggestionList.length>0)">
+              <td colspan="9" class="text-center"> {{'sugg.noSuggestionFound' | translate}}</td>
+            </tr>
+            <tr *ngFor="let suggestion of suggestionList; let suggestionIndex = index" [ngStyle]="{'background-color':suggestion.is_status === 'N' ? '#e5efe5' : '' }">
+              <td>{{ suggestion.suggestion_id || "-" }}</td>
+              <td>{{ suggestion.suggestion_type.suggestion_name || "-" }}</td>
+              <td>{{ suggestion.user.name || "-" }}</td>
+              <td>{{ suggestion.text || "-" }}</td>
+              <td>{{ suggestion.phone || "-" }}</td>
+              <td>{{ suggestion.email || "-" }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav *ngIf="totalSuggestion > params.per_page">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.current_page > 1">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'sugg.prev' | translate}}</a>
+            </li>
+            <li class="page-item active" [ngClass]="{'active': (page == params.current_page)}"
+              *ngFor="let page of totalPaginationShow">
+              <a class="page-link" href="javascript:void(0);" (click)="paginateList(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.current_page != totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(1)">{{'sugg.next' | translate}}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>
