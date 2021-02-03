@@ -29,8 +29,8 @@ export class ChangePasswordComponent implements OnInit {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     const pattern = new RegExp(/^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/);
     this.checkForm = this.formBuilder.group({
-      'oldPassword': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
-      'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      'oldPassword': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
+      'password': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
       'confirmPassword': ['', [Validators.required]]
     });
   }

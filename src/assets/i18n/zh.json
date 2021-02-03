@@ -488,5 +488,19 @@
     "next": "下一個",
     "noSuggestionFound": "找不到建議",
     "thereWasAnError": "有一個錯誤"
-  }
+  },
+  "Score set successfully": "{{ username }} --- 分數設置成功 {{ set_score }}: {{ name }}",
+  "Red packet balance added": "{{ username }} --- 添加了紅色數據包餘額 {{ set_score }}: {{ name }}",
+  "Player created successfully": "{{ username }} --- 播放器創建成功: {{ name }}",
+  "Agent created successfully": "{{ username }} --- 代理成功創建: {{ name }}",
+  "Password changed successfully": "密碼更換成功",
+  "Security password changed successfully" : "安全密碼更改成功",
+  "0": "添加硬幣",
+  "1": "扣除硬幣",
+  "2": "贏得",
+  "3": "新代理",
+  "4": "新玩家",
+  "5": "更改密碼",
+  "6": "修改個人密碼",
+  "7": "紅包"
 }

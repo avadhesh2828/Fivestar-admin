@@ -28,7 +28,7 @@ export class ChangeSecurityPasswordComponent implements OnInit {
   ngOnInit() {
     this.checkForm = this.formBuilder.group({
       'oldSecurityPassword': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
-      'securityPassword': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      'securityPassword': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
       'confirmSecurityPassword': ['', [Validators.required]]
     });
   }
