@@ -489,5 +489,19 @@
     "next": "Next",
     "noSuggestionFound": "No Suggestion Found",
     "thereWasAnError": "There was an error"
-  }
+  },
+  "Score set successfully": "{{ username }} --- Score set successfully {{ set_score }}: {{ name }}",
+  "Red packet balance added": "{{ username }} --- Red packet balance added {{ set_score }}: {{ name }}",
+  "Player created successfully": "{{ username }} --- Player created successfully: {{ name }}",
+  "Agent created successfully": "{{ username }} --- Agent created successfully: {{ name }}",
+  "Password changed successfully": "Password changed successfully",
+  "Security password changed successfully" : "Security password changed successfully",
+  "0": "Add Coins",
+  "1": "Deduct Coins",
+  "2": "Win",
+  "3": "New Agent",
+  "4": "New Player",
+  "5": "Change Password",
+  "6": "Change Personal Password",
+  "7": "Red Packet"
 }

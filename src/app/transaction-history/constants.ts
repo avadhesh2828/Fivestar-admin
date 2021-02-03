@@ -1,5 +1,5 @@
 export const ACTION_FOR = {
-  '0': 'add-coins',
+  '0': 'Add Coins',
   '1': 'deduct-coins',
   '2': 'win',
   '3': 'new-agent',

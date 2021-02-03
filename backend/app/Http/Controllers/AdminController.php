@@ -148,7 +148,7 @@ class AdminController extends Controller
         if(Hash::check($old_password, $adminInfo->password)) {
             $user = Admin::where('admin_id', $user_id)->update(['password' => Hash::make($password)]);
             if($user > 0){
-                History::create(['action_for' => 5, 'to_id' => $adminInfo->admin_id, 'from_id' => $adminInfo->parent_id, 'name' => $adminInfo->username, 'description' => 'Password changed successfully', 'last_ip' => \Request::ip(), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+                History::create(['action_for' => 5, 'to_id' => $adminInfo->admin_id, 'from_id' => ($adminInfo->parent_id) ? $adminInfo->parent_id:$adminInfo->admin_id, 'name' => $adminInfo->username, 'description' => 'Password changed successfully', 'last_ip' => \Request::ip(), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 
                 return response()->json([
                     'response_code'=> 200,
@@ -199,7 +199,7 @@ class AdminController extends Controller
         if(Hash::check($old_security_password, $adminInfo->personal_password)) {
             $user = Admin::where('admin_id', $user_id)->update(['personal_password' => Hash::make($security_password)]);
             if($user > 0){
-                History::create(['action_for' => 6, 'to_id' => $adminInfo->admin_id, 'from_id' => $adminInfo->parent_id, 'name' => $adminInfo->username, 'description' => 'Security password changed successfully', 'last_ip' => \Request::ip(), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+                History::create(['action_for' => 6, 'to_id' => $adminInfo->admin_id, 'from_id' => ($adminInfo->parent_id) ? $adminInfo->parent_id:$adminInfo->admin_id, 'name' => $adminInfo->username, 'description' => 'Security password changed successfully', 'last_ip' => \Request::ip(), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 
                 return response()->json([
                     'response_code'=> 200,

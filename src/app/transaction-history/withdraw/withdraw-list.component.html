@@ -17,7 +17,7 @@
               <select class="form-control" [(ngModel)]="params['status']" name="status"
                 (ngModelChange)="searchFilter();">
                 <option value="">{{ 'transactions.selectAction' | translate}}</option>
-                <option *ngFor="let action of actionFor | keyvalue" [value]="action.key">{{action.value}}</option>
+                <option *ngFor="let action of actionFor | keyvalue" [value]="action.key">{{action.key | translate }}</option>
               </select>
             </div>
           </div>
@@ -92,14 +92,16 @@
             </tr>
 
             <tr *ngFor="let transaction of withdrawList; let tranIndex = index">
-              <td> {{ actionFor[transaction.action_for | translate] }} </td>
+              <!-- <td>{{ actionFor[transaction.action_for | translate] }}</td> -->
+              <td>{{transaction.action_for | translate }}</td>
               <td>{{ transaction.agent_detail.username || transaction.agent_detail.name }} </td>
               <td>{{ transaction.name }}</td>
               <td>{{ transaction.last_ip }}</td>
               <td>
                 {{ formatDateTimeZone(transaction.created_at) | date:'MMM d, y, h:mm:ss a' }}
               </td>
-              <td> {{ transaction.agent_detail.username || transaction.agent_detail.name }} --- {{ transaction.description }} {{ transaction.set_score }}: {{ transaction.name }}</td>
+              <!-- <td> {{ transaction.agent_detail.username || transaction.agent_detail.name }} --- {{ transaction.description }} {{ transaction.set_score }}: {{ transaction.name }}</td> -->
+              <td>{{transaction.description | translate:{username:transaction.agent_detail.username,set_score:transaction.set_score,name:transaction.name}  }}</td>
             </tr>
           </tbody>
         </table>
