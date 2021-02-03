@@ -39,10 +39,11 @@
               <td *ngIf="isEditabel == jackpot.id" >
                 <input type="text" class="form-control" placeholder="Enter" name="jackpot_value" [(ngModel)]="jackpot.jackpot_value"/>
               </td>
-              <td *ngIf="isEditabel !== jackpot.id" > {{ jackpot.reset_value }} </td>
+              <td > {{ jackpot.reset_value }} </td>
+              <!-- <td *ngIf="isEditabel !== jackpot.id" > {{ jackpot.reset_value }} </td>
               <td *ngIf="isEditabel == jackpot.id" >
                 <input type="text" class="form-control" placeholder="Enter" name="reset_value" [(ngModel)]="jackpot.reset_value"/>
-              </td>
+              </td> -->
               <td>              
                 <a href="javascript:void(0);" (click)="jackpotEditable(jackpot.id)" [hidden]="isEditabel == jackpot.id">
                   <i class="fa fa-pencil-square-o action-icon" aria-hidden="true"></i>
