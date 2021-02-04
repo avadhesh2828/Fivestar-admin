@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { formatDateTime, formatDate } from '../../services/utils.service';
 import { UserService } from 'src/app/services/user.service';
-
+import { Location } from '@angular/common';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,6 +29,7 @@ export class ListComponent implements OnInit {
     private userService: UserService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
+    private location: Location,
   ) { 
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -72,4 +73,9 @@ export class ListComponent implements OnInit {
     this.showLoginIPList = false;
     this.searchForm.reset();
   }
+
+  goBack() {
+    this.location.back();
+  }
+
 }

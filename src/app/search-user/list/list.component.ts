@@ -7,6 +7,7 @@ import { formatDateTime, formatDate } from '../../services/utils.service';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ListComponent implements OnInit {
     private userService: UserService,
     public subscriptionService: SubscriptionService,
     public translate: TranslateService,
+    private location: Location,
   ) { 
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -85,6 +87,10 @@ export class ListComponent implements OnInit {
         this.formSubmitted = false;
       });
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

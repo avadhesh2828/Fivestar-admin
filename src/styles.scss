@@ -14278,3 +14278,41 @@ button.btn.btn-sm.btn-primary.create-button a {
     }
   }
 }
+
+.card-header {
+  @media (max-width:767px){
+    .filter-btn {
+      width: 100%;
+      margin: 10px 0px;
+    }
+    select {
+      margin: 10px 0px;
+    }
+    .back-btn {
+      display:block;
+      float: none !important;
+      text-align: center;
+    }
+  }
+}
+
+.nav-item {
+  padding-left: 0 !important;
+}
+.player-login-ip {
+  label {
+    flex:1;
+  } 
+}
+
+.search-btn {
+  @media (max-width:767px){
+    width: 100%;
+    margin: 10px 0px;
+  }
+}
+
+.score-log-back {
+  position: relative;
+  top:-10px;
+}

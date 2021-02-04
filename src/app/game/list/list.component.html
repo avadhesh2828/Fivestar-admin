@@ -36,7 +36,7 @@
           </div>
           <div class="col-12 col-sm-2">
             <span class="input-group-prepend">
-              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+              <button class="btn btn-primary filter-btn" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
                 {{'games.filter' | translate}}</button>&nbsp;
             </span>
           </div>
@@ -52,7 +52,7 @@
           <div class="col-12 col-sm-6">
             <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
               <i class="fa fa-search"></i> Search</button>&nbsp; -->
-            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+            <button class="btn btn-warning filter-btn" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
               {{'games.resetFilters' | translate}}</button>
             <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
               <i class="icon-arrow-left-circle" aria-hidden="true"></i>

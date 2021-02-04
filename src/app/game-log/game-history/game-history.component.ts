@@ -10,6 +10,7 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
 import { SubscriptionService } from '../../services/subscription.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 const INITIAL_PARAMS = {
   per_page: 10,
@@ -51,6 +52,7 @@ export class GameHistoryComponent implements OnInit {
     public translate: TranslateService,
     private route: ActivatedRoute, 
     private loaderService: LoaderService,
+    private location: Location,
   ) { 
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -164,6 +166,10 @@ export class GameHistoryComponent implements OnInit {
   gameLogModel(game) {
     this.gameLog = game;
     $('#gameLogModel').modal('show');
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

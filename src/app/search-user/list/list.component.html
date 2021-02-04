@@ -4,20 +4,23 @@
       <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong> {{'search.searchUser' | translate}}</strong>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="username"></label>
-            <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="username" placeholder="{{'search.search' | translate}}">
-              <div *ngIf="submitted && f['username'].errors" class="text-danger">
-                <div *ngIf="f['username'].errors.required">{{'search.UserNameIsRequired' | translate}}</div>
-              </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="d-md-flex">
+                <input type="text" class="form-control mr-4" formControlName="username" placeholder="{{'search.search' | translate}}">
+                <div *ngIf="submitted && f['username'].errors" class="text-danger">
+                  <div *ngIf="f['username'].errors.required">{{'search.UserNameIsRequired' | translate}}</div>
+                </div>
+                <button class="btn btn-lg-sm btn-primary search-btn" type="submit"><i class="fa fa-search"></i>
+                  {{'search.submit' | translate}}</button>
+              </div>    
             </div>
-            <div class="col-md-3">
-              <button class="btn btn-lg-sm btn-primary" type="submit"><i class="fa fa-search"></i>
-                {{'search.submit' | translate}}</button>
-            </div>
+            
           </div>
         </div>
       </form>

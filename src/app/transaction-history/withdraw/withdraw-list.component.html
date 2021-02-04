@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card filter">
       <div class="card-header">
         <div class="row">
           <!-- <div class="col-12 col-sm-3">
@@ -32,7 +32,7 @@
           </div>
           <div class="col-12 col-sm-3">
             <span class="input-group-prepend">
-              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
+              <button class="btn btn-primary filter-btn" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
                 {{ 'transactions.filter' | translate}}</button>&nbsp;
             </span>
           </div>
@@ -55,12 +55,15 @@
             </div>
           </div>
           <div class="col-12 col-sm-6">
-            <button class="btn btn-primary" type="submit" (click)="searchFilter();">
+            <button class="btn btn-primary filter-btn" type="submit" (click)="searchFilter();">
               <i class="fa fa-search"></i> {{ 'transactions.search' | translate}}</button>&nbsp;
-            <button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
+            <button class="btn btn-warning filter-btn" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
               {{ 'transactions.resetFilters' | translate}}</button>
           </div>
         </form>
+        <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+          <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+        </a>
       </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

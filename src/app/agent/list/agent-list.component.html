@@ -1,70 +1,23 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
-      <!-- <div class="card-header"> -->
-      <!-- <div class="row">
-          <div class="col-12 col-sm-3">
-            <div class="input-group">
-              <select class="form-control" [(ngModel)]="params['country']" placeholder="Select a country"
-                name="country">
-                <option value="-1">Select a country</option>
-                <option *ngFor="let country of countryList" [value]="country.master_country_id">
-                  {{country.country_name}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-12 col-sm-3">
-            <div class="input-group">
-              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
-                <option value="-1">Select a status</option>
-                <option *ngFor="let status of AgentStatus | keyvalue" [value]="status.key">
-                  {{status.value}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-12 col-sm-3">
-            <span class="input-group-prepend">
-              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
-                Filter</button>&nbsp;
-            </span>
-
-          </div>
+    <div class="card filter">
+      <!--filter-->
+      <div class="card-header d-flex justify-content-between">
+        <div class="row">
+          <h1 class="h3 mb-0 text-gray-800">{{ 'agent.agentMng' | translate}}</h1>
         </div>
-        <form class="row mt-1">
-          <div class="col-12 col-sm-6">
-            <div class="input-group">
-              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
-                name="search_keyword" placeholder="Search by agent username, name, email"
-                (ngModelChange)="search()" autocomplete="off">
-            </div>
-          </div>
-          <div class="col-12 col-sm-6">-->
-      <!-- <button class="btn btn-primary" type="submit" (click)="searchFilter();">
-              <i class="fa fa-search"></i> Search</button>&nbsp; -->
-      <!--<button class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
-              Reset Filters</button>
-          </div>
-        </form> -->
-      <!-- <span class="input-group-prepend">
-          <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
-        </span>
-      </div> -->
+        <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+          <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+        </a>
+      </div>
+      <!---->
+  
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800"> {{ 'agent.agentMng' | translate}}
-            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
-                [routerLink]="['/agent/new']">
-                <i class="nav-icon icon-plus"></i> {{ 'agent.create' | translate}}</a></button>
-          </h1>
-          <!-- <span class="input-group-prepend">
-            <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>
-          </span> -->
-          <h5 class="mb-0 text-gray-800">{{ 'agent.totalRecord' | translate}}: {{totalAgents}}</h5>
-          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
-            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
-          </a>
+            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);" [routerLink]="['/agent/new']">
+              <i class="nav-icon icon-plus"></i> {{ 'agent.create' | translate}}</a>
+            </button>
+            <h5 class="mb-0 text-gray-800">{{ 'agent.totalRecord' | translate}}: {{totalAgents}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm admin-table">
           <thead>
@@ -90,9 +43,9 @@
             </tr>
             <tr *ngFor="let agent of agentList; let agentIndex = index">
               <!-- <td class="username" (click)="checkSubAgent(agent)">{{ agent.username || "-" }}</td> -->
-              <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "-" }}</td>
-              <td>{{ agent.name || "-" | titlecase }}</td>
-              <td>{{ agent.phone || "-" }}</td>
+              <td class="username" routerLink="{{agent.admin_id}}" >{{ agent.username || "N/A" }}</td>
+              <td>{{ agent.name || "N/A" | titlecase }}</td>
+              <td>{{ agent.phone || "N/A" }}</td>
               <td>{{ agent.balance}}</td>
               <td>{{ formatDateTimeZone(agent.last_login) | date: dateFormatString}} </td>
               <td>
@@ -130,7 +83,5 @@
 </div>
 <app-user-list></app-user-list>
 
-
-<!-- <app-edit-agent [agent]="currentAgent" (editedStatus)="onStatusEdit($event)"></app-edit-agent> -->
 
 <app-loader></app-loader>
