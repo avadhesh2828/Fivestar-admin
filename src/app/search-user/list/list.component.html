@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card filter">
       <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong> {{'search.searchUser' | translate}}</strong>
@@ -24,7 +24,8 @@
 
 
       <div class="card-body custom-listing-table" *ngIf="showList === true">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm admin-table">
           <thead>
             <tr>
               <th>{{'search.userName' | translate}}</th>
@@ -67,6 +68,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
