@@ -6,6 +6,7 @@ import { Constants } from '../../constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 const INITIAL_PARAMS = {
   per_page: 20,
@@ -41,6 +42,7 @@ export class WithdrawListComponent implements OnInit {
     private toastr: ToastrService,
     private loaderService: LoaderService,
     private userService: UserService,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -132,5 +134,9 @@ export class WithdrawListComponent implements OnInit {
 
   public formatDate(date) {
     return date.replace(' ', 'T') + 'Z';
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

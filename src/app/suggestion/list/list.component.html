@@ -2,9 +2,9 @@
   <div class="col-lg-12">
     <div class="card filter">
       <!--filter-->
-      <div class="card-header">
+      <div class="card-header d-flex justify-content-between">
         <div class="row">
-
+          <h1 class="h3 mb-0 text-gray-800">{{'sugg.suggestion' | translate}}</h1>
         </div>
         <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
           <i class="icon-arrow-left-circle" aria-hidden="true"></i>
@@ -14,7 +14,7 @@
       
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">{{'sugg.suggestion' | translate}}</h1>
+          <!-- <h1 class="h3 mb-0 text-gray-800">{{'sugg.suggestion' | translate}}</h1> -->
           
 
           <h5 class="mb-0 text-gray-800">{{ 'sugg.totalRecord' | translate}}: {{totalSuggestion}}</h5>

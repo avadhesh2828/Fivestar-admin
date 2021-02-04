@@ -1,20 +1,27 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card filter">
       <form class="form-horizontal" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
           <strong>{{'playerLoginIn.queryplPlayerLoginIn' | translate}}</strong>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label class="col-md-2 col-form-label" for="username">{{'playerLoginIn.userName' | translate}}<span class="text-danger">*</span></label>
-            <div class="col-md-6">
+            <!-- <label class="col-md-2 col-form-label" for="username">{{'playerLoginIn.userName' | translate}}<span class="text-danger">*</span></label> -->
+            <div class="col-md-6 col-lg-4">
+              <div class="d-flex justify-contant-between w-100 align-items-center player-login-ip">
+                <label class="col-form-label" for="username">{{'playerLoginIn.userName' | translate}}<span class="text-danger">*</span></label>
+                <span> {{'playerLoginIn.last' | translate}} 10</span>
+              </div>
               <input type="text" class="form-control" formControlName="username" placeholder="{{'playerLoginIn.enter' | translate}}">
               <div *ngIf="submitted && f['username'].errors" class="text-danger">
                 <div *ngIf="f['username'].errors.required">{{'playerLoginIn.userNameIsRequired' | translate}}</div>
               </div>
             </div>
-            <div class="col-md-4"><span> {{'playerLoginIn.last' | translate}} 10</span></div>
+            <!-- <div class="col-md-4"><span> {{'playerLoginIn.last' | translate}} 10</span></div> -->
           </div>
         </div>
         <div class="card-footer">

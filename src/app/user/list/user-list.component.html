@@ -1,75 +1,18 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
-      <!-- <div class="card-header">
+    <div class="card filter">
+      <div class="card-header d-flex justify-content-between">
         <div class="row">
-          <div class="col-12 col-sm-3">
-            <div class="input-group">
-              <select class="form-control" [(ngModel)]="params['country']" placeholder="Select a country"
-                name="country">
-                <option value="-1">Select a country</option>
-                <option *ngFor="let country of countryList" [value]="country.master_country_id">
-                  {{country.country_name}}
-                </option>
-              </select>
-            </div>
-            <div class="input-group">
-              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
-                name="search_keyword" placeholder="Search by email, name" (ngModelChange)="search()" autocomplete="off">
-            </div>
-          </div>
-          <div class="col-12 col-sm-3">
-            <div class="input-group">
-              <select class="form-control" [(ngModel)]="params['status']" placeholder="Select a status" name="status">
-                <option value="-1">Select a status</option>
-                <option *ngFor="let status of userStatus | keyvalue" [value]="status.key">
-                  {{status.value}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-12 col-sm-3">
-            <span class="input-group-prepend">
-              <button class="btn btn-primary" type="button" (click)="searchFilter();"> <i class="fa fa-filter"></i>
-                Filter</button>&nbsp;
-              <a class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
-                Reset Filters</a>
-            </span>
-          </div>
-          <div class="col-6 col-sm-3">
-            <span class="input-group-prepend">
-              <a class="btn btn-warning" (click)="exportPDF();"><i class="fa fa-file-pdf-o"></i>
-                Create player</a>
-              <a class="btn btn-warning" (click)="exportPDF();"><i class="fa fa-file-pdf-o"></i>
-                Export PDF</a>
-              <a class="btn btn-warning" (click)="exportExcel();"><i class="fa fa-file-excel-o"></i>
-                Export CSV</a>
-            </span>
-          </div>
+          <h1 class="h3 mb-0 text-gray-800">{{ 'player.playerMng' | translate}}</h1>
         </div>
-        <form class="row mt-1">
-           <div class="col-12 col-sm-6">
-            <div class="input-group">
-              <input class="form-control" [(ngModel)]="params['keyword']" id="search_keyword" type="text"
-                name="search_keyword" placeholder="Search by username, name, email"
-                (ngModelChange)="search()"  autocomplete="off">
-            </div>
-          </div>
-          <div class="col-12 col-sm-6">
-             <button class="btn btn-primary" type="submit" (click)="searchFilter();">
-              <i class="fa fa-search"></i> Search</button>&nbsp;
-              <a class="btn btn-warning" (click)="searchFilter('reset');"><i class="fa fa-refresh"></i>
-              Reset Filters</a>
-          </div>
-        </form>
-      </div> -->
+      </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">{{ 'player.playerMng' | translate}}
+          <!-- <h1 class="h3 mb-0 text-gray-800">{{ 'player.playerMng' | translate}} -->
             <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
                 [routerLink]="['/users/new']">
                 <i class="nav-icon icon-plus"></i> {{ 'player.create' | translate}}</a></button>
-          </h1>
+          <!-- </h1> -->
           
 
           <h5 class="mb-0 text-gray-800">{{ 'player.totalRecord' | translate}}: {{totalUsers}}</h5>
@@ -103,10 +46,10 @@
               <td colspan="7" class="text-center">{{ 'player.notFound' | translate}}</td>
             </tr>
             <tr *ngFor="let user of userList; let userIndex = index">
-              <td class="username" routerLink="/users/{{user.user_id}}">{{ user.username || "-" }}</td>
+              <td class="username" routerLink="/users/{{user.user_id}}">{{ user.username || "N/A" }}</td>
               <!-- <td>{{ user.user_unique_id }}</td> -->
-              <td>{{ user.name || "-" | titlecase }}</td>
-              <td>{{ user.phone || "-" }}</td>
+              <td>{{ user.name || "N/A" | titlecase }}</td>
+              <td>{{ user.phone || "N/A" }}</td>
               <td>{{ user.balance}}</td>
               <td>{{ formatDateTimeZone(user.last_login) | date: dateFormatString}} </td>
 
