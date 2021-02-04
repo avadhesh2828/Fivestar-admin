@@ -14223,3 +14223,58 @@ button.btn.btn-sm.btn-primary.create-button a {
   color: #fff;
   text-decoration: none;
 }
+
+.admin-table {
+  @media (max-width:1199px){
+    width: 1020px;
+  }
+}
+
+.app-header {
+  @media (max-width:767px){
+    .user-data {
+      font-size: 12px;
+      width: 100%;
+      justify-content: center;
+      height:auto !important;
+      margin-bottom: 15px !important;
+    }
+    .navbar-brand {
+      span {
+        font-size: 12px;
+        
+        img {
+          position: relative;
+          top:-6px;
+          right:5px;
+        }
+      }
+    }
+    .navbar-toggler {
+        margin-top: 10px;
+    }
+    .left-list {
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 10px;
+
+      a {
+        font-size: 12px;
+      }
+
+      .flag-list  {
+        li {
+          margin-right: 0;
+        }
+      }
+    }
+    .navbar-nav {
+      a {
+        img {
+          margin: 0;
+        }
+      } 
+    }
+  }
+}
