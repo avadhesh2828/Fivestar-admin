@@ -2,7 +2,10 @@
   "dashboard": {
     "title": "仪表板",
     "totalAgent": "总代理",
-    "totalPlayer": "总球员"
+    "totalPlayer": "总球员",
+    "amountDepositedInWallet" : "存入電子錢包的金額",
+    "amountWithdrawFromWallet" : "從錢包提款",
+    "totalPlayerAssets" : "玩家總資產"
   },
   "home": {
     "login": "登錄",
