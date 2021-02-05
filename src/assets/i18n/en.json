@@ -2,7 +2,10 @@
   "dashboard": {
     "title": "Dashboard",
     "totalAgent": "Total Agent",
-    "totalPlayer": "Total Player"
+    "totalPlayer": "Total Player",
+    "amountDepositedInWallet" : "Amount Deposited in Wallet",
+    "amountWithdrawFromWallet" : "Amount Withdraw from Wallet",
+    "totalPlayerAssets" : "Total Player Assets"
   },
   "home": {
     "login": "Login",
