@@ -318,6 +318,7 @@ class UserController extends Controller
                 'win'           => $score,
                 'begin_money'   => 0,
                 'end_money'     => 0,
+                'is_redpacket_calculated' => 1,
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s')
             ]);
