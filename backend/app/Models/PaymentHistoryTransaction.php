@@ -27,6 +27,18 @@ class PaymentHistoryTransaction extends Model
         'updated_at'
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'bet'         => 'decimal:2',
+        'win'         => 'decimal:2',
+        'begin_money' => 'decimal:2',
+        'end_money'   => 'decimal:2'
+    ];
+
     public function game_detail(){
         return $this->belongsTo('App\Models\Game', 'game_id', 'game_id');
     }

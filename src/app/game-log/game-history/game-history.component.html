@@ -65,6 +65,7 @@
               <th>{{'gameHistory.win' | translate}}</th>
               <th>{{'gameHistory.beginMoney' | translate}}</th>
               <th>{{'gameHistory.endMoney' | translate}}</th>
+              <th>{{'gameHistory.action' | translate}}</th>
               <th>{{'gameHistory.dateTime' | translate}}</th>
             </tr>
           </thead>
@@ -80,10 +81,11 @@
             </tr>
             <tr *ngFor="let history of gameHistory; let scoreIndex = index">
               <td class="username" (click)="gameLogModel(history)">{{ history.game_detail.name || "-" }}</td>
-              <td>{{ history.bet || "-" }}</td>
-              <td>{{ history.win || "-" }}</td>
-              <td>{{ history.begin_money || "-" }}</td>
-              <td>{{ history.end_money || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.bet || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.win || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.begin_money || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.end_money || "-" }}</td>
+              <td *ngIf="history.action != null; else notAvailable">{{ history.action | translate:{earn:history.win} }}</td>
               <td>{{ history.created_at || "-" }}</td>
             </tr>
           </tbody>
@@ -112,6 +114,7 @@
             </li>
           </ul>
         </nav>
+        <ng-template #notAvailable> <td> - </td></ng-template>
       </div>
     </div>
   </div>

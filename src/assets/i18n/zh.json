@@ -462,6 +462,7 @@
     "beginMoney": "開始賺錢",
     "endMoney": "完錢",
     "dateTime": "約會時間",
+    "action": "行動",
     "noDataFound":"沒有找到數據",
     "totalRecord": "總記錄",
     "thereWasError" : "有一個錯誤",
@@ -498,6 +499,7 @@
   "Agent created successfully": "{{ username }} --- 代理成功創建: {{ name }}",
   "Password changed successfully": "密碼更換成功",
   "Security password changed successfully" : "安全密碼更改成功",
+  "Star Lucky Wheel" : "星幸運輪 : {{ earn }}",
   "0": "添加硬幣",
   "1": "扣除硬幣",
   "2": "贏得",
@@ -505,5 +507,6 @@
   "4": "新玩家",
   "5": "更改密碼",
   "6": "修改個人密碼",
-  "7": "紅包"
+  "7": "紅包",
+  "StarLuckyWheel" : "星幸運輪 : {{ earn }}"
 }
