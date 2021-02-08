@@ -36,6 +36,8 @@ export class GameHistoryComponent implements OnInit {
   public totalGameHistory = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
+  public jump_to : any;
+  public checkLastPage :any;
 
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
@@ -123,6 +125,7 @@ export class GameHistoryComponent implements OnInit {
         this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.gameHistory = log['data'].data;
+          this.checkLastPage = log['data'].last_page;
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameHistory = log['data'];
@@ -153,6 +156,8 @@ export class GameHistoryComponent implements OnInit {
 
   public nextOrPreviousPage(deviation: number) {
     this.params.current_page = this.params.current_page + deviation;
+    console.log('current_page', this.params.current_page)
+    console.log('deviation', deviation)
     this.onSubmit();
   }
 
@@ -170,6 +175,15 @@ export class GameHistoryComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+      if(checkLastPage >= this.jump_to) {
+        this.params.current_page = this.jump_to;
+        this.onSubmit();
+      }
+    
   }
 
 }

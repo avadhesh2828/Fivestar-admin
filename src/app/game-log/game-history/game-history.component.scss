@@ -31,3 +31,16 @@
     font-size: 18px;
     float: right;
 }
+
+.page-jump {
+    float: left;
+    padding: 4px;
+    color: #6d6161;
+
+    input {
+        width: 50px;
+    }
+}
+.page-jump-btn {
+    float: right;
+}
