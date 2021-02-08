@@ -463,6 +463,7 @@
     "beginMoney": "Begin Money",
     "endMoney": "End Money",
     "dateTime": "Date Time",
+    "action": "Action",
     "noDataFound":"No data found",
     "totalRecord": "Total Record",
     "thereWasError" : "There was an error",
@@ -499,6 +500,7 @@
   "Agent created successfully": "{{ username }} --- Agent created successfully: {{ name }}",
   "Password changed successfully": "Password changed successfully",
   "Security password changed successfully" : "Security password changed successfully",
+  "Star Lucky Wheel" : "Star Lucky Wheel : {{ earn }}",
   "0": "Add Coins",
   "1": "Deduct Coins",
   "2": "Win",
@@ -506,5 +508,6 @@
   "4": "New Player",
   "5": "Change Password",
   "6": "Change Personal Password",
-  "7": "Red Packet"
+  "7": "Red Packet",
+  "StarLuckyWheel" : "Star Lucky Wheel : {{ earn }}"
 }
