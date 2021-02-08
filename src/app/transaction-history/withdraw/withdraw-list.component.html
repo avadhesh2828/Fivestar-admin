@@ -104,7 +104,7 @@
                 {{ formatDateTimeZone(transaction.created_at) | date:'MMM d, y, h:mm:ss a' }}
               </td>
               <!-- <td> {{ transaction.agent_detail.username || transaction.agent_detail.name }} --- {{ transaction.description }} {{ transaction.set_score }}: {{ transaction.name }}</td> -->
-              <td>{{transaction.description | translate:{username:transaction.agent_detail.username,set_score:transaction.set_score,name:transaction.name}  }}</td>
+              <td>{{transaction.description | translate:{username:transaction.agent_detail.username,set_score:transaction.set_score,name:transaction.name, earn:transaction.set_score}  }}</td>
             </tr>
           </tbody>
         </table>
