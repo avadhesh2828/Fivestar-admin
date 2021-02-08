@@ -500,6 +500,7 @@
   "Password changed successfully": "密碼更換成功",
   "Security password changed successfully" : "安全密碼更改成功",
   "Star Lucky Wheel" : "星幸運輪 : {{ earn }}",
+  "SetScore" : "設定分數 : {{ earn }}",
   "0": "添加硬幣",
   "1": "扣除硬幣",
   "2": "贏得",

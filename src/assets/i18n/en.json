@@ -501,6 +501,7 @@
   "Password changed successfully": "Password changed successfully",
   "Security password changed successfully" : "Security password changed successfully",
   "Star Lucky Wheel" : "Star Lucky Wheel : {{ earn }}",
+  "SetScore" : "Set Score : {{ earn }}",
   "0": "Add Coins",
   "1": "Deduct Coins",
   "2": "Win",

@@ -11,6 +11,7 @@ use App\Models\User_Portfolio;
 use App\Models\User_Watchlist;
 use App\Http\Controllers\Payment_transaction;
 use App\Models\PaymentDepositTransaction;
+use App\Models\PaymentHistoryTransaction;
 use App\Models\History;
 use App\Exports\UsersExport;
 use Excel;
@@ -307,6 +308,18 @@ class UserController extends Controller
                 'type'         => 'player',
                 'date_created' => date('Y-m-d H:i:s'),
                 'date_modified'=> date('Y-m-d H:i:s')
+            ]);
+
+            PaymentHistoryTransaction::insert([
+                'user_id'       => $checkPlayer->user_id,
+                'ip'            => \Request::ip(),
+                'game_id'       => 0,
+                'action'        => 'SetScore',
+                'win'           => $score,
+                'begin_money'   => 0,
+                'end_money'     => 0,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
             ]);
 
             History::create(['action_for' => 0, 'to_id' => $checkPlayer->user_id, 'from_id' => $admin_id, 'name' => $checkPlayer->username, 'description' => 'Score set successfully', 'last_ip' => \Request::ip(), 'type' => 1, 'set_score' => $score, 'before_score' => $checkPlayer->balance, 'after_score'  => $checkPlayer->balance + $score, 'payment_type' => 0, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
