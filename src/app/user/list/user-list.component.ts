@@ -61,26 +61,26 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
     this.getCountryList();
     // this.getAgentsList();
-    this.searchTextChanged.pipe(debounceTime(1000))
-      .subscribe(model => this.getUsersList());
+    // this.searchTextChanged.pipe(debounceTime(1000))
+    //   .subscribe(model => this.getUsersList());
   }
 
-  search() {
-    // debugger;
+  // search() {
+  //   // debugger;
 
-    this.params.current_page = 1;
-    this.searchTextChanged.next();
-  }
+  //   this.params.current_page = 1;
+  //   this.searchTextChanged.next();
+  // }
 
 
-  ngAfterViewInit() {
-    const that = this;
-    // Listen for bootstrap modal's hidden event to reset form
-    $('#editModal').on('hidden.bs.modal', function () {
-      that.currentUser = null;
-      $(this).find('textarea').val('').end();
-    });
-  }
+  // ngAfterViewInit() {
+  //   const that = this;
+  //   // Listen for bootstrap modal's hidden event to reset form
+  //   $('#editModal').on('hidden.bs.modal', function () {
+  //     that.currentUser = null;
+  //     $(this).find('textarea').val('').end();
+  //   });
+  // }
 
   public getCountryList() {
     this.userService.getCountryList()
@@ -138,13 +138,13 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public paginateList(newPage: number) {
     if (this.params.current_page === newPage) { return false; }
     this.params.current_page = newPage;
-    localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
+    // localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
     this.getUsersList();
   }
 
   public nextOrPreviousPage(deviation: number) {
     this.params.current_page = this.params.current_page + deviation;
-    localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
+    // localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
     this.getUsersList();
   }
 

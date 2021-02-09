@@ -83,7 +83,7 @@
               <th>{{'games.gameImage' | translate}}</th>
               <th>{{'games.status' | translate}}</th>
               <th>{{'games.position' | translate}}</th>
-              <th>{{'games.featured' | translate}}</th>
+              <!-- <th>{{'games.featured' | translate}}</th> -->
               <th>{{'games.action' | translate}}</th>
             </tr>
           </thead>
@@ -121,9 +121,9 @@
               <td *ngIf="isEditabel == game.id" >
                 <input type="text" class="form-control" placeholder="Enter Position" name="position" [(ngModel)]="game.position"/>
               </td>
-              <td>
+              <!-- <td>
                   <ui-switch [checked]="game.is_featured == 'true'" (change)="onSaveFeaturedChanged(game, $event)"></ui-switch>
-              </td>
+              </td> -->
               <td>
                 <a routerLink="/game/{{game.id}}">
                   <i class="fa fa-eye action-icon" aria-hidden="true"></i> 
