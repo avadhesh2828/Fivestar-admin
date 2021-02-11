@@ -41,11 +41,11 @@
               <td colspan="9" class="text-center"> {{'redPacket.notFound' | translate}}</td>
             </tr>
             <tr *ngFor="let pkt of advList; let agentIndex = index">
-              <td>{{ pkt.min }}</td>
-              <td>{{ pkt.max }}</td>
-              <td>{{ pkt.drop_min_amount }} </td>
-              <td>{{ pkt.drop_max_amount }}</td>
-              <td>{{pkt.drop_rates}} </td>
+              <td><input class="form-control" placeholder="MIN" name="min" [(ngModel)]="pkt.min" [disabled]="!pkt.isEditabel"></td>
+              <td><input class="form-control" placeholder="MAX" name="max" [(ngModel)]="pkt.max" [disabled]="!pkt.isEditabel"></td>
+              <td><input class="form-control" placeholder="DROP MIN AMOUNT" name="drop_min_amount" [(ngModel)]="pkt.drop_min_amount" [disabled]="!pkt.isEditabel"></td>
+              <td><input class="form-control" placeholder="DROP MIN AMOUNT" name="drop_max_amount" [(ngModel)]="pkt.drop_max_amount" [disabled]="!pkt.isEditabel"></td>
+              <td><input class="form-control" placeholder="DROP RATE" name="drop_rates" [(ngModel)]="pkt.drop_rates" [disabled]="!pkt.isEditabel"></td>
 
               <td *ngIf="!pkt.isEditabel">
                 <span class="badge"
