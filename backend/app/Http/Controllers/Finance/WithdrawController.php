@@ -40,6 +40,8 @@ class WithdrawController extends Controller
     }
     if( $request->status != "" ){
       $history = $history->where('action_for', $request->status);
+    } else {
+      $history = $history->where('action_for', '!=', 7);
     }
     $history = $history->orderBy('history_id', 'DESC');
     $history = $history->limit(1000);
