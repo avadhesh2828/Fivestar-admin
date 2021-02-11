@@ -35,7 +35,6 @@ class RedPacketController extends Controller
         $drop_min_amount = $request->post('drop_min_amount');
         $drop_max_amount = $request->post('drop_max_amount');
         $drop_rates      = $request->post('drop_rates');
-        // $games           = $request->post('games');
 
         //validation
 
@@ -79,35 +78,53 @@ class RedPacketController extends Controller
      * Change red packet status.
      *
      */
-    public function change_status($packet_id, Request $request)
+    public function update_red_packet($packet_id, Request $request)
     {
-        $status = $request->post('status');
+        $min             = $request->post('min');
+        $max             = $request->post('max');
+        $drop_min_amount = $request->post('drop_min_amount');
+        $drop_max_amount = $request->post('drop_max_amount');
+        $drop_rates      = $request->post('drop_rates');
+        $status          = $request->post('status');
         //validation
         $validator = Validator::make($request->all(), [
-            "status" => ['required']
+            "min" => 'required',
+            "max" => 'required',
+            "drop_min_amount" => 'required',
+            "drop_max_amount" => 'required',
+            "drop_rates" => 'required',
+            "status" => 'required'
         ]);
 
         if($validator->fails()){
             return response()->json([
             'response_code'=> 400,
-            'service_name' => 'change_status',
+            'service_name' => 'update_red_packet',
             'message'=> 'Validation Failed',
             'global_error'=> $validator->errors()->first(),
             ], 400);
         }
 
-        $update = RedPacket::where('red_packet_id', $packet_id)->update(["status" => $status, "updated_at"  => date('Y-m-d H:i:s')]);
+        $update = RedPacket::where('red_packet_id', $packet_id)->update([
+            "min"             => $min, 
+            "max"             => $max, 
+            "drop_min_amount" => $drop_min_amount, 
+            "drop_max_amount" => $drop_max_amount, 
+            "drop_rates"      => $drop_rates, 
+            "status"          => $status, 
+            "updated_at"      => date('Y-m-d H:i:s')
+        ]);
         if($update > 0){
             return response()->json([
                 'response_code'=> 200,
-                'service_name' => 'change_status',
-                'message'=> 'Status changed Successfully',
+                'service_name' => 'update_red_packet',
+                'message'=> 'Red packet updated Successfully',
             ],200);
         }else{
             return response()->json([
                 'response_code'=> 200,
-                'service_name' => 'change_status',
-                'message'=> 'Someting wrong for updating status',
+                'service_name' => 'update_red_packet',
+                'message'=> 'Someting wrong for updating red packet',
             ],500);
         }
 

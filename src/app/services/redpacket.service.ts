@@ -19,7 +19,7 @@ export class RedpacketService {
     return this.http.post(`${environment.API_URL}/red-packet/create`, data);
   }
   editRedPkt(redPacketId:any , data: object) {
-    return this.http.post(`${environment.API_URL}/red-packet/change-status/${redPacketId}`, data);
+    return this.http.post(`${environment.API_URL}/red-packet/update-red-packet/${redPacketId}`, data);
   }
 
   redPacketCategory() {

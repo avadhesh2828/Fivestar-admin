@@ -157,24 +157,28 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   public onStatusSubmit(pkt) {
     this.loaderService.display(true);
     pkt.isEditabel = false;
-    if (this.oldStatus !== this.advList.status) {
-      this.redpacketService.editRedPkt(pkt.red_packet_id, { status: pkt.status })
-        .subscribe((res: any) => {
-          this.loaderService.display(false);
-          if (res && res.message) {
-            this.getRedPktList();
-            this.toastr.success(res.message || 'Status updated successfully.');
-          }
+    const forminputdata = {
+      min             : pkt.min,
+      max             : pkt.max,
+      drop_min_amount : pkt.drop_min_amount,
+      drop_max_amount : pkt.drop_max_amount,
+      drop_rates      : pkt.drop_rates,
+      status          : pkt.status
+    };
+    this.redpacketService.editRedPkt(pkt.red_packet_id, forminputdata)
+      .subscribe((res: any) => {
+        this.loaderService.display(false);
+        if (res && res.message) {
+          this.getRedPktList();
+          this.toastr.success(res.message || 'Redpacket updated successfully.');
+        }
 
-        }, (err: any) => {
-          this.loaderService.display(false);
-          if (err && err.error && err.error.message) {
-            this.toastr.error(err.error.message || 'There was an error');
-          }
-        });
-    } else {
-      this.loaderService.display(false);
-    }
+      }, (err: any) => {
+        this.loaderService.display(false);
+        if (err && err.error && err.error.message) {
+          this.toastr.error(err.error.message || 'There was an error');
+        }
+      });
   }
 
   public gameCategoryModel() {
