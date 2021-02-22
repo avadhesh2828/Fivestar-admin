@@ -22,7 +22,8 @@
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.31",
         "paypal/paypal-checkout-sdk": "1.0.1",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "lcobucci/jwt": "3.3.3"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
