@@ -12,7 +12,7 @@ if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])){
 
   switch ($_SERVER['SERVER_NAME']) {
 
-    case 'production':
+    case '54.255.87.37':
   	Dotenv::create(__DIR__.'/../../../all-config/production', '.env')->overload();
       break;
     case '128.199.205.140':
@@ -23,7 +23,7 @@ if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])){
       break;
   }
 }else{
-  Dotenv::create(__DIR__.'/../../../all-config/development', '.env')->overload();
+  Dotenv::create(__DIR__.'/../../../all-config/production', '.env')->overload();
 }
 /*
 |--------------------------------------------------------------------------
