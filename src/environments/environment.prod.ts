@@ -7,5 +7,5 @@ export const environment = {
   PLAYER_IMG_URL: 'https://playfs5.com/backend/storage/app/uploads/players',
   USER_IMG_URL: 'https://fivestar888.com/storage/app/uploads/profile_image',
   NEWS_IMG_URL: 'https://playfs5.com/backend/storage/app/uploads/news',
-  LANG_URL: '/admin/assets/i18n/'
+  LANG_URL: '/assets/i18n/'
 };
