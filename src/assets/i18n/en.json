@@ -482,6 +482,7 @@
   },
   "sugg": {
     "suggestion": "Suggestions",
+    "playerId"  : "Player ID",
     "totalRecord": "Total Record",
     "suggestionId": "Suggestion Id",
     "suggestionType": "Suggestion Type",
@@ -491,6 +492,7 @@
     "email": "Email",
     "prev": "Prev",
     "next": "Next",
+    "date": "Date",
     "noSuggestionFound": "No Suggestion Found",
     "thereWasAnError": "There was an error"
   },
