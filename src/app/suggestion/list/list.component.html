@@ -22,31 +22,33 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <!-- <th>{{'sugg.suggestionId' | translate}}</th> -->
+              <th>{{'sugg.playerId' | translate}}</th>
               <th>{{'sugg.suggestionType' | translate}}</th>
               <th>{{'sugg.userName' | translate}}</th>
               <th>{{'sugg.message' | translate}}</th>
               <th>{{'sugg.phone' | translate}}</th>
               <th>{{'sugg.email' | translate}}</th>
+              <th>{{'sugg.date' | translate}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="9" class="table-danger">{{'sugg.thereWasAnError' | translate}}</td>
+              <td colspan="7" class="table-danger">{{'sugg.thereWasAnError' | translate}}</td>
             </tr>
             <tr *ngIf="!error && !suggestionList">
-              <td colspan="9">Loading...</td>
+              <td colspan="7">Loading...</td>
             </tr>
             <tr *ngIf="suggestionList && !(suggestionList.length>0)">
-              <td colspan="9" class="text-center"> {{'sugg.noSuggestionFound' | translate}}</td>
+              <td colspan="7" class="text-center"> {{'sugg.noSuggestionFound' | translate}}</td>
             </tr>
             <tr *ngFor="let suggestion of suggestionList; let suggestionIndex = index" [ngStyle]="{'background-color':suggestion.is_status === 'N' ? '#e5efe5' : '' }">
-              <!-- <td>{{ suggestion.suggestion_id || "-" }}</td> -->
+              <td>{{ suggestion.user_id || "-" }}</td>
               <td>{{ suggestion.suggestion_type.suggestion_name || "-" }}</td>
               <td>{{ suggestion.user.name || "-" }}</td>
               <td>{{ suggestion.text || "-" }}</td>
               <td>{{ suggestion.phone || "-" }}</td>
               <td>{{ suggestion.email || "-" }}</td>
+              <td>{{ suggestion.created_at | date:'yyyy-MM-dd - hh:mm a'}} </td>
             </tr>
           </tbody>
         </table>

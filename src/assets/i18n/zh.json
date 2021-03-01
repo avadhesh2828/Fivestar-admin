@@ -481,6 +481,7 @@
   },
   "sugg": {
     "suggestion": "意見建議",
+    "playerId"  : "玩家編號",
     "totalRecord": "總記錄",
     "suggestionId": "建議編號",
     "suggestionType": "建議類型",
@@ -490,6 +491,7 @@
     "email": "電子郵件",
     "prev": "上一個",
     "next": "下一個",
+    "date": "日期",
     "noSuggestionFound": "找不到建議",
     "thereWasAnError": "有一個錯誤"
   },
