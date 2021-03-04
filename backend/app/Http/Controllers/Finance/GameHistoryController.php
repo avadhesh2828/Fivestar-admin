@@ -38,7 +38,7 @@ class GameHistoryController extends Controller
         }
         
         $gameHistory = new PaymentHistoryTransaction;
-        $gameHistory = $gameHistory->select('payment_history_transactions.*', 'U.username');
+        $gameHistory = $gameHistory->select('payment_history_transactions.*', 'U.username', DB::raw("(CASE WHEN payment_history_transactions.action = 'FiveStar Blessing' THEN payment_history_transactions.action ELSE NULL END) AS action"));
         $gameHistory = $gameHistory->with(['game_detail']);
         $gameHistory = $gameHistory->join((new User)->getTable().' as U', function($j){
             $j->on('U.user_id', '=', 'payment_history_transactions.user_id');
