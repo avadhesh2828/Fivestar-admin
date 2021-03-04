@@ -40,6 +40,7 @@ class GameController extends Controller
         if($request->keyword != ''){
             $game = $game->where('name', 'ilike', '%' . $request->keyword . '%');
         }
+        $game = $game->where('is_visible', 0);
         $game = $game->orderByRaw('is_position ASC NULLS LAST');
         // $game = $game->orderBy('position','ASC');
         $game = $game->paginate($request->per_page);
