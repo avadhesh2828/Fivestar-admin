@@ -81,11 +81,11 @@
             </tr>
             <tr *ngFor="let history of gameHistory; let scoreIndex = index">
               <td  class="username" *ngIf="history.action == null; else notAvailable" (click)="gameLogModel(history)">{{ history.game_detail.name || "-" }}</td>
-              <td *ngIf="history.action != 'FiveStar Blessing'; else notAvailable">{{ history.bet || "-" }}</td>
-              <td *ngIf="history.action != 'FiveStar Blessing'; else notAvailable">{{ history.win || "-" }}</td>
-              <td *ngIf="history.action != 'FiveStar Blessing'; else notAvailable">{{ history.begin_money || "-" }}</td>
-              <td *ngIf="history.action != 'FiveStar Blessing'; else notAvailable">{{ history.end_money || "-" }}</td>
-              <td *ngIf="history.action == 'FiveStar Blessing'; else notAvailable">{{ history.action | translate:{earn:history.win} }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.bet || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.win || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.begin_money || "-" }}</td>
+              <td *ngIf="history.action == null; else notAvailable">{{ history.end_money || "-" }}</td>
+              <td *ngIf="history.action != null; else notAvailable">{{ history.action | translate:{earn:history.win} }}</td>
               <td>{{ history.created_at || "-" }}</td>
             </tr>
           </tbody>
