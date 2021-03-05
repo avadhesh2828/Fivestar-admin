@@ -154,11 +154,12 @@
               <tbody>
                 <tr >
                   <td>{{gameLog.game_detail.name}}</td>
-                  <td>{{gameLog.bet}}</td>
+                  <td><span *ngIf="gameLog.free_game == 0; else freeSpin"> {{ gameLog.bet || "-" }} </span></td>
                   <td>{{gameLog.win}}</td>
                 </tr>
               </tbody>
             </table>
+            <ng-template #freeSpin><span> Free Spin </span></ng-template>
         </div>
 
       </div>
