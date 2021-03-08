@@ -124,7 +124,7 @@ export class ScoreLogComponent implements OnInit {
           this.jump_to = this.checkLastPage;
           this.createPaginationItem(log['data'].total);
         } else {
-          
+          this.createPaginationItem(0);
           this.scoreLogList = log['data'];
         }
         this.loaderService.display(false);

@@ -101,6 +101,7 @@ export class ReportsComponent implements OnInit {
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
+          this.createPaginationItem(0);
         }
         this.loaderService.display(false);
         this.error = false;

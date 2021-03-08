@@ -69,19 +69,15 @@ export class WithdrawListComponent implements OnInit {
     this.createUrl(date);
     this.transactionService.getWithdraws(this.url)
       .subscribe((response: any) => {
-        // if (response.response_code === 200) {
-        //   this.withdrawList = response.data.data;
-        //   this.createPaginationItem(response.data.total);
-        // } else {
-        //   this.withdrawList = response.data
-        // }
-        // this.error = false;
         this.loaderService.display(false);
         if (response['data'] && response['data'].data) {
           this.withdrawList = response['data'].data;
           this.checkLastPage = response['data'].last_page;
           this.jump_to = this.checkLastPage;
           this.createPaginationItem(response['data'].total);
+        } else {
+            this.withdrawList = response.data
+          this.createPaginationItem(0);
         }
         this.error = false;
       }, () => {

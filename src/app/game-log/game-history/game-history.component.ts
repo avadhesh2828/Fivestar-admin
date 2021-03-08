@@ -129,6 +129,7 @@ export class GameHistoryComponent implements OnInit {
           this.jump_to = this.checkLastPage;
           this.createPaginationItem(log['data'].total);
         } else {
+          this.createPaginationItem(0);
           this.gameHistory = log['data'];
         }
         this.loaderService.display(false);
