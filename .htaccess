@@ -6,5 +6,5 @@
   RewriteRule ^upload/ - [L,NC]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /admin/index.html [L]
+  RewriteRule . index.html [L]
 </IfModule>
