@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 
 
 const INITIAL_PARAMS = {
-  per_page: 10,
+  per_page: 20,
   current_page: 1,
 };
 
@@ -28,7 +28,8 @@ export class ListComponent implements OnInit {
   public totalPaginationShow = [];
   public totalPages = 0;
   public error = false;
-
+  public jump_to : any;
+  public checkLastPage :any;
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'suggestion/list?';
@@ -66,6 +67,8 @@ export class ListComponent implements OnInit {
         this.loaderService.display(false);
         if (sugg['data'] && sugg['data'].data) {
           this.suggestionList = sugg['data'].data;
+          this.checkLastPage = sugg['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(sugg['data'].total);
         }
         this.error = false;
@@ -99,5 +102,12 @@ export class ListComponent implements OnInit {
     this.location.back();
   }
 
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.getSuggestionList();
+    } 
+  }
   
 }

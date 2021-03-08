@@ -39,6 +39,8 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   public url = 'agent/list?';
   formSubmitted = false;
   selectedAgent: any = '';
+  public jump_to : any;
+  public checkLastPage :any;
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
@@ -108,6 +110,8 @@ export class AgentListComponent implements OnInit, AfterViewInit {
         this.loaderService.display(false);
         if (agent['data'] && agent['data'].data) {
           this.agentList = agent['data'].data;
+          this.checkLastPage = agent['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(agent['data'].total);
         }
         this.error = false;
@@ -184,7 +188,14 @@ export class AgentListComponent implements OnInit, AfterViewInit {
         this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
         this.formSubmitted = false;
       });
+  }
 
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.getAgentList();
+    } 
   }
 
 }

@@ -15,3 +15,25 @@
   color: #fff;
   border: none;
 }
+
+.page-jump {
+  float: left;
+  padding: 4px;
+  color: #6d6161;
+
+  input {
+      width: 50px;
+      text-align: center;
+  }
+}
+.page-jump-btn {
+  float: right;
+}
+table {
+  tr {
+      text-align: center;
+  }
+  td {
+      text-align: center;
+  }
+}

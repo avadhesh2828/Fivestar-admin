@@ -183,8 +183,7 @@ export class GameHistoryComponent implements OnInit {
       if(checkLastPage >= this.jump_to) {
         this.params.current_page = this.jump_to;
         this.onSubmit();
-      }
-    
+      } 
   }
 
 }

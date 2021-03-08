@@ -33,6 +33,8 @@ export class ReportsComponent implements OnInit {
   public totalGameReport = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
+  public jump_to : any;
+  public checkLastPage :any;
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
   public url = 'finance/game-report?';
@@ -94,6 +96,8 @@ export class ReportsComponent implements OnInit {
         this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.gameReport = log['data'].data;
+          this.checkLastPage = log['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
@@ -131,6 +135,14 @@ export class ReportsComponent implements OnInit {
     this.showTable = false;
     this.gameReport = [];
     this.reportForm.reset();
+  }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.onSubmit();
+    } 
   }
 
 }

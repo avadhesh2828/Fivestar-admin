@@ -37,6 +37,8 @@ export class WithdrawListComponent implements OnInit {
   public isProcessed = STATUS;
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
+  public jump_to : any;
+  public checkLastPage :any;
   constructor(
     private transactionService: TransactionService,
     private toastr: ToastrService,
@@ -77,7 +79,8 @@ export class WithdrawListComponent implements OnInit {
         this.loaderService.display(false);
         if (response['data'] && response['data'].data) {
           this.withdrawList = response['data'].data;
-          // this.oldStatus = this.advList.status;
+          this.checkLastPage = response['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(response['data'].total);
         }
         this.error = false;
@@ -139,4 +142,13 @@ export class WithdrawListComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.getWithdrawHistory();
+    } 
+  }
+
 }

@@ -38,7 +38,8 @@ export class ListComponent implements OnInit {
   public error = false;
   public gameInfo :any;
   public isEditabel = 0;
-
+  public jump_to : any;
+  public checkLastPage :any;
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'game/list?';
@@ -86,6 +87,8 @@ export class ListComponent implements OnInit {
         this.loaderService.display(false);
         if (game['data'] && game['data'].data) {
           this.gameList = game['data'].data;
+          this.checkLastPage = game['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(game['data'].total);
         }
         this.error = false;
@@ -217,6 +220,14 @@ export class ListComponent implements OnInit {
         this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change position.');
         this.formSubmitted = false;
       });
+  }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.getGameList();
+    } 
   }
 
 }

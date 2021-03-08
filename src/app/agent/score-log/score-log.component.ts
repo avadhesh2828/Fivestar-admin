@@ -35,6 +35,8 @@ export class ScoreLogComponent implements OnInit {
   public totalScoreLog = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
+  public jump_to : any;
+  public checkLastPage :any;
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
   public url = 'finance/score-log?'
@@ -61,100 +63,110 @@ export class ScoreLogComponent implements OnInit {
       'userName': ['', [Validators.required]],
       'date'    : ['', [Validators.required]]
     });
-}
+  }
 
-private getAgentDetail() {
-  this.loaderService.display(true);
-  const agentId = this.route.snapshot.paramMap.get('agentId');
-  this.agentService.getAgentDetails(agentId)
-    .subscribe((agent) => {
-      this.loaderService.display(false);
-      if (agent['data']) {
-        this.agentInfo = agent['data'];
-        this.setValue(this.agentInfo.username);
-      }
-    }, (err: object) => {
-      this.loaderService.display(false);
-      this.error = true;
-    });
-}
-
-setValue(username){
-  this.scorLogForm.setValue({userName: username,date: ''})
-}
-
-
-private createUrl() {
-  this.url = 'finance/score-log?';
-  this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;
-}
-
-get f() {
-  return this.scorLogForm.controls;
-}
-
-onSubmit() {
-  const date = this.f.date.value.length == 2 ? {
-    fromdate: `${formatDate( this.f.date.value[0])} 00:00:00`,
-    todate: `${formatDate( this.f.date.value[1])} 23:59:59`,
-    time_zone:  this.f.date.value[0].toString().split(' ')[5],
-  } : [];
-  
-  this.submitted = true;
-  this.createUrl();
-  if (this.scorLogForm.invalid || this.formError) {
-    return;
-  } else {
-    const forminputdata = {
-      'username': this.f.userName.value,
-      'dates'   : date,
-      'type'    : 'agent'
-    };
-    this.formSubmitted = true;
+  private getAgentDetail() {
     this.loaderService.display(true);
-    this.transactionService.playerScoreLog(this.url, forminputdata)
-    .subscribe((log: []) => {
-      this.loaderService.display(false);  
-      this.showTable = true;
-      if (log['data'] && log['data'].data) {
-        this.scoreLogList = log['data'].data;
-        this.createPaginationItem(log['data'].total);
-      } else {
-        
-        this.scoreLogList = log['data'];
-      }
-      this.loaderService.display(false);
-      this.error = false;
-    }, (err: Error) => {
-      this.loaderService.display(false);
-      this.error = true;
-    });
-  }  
-}
+    const agentId = this.route.snapshot.paramMap.get('agentId');
+    this.agentService.getAgentDetails(agentId)
+      .subscribe((agent) => {
+        this.loaderService.display(false);
+        if (agent['data']) {
+          this.agentInfo = agent['data'];
+          this.setValue(this.agentInfo.username);
+        }
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+  }
 
-private createPaginationItem(totalScore: number) {
-  this.totalScoreLog = totalScore;
-  const maxPages: number = Math.ceil(totalScore / this.params.per_page);
-  const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
-  const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
-  this.totalPages = maxPages;
-  this.totalPaginationShow = range(end, start);
-}
+  setValue(username){
+    this.scorLogForm.setValue({userName: username,date: ''})
+  }
 
-public paginateList(newPage: number) {
-  if (this.params.current_page === newPage) { return false; }
-  this.params.current_page = newPage;
-  this.onSubmit();
-}
 
-public nextOrPreviousPage(deviation: number) {
-  this.params.current_page = this.params.current_page + deviation;
-  this.onSubmit();
-}
+  private createUrl() {
+    this.url = 'finance/score-log?';
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;
+  }
 
-handleReset() {
-  this.showTable = false;
-  this.scorLogForm.reset();
-}
+  get f() {
+    return this.scorLogForm.controls;
+  }
+
+  onSubmit() {
+    const date = this.f.date.value.length == 2 ? {
+      fromdate: `${formatDate( this.f.date.value[0])} 00:00:00`,
+      todate: `${formatDate( this.f.date.value[1])} 23:59:59`,
+      time_zone:  this.f.date.value[0].toString().split(' ')[5],
+    } : [];
+    
+    this.submitted = true;
+    this.createUrl();
+    if (this.scorLogForm.invalid || this.formError) {
+      return;
+    } else {
+      const forminputdata = {
+        'username': this.f.userName.value,
+        'dates'   : date,
+        'type'    : 'agent'
+      };
+      this.formSubmitted = true;
+      this.loaderService.display(true);
+      this.transactionService.playerScoreLog(this.url, forminputdata)
+      .subscribe((log: []) => {
+        this.loaderService.display(false);  
+        this.showTable = true;
+        if (log['data'] && log['data'].data) {
+          this.scoreLogList = log['data'].data;
+          this.checkLastPage = log['data'].last_page;
+          this.jump_to = this.checkLastPage;
+          this.createPaginationItem(log['data'].total);
+        } else {
+          
+          this.scoreLogList = log['data'];
+        }
+        this.loaderService.display(false);
+        this.error = false;
+      }, (err: Error) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
+    }  
+  }
+
+  private createPaginationItem(totalScore: number) {
+    this.totalScoreLog = totalScore;
+    const maxPages: number = Math.ceil(totalScore / this.params.per_page);
+    const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
+    const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
+    this.totalPages = maxPages;
+    this.totalPaginationShow = range(end, start);
+  }
+
+  public paginateList(newPage: number) {
+    if (this.params.current_page === newPage) { return false; }
+    this.params.current_page = newPage;
+    this.onSubmit();
+  }
+
+  public nextOrPreviousPage(deviation: number) {
+    this.params.current_page = this.params.current_page + deviation;
+    this.onSubmit();
+  }
+
+  handleReset() {
+    this.showTable = false;
+    this.scorLogForm.reset();
+  }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.onSubmit();
+    } 
+  }
 
 }

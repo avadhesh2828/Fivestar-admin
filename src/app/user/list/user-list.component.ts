@@ -41,6 +41,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public url = 'users/list?';
   selectedUser: any = '';
   selectedAgent: any = '';
+  public jump_to : any;
+  public checkLastPage :any;
   searchTextChanged: Subject<string> = new Subject<string>();
 
   constructor(
@@ -117,6 +119,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
         this.loaderService.display(false);
         if (user['data'] && user['data']) {
           this.userList = user['data'].data;
+          this.checkLastPage = user['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(user['data'].total);
         }
         this.error = false;
@@ -228,5 +232,13 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public exportExcel() {
     this.get({
     }, environment.API_URL + '/user/export-excel');
+  }
+
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.getUsersList();
+    } 
   }
 }

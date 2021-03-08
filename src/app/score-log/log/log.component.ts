@@ -41,6 +41,8 @@ export class LogComponent implements OnInit {
   public totalScoreLog = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
+  public jump_to : any;
+  public checkLastPage :any;
 
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
@@ -129,6 +131,8 @@ export class LogComponent implements OnInit {
         this.showTable = true;
         if (log['data'] && log['data'].data) {
           this.scoreLogList = log['data'].data;
+          this.checkLastPage = log['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(log['data'].total);
         } else {
           
@@ -176,4 +180,11 @@ export class LogComponent implements OnInit {
     this.location.back();
   }
 
+  // jump page
+  public jumpAnotherPage(checkLastPage) {
+    if(checkLastPage >= this.jump_to) {
+      this.params.current_page = this.jump_to;
+      this.onSubmit();
+    } 
+  }
 }
