@@ -61,11 +61,11 @@ export class NewComponent implements OnInit {
       this.newAgentForm = this.formBuilder.group({
         // checkadd:[''],
         // 'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
-        'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+        'password': ['App100', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
         // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
         // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
-        'name': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+        'name': [this.unique_username, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
         'phone': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
         'description': [''],
       });

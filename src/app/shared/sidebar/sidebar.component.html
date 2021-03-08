@@ -81,14 +81,14 @@
       <!-- end -->
 
       <!-- jackpot -->
-      <li class="nav-item nav-dropdown" routerLinkActive="open">
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/jackpot']" routerLinkActive="active">
           <i class="nav-icon icon-rocket"></i> {{'sidebar.jackpot' | translate}} </a>
       </li>
       <!-- end -->
 
       <!-- suggestion -->
-      <li class="nav-item nav-dropdown" routerLinkActive="open">
+      <li class="nav-item nav-dropdown" *ngIf="isSuperAdmin" routerLinkActive="open">
         <a class="nav-link" href="javascript:void(0);" [routerLink]="['/suggestion']" routerLinkActive="active">
           <i class="nav-icon icon-rocket"></i> {{'sidebar.suggestion' | translate}} </a>
       </li>

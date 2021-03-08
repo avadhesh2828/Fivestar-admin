@@ -4,6 +4,63 @@
       <div class="card-body">
         <h2 class="card-title text-center">{{'dashboard.title' | translate}}</h2>
         <div class="row">
+          <div class="col-md-3">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">{{'dashboard.active_agent' | translate}}</div>
+                    <div class="col-sm-1"><i class="nav-icon icon-user"></i></div>
+                  </div>
+                </h5>
+                
+                <p class="card-text">{{stats?.active_agent | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">{{'dashboard.inactive_agent' | translate}}</div>
+                    <div class="col-sm-1"><i class="nav-icon icon-user"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.inactive_agent | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">{{'dashboard.active_player' | translate}}</div>
+                    <div class="col-sm-1"><i class="nav-icon icon-user"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.active_player | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card stats-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="row">
+                    <div class="col-sm-10">{{'dashboard.inactive_player' | translate}}</div>
+                    <div class="col-sm-1"><i class="nav-icon icon-user"></i></div>
+                  </div>
+                </h5>
+                <p class="card-text">{{stats?.inactive_player | number: '1.0-1'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        <!-- <div class="row">
           <div class="col-md-4">
             <div class="card stats-card">
               <div class="card-body">
@@ -44,7 +101,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- <div class="row">
           <div class="col-md-4"></div>

@@ -45,6 +45,7 @@ class Admin extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'balance'         => 'decimal:2',
     ];
 
     public function AauthAcessToken(){

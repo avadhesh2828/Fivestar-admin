@@ -22,6 +22,10 @@ class DashboardController extends Controller
         $data['total_winning_amount'] = $this->get_total_winning_amount();
         $data['total_agent'] = $this->get_total_agent($this->user);
         $data['total_player'] = $this->get_total_player($this->user);
+        $data['active_agent'] = $this->get_active_agent($this->user);
+        $data['inactive_agent'] = $this->get_inactive_agent($this->user);
+        $data['active_player'] = $this->get_active_player($this->user);
+        $data['inactive_player'] = $this->get_inactive_player($this->user);
         return response()->json([
             'response_code'=>200,
             'service_name'=>'dashboard',
@@ -56,7 +60,7 @@ class DashboardController extends Controller
     private function get_total_agent($user)
     {
         if($user->parent_id > 0) {
-            $agent = Agent::where('parent_id', $user->parent_id)->count();    
+            $agent = Agent::where('parent_id', $user->admin_id)->count();    
 
         } else {
             $agent = Agent::all()->count();    
@@ -66,10 +70,54 @@ class DashboardController extends Controller
     private function get_total_player($user)
     {
         if($user->parent_id > 0) {
-            $player = User::where('parent_id', $user->parent_id)->count();    
+            $player = User::where('parent_id', $user->admin_id)->count();    
 
         } else {
             $player = User::all()->count();    
+        }
+        return $player;
+    }
+
+    private function get_active_agent($user)
+    {
+        if($user->parent_id > 0) {
+            $player = Agent::where(['parent_id' => $user->admin_id, 'status' => 1 ])->count();    
+
+        } else {
+            $player = Agent::where('status', 1)->count();    
+        }
+        return $player;
+    }
+
+    private function get_inactive_agent($user)
+    {
+        if($user->parent_id > 0) {
+            $player = Agent::where(['parent_id' => $user->admin_id, 'status' => 0 ])->count();    
+
+        } else {
+            $player = Agent::where('status', 0)->count();    
+        }
+        return $player;
+    }
+
+    private function get_active_player($user)
+    {
+        if($user->parent_id > 0) {
+            $player = User::where(['parent_id' => $user->admin_id, 'status' => 1 ])->count();    
+
+        } else {
+            $player = User::where('status', 1)->count();    
+        }
+        return $player;
+    }
+
+    private function get_inactive_player($user)
+    {
+        if($user->parent_id > 0) {
+            $player = User::where(['parent_id' => $user->admin_id, 'status' => 0 ])->count();    
+
+        } else {
+            $player = User::where('status', 0)->count();    
         }
         return $player;
     }

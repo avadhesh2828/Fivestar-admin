@@ -5,7 +5,11 @@
     "totalPlayer": "总球员",
     "amountDepositedInWallet" : "存入電子錢包的金額",
     "amountWithdrawFromWallet" : "從錢包提款",
-    "totalPlayerAssets" : "玩家總資產"
+    "totalPlayerAssets" : "玩家總資產",
+    "active_agent" : "主動代理",
+    "inactive_agent" : "非活動代理",
+    "active_player" : "活躍球員",
+    "inactive_player" : "無效的播放器"
   },
   "home": {
     "login": "登錄",
@@ -361,6 +365,7 @@
     "next": "下一個",
     "prev": "上一個",
     "noTransactionsFound" : "沒有可顯示的交易",
+    "empty" : "空的",
     "showLast" : "顯示最後 1000",
     "operationLog" : "操作日誌",
     "add-coins": "加分",

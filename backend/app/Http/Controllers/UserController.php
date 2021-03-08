@@ -90,7 +90,7 @@ class UserController extends Controller
         User::create([
             "username"      => $username, //mt_rand(1111111111, 9999999999),
             "password"      => Hash::make($password),
-            "balance"       => $score,
+            "balance"       => 0, //$score,
             "name"          => $name,
             "phone"         => $phone,
             "description"   => $description,
@@ -102,7 +102,11 @@ class UserController extends Controller
         ]);
 
         $InsertplayerId = DB::getPdo()->lastInsertId();
-        History::create(['action_for' => 4, 'to_id' => $InsertplayerId, 'from_id' => $agent_id, 'name' => $name, 'description' => 'Player created successfully', 'last_ip' => \Request::ip(), 'type' => '1', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+        History::create(['action_for' => 4, 'to_id' => $InsertplayerId, 'from_id' => $agent_id, 'name' => $username, 'description' => 'Player created successfully', 'last_ip' => \Request::ip(), 'type' => '1', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+
+        if($score > 0) {
+            $this->addBalance($this->user, $InsertplayerId, $score);
+        }
 
         return response()->json([
             'response_code'=> 200,
@@ -450,6 +454,47 @@ class UserController extends Controller
     {
         $unique_username = random_string('numeric',10);
         return response()->json(['response_code'=> 200,'service_name' => 'generate_unique_username','data' => $unique_username],200);
+    }
+
+    private function addBalance($agent, $playerId, $score)
+    {
+        $checkPlayer = User::where('user_id', $playerId)->first();
+        if($checkPlayer) {
+            $updateBalance = User::where('user_id', $checkPlayer->user_id)->update(['balance' => $checkPlayer->balance + $score]);
+            if($agent->role_id == 2) {
+                Agent::where('admin_id', $agent->admin_id)->decrement('balance', $score); 
+            }
+
+            PaymentDepositTransaction::insert([
+                'user_id'      => $checkPlayer->user_id,
+                'admin_id'     => $agent->admin_id,
+                'set_score'    => $score,
+                'before_score' => $checkPlayer->balance,
+                'after_score'  => $checkPlayer->balance + $score,
+                'ip'           => \Request::ip(),
+                'type'         => 'player',
+                'date_created' => date('Y-m-d H:i:s'),
+                'date_modified'=> date('Y-m-d H:i:s')
+            ]);
+
+            PaymentHistoryTransaction::insert([
+                'user_id'       => $checkPlayer->user_id,
+                'ip'            => \Request::ip(),
+                'game_id'       => 0,
+                'action'        => 'SetScore',
+                'win'           => $score,
+                'begin_money'   => 0,
+                'end_money'     => 0,
+                'is_redpacket_calculated' => 1,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            ]);
+
+            History::create(['action_for' => 0, 'to_id' => $checkPlayer->user_id, 'from_id' => $agent->admin_id, 'name' => $checkPlayer->username, 'description' => 'Score set successfully', 'last_ip' => \Request::ip(), 'type' => 1, 'set_score' => $score, 'before_score' => $checkPlayer->balance, 'after_score'  => $checkPlayer->balance + $score, 'payment_type' => 0, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+        
+             return;   
+        }
+        
     }
 
 
