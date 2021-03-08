@@ -126,6 +126,7 @@ export class GameHistoryComponent implements OnInit {
         if (log['data'] && log['data'].data) {
           this.gameHistory = log['data'].data;
           this.checkLastPage = log['data'].last_page;
+          this.jump_to = this.checkLastPage;
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameHistory = log['data'];
