@@ -44,6 +44,12 @@ export class DashboardComponent implements OnInit {
       }, err => {
         this.toastr.error(err.message || 'There was an error.');
       });
+
+  
+      if (localStorage.getItem('reload')) { 
+        location.reload() 
+        localStorage.removeItem('reload') 
+      }
   }
 
 }

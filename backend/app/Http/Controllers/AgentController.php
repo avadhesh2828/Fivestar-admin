@@ -80,7 +80,7 @@ class AgentController extends Controller
         Agent::create([
             "username"      => $username,
             "password"      => Hash::make($password),
-            "balance"       => $score,
+            "balance"       => 0, //$score,
             "name"          => $name,
             "phone"         => $phone,
             "description"   => $description,
@@ -93,7 +93,11 @@ class AgentController extends Controller
         ]);
 
         $InsertAgentId = DB::getPdo()->lastInsertId();
-        History::create(['action_for' => 3, 'to_id' => $InsertAgentId, 'from_id' => $user_id, 'name' => $name, 'description' => 'Agent created successfully', 'last_ip' => \Request::ip(), 'type' => '0', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);    
+        History::create(['action_for' => 3, 'to_id' => $InsertAgentId, 'from_id' => $user_id, 'name' => $username, 'description' => 'Agent created successfully', 'last_ip' => \Request::ip(), 'type' => '0', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);    
+
+        if($score > 0) {
+            $this->addBalance($this->user, $InsertAgentId, $score); 
+        }
 
         return response()->json([
             'response_code'=> 200,
@@ -320,6 +324,34 @@ class AgentController extends Controller
         }     
 
     }    
+
+
+    private function addBalance($admin, $agentId, $score)
+    {
+        $checkAgent = Agent::where('admin_id', $agentId)->first();
+        if($checkAgent) {
+            $updateBalance = Agent::where('admin_id', $checkAgent->admin_id)->update(['balance' => $checkAgent->balance + $score]);
+            if($admin->role_id == 2) {
+                Agent::where('admin_id', $admin->admin_id)->decrement('balance', $score); 
+            }
+
+            PaymentDepositTransaction::insert([
+                'user_id'      => $checkAgent->admin_id,
+                'admin_id'     => $admin->admin_id,
+                'set_score'    => $score,
+                'before_score' => $checkAgent->balance,
+                'after_score'  => $checkAgent->balance + $score,
+                'ip'           => \Request::ip(),
+                'type'         => 'agent',
+                'date_created' => date('Y-m-d H:i:s'),
+                'date_modified'=> date('Y-m-d H:i:s')
+            ]);
+
+            History::create(['action_for' => 0, 'to_id' => $checkAgent->admin_id, 'from_id' => $admin->admin_id, 'name' => $checkAgent->username, 'description' => 'Score set successfully', 'last_ip' => \Request::ip(), 'type' => 0, 'set_score' => $score, 'before_score' => $checkAgent->balance, 'after_score'  => $checkAgent->balance + $score, 'payment_type' => 0 ,'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+        
+            return;
+        }    
+    }
 
 
 
