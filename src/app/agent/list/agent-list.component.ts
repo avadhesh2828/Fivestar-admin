@@ -61,7 +61,6 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     // ? JSON.parse(localStorage.getItem('agentFilters'))
     // : { ...INITIAL_PARAMS };
     // localStorage.removeItem('agentFilters');
-    // this.getCountryList();
     // this.searchTextChanged.pipe(debounceTime(1000))
     //   .subscribe(model => this.getAgentList());
 
@@ -84,17 +83,6 @@ export class AgentListComponent implements OnInit, AfterViewInit {
       that.currentAgent = null;
       $(this).find('textarea').val('').end();
     });
-  }
-
-  public getCountryList() {
-    this.agentService.getCountryList()
-      .subscribe((response: any) => {
-        this.countryList = response.result;
-        this.getAgentList();
-      }, (err: Error) => {
-        this.toastr.error(err.message || 'There was an error.');
-        this.error = true;
-      });
   }
 
   private createUrl() {

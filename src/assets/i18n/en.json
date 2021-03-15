@@ -108,6 +108,7 @@
     "edit": "Edit"
   },
   "agentDetail": {
+    "agent" : "Agent Details",
     "agentName": "Agent Name",
     "userName": "Username",
     "balance": "Score",
@@ -128,7 +129,11 @@
     "noLimit": "No Limit",
     "maxValue": "Max Value",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "totalRecord": "Total Record",
+    "enable": "Enable",
+    "disable": "Disable",
+    "create" : "Create"
   },
   "player": {
     "playerMng": "Player Management",
@@ -518,5 +523,6 @@
   "5": "Change Password",
   "6": "Change Personal Password",
   "7": "Red Packet",
-  "StarLuckyWheel" : "Star Lucky Wheel : {{ earn }}"
+  "StarLuckyWheel" : "Star Lucky Wheel : {{ earn }}",
+  "permissionError" : "You don't have permission"
 }

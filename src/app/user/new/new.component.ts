@@ -126,11 +126,13 @@ export class NewComponent implements OnInit {
   }
 
   handleReset() {
+    this.getUniqueUserName();
+    
     this.newAgentForm.reset();
     // this.newAgentForm.controls['username'].setValue('');
-    this.newAgentForm.controls['password'].setValue('');
+    this.newAgentForm.controls['password'].setValue('App100');
     this.newAgentForm.controls['score'].setValue('0');
-    this.newAgentForm.controls['name'].setValue('');
+    this.newAgentForm.controls['name'].setValue(this.unique_username);
     this.newAgentForm.controls['phone'].setValue('');
     this.newAgentForm.controls['description'].setValue('');
     this.submitted = false;

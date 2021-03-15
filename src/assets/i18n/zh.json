@@ -106,6 +106,7 @@
     "edit": "編輯"
   },
   "agentDetail": {
+    "agent" : "代理商詳細信息",
     "agentName": "代理名稱",
     "userName": "用戶名",
     "balance": "得分了",
@@ -126,7 +127,11 @@
     "noLimit": "沒有限制",
     "maxValue": "最大值",
     "edit": "編輯",
-    "save": "救"
+    "save": "救",
+    "totalRecord": "總記錄",
+    "enable": "啟用",
+    "disable": "禁用",
+    "create" : "創建"
   },
   "player": {
     "playerMng": "球員管理",
@@ -517,5 +522,6 @@
   "5": "更改密碼",
   "6": "修改個人密碼",
   "7": "紅包",
-  "StarLuckyWheel" : "星幸運輪 : {{ earn }}"
+  "StarLuckyWheel" : "星幸運輪 : {{ earn }}",
+  "permissionError" : "您沒有權限"
 }

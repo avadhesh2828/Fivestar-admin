@@ -36,6 +36,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public error = false;
   public currentUser = null;
   public countryList = [];
+  public currentAgent : any = null;
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'users/list?';
@@ -59,7 +60,9 @@ export class UserListComponent implements OnInit, AfterViewInit {
       this.selectedAgent = this.route.snapshot.paramMap.get('agentId');
     }
     
-
+    this.userService.currentUser.subscribe((current_agent: any) => {
+      this.currentAgent = current_agent;
+    });
 
     this.getCountryList();
     // this.getAgentsList();

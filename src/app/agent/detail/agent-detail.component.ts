@@ -9,6 +9,8 @@ import { AGENT_STATUS, KYC_STATUS } from '../constants';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SubscriptionService } from '../../services/subscription.service';
 import { Constants } from '../../constants';
 import { ActivatedRoute } from '@angular/router';
 
@@ -42,8 +44,7 @@ export class AgentDetailComponent implements OnInit {
   public currency_code = Constants.CURRENCY_CODE;
   public kycStatus = KYC_STATUS;
   public error = false;
-  public currentAgent = null;
-  public countryList = [];
+  public currentAgent : any = null;
   public dateFormatString = dateFormatString;
   public formatDateTimeZone = formatDateTimeZone;
   public url = 'agent/list?';
@@ -64,13 +65,23 @@ export class AgentDetailComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+    public translate: TranslateService,
+    public subscriptionService: SubscriptionService
+  ) { 
+    this.subscriptionService.language.subscribe((lang) => {
+      this.translate.setDefaultLang(lang);  // this will happen on every change
+    });
+  }
 
   ngOnInit() {
     this.selectedAgent = this.route.snapshot.paramMap.get('agentId');
     this.getAgentDetail();
     this.getAgentList();
     this.getUserList();
+
+    this.userService.currentUser.subscribe((current_agent: any) => {
+      this.currentAgent = current_agent;
+    });
 
   }
 
@@ -97,17 +108,6 @@ export class AgentDetailComponent implements OnInit {
         }
       }, (err: object) => {
         this.loaderService.display(false);
-        this.error = true;
-      });
-  }
-
-  public getCountryList() {
-    this.agentService.getCountryList()
-      .subscribe((response: any) => {
-        this.countryList = response.result;
-        this.getAgentList();
-      }, (err: Error) => {
-        this.toastr.error(err.message || 'There was an error.');
         this.error = true;
       });
   }
