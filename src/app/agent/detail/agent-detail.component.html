@@ -26,9 +26,9 @@
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">
-            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+            <button class="btn btn-sm btn-primary create-button" type="button" [ngClass]="(currentAgent.admin_id != selectedAgent)?'create-show':''"  ><a href="javascript:void(0);"
                 [routerLink]="['/agent/new']">
-                <i class="nav-icon icon-plus"></i> {{ 'agentDetail.create' | translate}}</a></button>
+                <i class="nav-icon icon-plus"></i> {{ 'agentDetail.create' | translate}} </a></button>
           </h1>
           <!-- <span class="input-group-prepend">
             <a class="btn btn-warning" [routerLink]="['/agent/new']"> Create New Agent</a>

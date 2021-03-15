@@ -8,11 +8,11 @@
       </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <!-- <h1 class="h3 mb-0 text-gray-800">{{ 'player.playerMng' | translate}} -->
-            <button class="btn btn-sm btn-primary create-button" type="button"><a href="javascript:void(0);"
+          <h1 class="h3 mb-0 text-gray-800">
+            <button class="btn btn-sm btn-primary create-button" type="button" *ngIf="(!selectedAgent)" ><a href="javascript:void(0);"
                 [routerLink]="['/users/new']">
-                <i class="nav-icon icon-plus"></i> {{ 'player.create' | translate}}</a></button>
-          <!-- </h1> -->
+                <i class="nav-icon icon-plus"></i> {{ 'player.create' | translate}} </a></button>
+          </h1>
           
 
           <h5 class="mb-0 text-gray-800">{{ 'player.totalRecord' | translate}}: {{totalUsers}}</h5>
