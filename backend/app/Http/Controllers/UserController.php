@@ -317,7 +317,6 @@ class UserController extends Controller
             PaymentHistoryTransaction::insert([
                 'user_id'       => $checkPlayer->user_id,
                 'ip'            => \Request::ip(),
-                'game_id'       => 0,
                 'action'        => 'SetScore',
                 'win'           => $score,
                 'begin_money'   => 0,
