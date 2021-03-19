@@ -30,6 +30,7 @@ export class UserDetailComponent implements OnInit {
   imgURL: any;
   maxBalance : any;
   public editPlayerId = 0;
+  public currentAgent : any = null;
 
 
   constructor(
@@ -44,7 +45,9 @@ export class UserDetailComponent implements OnInit {
     this.getUserDetail();
     this.userService.currentUser.subscribe((usr: any) => {
       this.maxBalance = (usr.role_id == 1)? '':usr.balance;
+      this.currentAgent = usr;
     });
+
   }
 
   private getUserDetail() {

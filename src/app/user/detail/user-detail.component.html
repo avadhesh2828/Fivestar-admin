@@ -19,7 +19,7 @@
                 <span class="badge"
                 [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
 
-                <a href="javascript:void(0);" (click)="setPlayerEditable(user.user_id)" [hidden]="editPlayerId === user.user_id" class="edit" >
+                <a href="javascript:void(0);" (click)="setPlayerEditable(user.user_id)" [hidden]="editPlayerId === user.user_id" class="edit" *ngIf="currentAgent.admin_id ==  user.parent_id">
                   <i class="fa fa-edit"></i>&nbsp;Edit
                 </a>
                 <a href="javascript:void(0);" (click)="savePlayerDetails(user)"
@@ -34,91 +34,91 @@
                   <div class="row">
                   <div class="col-sm-6">
                     <div class="row" *ngIf="editPlayerId !== user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.playerName' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.name; else notAvailable">{{user.name}}</div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.playerName' | translate}}</b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.name; else notAvailable">{{user.name}}</div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.playerName' | translate}}</b></div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.playerName' | translate}}</b></div>
+                      <div class="col-12 col-sm-4">
                         <input type="text" name="name" [(ngModel)]="user.name" class="form-control" placeholder="{{'playerDetail.playerName' | translate}}" >
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.userName' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.username; else notAvailable">{{user.username}}</div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.userName' | translate}}</b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.username; else notAvailable">{{user.username}}</div>
                     </div>
                     
                     <div class="row" *ngIf="editPlayerId !== user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.balance' | translate}}</b></div>
-                      <div class="col-12 col-sm-3"> {{user.balance}} </div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.balance' | translate}}</b></div>
+                      <div class="col-12 col-sm-8"> {{user.balance}} </div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.currentScore' | translate}}</b></div>
-                      <div class="col-12 col-sm-3 score-btn"> {{user.balance}} </div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.currentScore' | translate}}</b></div>
+                      <div class="col-12 col-sm-4 score-btn"> {{user.balance}} </div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4">
                           <b>{{'playerDetail.setScore' | translate}}</b> &nbsp; 
                           <span class="max-value" *ngIf="maxBalance == ''">{{ 'playerDetail.noLimit' | translate}}</span> 
                           <span class="max-value" *ngIf="maxBalance !== ''">{{ 'playerDetail.maxValue' | translate}} {{maxBalance}}</span> 
                       </div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-8">
                         <input type="text" name="balance" [(ngModel)]="user.setMoreScore" class="form-control" placeholder="0" >
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.phone' | translate}}</b></div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.phone' | translate}}</b></div>
+                      <div class="col-12 col-sm-8">
                         <input type="text" name="phone" [(ngModel)]="user.phone" class="form-control" placeholder="Mobile" [disabled]="editPlayerId !== user.user_id">
                       </div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.newPassword' | translate}}</b></div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.newPassword' | translate}}</b></div>
+                      <div class="col-12 col-sm-8">
                         <input type="password" name="new_password" [(ngModel)]="user.new_password" class="form-control" placeholder="{{'playerDetail.enterNewPassword' | translate}}" >
                       </div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.confirmPassword' | translate}}</b></div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.confirmPassword' | translate}}</b></div>
+                      <div class="col-12 col-sm-8">
                         <input type="password" name="confirm_password" [(ngModel)]="user.confirm_password" class="form-control" placeholder="{{'playerDetail.enterConfirmPassword' | translate}}" >
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.agent' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.agent_username; else notAvailable">{{user.agent_username}}</div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.agent' | translate}}</b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.agent_username; else notAvailable">{{user.agent_username}}</div>
                     </div>
 
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.status' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.status; else notAvailable">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.status' | translate}}</b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.status; else notAvailable">
                         <span class="badge" style="font-size:12px;"
                           [ngClass]="{'badge-success': (user.status == 1), 'badge-secondary': (user.status == 0), 'badge-danger': (user.status > 1)}">{{userStatus[user.status]}}</span>
                       </div>
                     </div>            
                     <div class="row" *ngIf="editPlayerId !== user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.description' | translate}} </b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.description; else notAvailable">{{user.description}}</div>
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.description' | translate}} </b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.description; else notAvailable">{{user.description}}</div>
                     </div>
 
                     <div class="row" *ngIf="editPlayerId == user.user_id">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.description' | translate}}</b></div>
-                      <div class="col-12 col-sm-3">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.description' | translate}}</b></div>
+                      <div class="col-12 col-sm-8">
                         <textarea type="text" name="description" [(ngModel)]="user.description" class="form-control" placeholder="{{'playerDetail.description' | translate}}" ></textarea>
                       </div>
                     </div>
                     
                     <div class="row">
-                      <div class="col-12 col-sm-3"><b>{{'playerDetail.lastLogin' | translate}}</b></div>
-                      <div class="col-12 col-sm-9" *ngIf="user.last_login; else notAvailable">
+                      <div class="col-12 col-sm-4"><b>{{'playerDetail.lastLogin' | translate}}</b></div>
+                      <div class="col-12 col-sm-8" *ngIf="user.last_login; else notAvailable">
                         {{formatDateTimeZone(this.user.last_login)| date:dateFormatString }}</div>
                     </div>
                   </div>
@@ -161,15 +161,14 @@
                   <td>{{ user.phone }} </td>
                   <td>{{ user.description }} </td>
                   <td>
-                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/score-log', user.user_id]"> {{'playerDetail.setScore' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/score-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.scoreLog' | translate}} </button>
-                    <!-- <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/users', user.user_id]"> {{'playerDetail.edit' | translate}} </button> -->
-                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/agent/reports', user.user_id]"> {{'playerDetail.reports' | translate}} </button>
-                    <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/game-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.gameLog' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/score-log', user.user_id]"> {{'playerDetail.setScore' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/score-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.scoreLog' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/agent/reports', user.user_id]"> {{'playerDetail.reports' | translate}} </button>
+                    <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/game-log']" [queryParams]="{ user_id: user.user_id}"> {{'playerDetail.gameLog' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
-                    (click)="changeUserStatus(user.user_id, '1')"> {{'playerDetail.enable' | translate}} </button>
+                    (click)="changeUserStatus(user.user_id, '1')" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" > {{'playerDetail.enable' | translate}} </button>
                     <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
-                    (click)="changeUserStatus(user.user_id, '0')"> {{'playerDetail.disable' | translate}} </button> 
+                    (click)="changeUserStatus(user.user_id, '0')" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" > {{'playerDetail.disable' | translate}} </button> 
                   </td>
                 </tr>
               </tbody>

@@ -74,6 +74,7 @@ class DepositController extends Controller
     $user_id = $this->user->admin_id;
 
     $logType = $request->post('type');
+    $userName = $request->post('username');
 
     $transaction = new PaymentDepositTransaction;
 
@@ -87,9 +88,9 @@ class DepositController extends Controller
 
     if($logType == 'player') {
       $transaction = $transaction->select('payment_deposit_transactions.*', 'U.*');
-      $transaction = $transaction->join((new User)->getTable().' as U', function($j) use ($logType){
+      $transaction = $transaction->join((new User)->getTable().' as U', function($j) use ($logType, $userName){
           $j->on('U.user_id', '=', 'payment_deposit_transactions.user_id');
-          $j->where('payment_deposit_transactions.type', $logType);
+          $j->where('payment_deposit_transactions.type', $logType)->where('U.username', $userName);
       }); 
     }
 
