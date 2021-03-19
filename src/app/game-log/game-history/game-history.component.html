@@ -80,7 +80,10 @@
               <td colspan="7" class="text-center"> {{'gameHistory.noDataFound' | translate}}</td>
             </tr>
             <tr *ngFor="let history of gameHistory; let scoreIndex = index">
-              <td  class="username" *ngIf="history.action == null; else notAvailable" (click)="gameLogModel(history)">{{ history.game_detail.name || "-" }}</td>
+              <td  class="username" *ngIf="history.action == null; else notAvailable">
+                <span class="game-name" *ngIf="history.game_detail != null" (click)="gameLogModel(history)">{{ history.game_detail ? history.game_detail.name : '-'}} </span>
+                <span *ngIf="history.game_detail == null"> {{ '-' }} </span>
+              </td>
               <td *ngIf="history.action == null; else notAvailable"> 
                 <span *ngIf="history.free_game == 0; else freeSpin"> {{ history.bet || "-" }} </span>
               </td>
