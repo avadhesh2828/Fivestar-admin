@@ -156,9 +156,28 @@ class GameHistoryController extends Controller
           ]);
       }
       
-      $report = new PaymentHistoryTransaction;
+      // $report = new PaymentHistoryTransaction;
+      // $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("SUM(payment_history_transactions.bet) as bet"));
+      // $report = $report->join('users.user', 'user.user_id', '=', 'payment_history_transactions.user_id');
+      // $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+    
+      // // Date Range Filter
+      // if( isset($dates['fromdate']) && isset($dates['todate']) ){
+      //   $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+      // }
+      // $report = $report->where('user.parent_id', $agent_id);
+      // if($game_type_id == '1') {
+      //   $report = $report->where('game.game_type_id', 6);
+      //   $report = $report->whereNotNull('payment_history_transactions.table_id');
+      // }
+      // $report = $report->where('payment_history_transactions.action', 'Debit');
+      // $report = $report->orWhere('payment_history_transactions.action', 'Credit');
+      // $report = $report->groupBy('user.username', 'user.name', 'user.phone');
+
+
+      $report = new User;
       $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("SUM(payment_history_transactions.bet) as bet"));
-      $report = $report->join('users.user', 'user.user_id', '=', 'payment_history_transactions.user_id');
+      $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
     
       // Date Range Filter
@@ -173,6 +192,7 @@ class GameHistoryController extends Controller
       $report = $report->where('payment_history_transactions.action', 'Debit');
       $report = $report->orWhere('payment_history_transactions.action', 'Credit');
       $report = $report->groupBy('user.username', 'user.name', 'user.phone');
+
       // Paginated records
       $report = $report->paginate($request->per_page);
   
