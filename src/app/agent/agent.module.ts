@@ -38,7 +38,7 @@ import { environment } from '../../environments/environment';
 
     ],
     declarations: [
-        ...routedComponents,
+        ...routedComponents
     ],
     providers: [
     ]

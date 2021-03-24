@@ -90,4 +90,8 @@ export class AgentService {
     return this.http.post(`${environment.API_URL}/agent/change_payout_status`, params);
   }
 
+  reports(url: any, params: any) {
+    return this.http.post(`${environment.API_URL}/${url}`, params);
+  }
+
 }

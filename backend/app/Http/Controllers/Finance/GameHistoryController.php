@@ -132,4 +132,65 @@ class GameHistoryController extends Controller
       ]);
     }
 
+    /**
+     * Display a listing of the Agent Game Reports
+     *
+     */
+    public function agent_game_report( Request $request ){
+      $agent_id = $request->post('agent_id');
+      $game_type_id = $request->post('game_type_id');
+      $dates    = $request->post('dates');
+
+      $validator = Validator::make($request->all(),[
+      'agent_id'     => 'required',
+      'game_type_id' => 'required',
+      'dates'        => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'agent_game_report',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ]);
+      }
+      
+      $report = new PaymentHistoryTransaction;
+      $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("SUM(payment_history_transactions.bet) as bet"));
+      $report = $report->join('users.user', 'user.user_id', '=', 'payment_history_transactions.user_id');
+      $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+    
+      // Date Range Filter
+      if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+      }
+      $report = $report->where('payment_history_transactions.user_id', $agent_id);
+      if($game_type_id == '1') {
+        $report = $report->where('game.game_type_id', 6);
+        $report = $report->whereNotNull('payment_history_transactions.table_id');
+      }
+      $report = $report->where('payment_history_transactions.win', 0);
+      $report = $report->groupBy('user.username', 'user.name', 'user.phone');
+      // Paginated records
+      $report = $report->paginate($request->per_page);
+  
+      if($report->count() == 0){
+        return response()->json([
+          'response_code'=> 500,
+          'service_name' => 'agent_game_report',
+          'data' => [],
+          'message'=> 'No reports found',
+          'global_error'=> 'No reports found',
+        ]);
+      }
+  
+      return response()->json([
+        'response_code'=> 200,
+        'service_name' => 'agent_game_report',
+        'data' => $report,
+        'message'=> 'Reports found',
+      ]);
+    }
+
 }

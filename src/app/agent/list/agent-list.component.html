@@ -57,6 +57,7 @@
                 <button href="javascript:void(0);" class="btn-warning" [routerLink]="['set-score', agent.admin_id]"> {{'agent.setScore' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [routerLink]="['score-log', agent.admin_id]"> {{'agent.scoreLog' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [routerLink]="['edit', agent.admin_id]"> {{'agent.edit' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning" [routerLink]="['report', agent.admin_id]"> {{'agent.reports' | translate}} </button>
                 <button href="javascript:void(0);" *ngIf="agent.status == 0" class="btn-warning" (click)="changeAgentStatus(agent.admin_id, '1')">{{ 'agent.enable' | translate}}</button>
                 <button href="javascript:void(0);" *ngIf="agent.status == 1" class="btn-warning" (click)="changeAgentStatus(agent.admin_id, '0')">{{ 'agent.disable' | translate}}</button>
               </td>

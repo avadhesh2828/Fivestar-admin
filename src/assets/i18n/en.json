@@ -105,7 +105,8 @@
     "max": "Max",
     "setScore": "Set Score",
     "scoreLog": "Score Log",
-    "edit": "Edit"
+    "edit": "Edit",
+    "reports": "Reports"
   },
   "agentDetail": {
     "agent" : "Agent Details",
@@ -134,6 +135,30 @@
     "enable": "Enable",
     "disable": "Disable",
     "create" : "Create"
+  },
+  "agentReports": {
+    "report": "Report",
+    "ChooseReportType": "Choose Report Types",
+    "ChooseDate": "Choose Date",
+    "selectDateRange": "Select a date range",
+    "singleGame" : "Single Game",
+    "liveGame" : "Live Game",
+    "submit": "Submit",
+    "reset": "Reset",
+    "typeIsRequired": "Type is required",
+    "dateIsRequired": "Date range is required",
+    "dateTime": "DateTime",
+    "win": "Win",
+    "bet": "Bet",
+    "userName" : "Username",
+    "name" : "Name",
+    "phone" : "Phone",
+    "totalWin": "Total Win",
+    "noDataFound":"No data found",
+    "totalRecord": "Total Record",
+    "thereWasError" : "There was an error",
+    "next": "Next",
+    "prev": "Prev"
   },
   "player": {
     "playerMng": "Player Management",
