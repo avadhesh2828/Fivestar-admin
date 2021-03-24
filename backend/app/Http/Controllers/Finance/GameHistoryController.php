@@ -165,12 +165,14 @@ class GameHistoryController extends Controller
       if( isset($dates['fromdate']) && isset($dates['todate']) ){
         $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
       }
-      $report = $report->where('payment_history_transactions.user_id', $agent_id);
+      $report = $report->where('user.parent_id', $agent_id);
       if($game_type_id == '1') {
         $report = $report->where('game.game_type_id', 6);
         $report = $report->whereNotNull('payment_history_transactions.table_id');
       }
-      $report = $report->where('payment_history_transactions.win', 0);
+      // $report = $report->where('payment_history_transactions.win', 0);
+      $report = $report->where('payment_history_transactions.action', 'Debit');
+      $report = $report->orWhere('payment_history_transactions.action', 'Credit');
       $report = $report->groupBy('user.username', 'user.name', 'user.phone');
       // Paginated records
       $report = $report->paginate($request->per_page);
