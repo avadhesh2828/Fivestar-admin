@@ -97,7 +97,7 @@ class GameHistoryController extends Controller
       }
       
       $report = new PaymentHistoryTransaction;
-      $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.win) as win_amount"));
+      $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'),  DB::raw("ROUND(SUM(payment_history_transactions.win)) as win_amount"));
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
     
       // Date Range Filter
@@ -157,7 +157,7 @@ class GameHistoryController extends Controller
       }
 
       $report = new User;
-      $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("SUM(payment_history_transactions.bet) as bet"));
+      $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"));
       $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
     
@@ -170,7 +170,7 @@ class GameHistoryController extends Controller
         $report = $report->where('game.game_type_id', 6);
         $report = $report->whereNotNull('payment_history_transactions.table_id');
       }
-      $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
+      // $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
       $report = $report->groupBy('user.username', 'user.name', 'user.phone');
 
       // Paginated records
