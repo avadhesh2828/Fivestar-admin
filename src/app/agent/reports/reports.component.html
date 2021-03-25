@@ -89,7 +89,7 @@
               <td>{{ report.username || "-" }}</td>
               <td>{{ report.name || "-" }}</td>
               <td>{{ report.phone || "-" }}</td>
-              <td>{{ report.bet || "-" }}</td>
+              <td>{{ report.bet | number : '.2-2' || "-" }}</td>
             </tr>
           </tbody>
         </table>
