@@ -86,10 +86,10 @@
               <td colspan="7" class="text-center"> {{'agentReports.noDataFound' | translate}}</td>
             </tr>
             <tr *ngFor="let report of gameReport; let reportIndex = index">
-              <td>{{ agentReports.username || "-" }}</td>
-              <td>{{ agentReports.name || "-" }}</td>
-              <td>{{ agentReports.phone || "-" }}</td>
-              <td>{{ agentReports.bet || "-" }}</td>
+              <td>{{ report.username || "-" }}</td>
+              <td>{{ report.name || "-" }}</td>
+              <td>{{ report.phone || "-" }}</td>
+              <td>{{ report.bet || "-" }}</td>
             </tr>
           </tbody>
         </table>
