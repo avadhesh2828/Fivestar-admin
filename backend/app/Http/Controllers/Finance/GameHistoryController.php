@@ -170,7 +170,7 @@ class GameHistoryController extends Controller
         $report = $report->where('game.game_type_id', 6);
         $report = $report->whereNotNull('payment_history_transactions.table_id');
       }
-      // $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
+      $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
       $report = $report->groupBy('user.username', 'user.name', 'user.phone');
 
       // Paginated records
