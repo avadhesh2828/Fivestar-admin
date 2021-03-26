@@ -60,13 +60,15 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.params = localStorage.getItem('agentFilters')
-      ? JSON.parse(localStorage.getItem('agentFilters'))
-      : { ...INITIAL_PARAMS };
-    localStorage.removeItem('agentFilters');
-    this.getRedPktList();
-    this.searchTextChanged.pipe(debounceTime(1000))
-      .subscribe(model => this.getRedPktList());
+    this.getRedPktList()
+
+    // this.params = localStorage.getItem('agentFilters')
+    //   ? JSON.parse(localStorage.getItem('agentFilters'))
+    //   : { ...INITIAL_PARAMS };
+    // localStorage.removeItem('agentFilters');
+    // this.getRedPktList();
+    // this.searchTextChanged.pipe(debounceTime(1000))
+    //   .subscribe(model => this.getRedPktList());
   }
 
   search() {
@@ -122,13 +124,11 @@ export class RedPktListComponent implements OnInit, AfterViewInit {
   public paginateList(newPage: number) {
     if (this.params.current_page === newPage) { return false; }
     this.params.current_page = newPage;
-    localStorage.setItem('agentFilters', JSON.stringify(this.params));
     this.getRedPktList();
   }
 
   public nextOrPreviousPage(deviation: number) {
     this.params.current_page = this.params.current_page + deviation;
-    localStorage.setItem('agentFilters', JSON.stringify(this.params));
     this.getRedPktList();
   }
 
