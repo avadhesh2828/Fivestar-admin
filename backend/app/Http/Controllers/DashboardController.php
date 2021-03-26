@@ -16,10 +16,10 @@ class DashboardController extends Controller
     public function get_all_stats(Request $request)
     {
         $this->user = Auth::user();
-        $data['total_user_available_balance'] = $this->get_total_user_balance();
-        $data['total_deposit_amount'] = $this->get_total_deposited_amount();
-        $data['total_withdraw_amount'] = $this->get_total_withdraw_amount();
-        $data['total_winning_amount'] = $this->get_total_winning_amount();
+        // $data['total_user_available_balance'] = $this->get_total_user_balance();
+        // $data['total_deposit_amount'] = $this->get_total_deposited_amount();
+        // $data['total_withdraw_amount'] = $this->get_total_withdraw_amount();
+        // $data['total_winning_amount'] = $this->get_total_winning_amount();
         $data['total_agent'] = $this->get_total_agent($this->user);
         $data['total_player'] = $this->get_total_player($this->user);
         $data['active_agent'] = $this->get_active_agent($this->user);
