@@ -111,6 +111,7 @@ class GameHistoryController extends Controller
       }
       $report = $report->where('payment_history_transactions.game_id', '!=', 0);
       $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
+      $report = $report->orderBy('created_at', 'DESC');
       // Paginated records
       $report = $report->paginate($request->per_page);
   
@@ -157,7 +158,7 @@ class GameHistoryController extends Controller
       }
 
       $report = new User;
-      $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"));
+      $report = $report->select('user.username', 'user.name', 'user.phone', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as win"));
       $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
     
