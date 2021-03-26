@@ -97,7 +97,7 @@ class GameHistoryController extends Controller
       }
       
       $report = new PaymentHistoryTransaction;
-      $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'),  DB::raw("ROUND(SUM(payment_history_transactions.win)) as win_amount"));
+      $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet") , DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
     
       // Date Range Filter
