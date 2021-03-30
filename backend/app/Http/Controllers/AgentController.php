@@ -31,6 +31,9 @@ class AgentController extends Controller
         } else {
             $agent = $agent->where('parent_id', $user_id);
         }
+        if($request->status != ''){
+            $agent = $agent->where('status', $request->status); 
+        }
         $agent = $agent->orderBy('admin_id','ASC');
         $agent = $agent->paginate($request->per_page);
         return response()->json(['response_code'=> 200,'service_name' => 'agent_list','data' => $agent],200);

@@ -106,7 +106,9 @@
     "setScore": "Set Score",
     "scoreLog": "Score Log",
     "edit": "Edit",
-    "reports": "Reports"
+    "reports": "Reports",
+    "agentTotalReport": "Agent Total Report",
+    "all": "All"
   },
   "agentDetail": {
     "agent" : "Agent Details",

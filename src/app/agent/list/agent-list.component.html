@@ -19,13 +19,24 @@
             </button>
             <h5 class="mb-0 text-gray-800">{{ 'agent.totalRecord' | translate}}: {{totalAgents}}</h5>
         </div>
+        <div class="agent-tab">
+          <ul>
+              <li [ngClass]="agentStatus == ''? 'active': ''" ><a href="javascript:void(0);" (click)="tabs('')"> {{ 'agent.all' | translate}} </a></li>
+              <li>|</li>
+              <li [ngClass]="agentStatus == '1'? 'active': ''" ><a href="javascript:void(0);" (click)="tabs(1)"> {{ 'agent.enable' | translate}} </a></li>
+              <li>|</li>
+              <li [ngClass]="agentStatus == '0'? 'active': ''" ><a href="javascript:void(0);" (click)="tabs(0)"> {{ 'agent.disable' | translate}} </a></li>
+              <li>|</li>
+              <li ><a href="javascript:void(0);" (click)="allReport()" > {{ 'agent.agentTotalReport' | translate}} </a></li>
+          </ul>
+        </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm admin-table">
           <thead>
             <tr>
               <th>{{ 'agent.username' | translate}}</th>
               <th>{{ 'agent.name' | translate}}</th>
               <th>{{ 'agent.phone' | translate}} </th>
-              <th> {{ 'agent.score' | translate}}</th>
+              <th>{{ 'agent.score' | translate}}</th>
               <th>{{ 'agent.lastLogin' | translate}}</th>
               <th>{{ 'agent.status' | translate}} </th>
               <th>{{ 'agent.action' | translate}} </th>

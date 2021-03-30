@@ -16,6 +16,11 @@ class User extends Model
 
   public $timestamps = false;
 
+  public function admin()
+	{
+		return $this->belongsTo('App\Models\Admin','parent_id','admin_id');	
+	}
+
 //   public function admin()
 //   {
 //       return $this->belongsTo('App\Models\Admin');

@@ -37,3 +37,18 @@ table {
       text-align: center;
   }
 }
+.agent-tab {
+  ul {
+    margin-left : -20px;
+    padding-bottom: 15px;
+  }
+  ul li {
+    list-style-type: none;
+    float: left;
+    padding: 0px 10px 0 10px;
+  }
+  .active {
+    border-bottom: 3px solid #20b6ce;
+  }
+}
+  

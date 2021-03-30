@@ -104,7 +104,9 @@
     "setScore": "設定分數",
     "scoreLog": "分數記錄",
     "edit": "編輯",
-    "reports": "報告書"
+    "reports": "報告書",
+    "agentTotalReport": "代理商總報告" ,
+    "all": "全部"
   },
   "agentDetail": {
     "agent" : "代理商詳細信息",

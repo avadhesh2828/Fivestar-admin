@@ -183,6 +183,7 @@ export class LoginComponent implements OnInit {
     }).subscribe((res) => {
       this.verifyPPasswordSubmitted = false;
       localStorage.setItem('reload', 'reload') 
+      localStorage.setItem('adminId', this.adminId) 
       this.router.navigate(['/dashboard']);
     }, err => {
       this.toastr.error('Wrong Password');

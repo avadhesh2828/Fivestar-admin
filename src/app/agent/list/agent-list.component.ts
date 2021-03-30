@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-
+import { Router } from '@angular/router';
 import { AgentService } from '../../services/agent.service';
 import { range, dateFormatString, formatDateTimeZone } from '../../services/utils.service';
 import { SubscriptionService } from '../../services/subscription.service';
@@ -13,9 +13,10 @@ import { LoaderService } from '../../shared/loader/loader.service';
 import { Constants } from '../../constants';
 
 const INITIAL_PARAMS = {
-  per_page: 10,
-  current_page: 1,
-  parent_id: '',
+  per_page     : 10,
+  current_page : 1,
+  parent_id    : '',
+  status       : ''
 };
 @Component({
   selector: 'app-agent-list',
@@ -39,6 +40,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
   public url = 'agent/list?';
   formSubmitted = false;
   selectedAgent: any = '';
+  agentStatus: any = '';
   public jump_to : any;
   public checkLastPage :any;
   searchTextChanged: Subject<string> = new Subject<string>();
@@ -49,7 +51,8 @@ export class AgentListComponent implements OnInit, AfterViewInit {
     private loaderService: LoaderService,
     private location: Location,
     public translate: TranslateService,
-    public subscriptionService: SubscriptionService
+    public subscriptionService: SubscriptionService,
+    private router: Router,
   ) {
     this.subscriptionService.language.subscribe((lang) => {
       this.translate.setDefaultLang(lang);  // this will happen on every change
@@ -87,7 +90,7 @@ export class AgentListComponent implements OnInit, AfterViewInit {
 
   private createUrl() {
     this.url = 'agent/list?';
-    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id=' + this.selectedAgent;
+    this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page + '&parent_id=' + this.selectedAgent + '&status=' + this.agentStatus;
   }
 
   public getAgentList() {
@@ -184,6 +187,17 @@ export class AgentListComponent implements OnInit, AfterViewInit {
       this.params.current_page = this.jump_to;
       this.getAgentList();
     } 
+  }
+
+  //tabs
+  public tabs(activeId) {
+      this.agentStatus = activeId;
+      this.getAgentList();
+  }
+
+  public allReport() {
+      var adminId = localStorage.getItem('adminId');
+      this.router.navigate(['agent/all/'+adminId]);
   }
 
 }

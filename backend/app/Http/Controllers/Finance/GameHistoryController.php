@@ -195,4 +195,67 @@ class GameHistoryController extends Controller
       ]);
     }
 
+    /**
+     * Display a listing of the Agent Game Reports
+     *
+     */
+    public function all_agent_report( Request $request ){
+      $agent_id = $request->post('agent_id');
+      $game_type_id = $request->post('game_type_id');
+      $dates    = $request->post('dates');
+
+      $validator = Validator::make($request->all(),[
+      'agent_id'     => 'required',
+      'game_type_id' => 'required',
+      'dates'        => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'all_agent_report',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ]);
+      }
+
+      $report = new User;
+      $report = $report->select('user.username', 'user.name', 'user.phone', 'user.parent_id', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
+      $report = $report->with(['admin']);
+      $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+      $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+    
+      // Date Range Filter
+      if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+      }
+      $report = $report->where('user.parent_id', $agent_id);
+      if($game_type_id == '1') {
+        $report = $report->where('game.game_type_id', 6);
+        $report = $report->whereNotNull('payment_history_transactions.table_id');
+      }
+      $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
+      $report = $report->groupBy('user.username', 'user.name', 'user.phone','user.parent_id');
+
+      // Paginated records
+      $report = $report->paginate($request->per_page);
+  
+      if($report->count() == 0){
+        return response()->json([
+          'response_code'=> 500,
+          'service_name' => 'all_agent_report',
+          'data' => [],
+          'message'=> 'No reports found',
+          'global_error'=> 'No reports found',
+        ]);
+      }
+  
+      return response()->json([
+        'response_code'=> 200,
+        'service_name' => 'all_agent_report',
+        'data' => $report,
+        'message'=> 'Reports found',
+      ]);
+    }
+
 }
