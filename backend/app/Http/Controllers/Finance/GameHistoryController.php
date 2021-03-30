@@ -222,7 +222,7 @@ class GameHistoryController extends Controller
 
 
       $report = new Agent;
-      $report = $report->select('admins.admin_id','admins.username', 'admins.name', 'admins.parent_id', 'user.username as player', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));  
+      $report = $report->select('admins.admin_id','admins.username', 'admins.name', 'admins.phone', 'admins.parent_id', 'user.username as player', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));  
       $report = $report->join('users.user', 'user.parent_id', '=', 'admins.admin_id');
       $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
       $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
@@ -231,39 +231,16 @@ class GameHistoryController extends Controller
       if( isset($dates['fromdate']) && isset($dates['todate']) ){
         $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
       }
-      // $report = $report->where('user.parent_id', $agent_id);
       if($game_type_id == '1') {
         $report = $report->where('game.game_type_id', 6);
         $report = $report->whereNotNull('payment_history_transactions.table_id');
       }
       $report = $report->where('admin_id', '!=',$agent_id);
       $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
-      $report = $report->groupBy('admins.admin_id','admins.username', 'admins.name', 'admins.parent_id');
+      $report = $report->groupBy('admins.admin_id','admins.username', 'admins.name', 'admins.phone', 'admins.parent_id', 'user.username');
       // Paginated records
       $report = $report->paginate($request->per_page);
-
-
-      // $report = new User;
-      // $report = $report->select('user.username', 'user.name', 'user.phone', 'user.parent_id', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
-      // $report = $report->with(['admin']);
-      // $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
-      // $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
-    
-      // // Date Range Filter
-      // if( isset($dates['fromdate']) && isset($dates['todate']) ){
-      //   $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
-      // }
-      // $report = $report->where('user.parent_id', $agent_id);
-      // if($game_type_id == '1') {
-      //   $report = $report->where('game.game_type_id', 6);
-      //   $report = $report->whereNotNull('payment_history_transactions.table_id');
-      // }
-      // $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
-      // $report = $report->groupBy('user.username', 'user.name', 'user.phone','user.parent_id');
-
-      // // Paginated records
-      // $report = $report->paginate($request->per_page);
-  
+ 
       if($report->count() == 0){
         return response()->json([
           'response_code'=> 500,

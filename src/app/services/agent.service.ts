@@ -94,4 +94,8 @@ export class AgentService {
     return this.http.post(`${environment.API_URL}/${url}`, params);
   }
 
+  allAgentReport(url: any, params: any) {
+    return this.http.post(`${environment.API_URL}/${url}`, params);
+  }
+
 }
