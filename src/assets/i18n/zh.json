@@ -153,6 +153,7 @@
     "userName" : "用戶名",
     "name" : "姓名",
     "phone" : "電話",
+    "description": "描述",
     "totalWin": "總贏",
     "noDataFound":"沒有找到數據",
     "totalRecord": "總記錄",

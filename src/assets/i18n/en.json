@@ -155,6 +155,7 @@
     "userName" : "Username",
     "name" : "Name",
     "phone" : "Phone",
+    "description": "Description",
     "totalWin": "Total Win",
     "noDataFound":"No data found",
     "totalRecord": "Total Record",
