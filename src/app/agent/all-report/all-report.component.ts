@@ -32,6 +32,7 @@ export class AllReportComponent implements OnInit {
   public showTable = false;
   public gameReport = [];
   public totalGameReport = 0;
+  public totalWin = 0;
   public totalPaginationShow = [];
   public totalPages = 0;
   public jump_to : any;
@@ -99,6 +100,7 @@ export class AllReportComponent implements OnInit {
           this.gameReport = log['data'].data;
           this.checkLastPage = log['data'].last_page;
           this.jump_to = this.checkLastPage;
+          this.totalWin = log['total_Win'];
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
