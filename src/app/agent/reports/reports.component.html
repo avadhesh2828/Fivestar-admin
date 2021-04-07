@@ -75,17 +75,18 @@
               <th>{{'agentReports.phone' | translate}}</th>
               <th>{{'agentReports.description' | translate}}</th>
               <th>{{'agentReports.win' | translate}}</th>
+              <th>{{'agentReports.date' | translate}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="5" class="table-danger">{{'agentReports.thereWasError' | translate}} </td>
+              <td colspan="6" class="table-danger">{{'agentReports.thereWasError' | translate}} </td>
             </tr>
             <tr *ngIf="!error && !gameReport">
-              <td colspan="5">Loading...</td>
+              <td colspan="6">Loading...</td>
             </tr>
             <tr *ngIf="gameReport && !(gameReport.length>0)">
-              <td colspan="5" class="text-center"> {{'agentReports.noDataFound' | translate}}</td>
+              <td colspan="6" class="text-center"> {{'agentReports.noDataFound' | translate}}</td>
             </tr>
             <tr *ngFor="let report of gameReport; let reportIndex = index">
               <td>{{ report.username || "-" }}</td>
@@ -93,6 +94,7 @@
               <td>{{ report.phone || "-" }}</td>
               <td>{{ report.description || "-" }}</td>
               <td>{{ report.bet - report.win }}</td>
+              <td>{{ report.created_at }}</td>
 
             </tr>
           </tbody>
