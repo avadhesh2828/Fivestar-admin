@@ -222,7 +222,7 @@ class GameHistoryController extends Controller
     }
     
     function getChildren($parent_id, $tree_string=array()) {
-        $tree = array($this->user->admin_id);
+        $tree = array();
         // getOneLevel() returns a one-dimensional array of child ids        
         $tree = $this->getOneLevel($parent_id);     
         if(count($tree)>0 && is_array($tree)){    
