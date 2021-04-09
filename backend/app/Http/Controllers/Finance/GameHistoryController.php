@@ -155,6 +155,7 @@ class GameHistoryController extends Controller
      *
      */
     public function agent_game_report( Request $request ){
+      $this->user = Auth::user();
       $agent_id = $request->post('agent_id');
       $game_type_id = $request->post('game_type_id');
       $dates    = $request->post('dates');
@@ -221,7 +222,7 @@ class GameHistoryController extends Controller
     }
     
     function getChildren($parent_id, $tree_string=array()) {
-        $tree = array();
+        $tree = array($this->user->admin_id);
         // getOneLevel() returns a one-dimensional array of child ids        
         $tree = $this->getOneLevel($parent_id);     
         if(count($tree)>0 && is_array($tree)){    
