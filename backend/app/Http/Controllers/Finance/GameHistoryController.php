@@ -221,7 +221,9 @@ class GameHistoryController extends Controller
         return $cat_id;
     }
     
-    function getChildren($parent_id, $tree_string=array()) {
+    function getChildren($parent_id) {
+        $this->user = Auth::user();
+        $tree_string=array($this->user->admin_id);
         $tree = array();
         // getOneLevel() returns a one-dimensional array of child ids        
         $tree = $this->getOneLevel($parent_id);     
@@ -232,9 +234,6 @@ class GameHistoryController extends Controller
             $tree = $this->getOneLevel($val);
             $tree_string=array_merge($tree_string,$tree);
         }
-        // foreach ($tree as $key => $val) {
-        //   $this->getChildren($val, $tree_string);
-        // }   
         return $tree_string;
     }
 
@@ -306,7 +305,12 @@ class GameHistoryController extends Controller
           ]);
       }
 
-      $report = $this->combine_agent_report($agent_id, $game_type_id, $dates);
+
+      $agentIds = $this->getChildren($agent_id);
+
+      $report = $this->individual_agent_report($agentIds, $game_type_id, $dates);
+
+      // $report = $this->combine_agent_report($agent_id, $game_type_id, $dates);
       $bet = $report->get()->sum('bet');
       $win = $report->get()->sum('win');
       $total_win = $bet - $win;
