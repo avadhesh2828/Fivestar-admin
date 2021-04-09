@@ -74,6 +74,7 @@
               <th>{{'agentReports.name' | translate}}</th>
               <th>{{'agentReports.phone' | translate}}</th>
               <th>{{'agentReports.description' | translate}}</th>
+              <th>{{'agentReports.date' | translate}}</th>
               <th>{{'agentReports.win' | translate}}</th>
             </tr>
           </thead>
@@ -92,6 +93,7 @@
               <td>{{ report.name || "-" }}</td>
               <td>{{ report.phone || "-" }}</td>
               <td>{{ report.description || "-" }}</td>
+              <td>{{ report.created_at || "-" }}</td>
               <td>{{ report.bet - report.win }}</td>
 
             </tr>
