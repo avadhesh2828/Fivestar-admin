@@ -155,73 +155,126 @@ class GameHistoryController extends Controller
      *
      */
     public function agent_game_report( Request $request ){
-      $this->user = Auth::user();
-      $agent_id = $request->post('agent_id');
-      $game_type_id = $request->post('game_type_id');
-      $dates    = $request->post('dates');
+        $this->user = Auth::user();
+        $agent_id = $request->post('agent_id');
+        $game_type_id = $request->post('game_type_id');
+        $dates    = $request->post('dates');
 
-      $validator = Validator::make($request->all(),[
-      'agent_id'     => 'required',
-      'game_type_id' => 'required',
-      'dates'        => 'required'
-      ]);
+        $validator = Validator::make($request->all(),[
+        'agent_id'     => 'required',
+        'game_type_id' => 'required',
+        'dates'        => 'required'
+        ]);
 
-      if($validator->fails() ){
-          return response()->json([
-              'response_code'=> 400,
-              'service_name' => 'agent_game_report',
-              'message'=> 'Validation Failed',
-              'global_error'=> $validator->errors(),
-          ]);
-      }
+        if($validator->fails() ){
+            return response()->json([
+                'response_code'=> 400,
+                'service_name' => 'agent_game_report',
+                'message'=> 'Validation Failed',
+                'global_error'=> $validator->errors(),
+            ]);
+        }
 
-      $agentIds = $this->getChildren($agent_id);
-
-      $report = $this->individual_agent_report($agentIds, $game_type_id, $dates);
-      $bet = $report->get()->sum('bet');
-      $win = $report->get()->sum('win');
-      $total_win = $bet - $win;
+        $agentIds = $this->getChildren($agent_id);
+        $report = $this->get_agent_report($agentIds, $game_type_id, $dates);
+        $bet = $report->get()->sum('bet');
+        $win = $report->get()->sum('win');
+        $total_win = $bet - $win;
       
-      // Paginated records
-      $report = $report->paginate($request->per_page);
-  
-      if($report->count() == 0){
+        // Paginated records
+        $report = $report->paginate($request->per_page);
+        if($report->count() == 0){
+          return response()->json([
+            'response_code'=> 500,
+            'service_name' => 'agent_game_report',
+            'bet'          => $bet,
+            'win'          => $win,
+            'total_win'    => $total_win,
+            'data'         => [],
+            'message'      => 'No reports found',
+            'global_error' => 'No reports found',
+          ]);
+        }
         return response()->json([
-          'response_code'=> 500,
+          'response_code'=> 200,
           'service_name' => 'agent_game_report',
           'bet'          => $bet,
           'win'          => $win,
           'total_win'    => $total_win,
-          'data'         => [],
-          'message'      => 'No reports found',
-          'global_error' => 'No reports found',
+          'data'         => $report,
+          'message'      => 'Reports found',
         ]);
-      }
-  
-      return response()->json([
-        'response_code'=> 200,
-        'service_name' => 'agent_game_report',
-        'bet'          => $bet,
-        'win'          => $win,
-        'total_win'    => $total_win,
-        'data'         => $report,
-        'message'      => 'Reports found',
-      ]);
     }
 
-    function getOneLevel($catId){
+    /**
+     * Display a listing of the Agent Game Reports
+     *
+     */
+    public function all_agent_report( Request $request )
+    {
+        $agent_id = $request->post('agent_id');
+        $game_type_id = $request->post('game_type_id');
+        $dates    = $request->post('dates');
+
+        $validator = Validator::make($request->all(),[
+        'agent_id'     => 'required',
+        'game_type_id' => 'required',
+        'dates'        => 'required'
+        ]);
+
+        if($validator->fails() ){
+            return response()->json([
+                'response_code'=> 400,
+                'service_name' => 'all_agent_report',
+                'message'=> 'Validation Failed',
+                'global_error'=> $validator->errors(),
+            ]);
+        }
+        $agentIds = $this->getChildren($agent_id);
+        $report = $this->get_agent_report($agentIds, $game_type_id, $dates);
+        $bet = $report->get()->sum('bet');
+        $win = $report->get()->sum('win');
+        $total_win = $bet - $win;
+      
+        // Paginated records
+        $report = $report->paginate($request->per_page);
+        if($report->count() == 0){
+          return response()->json([
+            'response_code'=> 500,
+            'service_name' => 'all_agent_report',
+            'bet'          => $bet,
+            'win'          => $win,
+            'total_win'    => $total_win,
+            'data'         => [],
+            'message'      => 'No reports found',
+            'global_error' => 'No reports found',
+          ]);
+        }
+
+        return response()->json([
+          'response_code'=> 200,
+          'service_name' => 'all_agent_report',
+          'bet'          => $bet,
+          'win'          => $win,
+          'total_win'    => $total_win,
+          'data'         => $report,
+          'message'      => 'Reports found',
+        ]);
+    }
+
+    private function getOneLevel($catId){
         $agentIds = agent::select('admin_id','parent_id')->where('parent_id', $catId)->get();
         $cat_id=array();
         if(count($agentIds)>0){
             foreach($agentIds as $key) {
-              // echo $key;
               $cat_id[]=$key->admin_id; 
             }
         }   
         return $cat_id;
     }
     
-    function getChildren($parent_id) {
+    private function getChildren($parent_id) 
+    {
         $this->user = Auth::user();
         $tree_string=array($this->user->admin_id);
         $tree = array();
@@ -237,7 +290,7 @@ class GameHistoryController extends Controller
         return $tree_string;
     }
 
-    private function individual_agent_report($agentIds, $game_type_id, $dates)
+    private function get_agent_report($agentIds, $game_type_id, $dates)
     {
         $report = new User;
         $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', 'user.parent_id', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
@@ -258,110 +311,6 @@ class GameHistoryController extends Controller
         $report = $report->groupBy('user.username', 'user.name', 'user.phone', 'user.description', 'user.parent_id', DB::raw('DATE(payment_history_transactions.created_at)'));
         return $report = $report;
     }
-
-
-    private function individual_agent_report_($agent_id, $game_type_id, $dates)
-    {
-        $report = new User;
-        $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
-        $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
-        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
-      
-        // Date Range Filter
-        if( isset($dates['fromdate']) && isset($dates['todate']) ){
-          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
-        }
-        $report = $report->where('user.parent_id', $agent_id);
-        if($game_type_id == '1') {
-          $report = $report->where('game.game_type_id', 6);
-          $report = $report->whereNotNull('payment_history_transactions.table_id');
-        }
-        $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
-        $report = $report->groupBy('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at)'));
-        return $report = $report;
-    }
-
-    /**
-     * Display a listing of the Agent Game Reports
-     *
-     */
-    public function all_agent_report( Request $request ){
-      $agent_id = $request->post('agent_id');
-      $game_type_id = $request->post('game_type_id');
-      $dates    = $request->post('dates');
-
-      $validator = Validator::make($request->all(),[
-      'agent_id'     => 'required',
-      'game_type_id' => 'required',
-      'dates'        => 'required'
-      ]);
-
-      if($validator->fails() ){
-          return response()->json([
-              'response_code'=> 400,
-              'service_name' => 'all_agent_report',
-              'message'=> 'Validation Failed',
-              'global_error'=> $validator->errors(),
-          ]);
-      }
-
-
-      $agentIds = $this->getChildren($agent_id);
-
-      $report = $this->individual_agent_report($agentIds, $game_type_id, $dates);
-
-      // $report = $this->combine_agent_report($agent_id, $game_type_id, $dates);
-      $bet = $report->get()->sum('bet');
-      $win = $report->get()->sum('win');
-      $total_win = $bet - $win;
-      
-      // Paginated records
-      $report = $report->paginate($request->per_page);
- 
-      if($report->count() == 0){
-        return response()->json([
-          'response_code'=> 500,
-          'service_name' => 'all_agent_report',
-          'bet'          => $bet,
-          'win'          => $win,
-          'total_win'    => $total_win,
-          'data' => [],
-          'message'=> 'No reports found',
-          'global_error'=> 'No reports found',
-        ]);
-      }
-  
-      return response()->json([
-        'response_code'=> 200,
-        'service_name' => 'all_agent_report',
-        'bet'          => $bet,
-        'win'          => $win,
-        'total_win'    => $total_win,
-        'data' => $report,
-        'message'=> 'Reports found',
-      ]);
-    }
-
-    private function combine_agent_report($agent_id, $game_type_id, $dates)
-    {
-        $report = new Agent;
-        $report = $report->select('admins.admin_id','admins.username', 'admins.name', 'admins.phone', 'admins.description', 'admins.parent_id', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));  
-        $report = $report->join('users.user', 'user.parent_id', '=', 'admins.admin_id');
-        $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
-        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
-      
-        // Date Range Filter
-        if( isset($dates['fromdate']) && isset($dates['todate']) ){
-          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
-        }
-        if($game_type_id == '1') {
-          $report = $report->where('game.game_type_id', 6);
-          $report = $report->whereNotNull('payment_history_transactions.table_id');
-        }
-        $report = $report->where('admin_id', '!=',$agent_id);
-        $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
-        $report = $report->groupBy('admins.admin_id','admins.username', 'admins.name', 'admins.phone', 'admins.description', 'admins.parent_id');
-        return $report = $report;
-    }
+    
 
 }
