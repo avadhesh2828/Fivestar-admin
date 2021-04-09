@@ -174,8 +174,9 @@ class GameHistoryController extends Controller
           ]);
       }
 
+      $agentIds = $this->getChildren($agent_id);
 
-      $report = $this->individual_agent_report($agent_id, $game_type_id, $dates);
+      $report = $this->individual_agent_report($agentIds, $game_type_id, $dates);
       $bet = $report->get()->sum('bet');
       $win = $report->get()->sum('win');
       $total_win = $bet - $win;
@@ -207,8 +208,59 @@ class GameHistoryController extends Controller
       ]);
     }
 
+    function getOneLevel($catId){
+        $agentIds = agent::select('admin_id','parent_id')->where('parent_id', $catId)->get();
+        $cat_id=array();
+        if(count($agentIds)>0){
+            foreach($agentIds as $key) {
+              // echo $key;
+              $cat_id[]=$key->admin_id; 
+            }
+        }   
+        return $cat_id;
+    }
+    
+    function getChildren($parent_id, $tree_string=array()) {
+        $tree = array();
+        // getOneLevel() returns a one-dimensional array of child ids        
+        $tree = $this->getOneLevel($parent_id);     
+        if(count($tree)>0 && is_array($tree)){    
+            $tree_string=array_merge($tree_string,$tree);
+        }
+        foreach ($tree as $key => $val) {
+            $tree = $this->getOneLevel($val);
+            $tree_string=array_merge($tree_string,$tree);
+        }
+        // foreach ($tree as $key => $val) {
+        //   $this->getChildren($val, $tree_string);
+        // }   
+        return $tree_string;
+    }
 
-    private function individual_agent_report($agent_id, $game_type_id, $dates)
+    private function individual_agent_report($agentIds, $game_type_id, $dates)
+    {
+        $report = new User;
+        $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
+        $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+      
+        // Date Range Filter
+        if( isset($dates['fromdate']) && isset($dates['todate']) ){
+          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+        }
+        // $report = $report->where('user.parent_id', $agent_id);
+        $report = $report->whereIn('user.parent_id', $agentIds);
+        if($game_type_id == '1') {
+          $report = $report->where('game.game_type_id', 6);
+          $report = $report->whereNotNull('payment_history_transactions.table_id');
+        }
+        $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
+        $report = $report->groupBy('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at)'));
+        return $report = $report;
+    }
+
+
+    private function individual_agent_report_($agent_id, $game_type_id, $dates)
     {
         $report = new User;
         $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
