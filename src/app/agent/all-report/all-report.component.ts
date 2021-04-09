@@ -100,7 +100,7 @@ export class AllReportComponent implements OnInit {
           this.gameReport = log['data'].data;
           this.checkLastPage = log['data'].last_page;
           this.jump_to = this.checkLastPage;
-          this.totalWin = log['total_Win'];
+          this.totalWin = log['total_win'];
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
