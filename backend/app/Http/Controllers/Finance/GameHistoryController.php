@@ -240,8 +240,7 @@ class GameHistoryController extends Controller
     private function individual_agent_report($agentIds, $game_type_id, $dates)
     {
         $report = new User;
-        $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
-        $report = $report->with(['user.admin']);
+        $report = $report->select('user.username', 'user.name', 'user.phone', 'user.description', 'user.parent_id', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
         $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
         $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
       
@@ -256,7 +255,7 @@ class GameHistoryController extends Controller
           $report = $report->whereNotNull('payment_history_transactions.table_id');
         }
         $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
-        $report = $report->groupBy('user.username', 'user.name', 'user.phone', 'user.description', DB::raw('DATE(payment_history_transactions.created_at)'));
+        $report = $report->groupBy('user.username', 'user.name', 'user.phone', 'user.description', 'user.parent_id', DB::raw('DATE(payment_history_transactions.created_at)'));
         return $report = $report;
     }
 
