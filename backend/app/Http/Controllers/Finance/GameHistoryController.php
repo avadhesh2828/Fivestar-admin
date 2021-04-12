@@ -249,6 +249,7 @@ class GameHistoryController extends Controller
         }
         $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
         $report = $report->groupBy('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at)'));
+        $report = $report->orderBy('created_at','DESC');
 
         $bet = $report->get()->sum('bet');
         $win = $report->get()->sum('win');
@@ -325,9 +326,9 @@ class GameHistoryController extends Controller
           $report = $report->where('game.game_type_id', 6);
           $report = $report->whereNotNull('payment_history_transactions.table_id');
         }
-        // $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
         $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
         $report = $report->groupBy('payment_history_transactions.created_date');
+        $report = $report->orderBy('payment_history_transactions.created_date','DESC');
         return $report = $report;
     }
 
