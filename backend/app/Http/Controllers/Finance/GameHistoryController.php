@@ -233,7 +233,7 @@ class GameHistoryController extends Controller
         // $agentIds = $this->getChildren($agent_id);
         // $report = $this->get_all_agent_report($agentIds, $game_type_id, $dates);
         $report = new User;
-        $report = $report->select('admins.username',DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
+        $report = $report->select('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
         $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
         $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
         $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
@@ -249,7 +249,7 @@ class GameHistoryController extends Controller
         }
         // $report = $report->where('payment_history_transactions.transaction_id', '!=', 'null');
         $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
-        $report = $report->groupBy('admins.username', DB::raw('DATE(payment_history_transactions.created_at)'));
+        $report = $report->groupBy('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at)'));
 
         $bet = $report->get()->sum('bet');
         $win = $report->get()->sum('win');
