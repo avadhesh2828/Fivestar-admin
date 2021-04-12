@@ -311,7 +311,7 @@ class GameHistoryController extends Controller
     private function get_agent_report($agentIds, $game_type_id, $dates)
     {
         $report = new User;
-        $report = $report->select('payment_history_transactions.created_date', DB::raw("ROUND(SUM(payment_history_transactions.bet)) as bet"), DB::raw("ROUND(SUM(payment_history_transactions.win)) as win"));
+        $report = $report->select('payment_history_transactions.created_date', DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
         $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
         $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
       
