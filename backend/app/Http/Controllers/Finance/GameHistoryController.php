@@ -254,7 +254,7 @@ class GameHistoryController extends Controller
         $agents = Agent::select('admin_id','username','parent_id');
         $agents = $agents->where('parent_id', $agent_id);
         $agents = $agents->orWhere('admin_id', $this->user->admin_id);
-        return $agents = $agents->get();die;
+
         $report = $this->getParent($agents, $game_type_id, $dates);
 
         // $bet = $report->get()->sum('bet');
