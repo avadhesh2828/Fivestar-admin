@@ -293,8 +293,8 @@ class GameHistoryController extends Controller
     
     private function getChildren($parent_id) 
     {
-        $this->user = Auth::user();
-        $tree_string=array($this->user->admin_id);
+        // $this->user = Auth::user();
+        $tree_string=array($parent_id);
         $tree = array();
         // getOneLevel() returns a one-dimensional array of child ids        
         $tree = $this->getOneLevel($parent_id);     
