@@ -231,9 +231,9 @@ class UserController extends Controller
 
 
         $checkPlayer = User::where('username', $username);
-        if($this->user->role_id != 1){
-            $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
-        }
+        // if($this->user->role_id != 1){
+        //     $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
+        // }
         $checkPlayer = $checkPlayer->first();
         if($checkPlayer) {
             $user = new User;
