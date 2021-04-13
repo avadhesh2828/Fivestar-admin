@@ -241,7 +241,7 @@ class UserController extends Controller
             $user = $user->join('users.admins as A', function($q) {
                 $q->on('A.admin_id', '=', 'user.parent_id');
             });
-            $user = $user->where('user.parent_id', $admin_id);
+            // $user = $user->where('user.parent_id', $admin_id);
             $user = $user->where('user.username', $username);
             $user = $user->get();
 
