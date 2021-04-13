@@ -212,6 +212,7 @@ class GameHistoryController extends Controller
      */
     public function all_agent_report( Request $request )
     {
+        $this->user = Auth::user();
         $agent_id = $request->post('agent_id');
         $game_type_id = $request->post('game_type_id');
         $dates    = $request->post('dates');
@@ -231,38 +232,50 @@ class GameHistoryController extends Controller
             ]);
         }
 
-        $report = new User;
-        $report = $report->select('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
-        $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
-        $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
-        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+        // $report = new User;
+        // $report = $report->select('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
+        // $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
+        // $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+        // $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
       
-        // Date Range Filter
-        if( isset($dates['fromdate']) && isset($dates['todate']) ){
-          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
-        }
-        $report = $report->where('user.parent_id', $agent_id);
-        if($game_type_id == '1') {
-          $report = $report->where('game.game_type_id', 6);
-          $report = $report->whereNotNull('payment_history_transactions.table_id');
-        }
-        $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
-        $report = $report->groupBy('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at)'));
-        $report = $report->orderBy('created_at','DESC');
+        // // Date Range Filter
+        // if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        //   $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+        // }
+        // $report = $report->where('user.parent_id', $agent_id);
+        // if($game_type_id == '1') {
+        //   $report = $report->where('game.game_type_id', 6);
+        //   $report = $report->whereNotNull('payment_history_transactions.table_id');
+        // }
+        // $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
+        // $report = $report->groupBy('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at)'));
+        // $report = $report->orderBy('created_at','DESC');
 
-        $bet = $report->get()->sum('bet');
-        $win = $report->get()->sum('win');
-        $total_win = $bet - $win;
+
+        // $agentIds = $this->getChildren($agent_id);
+        // $report = $this->get_all_agent_report($agentIds, $game_type_id, $dates);
+
+        $agents = Agent::select('admin_id','username','parent_id');
+        $agents = $agents->whereIn('parent_id',[$this->user->parent_id, $agent_id]);
+        
+        
+        $report = $this->getParent($agents, $game_type_id, $dates);
+
+        // $agents = $agents->paginate();
+
+        // $bet = $report->get()->sum('bet');
+        // $win = $report->get()->sum('win');
+        // $total_win = $bet - $win;
       
         // Paginated records
-        $report = $report->paginate($request->per_page);
-        if($report->count() == 0){
+        // $report = $report->paginate($request->per_page);
+        if(count($report) == 0){
           return response()->json([
             'response_code'=> 500,
             'service_name' => 'all_agent_report',
-            'bet'          => $bet,
-            'win'          => $win,
-            'total_win'    => $total_win,
+            // 'bet'          => $bet,
+            // 'win'          => $win,
+            // 'total_win'    => $total_win,
             'data'         => [],
             'message'      => 'No reports found',
             'global_error' => 'No reports found',
@@ -272,9 +285,9 @@ class GameHistoryController extends Controller
         return response()->json([
           'response_code'=> 200,
           'service_name' => 'all_agent_report',
-          'bet'          => $bet,
-          'win'          => $win,
-          'total_win'    => $total_win,
+          // 'bet'          => $bet,
+          // 'win'          => $win,
+          // 'total_win'    => $total_win,
           'data'         => $report,
           'message'      => 'Reports found',
         ]);
@@ -293,7 +306,6 @@ class GameHistoryController extends Controller
     
     private function getChildren($parent_id) 
     {
-        // $this->user = Auth::user();
         $tree_string=array($parent_id);
         $tree = array();
         // getOneLevel() returns a one-dimensional array of child ids        
@@ -329,6 +341,86 @@ class GameHistoryController extends Controller
         $report = $report->groupBy('payment_history_transactions.created_date');
         $report = $report->orderBy('payment_history_transactions.created_date','DESC');
         return $report = $report;
+    }
+
+    // private function get_all_agent_report($agentIds, $game_type_id, $dates)
+    // {
+    //     $report = new User;
+    //     $report = $report->select('payment_history_transactions.created_date', 'admins.username', 'user.parent_id', DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
+    //     $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+    //     $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+    //     $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
+      
+    //     // Date Range Filter
+    //     if( isset($dates['fromdate']) && isset($dates['todate']) ){
+    //       $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+    //     }
+    //     $report = $report->where('user.parent_id', $agentIds);
+    //     // $report = $report->whereIn('user.parent_id', $agentIds);
+    //     if($game_type_id == '1') {
+    //       $report = $report->where('game.game_type_id', 6);
+    //       $report = $report->whereNotNull('payment_history_transactions.table_id');
+    //     }
+    //     $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
+    //     $report = $report->groupBy('admins.username','user.parent_id', 'payment_history_transactions.created_date');
+    //     $report = $report->orderBy('payment_history_transactions.created_date','DESC');
+    //     return $report = $report;
+    // }
+
+    private function get_all_agent_report($agentIds, $game_type_id, $dates)
+    {
+        $report = new User;
+        // $report = $report->select('payment_history_transactions.created_date', 'admins.username', 'user.parent_id', DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
+        $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+        $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
+      
+        // Date Range Filter
+        if( isset($dates['fromdate']) && isset($dates['todate']) ){
+          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+        }
+        $report = $report->where('user.parent_id', $agentIds);
+        // $report = $report->whereIn('user.parent_id', $agentIds);
+        if($game_type_id == '1') {
+          $report = $report->where('game.game_type_id', 6);
+          $report = $report->whereNotNull('payment_history_transactions.table_id');
+        }
+        $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
+        // $report = $report->groupBy('admins.username','user.parent_id', 'payment_history_transactions.created_date');
+        return $report = $report;
+    }
+
+    private function getParent($agents, $game_type_id, $dates)
+    {
+      $report = array();
+      $agents = $agents->get();
+      foreach($agents as $key) {
+         $agentInfo = Agent::where('admin_id', $key->admin_id)->first();
+         $res = $this->get_all_agent_report($key->admin_id, $game_type_id, $dates);
+         $result = $res->get();
+
+         $bet = $result->sum('bet');
+         $win = $result->sum('win');
+
+         if($bet > 0 || $win > 0) {
+          $report[] = array(
+              'admin_id'    => $key->admin_id,
+              'username'    => $key->username,
+              'name'        => $agentInfo->name,
+              'phone'       => $agentInfo->phone,
+              'description' => $agentInfo->description,
+              'bet'         => $bet,
+              'win'         => $win
+          );
+          $total_win = $bet -$win;
+         }
+      }
+
+      $data = array(
+        'total_win' => $total_win,
+        'data'      => $report
+      );
+      return $data;
     }
 
 
