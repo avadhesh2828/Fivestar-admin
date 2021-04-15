@@ -236,12 +236,14 @@ class UserController extends Controller
         // }
         $checkPlayer = $checkPlayer->first();
         if($checkPlayer) {
+            $agentIds = $this->getAllParentAgent($this->user->admin_id);
+
             $user = new User;
             $user = $user->select('user.*', 'A.username as agent_name');
             $user = $user->join('users.admins as A', function($q) {
                 $q->on('A.admin_id', '=', 'user.parent_id');
             });
-            // $user = $user->where('user.parent_id', $admin_id);
+            $user = $user->whereIn('user.parent_id', $agentIds);
             $user = $user->where('user.username', $username);
             $user = $user->get();
 
@@ -251,6 +253,34 @@ class UserController extends Controller
             'global_error'=> "Username does't exist"],500);
         }      
 
+    }
+
+
+    private function getOneLevel($parentId){
+        $agentIds = Agent::select('admin_id','parent_id')->where('parent_id', $parentId)->get();
+        $agent_id=array();
+        if(count($agentIds)>0){
+            foreach($agentIds as $key) {
+              $agent_id[]=$key->admin_id; 
+            }
+        }   
+        return $agent_id;
+    }
+    
+    private function getAllParentAgent($parent_id) 
+    {
+        $tree_string=array($parent_id);
+        $tree = array();
+        // getOneLevel() returns a one-dimensional array of child ids        
+        $tree = $this->getOneLevel($parent_id);     
+        if(count($tree)>0 && is_array($tree)){    
+            $tree_string=array_merge($tree_string,$tree);
+        }
+        foreach ($tree as $key => $val) {
+            $tree = $this->getOneLevel($val);
+            $tree_string=array_merge($tree_string,$tree);
+        }
+        return $tree_string;
     }
 
     /**

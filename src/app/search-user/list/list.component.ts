@@ -23,6 +23,7 @@ export class ListComponent implements OnInit {
   public error = false;
   userList = [];
   showList = false;
+  public currentAgent : any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +42,11 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
       'username': ['', [Validators.required]],
+    });
+
+    this.userService.currentUser.subscribe((current_agent: any) => {
+      this.currentAgent = current_agent;
+      console.log('this.currentAgent ==>', current_agent);
     });
   }
 
