@@ -40,9 +40,9 @@ export class AllReportComponent implements OnInit {
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
   public url = 'finance/all-agent-report?';
-  private AgentWin = 0;
-  private AgentBet = 0;    
-  private value; 
+  // private AgentWin = 0;
+  // private AgentBet = 0;    
+  // private value; 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,7 +104,7 @@ export class AllReportComponent implements OnInit {
           this.checkLastPage = log['data'].last_page;
           this.jump_to = this.checkLastPage;
           this.totalWin = log['data'].total_win;
-          this.findsum(this.gameReport);
+          // this.findsum(this.gameReport);
           this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
@@ -153,16 +153,15 @@ export class AllReportComponent implements OnInit {
     } 
   }
 
-  findsum(data){    
-    debugger  
-    // this.value=data    
-    console.log(this.value);  
-    for(let j=0;j<data.length;j++){   
-         this.AgentBet+= this.value[j].bet;
-         this.AgentWin+= this.value[j].win;    
-         console.log('AgentBet' , this.AgentBet)
-         console.log('AgentWin', this.AgentWin)  
-    }  
-  }
+  // findsum(data){     
+  //   this.value=data    
+  //   console.log(this.value);  
+  //   for(let j=0;j<data.length;j++){   
+  //        this.AgentBet+= this.value[j].bet;
+  //        this.AgentWin+= this.value[j].win;      
+  //   }  
+  //   console.log('AgentBet' , this.AgentBet)
+  //   console.log('AgentWin', this.AgentWin)
+  // }
 
 }

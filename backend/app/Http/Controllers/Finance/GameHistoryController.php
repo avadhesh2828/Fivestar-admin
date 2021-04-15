@@ -361,6 +361,8 @@ class GameHistoryController extends Controller
     private function getParent($agents, $game_type_id, $dates)
     {
       $report = array();
+      $twin = 0;
+      $tbet = 0;
       $agents = $agents->get();
       foreach($agents as $key) {
          $agentInfo = Agent::where('admin_id', $key->admin_id)->first();
@@ -380,12 +382,12 @@ class GameHistoryController extends Controller
               'bet'         => $bet,
               'win'         => $win
           );
-          $total_win = $bet -$win;
+          $twin += $win;
+          $tbet += $bet;
          }
       }
-
       $data = array(
-        'total_win' => $total_win,
+        'total_win' => $tbet - $twin,
         'data'      => $report
       );
       return $data;
