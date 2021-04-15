@@ -232,35 +232,11 @@ class GameHistoryController extends Controller
             ]);
         }
 
-        // $report = new User;
-        // $report = $report->select('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet"), DB::raw("SUM(payment_history_transactions.win) as win"));
-        // $report = $report->join('users.admins', 'admins.admin_id', '=', 'user.parent_id');
-        // $report = $report->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
-        // $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
-      
-        // // Date Range Filter
-        // if( isset($dates['fromdate']) && isset($dates['todate']) ){
-        //   $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
-        // }
-        // $report = $report->where('user.parent_id', $agent_id);
-        // if($game_type_id == '1') {
-        //   $report = $report->where('game.game_type_id', 6);
-        //   $report = $report->whereNotNull('payment_history_transactions.table_id');
-        // }
-        // $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
-        // $report = $report->groupBy('admins.username', 'admins.name', 'admins.phone', 'admins.description', DB::raw('DATE(payment_history_transactions.created_at)'));
-        // $report = $report->orderBy('created_at','DESC');
-
         $agents = Agent::select('admin_id','username','parent_id');
         $agents = $agents->where('parent_id', $agent_id);
         $agents = $agents->orWhere('admin_id', $this->user->admin_id);
 
         $report = $this->getParent($agents, $game_type_id, $dates);
-
-        // $bet = $report->get()->sum('bet');
-        // $win = $report->get()->sum('win');
-        // $total_win = $bet - $win;
-      
         // Paginated records
         // $report = $report->paginate($request->per_page);
         if(count($report) == 0){
