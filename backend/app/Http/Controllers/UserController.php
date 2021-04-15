@@ -247,7 +247,12 @@ class UserController extends Controller
             $user = $user->where('user.username', $username);
             $user = $user->get();
 
-            return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
+            if(count($user) > 0) {
+                return response()->json(['response_code'=> 200,'service_name' => 'search_user','data' => $user],200);
+            } else {
+                return response()->json(['response_code'=> 500,'service_name' => 'search_user','message'=> "Username not found", 'global_error'=> "Username not found", 'data' => []],500);
+            }
+            
         } else {
             return response()->json(['response_code'=> 500,'service_name' => 'search_user','message'=> "Username does't exist",
             'global_error'=> "Username does't exist"],500);

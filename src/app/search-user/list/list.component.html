@@ -63,9 +63,9 @@
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [routerLink]="['/users', user.user_id]" > {{'search.edit' | translate}} </button> 
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [routerLink]="['/agent/reports', user.user_id]"> {{'search.reports' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/game-log']" [queryParams]="{ user_id: user.user_id}"> {{'search.gameLog' | translate}} </button>
-                <button href="javascript:void(0);" class="btn-warning"   *ngIf="user.status == 0"
+                <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id"  *ngIf="user.status == 0"
                 (click)="changeUserStatus(user.user_id, '1')"> {{'search.enable' | translate}} </button> 
-                <button href="javascript:void(0);" class="btn-warning"  *ngIf="user.status == 1"
+                <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id"  *ngIf="user.status == 1"
                 (click)="changeUserStatus(user.user_id, '0')"> {{'search.disable' | translate}} </button>
               </td>
             </tr>

@@ -46,7 +46,6 @@ export class ListComponent implements OnInit {
 
     this.userService.currentUser.subscribe((current_agent: any) => {
       this.currentAgent = current_agent;
-      console.log('this.currentAgent ==>', current_agent);
     });
   }
 
@@ -71,6 +70,7 @@ export class ListComponent implements OnInit {
           this.toastr.success(res.message || 'User Found.');
         }, err => {
           const errorMessage = '';
+          this.userList = [];
           this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while fetching player login ip.');
           this.formSubmitted = false;
         });
