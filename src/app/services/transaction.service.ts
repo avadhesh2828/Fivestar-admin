@@ -35,4 +35,8 @@ export class TransactionService {
   getJackpotTransactions(params: any) {
     return this.http.post(`${environment.API_URL}/payment_transaction/get_jackpot_transaction`, params);
   }
+
+  gameRecall(params: any) {
+    return this.http.post(`${environment.API_URL}/finance/game-recall`, params);
+  }
 }

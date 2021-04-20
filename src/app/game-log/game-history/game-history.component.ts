@@ -38,6 +38,8 @@ export class GameHistoryComponent implements OnInit {
   public totalPages = 0;
   public jump_to : any;
   public checkLastPage :any;
+  public recallUrl : any = '';
+  public transactionId :any = '';
 
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
@@ -172,6 +174,7 @@ export class GameHistoryComponent implements OnInit {
 
   gameLogModel(game) {
     this.gameLog = game;
+    this.game_recall(game.transaction_id);
     $('#gameLogModel').modal('show');
   }
 
@@ -185,6 +188,19 @@ export class GameHistoryComponent implements OnInit {
         this.params.current_page = this.jump_to;
         this.onSubmit();
       } 
+  }
+
+  public game_recall(transactionId){
+    this.loaderService.display(true);
+    this.transactionService.gameRecall({transactionId : transactionId})
+      .subscribe((dat) => {
+        this.loaderService.display(false);
+        this.recallUrl = dat['data'];
+        $('#game-container').find('iframe').attr('src',this.recallUrl);
+      }, (err: object) => {
+        this.loaderService.display(false);
+        this.error = true;
+      });
   }
 
 }

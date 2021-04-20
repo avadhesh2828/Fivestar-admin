@@ -117,6 +117,7 @@ Route::middleware('auth:api')->group(function () {
 		Route::post('game-report', 'Finance\GameHistoryController@game_report');
 		Route::post('agent-game-report', 'Finance\GameHistoryController@agent_game_report');
 		Route::post('all-agent-report', 'Finance\GameHistoryController@all_agent_report');
+		Route::post('game-recall', 'Finance\GameHistoryController@game_recall');
 
 		Route::get('deposit-list', 'Finance\DepositController@deposit_list');
 		Route::get('withdraw-list', 'Finance\WithdrawController@withdraw_list');

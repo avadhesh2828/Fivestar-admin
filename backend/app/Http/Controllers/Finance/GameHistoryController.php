@@ -74,6 +74,42 @@ class GameHistoryController extends Controller
     }
 
     /**
+     * KA game recall
+     */
+    public function game_recall(Request $request) {
+      $transactionId = $request->post('transactionId');
+
+      $validator = Validator::make($request->all(),[
+        'transactionId' => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'game_recall',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ]);
+      }
+
+        // $transactionId = 'd6de3761b80e321e22925db83b85e33b';
+        $epochSeconds  =  time(); //'1618919526';
+        $secretKey     = '4651DFDFC7F0EE9BA04EBC0D767BFD13';
+
+        $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
+
+        $urls = env('KA_GAMING_RECALL_URL').'?g=BonusMania&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
+
+        return response()->json([
+          'response_code'=> 200,
+          'service_name' => 'game_recall',
+          'data' => $urls,
+          'message'=> 'Game recall found',
+        ]);
+
+    } 
+
+    /**
      * Display a listing of the Game Reports
      *
      */
