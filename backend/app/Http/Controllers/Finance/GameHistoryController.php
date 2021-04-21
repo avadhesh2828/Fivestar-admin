@@ -442,7 +442,7 @@ class GameHistoryController extends Controller
       $result = $this->postCurl($URL, $data);
       $data = json_decode($result); 
       
-      $urls = $date->url;
+      $urls = $data->url;
 
       return response()->json([
         'response_code'=> 200,
