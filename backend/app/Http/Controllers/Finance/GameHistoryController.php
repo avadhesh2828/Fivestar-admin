@@ -98,7 +98,7 @@ class GameHistoryController extends Controller
 
         $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
 
-        $urls = env('KA_GAMING_RECALL_URL').'?g=BonusMania&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
+        $urls = 'https://gamessea.kaga88.com/?g=BonusMania&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
 
         return response()->json([
           'response_code'=> 200,
