@@ -10,6 +10,7 @@ use App\Models\PaymentHistoryTransaction;
 use App\Models\Notification_model;
 use App\Models\User;
 use App\Models\Agent;
+use App\Helpers\GenerateSignature;
 use Auth;
 use Validator;
 use DB;
@@ -72,73 +73,6 @@ class GameHistoryController extends Controller
           'message'=> 'Game history found',
         ]);
     }
-
-    /**
-     * KA game recall
-     */
-    public function ka_recall(Request $request) {
-        $transactionId = $request->post('transactionId');
-        $game_id = $request->post('game_id');
-
-        $validator = Validator::make($request->all(),[
-          'transactionId' => 'required',
-          'game_id'       => 'required'
-        ]);
-
-        if($validator->fails() ){
-            return response()->json([
-                'response_code'=> 400,
-                'service_name' => 'ka_recall',
-                'message'=> 'Validation Failed',
-                'global_error'=> $validator->errors(),
-            ]);
-        }
-        $epochSeconds  =  time();
-        $secretKey     = '4651DFDFC7F0EE9BA04EBC0D767BFD13';
-        $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
-
-        $urls = 'https://gamessea.kaga88.com/?g='.$game_id.'&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
-
-        return response()->json([
-          'response_code'=> 200,
-          'service_name' => 'ka_recall',
-          'data' => $urls,
-          'message'=> 'KaS recall found',
-        ]);
-
-    } 
-
-    public function dragoon_recall(Request $request) {
-      $transactionId = $request->post('transactionId');
-      $game_id = $request->post('game_id');
-
-      $validator = Validator::make($request->all(),[
-        'transactionId' => 'required',
-        'game_id'       => 'required'
-      ]);
-
-      if($validator->fails() ){
-          return response()->json([
-              'response_code'=> 400,
-              'service_name' => 'dragoon_recall',
-              'message'=> 'Validation Failed',
-              'global_error'=> $validator->errors(),
-          ]);
-      }
-      $epochSeconds  =  time();
-      $secretKey     = '4651DFDFC7F0EE9BA04EBC0D767BFD13';
-      $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
-
-      $urls = '';
-
-      return response()->json([
-        'response_code'=> 200,
-        'service_name' => 'dragoon_recall',
-        'data' => $urls,
-        'message'=> 'Dragoon recall found',
-      ]);
-
-  } 
 
     /**
      * Display a listing of the Game Reports
@@ -436,5 +370,123 @@ class GameHistoryController extends Controller
       return $data;
     }
 
+
+
+  /**
+   * KA game recall
+   */
+  public function ka_recall(Request $request) {
+      $transactionId = $request->post('transactionId');
+      $game_id = $request->post('game_id');
+
+      $validator = Validator::make($request->all(),[
+        'transactionId' => 'required',
+        'game_id'       => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'ka_recall',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ]);
+      }
+      $epochSeconds  =  time();
+      $secretKey     = '4651DFDFC7F0EE9BA04EBC0D767BFD13';
+      $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
+
+      $urls = 'https://gamessea.kaga88.com/?g='.$game_id.'&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
+
+      return response()->json([
+        'response_code'=> 200,
+        'service_name' => 'ka_recall',
+        'data' => $urls,
+        'message'=> 'KaS recall found',
+      ]);
+
+  } 
+
+  /**
+   * Dragoon game recall
+   */
+  public function dragoon_recall(Request $request) {
+      $transactionId = $request->post('transactionId');
+      $game_id = $request->post('game_id');
+      $round = $request->post('round');
+
+      $validator = Validator::make($request->all(),[
+        'transactionId' => 'required',
+        'game_id'       => 'required',
+        'round'         => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'dragoon_recall',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ]);
+      }
+
+      $data = json_encode(array(
+        "channel"     => env('DRAGOON_CHANNEL'),
+        "game_id"     => $game_id,
+        "game_serial" => $transactionId,
+        "round_id"    => $round,
+        "lang"        => "en_us"
+      ));
+  
+      $URL = env('DRAGOON_API_URL').'record/get_bet_detail_page';
+      $result = $this->postCurl($URL, $data);
+      $data = json_decode($result); 
+      
+      $urls = $date->url;
+
+      return response()->json([
+        'response_code'=> 200,
+        'service_name' => 'dragoon_recall',
+        'data' => $urls,
+        'message'=> 'Dragoon recall found',
+      ]);
+  } 
+
+  /**
+   * POST CURL for Game
+   */
+  private function postCurl($URL, $data) {
+          
+    // Generate X-Ds-X_Ds_Signature
+    $X_Ds_Signature = GenerateSignature::AutoGenerateSignature($data);
+    
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $URL,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $data,
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json",
+            "Cookie: __cfduid=d825410a64270b3bde9d3b30e3ec705961604303179",
+            "X-Ds-Signature: " .$X_Ds_Signature,
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err      = curl_error($curl);
+    curl_close($curl);
+    if ($err) {
+        // echo "cURL Error #:" . $err;
+        return $err;
+    } else {
+        return $response;
+    }     
+  }
 
 }

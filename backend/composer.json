@@ -52,7 +52,8 @@
         ],
         "files": [
             "app/Helpers/Paypal.php",
-            "app/Helpers/General.php"
+            "app/Helpers/General.php",
+            "app/Helpers/GenerateSignature.php"
         ]
     },
     "autoload-dev": {
