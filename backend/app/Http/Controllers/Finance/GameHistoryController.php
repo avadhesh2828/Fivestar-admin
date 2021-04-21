@@ -78,9 +78,11 @@ class GameHistoryController extends Controller
      */
     public function game_recall(Request $request) {
       $transactionId = $request->post('transactionId');
+      $game_id = $request->post('game_id');
 
       $validator = Validator::make($request->all(),[
-        'transactionId' => 'required'
+        'transactionId' => 'required',
+        'game_id'       => 'required'
       ]);
 
       if($validator->fails() ){
@@ -98,7 +100,7 @@ class GameHistoryController extends Controller
 
         $hash =  hash_hmac('SHA256', $transactionId . $epochSeconds, $secretKey);
 
-        $urls = 'https://gamessea.kaga88.com/?g=BonusMania&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
+        $urls = 'https://gamessea.kaga88.com/?g='.$game_id.'&ak=3AA53FCC197FE1BC041D648782C060BF&p=FIVESTAR&grid='.$transactionId.'&grha='.$hash.'&grts='.$epochSeconds;
 
         return response()->json([
           'response_code'=> 200,

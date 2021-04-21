@@ -174,7 +174,7 @@ export class GameHistoryComponent implements OnInit {
 
   gameLogModel(game) {
     this.gameLog = game;
-    this.game_recall(game.transaction_id);
+    this.game_recall(game);
     $('#gameLogModel').modal('show');
   }
 
@@ -190,9 +190,9 @@ export class GameHistoryComponent implements OnInit {
       } 
   }
 
-  public game_recall(transactionId){
+  public game_recall(game){
     this.loaderService.display(true);
-    this.transactionService.gameRecall({transactionId : transactionId})
+    this.transactionService.gameRecall({transactionId : game.transaction_id, game_id : game.game_id})
       .subscribe((dat) => {
         this.loaderService.display(false);
         this.recallUrl = dat['data'];
