@@ -192,7 +192,7 @@ export class GameHistoryComponent implements OnInit {
 
   public game_recall(game){
     this.loaderService.display(true);
-    this.transactionService.gameRecall({transactionId : game.transaction_id, game_id : game.game_id})
+    this.transactionService.gameRecall({transactionId : game.transaction_id, game_id : game.game_id}, game.game_detail.provider_id)
       .subscribe((dat) => {
         this.loaderService.display(false);
         this.recallUrl = dat['data'];
