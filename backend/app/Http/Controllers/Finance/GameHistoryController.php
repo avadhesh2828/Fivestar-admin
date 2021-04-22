@@ -434,7 +434,7 @@ class GameHistoryController extends Controller
         "channel"     => env('DRAGOON_CHANNEL'),
         "game_id"     => $game_id,
         "game_serial" => $transactionId,
-        "round_id"    => $round,
+        "round_id"    => (string)$round,
         "lang"        => "en_us"
       ));
   
