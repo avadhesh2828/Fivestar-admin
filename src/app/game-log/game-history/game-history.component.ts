@@ -191,6 +191,7 @@ export class GameHistoryComponent implements OnInit {
   }
 
   public game_recall(game){
+    $('#game-container').find('iframe').attr('src','');
     this.loaderService.display(true);
     this.transactionService.gameRecall({transactionId : game.transaction_id, game_id : game.game_id, round : game.round}, game.game_detail.provider_id)
       .subscribe((dat) => {
