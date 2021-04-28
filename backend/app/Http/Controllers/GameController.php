@@ -42,7 +42,6 @@ class GameController extends Controller
         }
         $game = $game->where('is_visible', 0);
         $game = $game->orderByRaw('is_position ASC NULLS LAST');
-        // $game = $game->orderBy('position','ASC');
         $game = $game->paginate($request->per_page);
         return response()->json(['response_code'=> 200, 'service_name' => 'game_list', 'data' => $game],200);
     }

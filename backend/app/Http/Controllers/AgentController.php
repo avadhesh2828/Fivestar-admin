@@ -170,7 +170,6 @@ class AgentController extends Controller
      */
     public function update_agent(Request $request)
     {
-
         $this->user = Auth::user();
         $admin_id         = $this->user->admin_id;
         $agent_id         = $request->post('agent_id');
@@ -355,7 +354,5 @@ class AgentController extends Controller
             return;
         }    
     }
-
-
 
 }

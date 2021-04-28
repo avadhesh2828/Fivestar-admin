@@ -14,20 +14,10 @@ use Validator;
 class AdminController extends Controller
 {
 
-    // public function login(){
-    //     if(\Auth::attempt(['username' => request('username'), 'password' => request('password')])){
-    //         $user = \Auth::user();
-    //         // print_r($user);die;
-    //         $success['session_key'] =  'Bearer '.$user->createToken('MyLance Admin')->accessToken;
-    //         return response()->json(['Data' => $success])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
-    //     }
-    //     else{
-    //       $error['email'] = 'Incorrect credentials!';
-    //         return response()->json(['error'=>$error])->setStatusCode(Response::HTTP_BAD_REQUEST, Response::$statusTexts[Response::HTTP_BAD_REQUEST]);
-    //     }
-    // }
-
-    public function login(){
+    /**
+     *  login
+     */    
+    public function login() {
         if(\Auth::attempt(['username' => request('username'), 'password' => request('password')])){
             $user = \Auth::user();
             if(!empty($user->personal_password)){
@@ -50,7 +40,10 @@ class AdminController extends Controller
         }
     }
 
-    public function verify_personal_password(){
+    /**
+     * Personal Password
+     */
+    public function verify_personal_password() {
         $personal_password = request('personal_password');
         $user = Admin::where(['admin_id' => request('admin_id')])->first();
         if($user){
@@ -77,7 +70,10 @@ class AdminController extends Controller
         }
     }
 
-    public function set_personal_password(Request $request){
+    /**
+     * Set Personal Password
+     */
+    public function set_personal_password(Request $request) {
 
         $admin_id = $request->post('admin_id');
         $security_password = $request->post('security_password');
@@ -122,7 +118,10 @@ class AdminController extends Controller
         }
     }
 
-    public function change_password(Request $request){
+    /**
+     * Change Password
+     */
+    public function change_password(Request $request) {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
         $old_password = $request->post('old_password');
@@ -173,7 +172,10 @@ class AdminController extends Controller
 
     }
 
-    public function change_security_password(Request $request){
+    /**
+     * Change Personal Password
+     */
+    public function change_security_password(Request $request) {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id;
         $old_security_password = $request->post('old_security_password');
@@ -224,15 +226,20 @@ class AdminController extends Controller
 
     }
 
-    public function get_details(){
+    /**
+     * Get Detail
+     */
+    public function get_details() {
         $this->user = Auth::user();
         $user_id = $this->user->admin_id; 
         $user = Admin::where('admin_id', $user_id)->first();
         return response()->json(['response_code'=> 200,'service_name' => 'get_details','data' => $user],200);
     }
 
-    public function logout(Request $request)
-    {
+    /**
+     * Logout
+     */
+    public function logout(Request $request) {
         $request->user()->token()->delete();
         return response()->json(['Data' => 'successfully logout.'])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
     }
