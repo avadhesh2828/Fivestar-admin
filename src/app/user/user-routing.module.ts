@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UserListComponent } from './list/user-list.component';
 import { UserDetailComponent } from './detail/user-detail.component';
-import { UserPortfolioComponent } from './user-portfolio/user-portfolio.component';
-import { UserWatchlistComponent } from './user-watchlist/user-watchlist.component';
 import { NewComponent } from './new/new.component';
 import { ReportsComponent } from './reports/reports.component';
 
@@ -12,9 +10,7 @@ const routes: Routes = [
     { path: '', component: UserListComponent },
     { path: 'new', component: NewComponent },
     { path: ':userId', component: UserDetailComponent },
-    { path: 'reports/:userId', component: ReportsComponent },
-    { path: 'portfolio/:userId', component: UserPortfolioComponent },
-    { path: 'watchlist/:userId', component: UserWatchlistComponent },
+    { path: 'reports/:userId', component: ReportsComponent }
 
 ];
 
@@ -31,8 +27,6 @@ export class UserRoutingModule { }
 export const routedComponents: Array<any> = [
     UserListComponent,
     UserDetailComponent,
-    UserPortfolioComponent,
-    UserWatchlistComponent,
     NewComponent,
     ReportsComponent,
 ];

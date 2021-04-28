@@ -58,11 +58,7 @@ export class UserService {
   getAgentTicketDetails(params: object) {
     return this.http.post(`${environment.API_URL}/user/get_agent_ticket_detail`, params);
   }
-
-  // changeUserStatus(params: object) {
-  //   return this.http.post(`${environment.API_URL}/user/change_user_status`, params);
-  // }
-
+  
   getCountryList() {
     return this.http.post(`${environment.API_URL}/common/country_list`, {});
   }

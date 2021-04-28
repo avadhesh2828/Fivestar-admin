@@ -64,8 +64,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
       this.currentAgent = current_agent;
     });
 
-    this.getCountryList();
     // this.getAgentsList();
+    this.getUsersList();
     this.searchTextChanged.pipe(debounceTime(1000))
       .subscribe(model => this.getUsersList());
   }
@@ -85,23 +85,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
       that.currentUser = null;
       $(this).find('textarea').val('').end();
     });
-  }
-
-  public getCountryList() {
-    this.userService.getCountryList()
-      .subscribe((response: any) => {
-        this.countryList = response.result;
-        this.getUsersList();
-      },
-        (err: any) => {
-          if (err.status !== 401) {
-            this.toastr.error(err.message || 'There was an error.');
-            this.error = true;
-          }
-          // }, (err: Error) => {
-          //   this.toastr.error(err.message || 'There was an error.');
-          //   this.error = true;
-        });
   }
 
   public players(status:any) {
@@ -145,13 +128,11 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public paginateList(newPage: number) {
     if (this.params.current_page === newPage) { return false; }
     this.params.current_page = newPage;
-    // localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
     this.getUsersList();
   }
 
   public nextOrPreviousPage(deviation: number) {
     this.params.current_page = this.params.current_page + deviation;
-    // localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
     this.getUsersList();
   }
 
@@ -168,11 +149,11 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.userService.changeUserStatus(agentId, forminputdata).pipe()
       .subscribe((res: any) => {
         this.formSubmitted = false;
-        this.toastr.success(res.message || 'Agent status changed Sucessfully.');
+        this.toastr.success(res.message || 'User status changed Sucessfully.');
         this.getUsersList();
       }, err => {
         const errorMessage = '';
-        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change agent status.');
+        this.toastr.error(errorMessage || err.error.global_error || err.error.message || 'Some error occurred while change user status.');
         this.formSubmitted = false;
       });
 
@@ -186,18 +167,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public searchFilter(type?: string) {
-    // this.params.current_page = 1;
-    localStorage.setItem('adminuserFilters', JSON.stringify(this.params));
-    if (type === 'reset') {
-
-      this.params = { ...INITIAL_PARAMS };
-      localStorage.removeItem('adminuserFilters');
-    }
-    this.params.current_page = 1;
-    this.getUsersList();
-  }
-
   public startEdit(user) {
     this.currentUser = user;
 
@@ -209,32 +178,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
       this.userList[this.currentUser.userIndex].status = this.currentUser.status;
       this.userList[this.currentUser.userIndex].balance = this.currentUser.balance;
     }
-  }
-  get(obj, url) {
-    const mapForm = document.createElement('form');
-    mapForm.target = '_blank';
-    mapForm.method = 'GET'; // or "post" if appropriate
-    mapForm.action = url;
-    Object.keys(obj).forEach(function (param) {
-      const mapInput = document.createElement('input');
-      mapInput.type = 'hidden';
-      mapInput.name = param;
-      mapInput.setAttribute('value', obj[param]);
-      mapForm.appendChild(mapInput);
-    });
-
-    document.body.appendChild(mapForm);
-    mapForm.submit();
-  }
-
-  public exportPDF() {
-    this.get({
-    }, environment.API_URL + '/user/export-pdf');
-  }
-
-  public exportExcel() {
-    this.get({
-    }, environment.API_URL + '/user/export-excel');
   }
 
   // jump page
