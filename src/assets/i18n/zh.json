@@ -60,6 +60,8 @@
     "gameLog": "玩家遊戲日誌",
     "jackpot": "頭獎",
     "suggestion": "建議",
+    "setting": "環境",
+    "appVersion" : "應用程式版本",
     "signOut": " 登出"
   },
   "agent": {
@@ -534,6 +536,13 @@
     "date": "日期",
     "noSuggestionFound": "找不到建議",
     "thereWasAnError": "有一個錯誤"
+  },
+  "appVersion": {
+    "changeVersion": "變更版本",
+    "version": "版本",
+    "submit": "提交",
+    "reset": "重啟",
+    "versionRequired": "需要版本"
   },
   "Score set successfully": "{{ username }} --- 分數設置成功 {{ set_score }}: {{ name }}",
   "Red packet balance added": "{{ username }} --- 添加了紅色數據包餘額 {{ set_score }}: {{ name }}",
