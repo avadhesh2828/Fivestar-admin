@@ -79,6 +79,13 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('list', 'SuggestionController@index');
 	  });
 
+	//Setting
+	Route::group(['prefix' => 'setting'], function(){
+		Route::get('get-version','SettingController@get_version')->middleware('can:isAdmin');
+		Route::post('update-version/{versionId}','SettingController@update_version')->middleware('can:isAdmin');
+	});  
+
+
 	//advertisment route
 	Route::group(['prefix' => 'advertisements'], function(){
 		Route::get('get_advertisement','Advertisements@get_advertisement')->middleware('can:isAdmin');
