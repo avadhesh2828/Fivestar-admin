@@ -15,4 +15,25 @@ class Agent extends Model
     ];
     
     public $timestamps = false;
+    
+
+    // One level child
+    public function child() {
+        return $this->hasMany('App\Models\Agent', 'parent_id');
+    }
+
+    // Recursive children
+    public function children() {
+        return $this->hasMany('App\Models\Agent', 'parent_id')->with('children');
+    }
+
+    // One level parent
+    public function parent() {
+        return $this->belongsTo('App\Models\Agent', 'parent_id');
+    }
+
+    // Recursive parents
+    public function parents() {
+        return $this->belongsTo('App\Models\Agent', 'parent_id')->with('parent');
+    }
 }
