@@ -543,8 +543,8 @@ class GameHistoryController extends Controller
 
          if($bet > 0 || $win > 0) {
           $report[] = array(
-              'admin_id'    => $key->admin_id,
-              'username'    => $key->username,
+              'admin_id'    => $agentInfo->admin_id,
+              'username'    => $agentInfo->username,
               'name'        => $agentInfo->name,
               'phone'       => $agentInfo->phone,
               'description' => $agentInfo->description,
