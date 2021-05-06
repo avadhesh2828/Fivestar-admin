@@ -38,7 +38,7 @@ export class ReportsComponent implements OnInit {
   public checkLastPage :any;
   public formatDateTimeZone = formatDateTimeZone;
   public maxDate = new Date();
-  public url = 'finance/agent-report?';
+  public url = 'finance/agent-game-report?';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,7 +63,7 @@ export class ReportsComponent implements OnInit {
   }
   
   private createUrl() {
-    this.url = 'finance/agent-report?';
+    this.url = 'finance/agent-game-report?';
     this.url += 'per_page=' + this.params.per_page + '&page=' + this.params.current_page;
   }
 
@@ -86,7 +86,6 @@ export class ReportsComponent implements OnInit {
     } else {
       const forminputdata = {
         'agent_id'    : agentId,
-        'type'        : 'individual',
         'game_type_id': this.f.game_type.value,
         'dates'       : date
       };
