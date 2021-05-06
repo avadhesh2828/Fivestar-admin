@@ -408,7 +408,7 @@ class GameHistoryController extends Controller
             ]);
         }
 
-        $agents = Agent::select('admin_id','username','parent_id');
+        $agents = Agent::select('admin_id','username','parent_id','name','phone','description');
         $agents = $agents->where('parent_id', $agent_id);
         $agents = $agents->get();
         if(count($agents) > 0 ) {
@@ -428,9 +428,9 @@ class GameHistoryController extends Controller
                 $report[] = array(
                     'admin_id'    => $key->admin_id,
                     'username'    => $key->username,
-                    // 'name'        => $agentInfo->name,
-                    // 'phone'       => $agentInfo->phone,
-                    // 'description' => $agentInfo->description,
+                    'name'        => $key->name,
+                    'phone'       => $key->phone,
+                    'description' => $key->description,
                     'bet'         => $bet,
                     'win'         => $win
                 );
