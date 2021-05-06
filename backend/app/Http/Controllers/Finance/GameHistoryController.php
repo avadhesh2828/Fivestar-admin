@@ -410,6 +410,7 @@ class GameHistoryController extends Controller
 
         $agents = Agent::select('admin_id','username','parent_id','name','phone','description');
         $agents = $agents->where('parent_id', $agent_id);
+        $agents = $agents->orWhere('parent_id', '0');
         $agents = $agents->get();
         if(count($agents) > 0 ) {
           $report = array();
@@ -475,7 +476,9 @@ class GameHistoryController extends Controller
             }
             return $tree; 
         } else {
-          return [];
+          
+          return  $agents = Agent::where('admin_id', $adminId)->pluck('admin_id');
+
         }    
     }
 
