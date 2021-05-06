@@ -186,7 +186,9 @@ class GameHistoryController extends Controller
             ]);
         }
 
-        $agentIds = $this->getChildren($agent_id);
+
+        $agentIds = $this->get_child($agent_id);
+        // $agentIds = $this->getChildren($agent_id);
         $report = $this->get_agent_report($agentIds, $game_type_id, $dates);
         $bet = $report->get()->sum('bet');
         $win = $report->get()->sum('win');
@@ -216,6 +218,52 @@ class GameHistoryController extends Controller
           'message'      => 'Reports found',
         ]);
     }
+
+
+    /**
+     * get child agent
+     */
+    private function get_child($adminId) {
+      $agents = Agent::with('children')->where('parent_id', $adminId)->get();
+        if(count($agents) > 0) {
+            $tree=array($adminId);
+            foreach($agents as $key) {
+              $idArr = $this->children($key->children);
+              if(count($idArr) > 0) {
+                $tree=array_merge($tree,$idArr);  
+              }
+              $ids[] = $key->admin_id; 
+              $tree=array_merge($tree,$ids);
+            }
+            return $tree; 
+        } else {
+          
+          return  $agents = Agent::where('admin_id', $adminId)->pluck('admin_id');
+
+        }    
+    }
+
+    /**
+     * recursive
+     */
+    private function children($childArray)
+    {
+        if(count($childArray) > 0) {
+            foreach($childArray as $value) {
+              $ids = $value->admin_id; 
+              // $tree =array_merge( self::$validate, $ids); 
+              Session::push('agentIds', $ids);
+              $this->Child($value->children);
+               
+            } 
+            return $items = Session::get('agentIds');
+            // return $tree;
+        } else {
+          return [];
+        }
+    
+    }
+
 
 
     private function getOneLevel($catId){
