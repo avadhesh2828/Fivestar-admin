@@ -410,7 +410,6 @@ class GameHistoryController extends Controller
 
         $agents = Agent::select('admin_id','username','parent_id','name','phone','description');
         $agents = $agents->where('parent_id', $agent_id);
-        $agents = $agents->orWhere('parent_id', '0');
         $agents = $agents->get();
         if(count($agents) > 0 ) {
           $report = array();
@@ -461,7 +460,9 @@ class GameHistoryController extends Controller
         }
     }
 
-
+    /**
+     * get child agent
+     */
     private function get_agent_child($adminId) {
       $agents = Agent::with('children')->where('parent_id', $adminId)->get();
         if(count($agents) > 0) {
@@ -482,6 +483,9 @@ class GameHistoryController extends Controller
         }    
     }
 
+    /**
+     * recursive
+     */
     private function Child($childArray)
     {
         if(count($childArray) > 0) {
@@ -521,42 +525,6 @@ class GameHistoryController extends Controller
         $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
         return $report = $report;
     }
-
-    private function getParent($agents, $game_type_id, $dates)
-    {
-      $report = array();
-      $twin = 0;
-      $tbet = 0;
-      $agents = $agents->get();
-      foreach($agents as $key) {
-         $agentInfo = Agent::where('admin_id', $key)->first();
-         $res = $this->get_all_agent_report($key, $game_type_id, $dates);
-         $result = $res->get();
-
-         $bet = $result->sum('bet');
-         $win = $result->sum('win');
-
-         if($bet > 0 || $win > 0) {
-          $report[] = array(
-              'admin_id'    => $agentInfo->admin_id,
-              'username'    => $agentInfo->username,
-              'name'        => $agentInfo->name,
-              'phone'       => $agentInfo->phone,
-              'description' => $agentInfo->description,
-              'bet'         => $bet,
-              'win'         => $win
-          );
-          $twin += $win;
-          $tbet += $bet;
-         }
-      }
-      $data = array(
-        'total_win' => $tbet - $twin,
-        'data'      => $report
-      );
-      return $data;
-    }
-
 
   /**
    * KA game recall
