@@ -186,9 +186,7 @@ class GameHistoryController extends Controller
             ]);
         }
 
-
         $agentIds = $this->get_child($agent_id);
-        // $agentIds = $this->getChildren($agent_id);
         $report = $this->get_agent_report($agentIds, $game_type_id, $dates);
         $bet = $report->get()->sum('bet');
         $win = $report->get()->sum('win');
@@ -265,34 +263,6 @@ class GameHistoryController extends Controller
     }
 
 
-
-    private function getOneLevel($catId){
-        $agentIds = agent::select('admin_id','parent_id')->where('parent_id', $catId)->get();
-        $cat_id=array();
-        if(count($agentIds)>0){
-            foreach($agentIds as $key) {
-              $cat_id[]=$key->admin_id; 
-            }
-        }   
-        return $cat_id;
-    }
-    
-    private function getChildren($parent_id) 
-    {
-        $tree_string=array($parent_id);
-        $tree = array();
-        // getOneLevel() returns a one-dimensional array of child ids        
-        $tree = $this->getOneLevel($parent_id);     
-        if(count($tree)>0 && is_array($tree)){    
-            $tree_string=array_merge($tree_string,$tree);
-        }
-        foreach ($tree as $key => $val) {
-            $tree = $this->getOneLevel($val);
-            $tree_string=array_merge($tree_string,$tree);
-        }
-        return $tree_string;
-    }
-
     private function get_agent_report($agentIds, $game_type_id, $dates)
     {
         $report = new User;
@@ -304,7 +274,7 @@ class GameHistoryController extends Controller
         if( isset($dates['fromdate']) && isset($dates['todate']) ){
           $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
         }
-        // $report = $report->where('user.parent_id', $agent_id);
+
         $report = $report->whereIn('user.parent_id', $agentIds);
         if($game_type_id == '1') {
           $report = $report->where('game.game_type_id', 6);
