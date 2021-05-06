@@ -386,23 +386,25 @@ class GameHistoryController extends Controller
      * Display a listing of the Agent Game Reports
      *
      */
-    public function all_agent_report( Request $request )
+    public function agent_report( Request $request )
     {
         $this->user = Auth::user();
         $agent_id = $request->post('agent_id');
+        $type = $request->post('type');
         $game_type_id = $request->post('game_type_id');
         $dates    = $request->post('dates');
 
         $validator = Validator::make($request->all(),[
         'agent_id'     => 'required',
         'game_type_id' => 'required',
+        'type'         => 'required',
         'dates'        => 'required'
         ]);
 
         if($validator->fails() ){
             return response()->json([
                 'response_code'=> 400,
-                'service_name' => 'all_agent_report',
+                'service_name' => 'agent_report',
                 'message'=> 'Validation Failed',
                 'global_error'=> $validator->errors(),
             ]);
@@ -445,14 +447,14 @@ class GameHistoryController extends Controller
           // return $data;  
           return response()->json([
             'response_code'=> 200,
-            'service_name' => 'all_agent_report',
+            'service_name' => 'agent_report',
             'data'         => $data,
             'message'      => 'Reports found',
           ]);
         } else {
           return response()->json([
             'response_code'=> 500,
-            'service_name' => 'all_agent_report',
+            'service_name' => 'agent_report',
             'data'         => [],
             'message'      => 'No reports found',
             'global_error' => 'No reports found',
