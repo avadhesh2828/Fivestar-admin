@@ -19,13 +19,12 @@ use Session;
 class GameHistoryController extends Controller
 {
 
-    // public $newArray = array();
-    // public $data;
-    // public function __construct(){
-    //     $this->data = array();
-    // }
+    protected $childs = array();  
+    protected $child_array = array();  
 
-    static $validate = array();
+    public function __construct(){ }
+      
+    
 
     /**
      * Display a listing of the Game History
@@ -250,11 +249,13 @@ class GameHistoryController extends Controller
             foreach($childArray as $value) {
               $ids = $value->admin_id; 
               // $tree =array_merge( self::$validate, $ids); 
-              Session::push('agentIds', $ids);
+              // Session::push('agentIds', $ids);
+              array_push($this->childs, $ids); 
               $this->Child($value->children);
                
             } 
-            return $items = Session::get('agentIds');
+            return $this->childs;
+            // return $items = Session::get('agentIds');
             // return $tree;
         } else {
           return [];
@@ -476,7 +477,47 @@ class GameHistoryController extends Controller
             'global_error' => 'No reports found',
           ]);
         }
+
+        
     }
+
+
+    // /**
+    //  * get child agent
+    //  */
+    // private function get_agent_child($adminId) {
+    //     $agents = Agent::with('children')->where('parent_id', $adminId)->get();       
+    //     if(count($agents) > 0) {
+    //         $arr = array($adminId);
+    //         foreach($agents as $key) {
+    //           array_push($arr, $key->admin_id);              
+    //           if(count($key->children) > 0) {                 
+    //              $this->Child($key->children);
+    //           } 
+    //         }
+    //         $common = array_merge( $arr , $this->child_array );
+    //         return $common; 
+    //     } else {
+    //       return  $agents = Agent::where('admin_id', $adminId)->pluck('admin_id');
+    //     }    
+    // }
+
+    // /**
+    //  * recursive
+    //  */
+    // private function Child($childArray)
+    // {
+    //     if(count($childArray) > 0) {
+    //         foreach($childArray as $value) {
+    //             $child_id = $value->admin_id; 
+    //             array_push($this->child_array, $child_id); 
+    //             $this->Child($value->children);
+    //         } 
+    //         return $this->child_array;
+    //     }
+    
+    // }
+
 
     /**
      * get child agent
@@ -494,10 +535,8 @@ class GameHistoryController extends Controller
               $tree=array_merge($tree,$ids);
             }
             return $tree; 
-        } else {
-          
+        } else {          
           return  $agents = Agent::where('admin_id', $adminId)->pluck('admin_id');
-
         }    
     }
 
@@ -508,14 +547,12 @@ class GameHistoryController extends Controller
     {
         if(count($childArray) > 0) {
             foreach($childArray as $value) {
-              $ids = $value->admin_id; 
-              // $tree =array_merge( self::$validate, $ids); 
-              Session::push('agentIds', $ids);
+              $child_id = $value->admin_id; 
+              array_push($this->child_array, $child_id); 
               $this->Child($value->children);
                
             } 
-            return $items = Session::get('agentIds');
-            // return $tree;
+            return $this->child_array;
         } else {
           return [];
         }
