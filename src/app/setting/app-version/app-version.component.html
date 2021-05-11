@@ -17,6 +17,14 @@
             </div>
           </div>
 
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="link">{{'appVersion.link' | translate}}<span
+                class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="link" [(ngModel)]="version.link" placeholder="{{'appVersion.url' | translate}}" />
+            </div>
+          </div>
+
         </div>
         <div class="card-footer">
           <button class="btn btn-sm btn-primary" type="submit" (click)="updateAppVersion(version.id)"><i class="fa fa-dot-circle-o"></i>

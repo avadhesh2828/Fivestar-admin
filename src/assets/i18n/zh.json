@@ -540,6 +540,8 @@
   "appVersion": {
     "changeVersion": "變更版本",
     "version": "版本",
+    "link": "關聯",
+    "url": "網址",
     "submit": "提交",
     "reset": "重啟",
     "versionRequired": "需要版本"

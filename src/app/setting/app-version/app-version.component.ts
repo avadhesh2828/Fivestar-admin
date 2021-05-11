@@ -63,7 +63,8 @@ export class AppVersionComponent implements OnInit {
 
   updateAppVersion(id:any) {
     const forminputdata = {
-      'version' : this.version.version
+      'version' : this.version.version,
+      'link'    : this.version.link
     };
     this.settingService.updateVersion( id , forminputdata).pipe()
         .subscribe((res: any) => {
