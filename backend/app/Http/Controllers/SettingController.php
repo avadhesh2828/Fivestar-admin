@@ -39,9 +39,9 @@ class SettingController extends Controller
         $ios_link        = $request->post('ios_link');
         //validation
         $validator = Validator::make($request->all(), [
-            "android_version" => 'required|number',
+            "android_version" => 'required',
             "android_link"    => 'required',
-            "ios_version"     => 'required|number',
+            "ios_version"     => 'required',
             "ios_link"        => 'required'
         ]);
 
