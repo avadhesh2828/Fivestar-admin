@@ -10,18 +10,24 @@
         <div class="card-body">
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="version">{{'appVersion.version' | translate}}<span
+            <label class="col-md-2 col-form-label" for="version">{{'appVersion.android' | translate}}<span
                 class="text-danger">*</span></label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" id="version" [(ngModel)]="version.version" placeholder="0.0" />
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="android_version" [(ngModel)]="version.android_version" placeholder="{{'appVersion.version' | translate}}" />
+            </div>    
+            <div class="col-md-8">
+              <input type="text" class="form-control" id="android_link" [(ngModel)]="version.android_link" placeholder="{{'appVersion.url' | translate}}" />
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="link">{{'appVersion.link' | translate}}<span
+            <label class="col-md-2 col-form-label" for="link">{{'appVersion.ios' | translate}}<span
                 class="text-danger">*</span></label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" id="link" [(ngModel)]="version.link" placeholder="{{'appVersion.url' | translate}}" />
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="ios_version" [(ngModel)]="version.ios_version" placeholder="{{'appVersion.version' | translate}}" />
+            </div>
+            <div class="col-md-8">
+              <input type="text" class="form-control" id="ios_link" [(ngModel)]="version.ios_link" placeholder="{{'appVersion.url' | translate}}" />
             </div>
           </div>
 

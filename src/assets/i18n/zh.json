@@ -538,6 +538,8 @@
     "thereWasAnError": "有一個錯誤"
   },
   "appVersion": {
+    "android" : "安卓",
+    "ios" : "愛歐斯",
     "changeVersion": "變更版本",
     "version": "版本",
     "link": "關聯",
