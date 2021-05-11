@@ -34,9 +34,11 @@ class SettingController extends Controller
     public function update_version($versionId, Request $request)
     {
         $version = $request->post('version');
+        $link    = $request->post('link');
         //validation
         $validator = Validator::make($request->all(), [
             "version" => 'required',
+            "link"    => 'required'
         ]);
 
         if($validator->fails()){
@@ -51,6 +53,7 @@ class SettingController extends Controller
         if($version > $checkVersion->version) {
             $update = AppVersion::where('id', $versionId)->update([
                 "version"     => $version, 
+                "link"        => $link, 
                 "updated_at"  => date('Y-m-d H:i:s')
             ]);
             if($update > 0){

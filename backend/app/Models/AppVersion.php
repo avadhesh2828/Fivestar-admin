@@ -11,7 +11,7 @@ class AppVersion extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'version','created_at','updated_at'
+        'id', 'version', 'link', 'description', 'created_at', 'updated_at'
     ];
 
     public $timestamps = false;

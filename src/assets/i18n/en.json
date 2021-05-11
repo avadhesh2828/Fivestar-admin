@@ -541,6 +541,8 @@
   "appVersion": {
     "changeVersion": "Change Version",
     "version": "Version",
+    "link": "Link",
+    "url": "URL",
     "submit": "Submit",
     "reset": "Reset",
     "versionRequired": "Version is required"
