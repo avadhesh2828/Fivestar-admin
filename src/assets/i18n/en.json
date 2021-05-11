@@ -539,6 +539,8 @@
     "thereWasAnError": "There was an error"
   },
   "appVersion": {
+    "android" : "Android",
+    "ios" : "Ios",
     "changeVersion": "Change Version",
     "version": "Version",
     "link": "Link",

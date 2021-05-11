@@ -33,12 +33,16 @@ class SettingController extends Controller
      */
     public function update_version($versionId, Request $request)
     {
-        $version = $request->post('version');
-        $link    = $request->post('link');
+        $android_version = $request->post('android_version');
+        $android_link    = $request->post('android_link');
+        $ios_version     = $request->post('ios_version');
+        $ios_link        = $request->post('ios_link');
         //validation
         $validator = Validator::make($request->all(), [
-            "version" => 'required',
-            "link"    => 'required'
+            "android_version" => 'required|number',
+            "android_link"    => 'required',
+            "ios_version"     => 'required|number',
+            "ios_link"        => 'required'
         ]);
 
         if($validator->fails()){
@@ -49,12 +53,14 @@ class SettingController extends Controller
             'global_error'=> $validator->errors()->first(),
             ], 400);
         }
-        $checkVersion = AppVersion::where('id', $versionId)->first();
-        if($version > $checkVersion->version) {
-            $update = AppVersion::where('id', $versionId)->update([
-                "version"     => $version, 
-                "link"        => $link, 
-                "updated_at"  => date('Y-m-d H:i:s')
+        $checkVersion = AppVersion::first();
+        if($android_version >= $checkVersion->android_version && $ios_version >= $checkVersion->ios_version) {
+            $update = AppVersion::where('id', $checkVersion->id)->update([
+                "android_version" => $android_version,
+                "android_link"    => $android_link,
+                "ios_version"     => $ios_version,
+                "ios_link"        => $ios_link,
+                "updated_at"      => date('Y-m-d H:i:s')
             ]);
             if($update > 0){
                 return response()->json([
