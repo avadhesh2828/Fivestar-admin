@@ -30,6 +30,7 @@ export class NewComponent implements OnInit {
   maxBalance: any;
   userAgent: any;
   public unique_username:any;
+  public playerName:any = '';
 
   // public show:boolean = false;
   public isSameAdd = false;
@@ -54,18 +55,13 @@ export class NewComponent implements OnInit {
     
     const pattern = /^[a-zA-Z]([_@.&]?[a-zA-Z0-9 ]+)*$/;
     this.userService.currentUser.subscribe((usr: any) => {
-      // this.maxBalance =  usr.balance;
       this.maxBalance = (usr.role_id == 1)? '':usr.balance;
       this.userAgent = usr.username;
       this.minDate = new Date();
       this.newAgentForm = this.formBuilder.group({
-        // checkadd:[''],
-        // 'username': ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50), Validators.pattern(pattern)]],
         'password': ['App100', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-        // 'password': ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),
-        // Validators.pattern('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/')]],
         'score': [0, [Validators.required, Validators.max(this.maxBalance)]],
-        'name': [this.unique_username, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+        'name': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
         'phone': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
         'description': [''],
       });
@@ -80,6 +76,7 @@ export class NewComponent implements OnInit {
         this.loaderService.display(false);
         if (dat['data']) {
           this.unique_username = dat['data']; 
+          this.playerName = dat['data'];
         }
       }, (err: object) => {
         this.loaderService.display(false);
@@ -127,12 +124,11 @@ export class NewComponent implements OnInit {
 
   handleReset() {
     this.getUniqueUserName();
-    
+  
     this.newAgentForm.reset();
-    // this.newAgentForm.controls['username'].setValue('');
     this.newAgentForm.controls['password'].setValue('App100');
     this.newAgentForm.controls['score'].setValue('0');
-    this.newAgentForm.controls['name'].setValue(this.unique_username);
+    this.newAgentForm.controls['name'].setValue(this.playerName);
     this.newAgentForm.controls['phone'].setValue('');
     this.newAgentForm.controls['description'].setValue('');
     this.submitted = false;

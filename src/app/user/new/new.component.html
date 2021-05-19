@@ -43,7 +43,7 @@
             <label class="col-md-3 col-form-label" for="name">{{ 'player.name' | translate}}<span
                 class="text-danger">*</span></label>
             <div class="col-md-9">
-              <input type="text" class="form-control" formControlName="name" [(ngModel)]="unique_username" >
+              <input type="text" class="form-control" formControlName="name" [(ngModel)]="playerName" >
               <div *ngIf="submitted && f['name'].errors" class="text-danger">
                 <div *ngIf="f['name'].errors.required">{{ 'player.nameReq' | translate}} </div>
                 <div *ngIf="f['name'].errors.minlength">{{ 'player.nameMinLen' | translate}}</div>
