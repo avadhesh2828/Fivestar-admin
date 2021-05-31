@@ -213,7 +213,8 @@
     "edit": "Edit",
     "reports": "Reports",
     "gameLog": "Game Log",
-    "quiteGame": "Quite Game"
+    "quiteGame": "Quite Game",
+    "redpacket": "Redpacket" 
   },
   "playerDetail": {
     "playerName": "Player Name",
@@ -512,6 +513,25 @@
     "next": "Next",
     "prev": "Prev",
     "lineName" : "Line Name"
+  },
+  "agentRedPacket": {
+    "redpacketLog": "Redpacket Log",
+    "userName": "Username",
+    "userNameIsRequired": "Username is required",
+    "selectDateRange": "Select a date range",
+    "dateIsRequired": "Date is required",
+    "enter": "Enter Username",
+    "submit": "Submit",
+    "reset": "Reset",
+    "win": "Win",
+    "action": "Action",
+    "noDataFound":"No data found",
+    "totalRecord": "Total Record",
+    "thereWasError" : "There was an error",
+    "next": "Next",
+    "prev": "Prev",
+    "fiveStarBlessing":"FiveStar Blessing",
+    "title": "Title" 
   },
   "jackpot": {
     "jackPot": "Jackpot",

@@ -63,6 +63,7 @@
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/score-log']" [queryParams]="{ user_id: user.user_id}"> {{'player.scoreLog' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['/users', user.user_id]"> {{'player.edit' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" [routerLink]="['reports', user.user_id]"> {{'player.reports' | translate}} </button>
+                <button href="javascript:void(0);" class="btn-warning" [routerLink]="['player-redpacket',  user.user_id]"  > {{'player.redpacket' | translate}} </button>
                 <button href="javascript:void(0);" class="btn-warning" [routerLink]="['/game-log']" [queryParams]="{ user_id: user.user_id}" > {{'player.gameLog' | translate}} </button>
                 
                 <button href="javascript:void(0);" class="btn-warning" [disabled]="currentAgent.admin_id !=  user.parent_id" [title]="'permissionError' | translate" *ngIf="user.status == 0"

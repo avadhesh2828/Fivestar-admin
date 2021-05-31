@@ -15,6 +15,9 @@ export class TransactionService {
     return this.http.post(`${environment.API_URL}/${url}`, params);
   }
 
+  playerRedpacketLog(url: any, params: any) {
+    return this.http.post(`${environment.API_URL}/${url}`, params);
+  }
 
   getTransactions(url: any) {
     return this.http.get(`${environment.API_URL}/${url}`);

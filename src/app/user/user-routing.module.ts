@@ -7,12 +7,14 @@ import { UserPortfolioComponent } from './user-portfolio/user-portfolio.componen
 import { UserWatchlistComponent } from './user-watchlist/user-watchlist.component';
 import { NewComponent } from './new/new.component';
 import { ReportsComponent } from './reports/reports.component';
+import { PlayerRedpacketComponent } from './player-redpacket/player-redpacket.component';
 
 const routes: Routes = [
     { path: '', component: UserListComponent },
     { path: 'new', component: NewComponent },
     { path: ':userId', component: UserDetailComponent },
     { path: 'reports/:userId', component: ReportsComponent },
+    { path: 'player-redpacket/:userId', component: PlayerRedpacketComponent },
     { path: 'portfolio/:userId', component: UserPortfolioComponent },
     { path: 'watchlist/:userId', component: UserWatchlistComponent },
 
@@ -35,4 +37,5 @@ export const routedComponents: Array<any> = [
     UserWatchlistComponent,
     NewComponent,
     ReportsComponent,
+    PlayerRedpacketComponent,
 ];

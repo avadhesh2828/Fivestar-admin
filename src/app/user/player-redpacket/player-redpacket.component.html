@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card filter">
+      <form class="form-horizontal" [formGroup]="logForm" (ngSubmit)="onSubmit()">
+        <div class="card-header d-flex justify-content-between">
+          <strong>{{'agentRedPacket.redpacketLog' | translate}}</strong>
+          <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
+            <i class="icon-arrow-left-circle" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'agentRedPacket.userName' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="userName" placeholder="{{'agentRedPacket.enter' | translate}}">
+            
+              <div *ngIf="submitted && f['userName'].errors" class="text-danger">
+                <div *ngIf="f['userName'].errors.required">{{ 'agentRedPacket.userNameIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'agentRedPacket.selectDateRange' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+
+              <input type="text" class="form-control cursor-pointer"
+                placeholder="{{'scoreLog.selectDateRange' | translate}}" #dp="bsDaterangepicker" formControlName="date" bsDaterangepicker readonly autocomplete="off" [maxDate]="maxDate" [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false }">
+            
+              <div *ngIf="submitted && f['date'].errors" class="text-danger">
+                <div *ngIf="f['date'].errors.required">{{ 'agentRedPacket.dateIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'gameHistory.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'gameHistory.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row" *ngIf="showTable === true">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'agentRedPacket.title' | translate}}</th>
+              <th>{{'agentRedPacket.win' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">{{'agentRedPacket.thereWasError' | translate}} </td>
+            </tr>
+            <tr *ngIf="!error && !redpacketLog">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="redpacketLog && !(redpacketLog.length>0)">
+              <td colspan="7" class="text-center"> {{'agentRedPacket.noDataFound' | translate}}</td>
+            </tr>
+            <tr *ngFor="let redpacket of redpacketLog; let logIndex = index">
+              <td> {{'agentRedPacket.fiveStarBlessing' | translate}} </td>
+              <td>{{ redpacket.win || "-" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader></app-loader>
