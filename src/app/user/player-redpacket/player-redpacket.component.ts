@@ -33,6 +33,7 @@ export class PlayerRedpacketComponent implements OnInit {
   public formError: any;
   public submitted = false;
   public showTable = false;
+  public isDisabledUserName = false;
 
   public params = { ...INITIAL_PARAMS };
   public redpacketLog = [];
@@ -60,14 +61,15 @@ export class PlayerRedpacketComponent implements OnInit {
   }
 
   ngOnInit() {
-    // const userId = this.route.snapshot.queryParams.user_id;
     const userId = this.route.snapshot.paramMap.get('userId');
       if(userId) {
-        this.getUserDetail(userId);
+        if(userId !== '0') {
+          this.isDisabledUserName = true;
+          this.getUserDetail(userId);
+        }
       }
 
       this.logForm = this.formBuilder.group({
-        'userName': ['', [Validators.required]],
         'date': ['', [Validators.required]]
       });
   }
@@ -79,7 +81,6 @@ export class PlayerRedpacketComponent implements OnInit {
         this.loaderService.display(false);
         if (user['data']) {
           this.user = user['data'];
-          this.setValue(this.user.username);
         }
       }, (err: object) => {
         this.loaderService.display(false);
@@ -87,8 +88,9 @@ export class PlayerRedpacketComponent implements OnInit {
       });
   }
 
-  setValue(username){
-    this.logForm.setValue({userName: username,date: ''})
+  setValue(){
+    this.logForm.setValue({date: ''})
+    return;
   }
 
   private createUrl() {
@@ -113,7 +115,7 @@ export class PlayerRedpacketComponent implements OnInit {
       return;
     } else {
       const forminputdata = {
-        'username': this.f.userName.value,
+        'username': (this.isDisabledUserName === true)? this.user.username:0,
         'dates'   : date,
       };
       this.formSubmitted = true;

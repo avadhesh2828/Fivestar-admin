@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { UserListComponent } from './list/user-list.component';
 import { UserDetailComponent } from './detail/user-detail.component';
 import { UserPortfolioComponent } from './user-portfolio/user-portfolio.component';
@@ -16,8 +15,7 @@ const routes: Routes = [
     { path: 'reports/:userId', component: ReportsComponent },
     { path: 'player-redpacket/:userId', component: PlayerRedpacketComponent },
     { path: 'portfolio/:userId', component: UserPortfolioComponent },
-    { path: 'watchlist/:userId', component: UserWatchlistComponent },
-
+    { path: 'watchlist/:userId', component: UserWatchlistComponent }
 ];
 
 @NgModule({

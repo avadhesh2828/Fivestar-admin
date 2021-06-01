@@ -9,14 +9,10 @@
           </a>
         </div>
         <div class="card-body">
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="isDisabledUserName">
             <label class="col-md-2 col-form-label" for="username">{{'agentRedPacket.userName' | translate}} <span class="text-danger">*</span></label>
             <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="userName" placeholder="{{'agentRedPacket.enter' | translate}}">
-            
-              <div *ngIf="submitted && f['userName'].errors" class="text-danger">
-                <div *ngIf="f['userName'].errors.required">{{ 'agentRedPacket.userNameIsRequired' | translate}}</div>
-              </div>
+              {{user.username}}
             </div>
             <div class="col-md-4"></div>
           </div>

@@ -20,7 +20,8 @@
         <div class="player-btn">
             <button (click)="players('')"> {{ 'player.allPlayer' | translate}} </button> |
             <button (click)="players(1)"> {{ 'player.enablePlayer' | translate}} </button> |
-            <button (click)="players(0)"> {{ 'player.disablePlayer' | translate}} </button>
+            <button (click)="players(0)"> {{ 'player.disablePlayer' | translate}} </button> |
+            <button [routerLink]="['player-redpacket',  0]" > {{ 'player.playerRedpacket' | translate}} </button>
         </div>
 
         <table class="table table-responsive-sm table-bordered table-striped table-sm admin-table">

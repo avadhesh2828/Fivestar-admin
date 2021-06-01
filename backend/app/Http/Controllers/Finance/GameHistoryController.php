@@ -564,7 +564,6 @@ class GameHistoryController extends Controller
 
       $redpacket_report = new PaymentHistoryTransaction;
       $redpacket_report = $redpacket_report->select(DB::raw("SUM(payment_history_transactions.win) as win"));
-      // $redpacket_report = $redpacket_report->with(['game_detail']);
       $redpacket_report = $redpacket_report->join((new User)->getTable().' as U', function($j){
           $j->on('U.user_id', '=', 'payment_history_transactions.user_id');
       });
@@ -574,7 +573,9 @@ class GameHistoryController extends Controller
           $redpacket_report = $redpacket_report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
       }
   
-      $redpacket_report = $redpacket_report->where('U.username', $username);
+      if($username > 0) {
+        $redpacket_report = $redpacket_report->where('U.username', $username);
+      }
       $redpacket_report = $redpacket_report->where('payment_history_transactions.action', 'FiveStar Blessing');
       // Paginated records
       $redpacket_report = $redpacket_report->paginate($request->per_page);

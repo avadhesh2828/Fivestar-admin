@@ -212,7 +212,8 @@
     "reports": "報告書",
     "gameLog": "遊戲記錄",
     "quiteGame": "相當遊戲",
-    "redpacket": "紅包" 
+    "redpacket": "紅包",
+    "playerRedpacket": "播放器 紅包" 
   },
   "playerDetail": {
     "playerName": "参赛者姓名",
