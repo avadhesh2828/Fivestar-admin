@@ -95,15 +95,15 @@ export class ReportsComponent implements OnInit {
       .subscribe((log: []) => {
         this.loaderService.display(false);
         this.showTable = true;
-        if (log['data'] && log['data'].data) {
-          this.gameReport = log['data'].data;
-          this.checkLastPage = log['data'].last_page;
-          this.jump_to = this.checkLastPage;
-          this.totalWin = log['total_win'];
-          this.createPaginationItem(log['data'].total);
+        if (log['data']) {
+          this.gameReport = log;
+          // this.checkLastPage = log['data'].last_page;
+          // this.jump_to = this.checkLastPage;
+          // this.totalWin = log['total_win'];
+          // this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
-          this.createPaginationItem(0);
+          // this.createPaginationItem(0);
         }
         this.loaderService.display(false);
         this.error = false;
@@ -114,25 +114,25 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  private createPaginationItem(totalGame: number) {
-    this.totalGameReport = totalGame;
-    const maxPages: number = Math.ceil(totalGame / this.params.per_page);
-    const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
-    const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
-    this.totalPages = maxPages;
-    this.totalPaginationShow = range(end, start);
-  }
+  // private createPaginationItem(totalGame: number) {
+  //   this.totalGameReport = totalGame;
+  //   const maxPages: number = Math.ceil(totalGame / this.params.per_page);
+  //   const end = (this.params.current_page + 5) < maxPages ? this.params.current_page + 5 : maxPages;
+  //   const start = (this.params.current_page - 5) > 1 ? this.params.current_page - 5 : 1;
+  //   this.totalPages = maxPages;
+  //   this.totalPaginationShow = range(end, start);
+  // }
 
-  public paginateList(newPage: number) {
-    if (this.params.current_page === newPage) { return false; }
-    this.params.current_page = newPage;
-    this.onSubmit();
-  }
+  // public paginateList(newPage: number) {
+  //   if (this.params.current_page === newPage) { return false; }
+  //   this.params.current_page = newPage;
+  //   this.onSubmit();
+  // }
 
-  public nextOrPreviousPage(deviation: number) {
-    this.params.current_page = this.params.current_page + deviation;
-    this.onSubmit();
-  }
+  // public nextOrPreviousPage(deviation: number) {
+  //   this.params.current_page = this.params.current_page + deviation;
+  //   this.onSubmit();
+  // }
 
   handleReset() {
     this.showTable = false;

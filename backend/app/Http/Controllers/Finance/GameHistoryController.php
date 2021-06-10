@@ -147,7 +147,7 @@ class GameHistoryController extends Controller
         'response_code' => 200,
         'service_name'  => 'game_report',
         'total_free_spin' => $totalFreeSpin,
-        'data'          => $report,
+        'data'          => $report[0],
         'message'       => 'Reports found',
       ]);
 
