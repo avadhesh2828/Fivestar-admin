@@ -183,7 +183,7 @@ class GameHistoryController extends Controller
         $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
         // $report = $report->orderBy('created_at', 'DESC');
         $report = $report->get()->sum('win');
-        return $report
+        return $report;
     }
 
 
