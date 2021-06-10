@@ -154,6 +154,28 @@ class GameHistoryController extends Controller
           $report = $report->whereNotNull('payment_history_transactions.table_id');
         }
         $report = $report->where('payment_history_transactions.game_id', '!=', 0);
+        $report = $report->where('payment_history_transactions.free_game', '=', 0);
+        $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
+        $report = $report->orderBy('created_at', 'DESC');
+        return $report = $report;
+    }
+
+    private function sumRedpacket($player_id, $game_type_id, $dates)
+    {
+        $report = new PaymentHistoryTransaction;
+        $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet") , DB::raw("SUM(payment_history_transactions.win) as win"));
+        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+      
+        // Date Range Filter
+        if( isset($dates['fromdate']) && isset($dates['todate']) ){
+          $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+        }
+        $report = $report->where('payment_history_transactions.user_id', $player_id);
+        if($game_type_id == '1') {
+          $report = $report->where('game.game_type_id', 6);
+          $report = $report->whereNotNull('payment_history_transactions.table_id');
+        }
+        $report = $report->where('payment_history_transactions.game_id', '!=', 0);
         $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
         $report = $report->orderBy('created_at', 'DESC');
         return $report = $report;
