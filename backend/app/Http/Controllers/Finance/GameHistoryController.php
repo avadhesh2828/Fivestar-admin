@@ -108,7 +108,7 @@ class GameHistoryController extends Controller
       }
       
       $report = $this->playerReport($player_id, $game_type_id, $dates);
-      $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates)
+      $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
       $bet = $report->get()->sum('bet');
       $win = $report->get()->sum('win');
       $total_win = $bet - $win;
