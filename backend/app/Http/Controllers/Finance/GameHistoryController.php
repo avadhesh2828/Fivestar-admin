@@ -113,7 +113,7 @@ class GameHistoryController extends Controller
       $win = $report->get()->sum('win');
       $total_win = $bet - $win;
       // Paginated records
-      $report = $report->paginate($request->per_page);
+      // $report = $report->paginate($request->per_page);
   
       if($report->count() == 0){
         return response()->json([
@@ -144,7 +144,9 @@ class GameHistoryController extends Controller
     private function playerReport($player_id, $game_type_id, $dates)
     {
         $report = new PaymentHistoryTransaction;
-        $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet") , DB::raw("SUM(payment_history_transactions.win) as win"));
+        // $report = $report->select(DB::raw('DATE(payment_history_transactions.created_at) as created_at'), DB::raw("SUM(payment_history_transactions.bet) as bet") , DB::raw("SUM(payment_history_transactions.win) as win"));
+
+        $report = $report->select( DB::raw("SUM(payment_history_transactions.bet) as bet") , DB::raw("SUM(payment_history_transactions.win) as win"));
         $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
       
         // Date Range Filter
@@ -158,8 +160,6 @@ class GameHistoryController extends Controller
         }
         $report = $report->where('payment_history_transactions.game_id', '!=', 0);
         $report = $report->where('payment_history_transactions.free_game', '=', 0);
-        $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
-        $report = $report->orderBy('created_at', 'DESC');
         return $report = $report;
     }
 
@@ -180,7 +180,7 @@ class GameHistoryController extends Controller
         }
         $report = $report->where('payment_history_transactions.game_id', '!=', 0);
         $report = $report->where('payment_history_transactions.free_game', '=', 1);
-        $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
+        // $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
         // $report = $report->orderBy('created_at', 'DESC');
         $report = $report->get()->sum('win');
         return $report;
