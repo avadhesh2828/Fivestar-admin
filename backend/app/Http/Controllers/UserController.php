@@ -180,9 +180,9 @@ class UserController extends Controller
         }
 
         $checkPlayer = User::where('username', $username);
-        if($this->user->role_id != 1){
-            $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
-        }
+        // if($this->user->role_id != 1){
+        //     $checkPlayer = $checkPlayer->where('parent_id', $this->user->parent_id);
+        // }
         $checkPlayer = $checkPlayer->first();
         if($checkPlayer) {
             $playerIp = new LoginHistory;
@@ -190,7 +190,9 @@ class UserController extends Controller
             $playerIp = $playerIp->join('users.user as U', function($q) {
                 $q->on('U.user_id', '=', 'user_login_history.user_id');
             });
-            $playerIp = $playerIp->where('U.parent_id', $admin_id);
+            if($this->user->role_id != 1){    
+                $playerIp = $playerIp->where('U.parent_id', $admin_id);
+            }    
             $playerIp = $playerIp->where('U.username', $username);
             $playerIp = $playerIp->orderBy('user_login_history.created_at', 'DESC');
             $playerIp = $playerIp->limit(10);
