@@ -401,7 +401,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id'          => 'required',
             'score'            => 'nullable|numeric|min:0'.$maxBalance,
-            'phone'            => 'nullable|numeric|min:1|max:10',
+            'phone'            => 'nullable|numeric|min:0',
             'new_password'     => 'nullable|min:6',
             'confirm_password' => 'nullable|required_with:new_password|same:new_password|min:6'
         ]);
