@@ -107,38 +107,40 @@ class GameHistoryController extends Controller
           ]);
       }
       
-      $report = $this->playerReport($player_id, $game_type_id, $dates);
-      $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
-      $bet = $report->get()->sum('bet');
-      $win = $report->get()->sum('win');
-      $total_win = $bet - $win;
-      // Paginated records
-      $report = $report->paginate($request->per_page);
+      // $report = $this->playerReport($player_id, $game_type_id, $dates);
+      // $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
+      // $bet = $report->get()->sum('bet');
+      // $win = $report->get()->sum('win');
+      // $total_win = $bet - $win;
+      // // Paginated records
+      // $report = $report->paginate($request->per_page);
   
-      if($report->count() == 0){
-        return response()->json([
-          'response_code' => 500,
-          'service_name'  => 'game_report',
-          'bet'           => $bet,
-          'win'           => $win,
-          // 'total_win'     => $total_win,
-          'total_free_spin' => $totalFreeSpin,
-          'data'          => [],
-          'message'       => 'No reports found',
-          'global_error'  => 'No reports found',
-        ]);
-      }
+      // if($report->count() == 0){
+      //   return response()->json([
+      //     'response_code' => 500,
+      //     'service_name'  => 'game_report',
+      //     'bet'           => $bet,
+      //     'win'           => $win,
+      //     // 'total_win'     => $total_win,
+      //     'total_free_spin' => $totalFreeSpin,
+      //     'data'          => [],
+      //     'message'       => 'No reports found',
+      //     'global_error'  => 'No reports found',
+      //   ]);
+      // }
   
-      return response()->json([
-        'response_code' => 200,
-        'service_name'  => 'game_report',
-        'bet'           => $bet,
-        'win'           => $win,
-        // 'total_win'     => $total_win,
-        'total_free_spin' => $totalFreeSpin,
-        'data'          => $report,
-        'message'       => 'Reports found',
-      ]);
+      // return response()->json([
+      //   'response_code' => 200,
+      //   'service_name'  => 'game_report',
+      //   'bet'           => $bet,
+      //   'win'           => $win,
+      //   // 'total_win'     => $total_win,
+      //   'total_free_spin' => $totalFreeSpin,
+      //   'data'          => $report,
+      //   'message'       => 'Reports found',
+      // ]);
+
+
 
       // $report = $this->playerReport($player_id, $game_type_id, $dates);
       // $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
@@ -150,6 +152,48 @@ class GameHistoryController extends Controller
       //   'data'          => $report[0],
       //   'message'       => 'Reports found',
       // ]);
+
+
+      $report = $this->playerReport($player_id, $game_type_id, $dates);
+      $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
+      $bet = $report->get()->sum('bet');
+      $win = $report->get()->sum('win');
+      $total_win = $bet - $win;
+      // Paginated records
+      $report = $report->get();
+  
+      if($report->count() > 0){
+        foreach($report as $key) {
+            $redpacket = $this->getSumOfPlayerRedpacket($player_id, $game_type_id, $key->created_at);
+            $key['redpacket'] = $redpacket;
+            $reports[] = $key;
+        }
+
+        return response()->json([
+          'response_code'   => 200,
+          'service_name'    => 'game_report',
+          'bet'             => $bet,
+          'win'             => $win,
+          // 'total_win'    => $total_win,
+          'total_free_spin' => $totalFreeSpin,
+          'data'            => $reports,
+          'message'         => 'Reports found',
+        ]);
+
+      }
+  
+      return response()->json([
+        'response_code'   => 500,
+        'service_name'    => 'game_report',
+        'bet'             => $bet,
+        'win'             => $win,
+        // 'total_win'    => $total_win,
+        'total_free_spin' => $totalFreeSpin,
+        'data'            => [],
+        'message'         => 'No reports found',
+        'global_error'    => 'No reports found',
+      ]);      
+
 
     }
 
@@ -198,6 +242,24 @@ class GameHistoryController extends Controller
         $report = $report->where('payment_history_transactions.free_game', '=', 1);
         // $report = $report->groupBy(DB::raw('DATE(payment_history_transactions.created_at)'));
         // $report = $report->orderBy('created_at', 'DESC');
+        $report = $report->get()->sum('win');
+        return $report;
+    }
+
+
+    private function getSumOfPlayerRedpacket($player_id, $game_type_id, $created_date)
+    {
+        $report = new PaymentHistoryTransaction;
+        $report = $report->select(DB::raw("SUM(payment_history_transactions.win) as win"));
+        $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+        $report = $report->where('payment_history_transactions.created_date', $created_date);
+        $report = $report->where('payment_history_transactions.user_id', $player_id);
+        if($game_type_id == '1') {
+          $report = $report->where('game.game_type_id', 6);
+          $report = $report->whereNotNull('payment_history_transactions.table_id');
+        }
+        $report = $report->where('payment_history_transactions.game_id', '!=', 0);
+        $report = $report->where('payment_history_transactions.free_game', '=', 1);
         $report = $report->get()->sum('win');
         return $report;
     }
