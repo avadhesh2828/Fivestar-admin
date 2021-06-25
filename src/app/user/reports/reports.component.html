@@ -64,7 +64,8 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h5 class="mb-0 text-gray-800 total_win">{{ 'reports.totalWin' | translate}}: {{ gameReport.data.bet - gameReport.data.win - gameReport.total_free_spin | number:'1.2'}} </h5>
+          <!-- <h5 class="mb-0 text-gray-800 total_win">{{ 'reports.totalWin' | translate}}: {{ gameReport.data.bet - gameReport.data.win - gameReport.total_free_spin | number:'1.2'}} </h5> -->
+          <h5 class="mb-0 text-gray-800 total_win">{{ 'reports.totalWin' | translate}}: {{ totalWin - total_free_spin | number:'1.2'}} </h5>
           <h5 class="mb-0 text-gray-800">{{ 'reports.totalRecord' | translate}}: {{totalGameReport}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -78,23 +79,23 @@
             <tr *ngIf="error">
               <td colspan="7" class="table-danger">{{'reports.thereWasError' | translate}} </td>
             </tr>
-            <tr *ngIf="!error && !gameReport.data">
+            <tr *ngIf="!error && !gameReport">
               <td colspan="7">Loading...</td>
             </tr>
-            <tr *ngIf="!gameReport.data">
+            <tr *ngIf="gameReport && !(gameReport.length>0)">
               <td colspan="7" class="text-center"> {{'reports.noDataFound' | translate}}</td>
             </tr>
-            <tr *ngIf="gameReport.data" >
+            <!-- <tr *ngIf="gameReport.data" >
               <td> - </td>
               <td> {{ gameReport.data.bet - gameReport.data.win - gameReport.total_free_spin | number:'1.2'}}</td>
-            </tr>
-            <!-- <tr *ngFor="let report of gameReport; let reportIndex = index">
+            </tr> -->
+            <tr *ngFor="let report of gameReport; let reportIndex = index">
               <td>{{ report.created_at || "-" }}</td>
               <td> {{ report.bet - report.win | number:'1.2'}}</td>
-            </tr> -->
+            </tr>
           </tbody>
         </table>
-        <!-- <nav *ngIf="totalGameReport > params.per_page">
+        <nav *ngIf="totalGameReport > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
               <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'reports.prev' | translate}}</a>
@@ -117,7 +118,7 @@
               </div>
             </li>
           </ul>
-        </nav> -->
+        </nav>
       </div>
     </div>
   </div>
