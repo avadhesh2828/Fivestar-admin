@@ -647,6 +647,9 @@ class GameHistoryController extends Controller
     }     
   }
 
+  /**
+   * Display a listing of the player redpacket
+   */
   public function player_redpacket(Request $request)
   {
       $this->user = Auth::user();
@@ -701,5 +704,91 @@ class GameHistoryController extends Controller
         'message'      => 'Reports found',
       ]);
   }
+
+
+  /**
+   * Display a listing of the Game Reports
+   *
+   */
+  public function get_all_player_report( Request $request ){
+      $agent_id = $request->post('agent_id');
+      $dates    = $request->post('dates');
+      $game_type_id = $request->post('game_type_id');
+
+      $validator = Validator::make($request->all(),[
+      'agent_id'     => 'required',
+      'game_type_id' => 'required',
+      'dates'        => 'required'
+      ]);
+
+      if($validator->fails() ){
+          return response()->json([
+              'response_code'=> 400,
+              'service_name' => 'get_all_player_report',
+              'message'=> 'Validation Failed',
+              'global_error'=> $validator->errors(),
+          ],400);
+      }
+
+      
+      $report = new PaymentHistoryTransaction;
+      $report = $report->select('user.user_id', 'user.username', DB::raw("SUM(payment_history_transactions.bet) as bet") , DB::raw("SUM(payment_history_transactions.win) as win"));
+
+      $report = $report->join('users.user', 'user.user_id', '=', 'payment_history_transactions.user_id');
+
+      $report = $report->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+    
+      // Date Range Filter
+      if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+      }
+      $report = $report->where('user.parent_id', $agent_id);
+      if($game_type_id == '1') {
+        $report = $report->where('game.game_type_id', 6);
+        $report = $report->whereNotNull('payment_history_transactions.table_id');
+      }
+      $report = $report->where('payment_history_transactions.game_id', '!=', 0);
+      $report = $report->where('payment_history_transactions.free_game', '=', 0);
+
+      $report = $report->groupBy('user.user_id','user.username');
+
+      $report = $report->get();
+
+      if($report->count() > 0){
+        foreach($report as $key) {
+          $free_game = new PaymentHistoryTransaction;
+          $free_game = $free_game->select(DB::raw("SUM(payment_history_transactions.win) as win"));
+          $free_game = $free_game->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+          $free_game = $free_game->where('payment_history_transactions.user_id', $key->user_id);
+          if($game_type_id == '1') {
+            $free_game = $free_game->where('game.game_type_id', 6);
+            $free_game = $free_game->whereNotNull('payment_history_transactions.table_id');
+          }
+          $free_game = $free_game->where('payment_history_transactions.game_id', '!=', 0);
+          $free_game = $free_game->where('payment_history_transactions.free_game', '=', 1);
+          $free_game = $free_game->get()->sum('win');
+        
+          $key['free_game'] = $free_game;
+          $reports[] = $key;
+        }
+
+        return response()->json([
+          'response_code'   => 200,
+          'service_name'    => 'get_all_player_report',
+          'data'            => $reports,
+          'message'         => 'Reports found',
+        ]);
+      } else {
+        return response()->json([
+          'response_code'   => 500,
+          'service_name'    => 'get_all_player_report',
+          'data'            => [],
+          'message'         => 'No reports found',
+          'global_error'    => 'No reports found',
+        ]);     
+      }  
+      
+    }
+
 
 }

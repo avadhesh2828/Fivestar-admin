@@ -15,13 +15,9 @@
 
       <div class="head">
         <span class="detail">
-          <a (click)="goBack()">{{ 'agentDetail.agent' | translate}} </a> 
-           <i class="fa fa-chevron-right"></i> 
-           <span class="agent-title" > {{parentAgentInfo.username}}</span> 
+          <a (click)="goBack()">{{'agentDetail.agent' | translate}} </a> 
+           <i class="fa fa-chevron-right"></i> {{parentAgentInfo?.username}}
         </span>
-        <!-- <a class="btn back-btn" href="javascript:void(0)" (click)="goBack()">
-          <i class="icon-arrow-left-circle" aria-hidden="true"></i>
-        </a> -->
       </div>
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

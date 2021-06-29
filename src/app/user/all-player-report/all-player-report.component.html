@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <form class="form-horizontal" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong>{{'playerTotalReports.report' | translate}}</strong>
+          <a class="btn back-btn" routerLink="/agent"><i class="icon-arrow-left-circle" aria-hidden="true"></i></a>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'playerTotalReports.ChooseReportType' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+              <!-- <input type="text" class="form-control" formControlName="userName" placeholder="{{'scoreLog.enter' | translate}}"> -->
+              <label class="md-check">
+                <input type="radio" value="0" name="game_type" formControlName="game_type">
+                {{'playerTotalReports.singleGame' | translate}}
+              </label>
+              &nbsp;
+              <label class="md-check">
+                <input type="radio" value="1" name="game_type" formControlName="game_type">     
+                {{'playerTotalReports.liveGame' | translate}}
+              </label>
+
+              <div *ngIf="submitted && f['game_type'].errors" class="text-danger">
+                <div *ngIf="f['game_type'].errors.required">{{ 'playerTotalReports.typeIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="username">{{'playerTotalReports.ChooseDate' | translate}} <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+
+              <input type="text" class="form-control cursor-pointer"
+                placeholder="{{'playerTotalReports.selectDateRange' | translate}}" #dp="bsDaterangepicker" formControlName="date" bsDaterangepicker readonly autocomplete="off" [maxDate]="maxDate" [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default', showWeekNumbers:false }">
+              
+            
+              <div *ngIf="submitted && f['date'].errors" class="text-danger">
+                <div *ngIf="f['date'].errors.required">{{ 'playerTotalReports.dateIsRequired' | translate}}</div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+            {{'playerTotalReports.submit' | translate}}</button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" type="button" (click)="handleReset()"><i class="fa fa-ban"></i>
+            {{'playerTotalReports.reset' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row" *ngIf="showTable === true">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body custom-listing-table">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h5 class="mb-0 text-gray-800">
+            <!-- {{ 'playerTotalReports.totalWin' | translate}}: {{ gameReport.bet - gameReport.win - gameReport.total_free_spin | number:'1.2'}}  -->
+          </h5>
+          <h5 class="mb-0 text-gray-800">{{ 'playerTotalReports.totalRecord' | translate}}: {{gameReport.data.length}}</h5>
+        </div>
+        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'playerTotalReports.userName' | translate}}</th>
+              <th>{{'playerTotalReports.win' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="error">
+              <td colspan="7" class="table-danger">{{'playerTotalReports.thereWasError' | translate}} </td>
+            </tr>
+            <tr *ngIf="!error && !gameReport.data">
+              <td colspan="7">Loading...</td>
+            </tr>
+            <tr *ngIf="!gameReport.data && !(gameReport.data.length>0)">
+              <td colspan="7" class="text-center"> {{'playerTotalReports.noDataFound' | translate}}</td>
+            </tr>
+            <tr *ngFor="let report of gameReport.data; let reportIndex = index">
+              <td>{{ report.username || "-" }}</td>
+              <td>{{ report.bet - report.win - report.free_game | number:'1.2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader></app-loader>

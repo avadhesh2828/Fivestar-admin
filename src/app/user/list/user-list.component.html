@@ -21,7 +21,8 @@
             <button (click)="players('')"> {{ 'player.allPlayer' | translate}} </button> |
             <button (click)="players(1)"> {{ 'player.enablePlayer' | translate}} </button> |
             <button (click)="players(0)"> {{ 'player.disablePlayer' | translate}} </button> |
-            <button [routerLink]="['player-redpacket',  0]" > {{ 'player.playerRedpacket' | translate}} </button>
+            <button [routerLink]="['/users/player-redpacket',  0]" > {{ 'player.playerRedpacket' | translate}} </button> |
+            <button [routerLink]="['/users/all-player-reports', (selectedAgent != '')? selectedAgent:currentAgent.admin_id]" > {{ 'player.playerTotalReport' | translate}} </button>
         </div>
 
         <table class="table table-responsive-sm table-bordered table-striped table-sm admin-table">

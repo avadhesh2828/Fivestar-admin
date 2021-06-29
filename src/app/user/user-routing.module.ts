@@ -7,6 +7,7 @@ import { UserWatchlistComponent } from './user-watchlist/user-watchlist.componen
 import { NewComponent } from './new/new.component';
 import { ReportsComponent } from './reports/reports.component';
 import { PlayerRedpacketComponent } from './player-redpacket/player-redpacket.component';
+import { AllPlayerReportComponent } from './all-player-report/all-player-report.component';
 
 const routes: Routes = [
     { path: '', component: UserListComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
     { path: 'reports/:userId', component: ReportsComponent },
     { path: 'player-redpacket/:userId', component: PlayerRedpacketComponent },
     { path: 'portfolio/:userId', component: UserPortfolioComponent },
-    { path: 'watchlist/:userId', component: UserWatchlistComponent }
+    { path: 'watchlist/:userId', component: UserWatchlistComponent },
+    { path: 'all-player-reports/:userId', component: AllPlayerReportComponent }
 ];
 
 @NgModule({
@@ -36,4 +38,5 @@ export const routedComponents: Array<any> = [
     NewComponent,
     ReportsComponent,
     PlayerRedpacketComponent,
+    AllPlayerReportComponent
 ];
