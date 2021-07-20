@@ -107,55 +107,9 @@ class GameHistoryController extends Controller
           ]);
       }
       
-      // $report = $this->playerReport($player_id, $game_type_id, $dates);
-      // $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
-      // $bet = $report->get()->sum('bet');
-      // $win = $report->get()->sum('win');
-      // $total_win = $bet - $win;
-      // // Paginated records
-      // $report = $report->paginate($request->per_page);
-  
-      // if($report->count() == 0){
-      //   return response()->json([
-      //     'response_code' => 500,
-      //     'service_name'  => 'game_report',
-      //     'bet'           => $bet,
-      //     'win'           => $win,
-      //     // 'total_win'     => $total_win,
-      //     'total_free_spin' => $totalFreeSpin,
-      //     'data'          => [],
-      //     'message'       => 'No reports found',
-      //     'global_error'  => 'No reports found',
-      //   ]);
-      // }
-  
-      // return response()->json([
-      //   'response_code' => 200,
-      //   'service_name'  => 'game_report',
-      //   'bet'           => $bet,
-      //   'win'           => $win,
-      //   // 'total_win'     => $total_win,
-      //   'total_free_spin' => $totalFreeSpin,
-      //   'data'          => $report,
-      //   'message'       => 'Reports found',
-      // ]);
-
-
-
-      // $report = $this->playerReport($player_id, $game_type_id, $dates);
-      // $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
-      
-      // return response()->json([
-      //   'response_code' => 200,
-      //   'service_name'  => 'game_report',
-      //   'total_free_spin' => $totalFreeSpin,
-      //   'data'          => $report[0],
-      //   'message'       => 'Reports found',
-      // ]);
-
 
       $report = $this->playerReport($player_id, $game_type_id, $dates);
-      $totalFreeSpin = $this->sumRedpacket($player_id, $game_type_id, $dates);
+      $totalFreeSpin = $this->sumFreeSpin($player_id, $game_type_id, $dates);
       $bet = $report->get()->sum('bet');
       $win = $report->get()->sum('win');
       $total_win = $bet - $win;
@@ -164,7 +118,7 @@ class GameHistoryController extends Controller
   
       if($report->count() > 0){
         foreach($report as $key) {
-            $redpacket = $this->getSumOfPlayerRedpacket($player_id, $game_type_id, $key->created_at);
+            $redpacket = $this->getSumOfPlayerFreeSpin($player_id, $game_type_id, $key->created_at);
             $key['redpacket'] = $redpacket;
             $reports[] = $key;
         }
@@ -174,7 +128,6 @@ class GameHistoryController extends Controller
           'service_name'    => 'game_report',
           'bet'             => $bet,
           'win'             => $win,
-          // 'total_win'    => $total_win,
           'total_free_spin' => $totalFreeSpin,
           'data'            => $reports,
           'message'         => 'Reports found',
@@ -223,7 +176,7 @@ class GameHistoryController extends Controller
         // return $report = $report->get();
     }
 
-    private function sumRedpacket($player_id, $game_type_id, $dates)
+    private function sumFreeSpin($player_id, $game_type_id, $dates)
     {
         $report = new PaymentHistoryTransaction;
         $report = $report->select(DB::raw("SUM(payment_history_transactions.win) as win"));
@@ -247,7 +200,7 @@ class GameHistoryController extends Controller
     }
 
 
-    private function getSumOfPlayerRedpacket($player_id, $game_type_id, $created_date)
+    private function getSumOfPlayerFreeSpin($player_id, $game_type_id, $created_date)
     {
         $report = new PaymentHistoryTransaction;
         $report = $report->select(DB::raw("SUM(payment_history_transactions.win) as win"));
@@ -760,6 +713,7 @@ class GameHistoryController extends Controller
           $free_game = $free_game->select(DB::raw("SUM(payment_history_transactions.win) as win"));
           $free_game = $free_game->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
           $free_game = $free_game->where('payment_history_transactions.user_id', $key->user_id);
+          $free_game = $free_game->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
           if($game_type_id == '1') {
             $free_game = $free_game->where('game.game_type_id', 6);
             $free_game = $free_game->whereNotNull('payment_history_transactions.table_id');
