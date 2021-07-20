@@ -708,6 +708,7 @@ class GameHistoryController extends Controller
       $report = $report->get();
 
       if($report->count() > 0){
+        $grandTotal = 0;
         foreach($report as $key) {
           $free_game = new PaymentHistoryTransaction;
           $free_game = $free_game->select(DB::raw("SUM(payment_history_transactions.win) as win"));
@@ -724,12 +725,14 @@ class GameHistoryController extends Controller
         
           $key['free_game'] = $free_game;
           $reports[] = $key;
+          $grandTotal += $key->bet - $key->win - $key->free_game;  
         }
 
         return response()->json([
           'response_code'   => 200,
           'service_name'    => 'get_all_player_report',
           'data'            => $reports,
+          'grand_total'     => $grandTotal,
           'message'         => 'Reports found',
         ]);
       } else {
