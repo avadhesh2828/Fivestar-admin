@@ -64,8 +64,8 @@
     <div class="card">
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h5 class="mb-0 text-gray-800">
-            <!-- {{ 'playerTotalReports.totalWin' | translate}}: {{ gameReport.bet - gameReport.win - gameReport.total_free_spin | number:'1.2'}}  -->
+          <h5 class="mb-0 text-gray-800 total_win">
+            {{ 'playerTotalReports.totalWin' | translate}}: {{ gameReport.grand_total | number:'1.2'}} 
           </h5>
           <h5 class="mb-0 text-gray-800">{{ 'playerTotalReports.totalRecord' | translate}}: {{gameReport.data.length}}</h5>
         </div>
