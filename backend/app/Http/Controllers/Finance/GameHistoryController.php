@@ -460,7 +460,9 @@ class GameHistoryController extends Controller
               $bet = $result->sum('bet');
               $win = $result->sum('win');
       
-              if($bet > 0 || $win > 0) {
+              $free_spin = $this->get_all_agent_free_spin($childIds, $game_type_id, $dates);
+
+              if($bet > 0 || $win > 0 || $free_spin > 0) {
                 $report[] = array(
                     'admin_id'    => $key->admin_id,
                     'username'    => $key->username,
@@ -469,14 +471,15 @@ class GameHistoryController extends Controller
                     'description' => $key->description,
                     'bet'         => $bet,
                     'win'         => $win,
-                    'free_spin'  => $this->get_all_agent_free_spin($childIds, $game_type_id, $dates)
+                    'free_spin'   => $free_spin
                 );
                 $twin += $win;
                 $tbet += $bet;
+                $tfree += $free_spin;
               }
          }
          $data = array(
-            'total_win' => $tbet - $twin,
+            'total_win' => $tbet - $twin - $tfree,
             'data'      => $report
           );
           // return $data;  
