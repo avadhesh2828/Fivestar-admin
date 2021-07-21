@@ -449,6 +449,7 @@ class GameHistoryController extends Controller
           $report = array();
           $twin = 0;
           $tbet = 0;
+          $tfree = 0;
           foreach($agents as $key) {
 
               $childIds = $this->get_agent_child($key->admin_id);
