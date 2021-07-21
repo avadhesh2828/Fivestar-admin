@@ -86,7 +86,7 @@
             </tr>
             <tr *ngFor="let report of gameReport; let reportIndex = index">
               <td>{{ report.created_date }}</td>
-              <td>{{ report.bet - report.win | number:'1.2'}}</td>
+              <td>{{ report.bet - report.win - report.free_game | number:'1.2'}}</td>
             </tr>
           </tbody>
         </table>
