@@ -304,15 +304,15 @@ class GameHistoryController extends Controller
             'total_win'      => $grandTotal,
             'message'        => 'Reports found',
           ]);
-      } else {
-          return response()->json([
-            'response_code'   => 500,
-            'service_name'    => 'agent_game_report',
-            'data'            => [],
-            'message'         => 'No reports found',
-            'global_error'    => 'No reports found',
-          ]);     
-      }
+        } else {
+            return response()->json([
+              'response_code'   => 500,
+              'service_name'    => 'agent_game_report',
+              'data'            => [],
+              'message'         => 'No reports found',
+              'global_error'    => 'No reports found',
+            ]);     
+        }
       
         
         
@@ -455,6 +455,8 @@ class GameHistoryController extends Controller
               $res = $this->get_all_agent_report($childIds, $game_type_id, $dates);
               $result = $res->get();
 
+              
+
               $bet = $result->sum('bet');
               $win = $result->sum('win');
       
@@ -466,7 +468,8 @@ class GameHistoryController extends Controller
                     'phone'       => $key->phone,
                     'description' => $key->description,
                     'bet'         => $bet,
-                    'win'         => $win
+                    'win'         => $win,
+                    'free_spin'  => $this->get_all_agent_free_spin($childIds, $game_type_id, $dates)
                 );
                 $twin += $win;
                 $tbet += $bet;
@@ -480,7 +483,7 @@ class GameHistoryController extends Controller
           return response()->json([
             'response_code'=> 200,
             'service_name' => 'all_agent_report',
-            'data'         => $data,
+            'data'         =>  $data,
             'message'      => 'Reports found',
           ]);
         } else {
@@ -554,9 +557,81 @@ class GameHistoryController extends Controller
           $report = $report->where('game.game_type_id', 6);
           $report = $report->whereNotNull('payment_history_transactions.table_id');
         }
+        $report = $report->where('payment_history_transactions.game_id', '!=', 0);
+        $report = $report->where('payment_history_transactions.free_game', '=', 0);
         $report = $report->where('payment_history_transactions.action', '!=', 'SetScore');
+        // $report = $report->get();
         return $report = $report;
+
+
+        // if($report->count() > 0){
+        //     // $grandTotal = 0;
+        //     foreach($report as $key) {
+
+        //       $free_game = new User;
+        //       $free_game = $free_game->select(DB::raw("SUM(payment_history_transactions.win) as win"));
+        //       $free_game = $free_game->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+        //       $free_game = $free_game->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+
+        //       // Date Range Filter
+        //       if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        //         $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+        //       }
+
+        //       $free_game = $free_game->whereIn('user.parent_id', $agentIds);
+        //       if($game_type_id == '1') {
+        //         $free_game = $free_game->where('game.game_type_id', 6);
+        //         $free_game = $free_game->whereNotNull('payment_history_transactions.table_id');
+        //       }
+      
+        //       $free_game = $free_game->where('payment_history_transactions.game_id', '!=', 0);
+        //       $free_game = $free_game->where('payment_history_transactions.free_game', '=', 1);
+        //       $free_game = $free_game->where('payment_history_transactions.action', '!=', 'SetScore');
+        //       $free_game = $free_game->get()->sum('win');
+            
+        //       $key['free_game'] = $free_game;
+        //       $reports[] = $key;
+        //       // $grandTotal += $key->bet - $key->win - $key->free_game;  
+        //     }
+
+        //     return $reports;
+         
+        // } else {
+        //   return $report;     
+        // }
+
     }
+
+
+  private function get_all_agent_free_spin($agentIds, $game_type_id, $dates)
+  {
+      $free_game = new User;
+      $free_game = $free_game->select(DB::raw("SUM(payment_history_transactions.win) as win"));
+      $free_game = $free_game->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
+      $free_game = $free_game->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
+
+      // Date Range Filter
+      if( isset($dates['fromdate']) && isset($dates['todate']) ){
+        $free_game = $free_game->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
+      }
+
+      $free_game = $free_game->whereIn('user.parent_id', $agentIds);
+      if($game_type_id == '1') {
+        $free_game = $free_game->where('game.game_type_id', 6);
+        $free_game = $free_game->whereNotNull('payment_history_transactions.table_id');
+      }
+
+      $free_game = $free_game->where('payment_history_transactions.game_id', '!=', 0);
+      $free_game = $free_game->where('payment_history_transactions.free_game', '=', 1);
+      $free_game = $free_game->where('payment_history_transactions.action', '!=', 'SetScore');
+      $free_game = $free_game->get()->sum('win');
+    
+      return $free_game; 
+            
+
+  }
+
+    
 
   /**
    * KA game recall
