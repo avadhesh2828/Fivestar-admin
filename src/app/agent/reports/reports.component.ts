@@ -95,15 +95,15 @@ export class ReportsComponent implements OnInit {
       .subscribe((log: []) => {
         this.loaderService.display(false);
         this.showTable = true;
-        if (log['data'] && log['data'].data) {
-          this.gameReport = log['data'].data;
-          this.checkLastPage = log['data'].last_page;
-          this.jump_to = this.checkLastPage;
+        if (log['data']) {
+          this.gameReport = log['data'];
+          // this.checkLastPage = log['data'].last_page;
+          // this.jump_to = this.checkLastPage;
           this.totalWin = log['total_win'];
-          this.createPaginationItem(log['data'].total);
+          // this.createPaginationItem(log['data'].total);
         } else {
           this.gameReport = log['data'];
-          this.createPaginationItem(0);
+          // this.createPaginationItem(0);
         }
         this.loaderService.display(false);
         this.error = false;

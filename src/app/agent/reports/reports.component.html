@@ -65,40 +65,32 @@
       <div class="card-body custom-listing-table">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h5 class="mb-0 text-gray-800 total_win">{{ 'agentReports.totalWin' | translate}}: {{ totalWin | number:'1.2'}}</h5>
-          <h5 class="mb-0 text-gray-800">{{ 'agentReports.totalRecord' | translate}}: {{totalGameReport}}</h5>
+          <h5 class="mb-0 text-gray-800">{{ 'agentReports.totalRecord' | translate}}: {{gameReport.length}}</h5>
         </div>
         <table class="table table-responsive-sm table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <!-- <th>{{'agentReports.userName' | translate}}</th>
-              <th>{{'agentReports.name' | translate}}</th>
-              <th>{{'agentReports.phone' | translate}}</th>
-              <th>{{'agentReports.description' | translate}}</th> -->
               <th>{{'agentReports.date' | translate}}</th>
               <th>{{'agentReports.win' | translate}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="error">
-              <td colspan="6" class="table-danger">{{'agentReports.thereWasError' | translate}} </td>
+              <td colspan="2" class="table-danger">{{'agentReports.thereWasError' | translate}} </td>
             </tr>
             <tr *ngIf="!error && !gameReport">
-              <td colspan="6">Loading...</td>
+              <td colspan="2">Loading...</td>
             </tr>
             <tr *ngIf="gameReport && !(gameReport.length>0)">
-              <td colspan="6" class="text-center"> {{'agentReports.noDataFound' | translate}}</td>
+              <td colspan="2" class="text-center"> {{'agentReports.noDataFound' | translate}}</td>
             </tr>
             <tr *ngFor="let report of gameReport; let reportIndex = index">
-              <!-- <td>{{ report.username || "-" }}</td>
-              <td>{{ report.name || "-" }}</td>
-              <td>{{ report.phone || "-" }}</td>
-              <td>{{ report.description || "-" }}</td> -->
               <td>{{ report.created_date }}</td>
               <td>{{ report.bet - report.win | number:'1.2'}}</td>
             </tr>
           </tbody>
         </table>
-        <nav *ngIf="totalGameReport > params.per_page">
+        <!-- <nav *ngIf="totalGameReport > params.per_page">
           <ul class="pagination">
             <li class="page-item" *ngIf="params.current_page > 1">
               <a class="page-link" href="javascript:void(0);" (click)="nextOrPreviousPage(-1)">{{'agentReports.prev' | translate}}</a>
@@ -121,7 +113,7 @@
               </div>
             </li>
           </ul>
-        </nav>
+        </nav> -->
       </div>
     </div>
   </div>
