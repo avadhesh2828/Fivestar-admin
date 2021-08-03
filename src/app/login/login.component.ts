@@ -118,7 +118,8 @@ export class LoginComponent implements OnInit {
         }
       }, err => {
         // this.captchaElem.resetCaptcha();
-        this.toastr.error('Error while login');
+        this.toastr.error(err['error']['error']['username'] || 'There was an error');
+        // this.toastr.error('Error while login');
       });
   }
 
@@ -186,7 +187,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('adminId', this.adminId) 
       this.router.navigate(['/dashboard']);
     }, err => {
-      this.toastr.error('Wrong Password');
+      // this.toastr.error('Wrong Password');
+      this.toastr.error(err['error']['error']['personal_password'] || 'Wrong Password');
     });
   }
 

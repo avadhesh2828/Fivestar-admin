@@ -256,7 +256,7 @@ class GameHistoryController extends Controller
           $report = $report->whereBetween('payment_history_transactions.created_at', [$dates['fromdate'] , $dates['todate']]);
         }
 
-        $report = $report->whereIn('user.parent_id', array_unique($agentIds));
+        $report = $report->whereIn('user.parent_id', $agentIds);
         if($game_type_id == '1') {
           $report = $report->where('game.game_type_id', 6);
           $report = $report->whereNotNull('payment_history_transactions.table_id');
@@ -279,7 +279,7 @@ class GameHistoryController extends Controller
               $free_game = $free_game->join('finanace.payment_history_transactions', 'user.user_id', '=', 'payment_history_transactions.user_id');
               $free_game = $free_game->join('game.game', 'game.game_id', '=', 'payment_history_transactions.game_id');
 
-              $free_game = $free_game->whereIn('user.parent_id', array_unique($agentIds));
+              $free_game = $free_game->whereIn('user.parent_id', $agentIds);
               if($game_type_id == '1') {
                 $free_game = $free_game->where('game.game_type_id', 6);
                 $free_game = $free_game->whereNotNull('payment_history_transactions.table_id');
